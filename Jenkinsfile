@@ -14,18 +14,18 @@ pipeline {
   }
 
   stages {
-    stage('Install Dependencies') {
-      steps {
-        echo 'Installing dependencies...'
-
-        sh 'npm ci'
-      }
-    }
-
     stage('Run Tests') {
+      agent {
+        docker {
+          image 'node:16-alpine'
+          reuseNode true
+        }
+      }
+
       steps {
         echo 'Running tests...'
 
+        sh 'npm ci'
         sh 'npm run lint'
       }
     }
