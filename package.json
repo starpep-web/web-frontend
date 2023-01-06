@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --ext .tsx,.ts,.js",
+    "lint": "tsc --noemit && eslint . --ext .tsx,.ts,.js",
     "lint:fix": "eslint . --ext .tsx,.ts,.js --fix"
   },
   "dependencies": {
