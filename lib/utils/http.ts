@@ -3,17 +3,11 @@ import { HttpError } from '../errors/http';
 
 const FIRST_UNSUCCESSFUL_STATUS_CODE = 400;
 
-export interface CommonBody {
+export interface ResponseBody {
   status: number
   success: boolean
-}
-
-export interface DataBody extends CommonBody {
-  data: object | string | null
-}
-
-export interface ErrorBody extends CommonBody {
-  error: {
+  data?: object | string | null
+  error?: {
     name: string,
     description: string,
     message: string
@@ -21,7 +15,7 @@ export interface ErrorBody extends CommonBody {
 }
 
 export class ResponseBuilder {
-  private readonly _body: CommonBody;
+  private readonly _body: ResponseBody;
 
   public constructor() {
     this._body = {
@@ -37,12 +31,12 @@ export class ResponseBuilder {
   }
 
   public withData(data: object | string): this {
-    (this._body as DataBody).data = data;
+    this._body.data = data;
     return this;
   }
 
   public withError(error: HttpError): this {
-    (this._body as ErrorBody).error = {
+    this._body.error = {
       name: error.name,
       description: error.description,
       message: error.message
@@ -51,9 +45,9 @@ export class ResponseBuilder {
     return this.withStatusCode(error.statusCode);
   }
 
-  public build(): object {
+  public build(): ResponseBody {
     if (!('data' in this._body) && !('error' in this._body)) {
-      (this._body as DataBody).data = null;
+      this._body.data = null;
     }
 
     return this._body;
