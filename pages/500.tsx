@@ -1,16 +1,16 @@
 import React, { Fragment } from 'react';
 import { PageMetadata } from '@components/common/pageMetadata';
 
-const HomePage = () => {
+const ServerSideErrorPage = () => {
   return (
     <Fragment>
-      <PageMetadata title="Home" />
+      <PageMetadata title="Server Side Error" />
 
       <main>
-        Main Page
+        Server Side Error
       </main>
     </Fragment>
   );
 };
 
-export default HomePage;
+export default ServerSideErrorPage;
