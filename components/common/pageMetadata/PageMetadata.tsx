@@ -7,9 +7,11 @@ interface Props {
 }
 
 const PageMetadata: React.FC<Props> = ({ title }) => {
+  const completeTitle = `${title} - ${SITE_TITLE}`;
+
   return (
     <Head>
-      <title>{title} - {SITE_TITLE}</title>
+      <title>{completeTitle}</title>
 
       {/* Favicon */}
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
