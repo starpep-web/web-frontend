@@ -3,6 +3,15 @@
   "exclude": ["node_modules"],
 
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@lib/*": ["lib/*"],
+      "@pages/*": ["pages/*"],
+      "@api/*": ["pages/api/*"],
+      "@styles/*": ["styles/*"],
+    },
+
     "target": "es5",
     "module": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
