@@ -1,16 +1,16 @@
 import React, { Fragment } from 'react';
 import { PageMetadata } from '@components/common/pageMetadata';
 
-const HomePage = () => {
+const NotFoundPage = () => {
   return (
     <Fragment>
-      <PageMetadata title="Home" />
+      <PageMetadata title="Not Found" />
 
       <main>
-        Main Page
+        Not Found :(
       </main>
     </Fragment>
   );
 };
 
-export default HomePage;
+export default NotFoundPage;
