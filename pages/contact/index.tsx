@@ -2,14 +2,14 @@ import React from 'react';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 
-const NotFoundPage = () => {
+const ContactPage = () => {
   return (
     <PageWrapper>
-      <PageMetadata title="Not Found" />
+      <PageMetadata title="Contact" />
 
-      Not Found :(
+      Contact Page
     </PageWrapper>
   );
 };
 
-export default NotFoundPage;
+export default ContactPage;

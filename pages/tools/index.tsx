@@ -2,14 +2,14 @@ import React from 'react';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 
-const NotFoundPage = () => {
+const ToolsPage = () => {
   return (
     <PageWrapper>
-      <PageMetadata title="Not Found" />
+      <PageMetadata title="Tools" />
 
-      Not Found :(
+      Tools Page
     </PageWrapper>
   );
 };
 
-export default NotFoundPage;
+export default ToolsPage;
