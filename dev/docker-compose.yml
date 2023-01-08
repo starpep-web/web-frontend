@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  db:
+    image: registry-docker.moonstar-x.dev/webpep/neo4j-db:latest
+    restart: unless-stopped
+    ports:
+      - 7687:7687
+      - 7474:7474
+    environment:
+      - TZ=America/Guayaquil
+      - NEO4J_AUTH=none
+
+  datamining_api:
+    image: registry-docker.moonstar-x.dev/webpep/datamining-api:latest
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - TZ=America/Guayaquil
+      - NEO4J_DB_URI=bolt://db:7687
