@@ -12,3 +12,13 @@ export const getSession = () => {
     defaultAccessMode: neo4j.session.READ
   });
 };
+
+export const readTransaction = async (query: string) => {
+  const session = getSession();
+  const result = await session.readTransaction((tx) => {
+    return tx.run(query);
+  });
+
+  await session.close();
+  return result;
+};
