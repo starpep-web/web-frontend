@@ -25,7 +25,7 @@ const Navbar = () => {
   return (
     <BulmaNavbar>
       <BulmaNavbar.Brand>
-        <BulmaNavbar.Item>
+        <BulmaNavbar.Item renderAs={Link} href={ROUTES.home}>
           <img
             alt="app logo"
             src="/android-chrome-192x192.png"
