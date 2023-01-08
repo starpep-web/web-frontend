@@ -1,15 +1,14 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { PageMetadata } from '@components/common/pageMetadata';
+import { PageWrapper } from '@components/common/pageWrapper';
 
 const SearchPage = () => {
   return (
-    <Fragment>
+    <PageWrapper>
       <PageMetadata title="Search" />
 
-      <main>
-        Search Page
-      </main>
-    </Fragment>
+      Search Page
+    </PageWrapper>
   );
 };
 

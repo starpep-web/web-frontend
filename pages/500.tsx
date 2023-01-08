@@ -1,15 +1,14 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { PageMetadata } from '@components/common/pageMetadata';
+import { PageWrapper } from '@components/common/pageWrapper';
 
 const ServerSideErrorPage = () => {
   return (
-    <Fragment>
+    <PageWrapper>
       <PageMetadata title="Server Side Error" />
 
-      <main>
-        Server Side Error
-      </main>
-    </Fragment>
+      Server Side Error
+    </PageWrapper>
   );
 };
 

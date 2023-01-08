@@ -1,15 +1,14 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { PageMetadata } from '@components/common/pageMetadata';
+import { PageWrapper } from '@components/common/pageWrapper';
 
 const NotFoundPage = () => {
   return (
-    <Fragment>
+    <PageWrapper>
       <PageMetadata title="Not Found" />
 
-      <main>
-        Not Found :(
-      </main>
-    </Fragment>
+      Not Found :(
+    </PageWrapper>
   );
 };
 

@@ -1,15 +1,14 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { PageMetadata } from '@components/common/pageMetadata';
+import { PageWrapper } from '@components/common/pageWrapper';
 
 const FaqPage = () => {
   return (
-    <Fragment>
+    <PageWrapper>
       <PageMetadata title="FAQ" />
 
-      <main>
-        FAQ Page
-      </main>
-    </Fragment>
+      FAQ Page
+    </PageWrapper>
   );
 };
 
