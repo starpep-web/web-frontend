@@ -9,6 +9,9 @@ Web Frontend made with Next.js (TypeScript)
 To start development, make sure you're using Node version `16.15.1` which is the [LTS version at the time of writing](https://nodejs.org/en/about/releases/).
 You can use [nvm](https://github.com/nvm-sh/nvm) to allow for multiple node versions in your machine.
 
+You will also need [Docker](https://www.docker.com/) to create a development environment in your machine to have access
+to the required services for development.
+
 ### First Steps
 
 First, clone this repo:
@@ -24,6 +27,19 @@ npm install
 ```
 
 ### Working
+
+Start a development environment by running inside the `dev` folder:
+
+```text
+docker-compose up
+```
+
+This will start a neo4j database on port 7687 with a web dashboard on port 7474 and the datamining api on port 8080.
+You can update these services by running:
+
+```text
+docker-compose pull
+```
 
 To start the development server, run:
 
