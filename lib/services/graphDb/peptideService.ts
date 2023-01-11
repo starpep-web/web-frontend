@@ -23,9 +23,9 @@ export const getPeptidesConstitutedBy = async () => {
 
 // eslint-disable-next-line no-warning-comments
 // TODO: Get Peptide with properties.
-export const getPeptideBySeq = async (seq: string): Promise<FullPeptide | null> => {
-  const query = 'MATCH (n:Peptide {seq: $seq}) RETURN n LIMIT 1';
-  const result = await readTransaction(query, { seq });
+export const getPeptideBySequence = async (sequence: string): Promise<FullPeptide | null> => {
+  const query = 'MATCH (n:Peptide {seq: $sequence}) RETURN n LIMIT 1';
+  const result = await readTransaction(query, { sequence });
   const [record] = result.records;
 
   if (!record) {
@@ -40,9 +40,9 @@ export const getPeptideBySeq = async (seq: string): Promise<FullPeptide | null> 
 
 // eslint-disable-next-line no-warning-comments
 // TODO: Implement pagination logic.
-export const searchPeptidesSingleQuery = async (seq: string, limit: number, skip: number): Promise<Peptide[]> => {
-  const query = 'MATCH (n:Peptide) WHERE n.seq CONTAINS $seq RETURN n SKIP $skip LIMIT $limit';
-  const result = await readTransaction(query, { seq, limit, skip });
+export const searchPeptidesSingleQuery = async (sequence: string, limit: number, skip: number): Promise<Peptide[]> => {
+  const query = 'MATCH (n:Peptide) WHERE n.seq CONTAINS $sequence RETURN n SKIP $skip LIMIT $limit';
+  const result = await readTransaction(query, { sequence, limit, skip });
 
   return result.records.map((r) => {
     const node = r.get('n');

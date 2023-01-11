@@ -2,11 +2,10 @@ import React from 'react';
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
-import { getPeptideBySeq } from '@lib/services/graphDb/peptideService';
+import { getPeptideBySequence } from '@lib/services/graphDb/peptideService';
 import { FullPeptide } from '@lib/models/peptide';
 
 interface ServerSideProps {
-  sequence: string
   peptide: FullPeptide
 }
 
@@ -14,12 +13,12 @@ interface Props extends ServerSideProps {
 
 }
 
-const PeptidePage: React.FC<Props> = ({ sequence, peptide }) => {
+const PeptidePage: React.FC<Props> = ({ peptide }) => {
   return (
     <PageWrapper>
-      <PageMetadata title={sequence} />
+      <PageMetadata title={peptide.sequence} />
 
-      Peptide Page for {sequence}
+      Peptide Page for {peptide.sequence}
 
       <pre>
         {JSON.stringify(peptide, null, 2)}
@@ -29,8 +28,8 @@ const PeptidePage: React.FC<Props> = ({ sequence, peptide }) => {
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<ServerSideProps>> => {
-  const seq = context.params!.seq as string;
-  const peptide = await getPeptideBySeq(seq);
+  const sequence = context.params!.sequence as string;
+  const peptide = await getPeptideBySequence(sequence);
 
   if (!peptide) {
     return {
@@ -40,8 +39,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
 
   return {
     props: {
-      sequence: seq,
-      peptide: peptide
+      peptide
     }
   };
 };
