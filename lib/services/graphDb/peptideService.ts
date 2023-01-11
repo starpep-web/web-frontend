@@ -33,9 +33,11 @@ export const getPeptideBySeq = async (seq: string): Promise<string | null> => {
   return result.records[0].get('n').properties.seq;
 };
 
+// eslint-disable-next-line no-warning-comments
+// TODO: Implement pagination logic.
 export const searchPeptidesSingleQuery = async (seq: string, limit: number, skip: number): Promise<string[]> => {
   const query = 'MATCH (n:Peptide) WHERE n.seq CONTAINS $seq RETURN n SKIP $skip LIMIT $limit';
   const result = await readTransaction(query, { seq, limit, skip });
 
-  return result.records.map((r) => r.get('n'));
+  return result.records.map((r) => r.get('n').properties.seq);
 };
