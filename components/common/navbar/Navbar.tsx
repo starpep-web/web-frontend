@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Navbar as BulmaNavbar } from 'react-bulma-components';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { ROUTES } from '@lib/constants/routes';
 
@@ -16,10 +17,19 @@ const navbarItems = [
 ];
 
 const Navbar = () => {
+  const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
 
   const handleBurgerClick = () => {
     setOpen(!open);
+  };
+
+  const isItemActive = (href: string): boolean => {
+    if (href === router.asPath) {
+      return true;
+    }
+
+    return href !== '/' && router.asPath.startsWith(href);
   };
 
   return (
@@ -39,7 +49,7 @@ const Navbar = () => {
         <BulmaNavbar.Container>
           {
             navbarItems.map(({ text, href }) => (
-              <BulmaNavbar.Item key={href} renderAs={Link} href={href}>
+              <BulmaNavbar.Item key={href} renderAs={Link} href={href} active={isItemActive(href)}>
                 {text}
               </BulmaNavbar.Item>
             ))

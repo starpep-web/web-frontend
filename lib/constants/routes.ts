@@ -8,3 +8,11 @@ export const ROUTES = {
   statistics: '/statistics',
   tools: '/tools'
 };
+
+export const DYNAMIC_ROUTES = {
+  peptide: (sequence: string) => `/peptide/${sequence}`,
+  singleQuery: (query: string, page: number = 1) => {
+    const params = new URLSearchParams({ query, page: page.toString() });
+    return `/search/single-query?${params.toString()}`;
+  }
+};

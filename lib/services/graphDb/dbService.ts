@@ -14,10 +14,10 @@ export const getSession = () => {
   });
 };
 
-export const readTransaction = async (query: string) => {
+export const readTransaction = async (query: string, params?: Record<string, string | number>) => {
   const session = getSession();
   const result = await session.readTransaction((tx) => {
-    return tx.run(query);
+    return tx.run(query, params);
   });
 
   await session.close();
