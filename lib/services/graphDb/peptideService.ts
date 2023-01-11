@@ -1,5 +1,6 @@
 import { readTransaction } from './dbService';
 import type { PathSegment } from 'neo4j-driver';
+import { Peptide, FullPeptide } from '@lib/models/peptide';
 
 // eslint-disable-next-line no-warning-comments
 // TODO: Remove this function.
@@ -22,22 +23,32 @@ export const getPeptidesConstitutedBy = async () => {
 
 // eslint-disable-next-line no-warning-comments
 // TODO: Get Peptide with properties.
-export const getPeptideBySeq = async (seq: string): Promise<string | null> => {
-  const query = 'MATCH (n:Peptide {seq: $seq}) RETURN n';
+export const getPeptideBySeq = async (seq: string): Promise<FullPeptide | null> => {
+  const query = 'MATCH (n:Peptide {seq: $seq}) RETURN n LIMIT 1';
   const result = await readTransaction(query, { seq });
+  const [record] = result.records;
 
-  if (result.records.length < 1) {
+  if (!record) {
     return null;
   }
 
-  return result.records[0].get('n').properties.seq;
+  const node = record.get('n');
+  return {
+    sequence: node.properties.seq
+  };
 };
 
 // eslint-disable-next-line no-warning-comments
 // TODO: Implement pagination logic.
-export const searchPeptidesSingleQuery = async (seq: string, limit: number, skip: number): Promise<string[]> => {
+export const searchPeptidesSingleQuery = async (seq: string, limit: number, skip: number): Promise<Peptide[]> => {
   const query = 'MATCH (n:Peptide) WHERE n.seq CONTAINS $seq RETURN n SKIP $skip LIMIT $limit';
   const result = await readTransaction(query, { seq, limit, skip });
 
-  return result.records.map((r) => r.get('n').properties.seq);
+  return result.records.map((r) => {
+    const node = r.get('n');
+
+    return {
+      sequence: node.properties.seq
+    };
+  });
 };

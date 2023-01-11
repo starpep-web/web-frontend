@@ -1,9 +1,10 @@
 import React from 'react';
 import { Box } from 'react-bulma-components';
 import PeptideSearchResultItem from './PeptideSearchResultItem';
+import { Peptide } from '@lib/models/peptide';
 
 interface Props {
-  peptides: string[]
+  peptides: Peptide[]
 }
 
 const PeptideSearchResult: React.FC<Props> = ({ peptides }) => {
@@ -19,7 +20,7 @@ const PeptideSearchResult: React.FC<Props> = ({ peptides }) => {
     <Box>
       {
         peptides.map((peptide) => (
-          <PeptideSearchResultItem key={peptide} peptide={peptide} />
+          <PeptideSearchResultItem key={peptide.sequence} {...peptide} />
         ))
       }
     </Box>

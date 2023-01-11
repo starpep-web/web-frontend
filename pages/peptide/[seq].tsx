@@ -3,10 +3,11 @@ import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { getPeptideBySeq } from '@lib/services/graphDb/peptideService';
+import { FullPeptide } from '@lib/models/peptide';
 
 interface ServerSideProps {
   sequence: string
-  peptide: string
+  peptide: FullPeptide
 }
 
 interface Props extends ServerSideProps {

@@ -6,12 +6,13 @@ import { PageWrapper } from '@components/common/pageWrapper';
 import { ErrorBoundary } from '@components/common/errorBoundary';
 import { PeptideSearchResult } from '@components/search/peptideSearchResult';
 import { searchPeptidesSingleQuery } from '@lib/services/graphDb/peptideService';
+import { Peptide } from '@lib/models/peptide';
 
 interface ServerSideProps {
   queryError?: string
   query?: string
   page?: number
-  peptides?: string[]
+  peptides?: Peptide[]
 }
 
 interface Props extends ServerSideProps {
@@ -54,6 +55,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
     };
   }
 
+  // eslint-disable-next-line no-warning-comments
+  // TODO: Consume pagination logic.
   const query = Array.isArray(context.query.query) ? context.query.query[0] : context.query.query;
   const peptides = await searchPeptidesSingleQuery(query, 50, 0);
 
