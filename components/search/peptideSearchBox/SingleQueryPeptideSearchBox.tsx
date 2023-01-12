@@ -13,7 +13,7 @@ const SingleQueryPeptideSearchBox = () => {
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
+    setQuery(event.target.value.toUpperCase());
   };
 
   return (
