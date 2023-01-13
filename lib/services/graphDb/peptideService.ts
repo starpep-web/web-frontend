@@ -1,4 +1,4 @@
-import { getNodeCount, readTransaction } from './dbService';
+import { readTransaction } from './dbService';
 import type { PathSegment } from 'neo4j-driver';
 import { Peptide, FullPeptide } from '@lib/models/peptide';
 import { WithPagination, createPagination } from '@lib/utils/pagination';
@@ -56,7 +56,10 @@ export const searchPeptidesSingleQueryPaginated = async (sequence: string, page:
   const LIMIT = 50;
   const start = (page - 1) * LIMIT;
 
-  const total = await getNodeCount('Peptide');
+  const countQuery = 'MATCH (n:Peptide) WHERE n.seq CONTAINS $sequence RETURN COUNT(n) AS c';
+  const result = await readTransaction(countQuery, { sequence: sequence.toUpperCase() });
+  const total = result.records[0]?.get('c').toInt() ?? 0;
+
   const pagination = createPagination(start, total, LIMIT);
 
   return {
