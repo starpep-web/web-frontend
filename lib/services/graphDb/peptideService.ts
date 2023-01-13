@@ -1,6 +1,7 @@
-import { readTransaction } from './dbService';
+import { getNodeCount, readTransaction } from './dbService';
 import type { PathSegment } from 'neo4j-driver';
 import { Peptide, FullPeptide } from '@lib/models/peptide';
+import { WithPagination, createPagination } from '@lib/utils/pagination';
 
 // eslint-disable-next-line no-warning-comments
 // TODO: Remove this function.
@@ -38,8 +39,6 @@ export const getPeptideBySequence = async (sequence: string): Promise<FullPeptid
   };
 };
 
-// eslint-disable-next-line no-warning-comments
-// TODO: Implement pagination logic.
 export const searchPeptidesSingleQuery = async (sequence: string, limit: number, skip: number): Promise<Peptide[]> => {
   const query = 'MATCH (n:Peptide) WHERE n.seq CONTAINS $sequence RETURN n SKIP $skip LIMIT $limit';
   const result = await readTransaction(query, { sequence: sequence.toUpperCase(), limit, skip });
@@ -51,4 +50,17 @@ export const searchPeptidesSingleQuery = async (sequence: string, limit: number,
       sequence: node.properties.seq
     };
   });
+};
+
+export const searchPeptidesSingleQueryPaginated = async (sequence: string, page: number): Promise<WithPagination<Peptide[]>> => {
+  const LIMIT = 50;
+  const start = (page - 1) * LIMIT;
+
+  const total = await getNodeCount('Peptide');
+  const pagination = createPagination(start, total, LIMIT);
+
+  return {
+    data: await searchPeptidesSingleQuery(sequence, LIMIT, start),
+    pagination
+  };
 };
