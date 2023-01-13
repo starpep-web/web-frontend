@@ -26,18 +26,3 @@ export const readTransaction = async (query: string, params?: Record<string, str
   await session.close();
   return result;
 };
-
-export const getNodeCount = async (nodeLabel: NodeLabel): Promise<number> => {
-  if (!NODE_LABELS.includes(nodeLabel)) {
-    throw new TypeError('Invalid node label supplied to getNodeCount.');
-  }
-
-  const session = getSession();
-  const result = await session.readTransaction((tx) => {
-    const query = `MATCH (n:${nodeLabel}) RETURN COUNT(n) AS n`; // We can afford to inject the nodeLabel directly because a value check is done previously.
-    return tx.run(query, { nodeLabel });
-  });
-
-  await session.close();
-  return result.records[0]?.get('n').toInt() ?? 0;
-};
