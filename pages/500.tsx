@@ -4,7 +4,7 @@ import { PageWrapper } from '@components/common/pageWrapper';
 
 const ServerSideErrorPage = () => {
   return (
-    <PageWrapper>
+    <PageWrapper isErrorPage>
       <PageMetadata title="Server Side Error" />
 
       Server Side Error

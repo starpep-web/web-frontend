@@ -8,12 +8,14 @@ import styles from './PageWrapper.module.scss';
 interface Props {
   children: React.ReactNode
   className?: string
+
+  isErrorPage?: boolean
 }
 
-const PageWrapper: React.FC<Props> = ({ children, className }) => {
+const PageWrapper: React.FC<Props> = ({ children, className, isErrorPage = false }) => {
   return (
     <div className={styles.wrapper}>
-      <Navbar />
+      <Navbar isErrorPage={isErrorPage} />
       <Container className={clsx(styles.page, className)} renderAs="main">
         {children}
       </Container>

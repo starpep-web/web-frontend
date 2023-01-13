@@ -16,7 +16,11 @@ const navbarItems = [
   { text: 'Contact', href: ROUTES.contact }
 ];
 
-const Navbar = () => {
+interface Props {
+  isErrorPage: boolean
+}
+
+const Navbar: React.FC<Props> = ({ isErrorPage }) => {
   const router = useRouter();
   const [open, setOpen] = useState<boolean>(false);
 
@@ -29,7 +33,7 @@ const Navbar = () => {
       return true;
     }
 
-    return href !== '/' && router.asPath.startsWith(href);
+    return href !== '/' && router.asPath.startsWith(href) && !isErrorPage;
   };
 
   return (
