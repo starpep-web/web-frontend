@@ -52,18 +52,45 @@ export const searchPeptidesSingleQuery = async (sequence: string, limit: number,
   });
 };
 
-export const searchPeptidesSingleQueryPaginated = async (sequence: string, page: number): Promise<WithPagination<Peptide[]>> => {
-  const LIMIT = 50;
-  const start = (page - 1) * LIMIT;
+export const searchPeptidesSingleQueryPaginated = async (sequence: string, page: number, limit = 50): Promise<WithPagination<Peptide[]>> => {
+  const start = (page - 1) * limit;
 
   const countQuery = 'MATCH (n:Peptide) WHERE n.seq CONTAINS $sequence RETURN COUNT(n) AS c';
   const result = await readTransaction(countQuery, { sequence: sequence.toUpperCase() });
   const total = result.records[0]?.get('c').toInt() ?? 0;
 
-  const pagination = createPagination(start, total, LIMIT);
+  const pagination = createPagination(start, total, limit);
 
   return {
-    data: await searchPeptidesSingleQuery(sequence, LIMIT, start),
+    data: await searchPeptidesSingleQuery(sequence, limit, start),
+    pagination
+  };
+};
+
+export const listAllPeptides = async (limit: number, skip: number): Promise<Peptide[]> => {
+  const query = 'MATCH (n:Peptide) RETURN n SKIP $skip LIMIT $limit';
+  const result = await readTransaction(query, { limit, skip });
+
+  return result.records.map((r) => {
+    const node = r.get('n');
+
+    return {
+      sequence: node.properties.seq
+    };
+  });
+};
+
+export const listAllPeptidesPaginated = async (page: number, limit = 50): Promise<WithPagination<Peptide[]>> => {
+  const start = (page - 1) * limit;
+
+  const countQuery = 'MATCH (n:Peptide) RETURN COUNT(n) AS c';
+  const result = await readTransaction(countQuery);
+  const total = result.records[0]?.get('c').toInt() ?? 0;
+
+  const pagination = createPagination(start, total, limit);
+
+  return {
+    data: await listAllPeptides(limit, start),
     pagination
   };
 };
