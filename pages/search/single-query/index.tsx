@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { PeptideSearchResult } from '@components/search/peptideSearchResult';
-import { searchPeptidesSingleQueryPaginated } from '@lib/services/graphDb/peptideService';
+import { listAllPeptidesPaginated, searchPeptidesSingleQueryPaginated } from '@lib/services/graphDb/peptideService';
 import { Peptide } from '@lib/models/peptide';
 import { Pagination } from '@lib/utils/pagination';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
@@ -43,18 +43,12 @@ const SingleQuerySearchPage: React.FC<Props> = ({ page, query, peptides, paginat
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<ServerSideProps>> => {
-  if (!context.query?.query) {
-    return {
-      notFound: true
-    };
-  }
-
-  const query = (Array.isArray(context.query.query) ? context.query.query[0] : context.query.query).toUpperCase();
+  const query = context.query?.query ? (Array.isArray(context.query.query) ? context.query.query[0] : context.query.query).toUpperCase() : '';
   const pageString = Array.isArray(context.query?.page) ? context.query.page[0] : context.query.page;
   const page = pageString ? parseInt(pageString, 10) : 1;
 
   try {
-    const paginatedResult = await searchPeptidesSingleQueryPaginated(query, page);
+    const paginatedResult = query ? await searchPeptidesSingleQueryPaginated(query, page) : await listAllPeptidesPaginated(page);
 
     return {
       props: {
