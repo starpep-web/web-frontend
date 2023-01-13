@@ -1,6 +1,9 @@
 import neo4j from 'neo4j-driver';
 import { BUILDING_STAGE, NEO4J_DB_URI } from '@lib/config';
 
+export const NODE_LABELS = ['Origin', 'Target', 'Peptide', 'CrossRef', 'Database', 'Function', 'Cterminus', 'Nterminus', 'UnusualAA'] as const;
+export type NodeLabel = typeof NODE_LABELS[number];
+
 // Don't start a connection while building.
 export const driver = (BUILDING_STAGE !== 'true' ? neo4j.driver(NEO4J_DB_URI) : null)!;
 

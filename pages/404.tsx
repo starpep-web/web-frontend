@@ -4,7 +4,7 @@ import { PageWrapper } from '@components/common/pageWrapper';
 
 const NotFoundPage = () => {
   return (
-    <PageWrapper>
+    <PageWrapper isErrorPage>
       <PageMetadata title="Not Found" />
 
       Not Found :(

@@ -1,13 +1,19 @@
 import React from 'react';
-import { Box } from 'react-bulma-components';
+import { Box, Pagination as BulmaPagination } from 'react-bulma-components';
 import PeptideSearchResultItem from './PeptideSearchResultItem';
 import { Peptide } from '@lib/models/peptide';
+import { Pagination } from '@lib/utils/pagination';
 
-interface Props {
+interface Props extends Pagination {
   peptides: Peptide[]
+  onPageChange: (page: number) => void
 }
 
-const PeptideSearchResult: React.FC<Props> = ({ peptides }) => {
+const PeptideSearchResult: React.FC<Props> = ({ onPageChange, peptides, currentPage, totalPages }) => {
+  const handlePaginationChange = (page: number) => {
+    onPageChange(page);
+  };
+
   if (peptides.length < 1) {
     return (
       <Box>
@@ -23,6 +29,8 @@ const PeptideSearchResult: React.FC<Props> = ({ peptides }) => {
           <PeptideSearchResultItem key={peptide.sequence} {...peptide} />
         ))
       }
+
+      <BulmaPagination current={currentPage} showFirstLast total={totalPages} onChange={handlePaginationChange} />
     </Box>
   );
 };
