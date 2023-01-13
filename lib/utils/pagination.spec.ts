@@ -116,5 +116,37 @@ describe('Utils: Pagination', () => {
         expect(createPagination(99, 100, 33).isLastPage).toBe(true);
       });
     });
+
+    describe('- Usage Testing:', () => {
+      const items = Array.from(Array(100).keys());
+
+      const sliceArr = <T>(arr: T[], start: number, step: number) => arr.slice(start, start + step);
+      const paginateArr = <T>(arr: T[], step: number) => {
+        let start = 0;
+        let pagination = createPagination(start, arr.length, step);
+        let arrFromPagination: any[] = [];
+        let lastPageVisited = false;
+
+        do {
+          if (pagination.isLastPage) {
+            lastPageVisited = true;
+          }
+
+          arrFromPagination = arrFromPagination.concat(sliceArr(arr, start, step));
+          start = pagination.nextStart;
+          pagination = createPagination(start, arr.length, step);
+        } while (!lastPageVisited);
+
+        return arrFromPagination;
+      };
+
+      it('should generate the full array with a step of 25.', () => {
+        expect(paginateArr(items, 25)).toMatchObject(items);
+      });
+
+      it('should generate the full array with a step of 33.', () => {
+        expect(paginateArr(items, 33)).toMatchObject(items);
+      });
+    });
   });
 });
