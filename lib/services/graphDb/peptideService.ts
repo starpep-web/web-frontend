@@ -1,6 +1,12 @@
 import { readTransaction } from './dbService';
 import type { PathSegment } from 'neo4j-driver';
-import { Peptide, FullPeptide } from '@lib/models/peptide';
+import {
+  Peptide,
+  FullPeptide,
+  RawRelationshipLabel,
+  getRelationshipLabelFromRaw,
+  RelationshipLabel
+} from '@lib/models/peptide';
 import { WithPagination, createPagination } from '@lib/utils/pagination';
 
 // eslint-disable-next-line no-warning-comments
@@ -22,23 +28,27 @@ export const getPeptidesConstitutedBy = async () => {
   });
 };
 
-// eslint-disable-next-line no-warning-comments
-// TODO: Get Peptide with properties.
 export const getPeptideBySequence = async (sequence: string): Promise<FullPeptide | null> => {
   const query = 'MATCH (n:Peptide {seq: $sequence})-[r]->(v) RETURN n, r, v';
   const result = await readTransaction(query, { sequence: sequence.toUpperCase() });
-  const [record] = result.records;
+  const [firstRecord] = result.records;
 
-  if (!record) {
+  if (!firstRecord) {
     return null;
   }
 
-  const node = record.get('n');
-  return {
-    sequence: node.properties.seq,
-    metadata: {
+  const peptideNode = firstRecord.get('n');
+  const metadata: [RelationshipLabel, string][] = result.records.map((record) => {
+    const rawRelationship: RawRelationshipLabel = record.get('r').type;
+    const relationship = getRelationshipLabelFromRaw(rawRelationship);
+    const value = record.get('v').properties.name;
 
-    }
+    return [relationship, value];
+  });
+
+  return {
+    sequence: peptideNode.properties.seq,
+    metadata: Object.fromEntries(metadata)
   };
 };
 
