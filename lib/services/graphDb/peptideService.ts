@@ -25,7 +25,7 @@ export const getPeptidesConstitutedBy = async () => {
 // eslint-disable-next-line no-warning-comments
 // TODO: Get Peptide with properties.
 export const getPeptideBySequence = async (sequence: string): Promise<FullPeptide | null> => {
-  const query = 'MATCH (n:Peptide {seq: $sequence}) RETURN n LIMIT 1';
+  const query = 'MATCH (n:Peptide {seq: $sequence})-[r]->(v) RETURN n, r, v';
   const result = await readTransaction(query, { sequence: sequence.toUpperCase() });
   const [record] = result.records;
 
@@ -35,7 +35,10 @@ export const getPeptideBySequence = async (sequence: string): Promise<FullPeptid
 
   const node = record.get('n');
   return {
-    sequence: node.properties.seq
+    sequence: node.properties.seq,
+    metadata: {
+
+    }
   };
 };
 
