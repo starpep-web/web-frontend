@@ -1,1 +1,1 @@
-export const SITE_TITLE = 'WebPep';
+export const SITE_TITLE = 'WebSPep';
