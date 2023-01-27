@@ -1,5 +1,6 @@
 import React from 'react';
 import { Footer as BulmaFooter, Container, Content } from 'react-bulma-components';
+import { SITE_TITLE } from '@lib/constants/site';
 import styles from './Footer.module.scss';
 
 const Footer = () => {
@@ -7,7 +8,7 @@ const Footer = () => {
     <BulmaFooter className={styles.footer}>
       <Container>
         <Content>
-          WebPep - 2023
+          {SITE_TITLE} - 2023
         </Content>
       </Container>
     </BulmaFooter>
