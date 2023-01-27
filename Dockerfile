@@ -8,7 +8,7 @@ RUN apk add --no-cache libc6-compat
 COPY package*.json ./
 RUN npm ci
 
-ENV BUILDING_STAGE true
+ENV NEXT_BUILDING_STAGE true
 COPY . .
 RUN npm run build
 
