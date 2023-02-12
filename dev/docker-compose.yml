@@ -1,8 +1,9 @@
 version: "3.9"
+name: webpep-dev
 
 services:
   db:
-    image: registry-docker.moonstar-x.dev/webpep/neo4j-db:latest
+    image: code.moonstar-x.dev/webpep/neo4j-db:latest
     restart: unless-stopped
     ports:
       - 7687:7687
@@ -12,7 +13,7 @@ services:
       - NEO4J_AUTH=none
 
   datamining_api:
-    image: registry-docker.moonstar-x.dev/webpep/datamining-api:latest
+    image: code.moonstar-x.dev/webpep/datamining-api:latest
     restart: unless-stopped
     ports:
       - 8080:8080
