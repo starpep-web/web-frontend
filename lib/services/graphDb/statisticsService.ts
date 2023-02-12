@@ -8,6 +8,13 @@ export const getPeptideCount = async (): Promise<number> => {
   return result.records[0]?.get('c').toInt() ?? 0;
 };
 
+export const getUnusualCount = async (): Promise<number> => {
+  const query = 'MATCH (n:Peptide)-[r:constituted_by]-(v) RETURN COUNT(v) AS c';
+  const result = await readTransaction(query);
+
+  return result.records[0]?.get('c').toInt() ?? 0;
+};
+
 export const getPeptideLengthDistribution = async (): Promise<Record<number, number>> => {
   const query = 'MATCH (n:Peptide) RETURN SIZE(n.seq) AS length, COUNT(*) as frequency ORDER BY length';
   const result = await readTransaction(query);
@@ -47,6 +54,7 @@ export const getPeptideDatabaseDistribution = async (): Promise<Record<string, n
 export const getDatabaseStatistics = async (): Promise<DatabaseStatistics> => {
   return {
     count: await getPeptideCount(),
+    unusualCount: await getUnusualCount(),
     lengthDistribution: await getPeptideLengthDistribution(),
     functionDistribution: await getPeptideFunctionDistribution(),
     databaseDistribution: await getPeptideDatabaseDistribution()
