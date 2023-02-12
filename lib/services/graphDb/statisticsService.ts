@@ -20,9 +20,22 @@ export const getPeptideLengthDistribution = async (): Promise<Record<number, num
   }));
 };
 
+export const getPeptideFunctionDistribution = async (): Promise<Record<string, number>> => {
+  const query = 'MATCH (n:Peptide)-[r:related_to]-(v) RETURN v.name AS func, COUNT(*) AS frequency';
+  const result = await readTransaction(query);
+
+  return Object.fromEntries(result.records.map((record) => {
+    const func = record.get('func');
+    const frequency = record.get('frequency').low;
+
+    return [func, frequency];
+  }));
+};
+
 export const getDatabaseStatistics = async (): Promise<DatabaseStatistics> => {
   return {
     count: await getPeptideCount(),
-    lengthDistribution: await getPeptideLengthDistribution()
+    lengthDistribution: await getPeptideLengthDistribution(),
+    functionDistribution: await getPeptideFunctionDistribution()
   };
 };
