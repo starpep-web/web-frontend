@@ -9,7 +9,7 @@ export const getPeptideCount = async (): Promise<number> => {
 };
 
 export const getUnusualCount = async (): Promise<number> => {
-  const query = 'MATCH (n:Peptide)-[r:constituted_by]-(v) RETURN COUNT(v) AS c';
+  const query = 'MATCH (n:Peptide)-[r:constituted_by]->(v) RETURN COUNT(v) AS c';
   const result = await readTransaction(query);
 
   return result.records[0]?.get('c').toInt() ?? 0;
@@ -28,7 +28,7 @@ export const getPeptideLengthDistribution = async (): Promise<Record<number, num
 };
 
 export const getPeptideFunctionDistribution = async (): Promise<Record<string, number>> => {
-  const query = 'MATCH (n:Peptide)-[r:related_to]-(v) RETURN v.name AS func, COUNT(*) AS frequency';
+  const query = 'MATCH (n:Peptide)-[r:related_to]->(v) RETURN v.name AS func, COUNT(*) AS frequency';
   const result = await readTransaction(query);
 
   return Object.fromEntries(result.records.map((record) => {
@@ -40,7 +40,7 @@ export const getPeptideFunctionDistribution = async (): Promise<Record<string, n
 };
 
 export const getPeptideDatabaseDistribution = async (): Promise<Record<string, number>> => {
-  const query = 'MATCH (n:Peptide)-[r:compiled_in]-(v) RETURN v.name AS database, COUNT(*) AS frequency';
+  const query = 'MATCH (n:Peptide)-[r:compiled_in]->(v) RETURN v.name AS database, COUNT(*) AS frequency';
   const result = await readTransaction(query);
 
   return Object.fromEntries(result.records.map((record) => {
