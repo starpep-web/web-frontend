@@ -5,7 +5,7 @@ export const getPeptideCount = async (): Promise<number> => {
   const query = 'MATCH (n:Peptide) RETURN COUNT(n) AS c';
   const result = await readTransaction(query);
 
-  return result.records[0]?.get('c').low ?? 0;
+  return result.records[0]?.get('c').toInt() ?? 0;
 };
 
 export const getPeptideLengthDistribution = async (): Promise<Record<number, number>> => {
@@ -13,8 +13,8 @@ export const getPeptideLengthDistribution = async (): Promise<Record<number, num
   const result = await readTransaction(query);
 
   return Object.fromEntries(result.records.map((record) => {
-    const length = record.get('length').low;
-    const frequency = record.get('frequency').low;
+    const length = record.get('length').toInt();
+    const frequency = record.get('frequency').toInt();
 
     return [length, frequency];
   }));
@@ -26,7 +26,7 @@ export const getPeptideFunctionDistribution = async (): Promise<Record<string, n
 
   return Object.fromEntries(result.records.map((record) => {
     const func = record.get('func');
-    const frequency = record.get('frequency').low;
+    const frequency = record.get('frequency').toInt();
 
     return [func, frequency];
   }));
@@ -38,7 +38,7 @@ export const getPeptideDatabaseDistribution = async (): Promise<Record<string, n
 
   return Object.fromEntries(result.records.map((record) => {
     const database = record.get('database');
-    const frequency = record.get('frequency').low;
+    const frequency = record.get('frequency').toInt();
 
     return [database, frequency];
   }));
