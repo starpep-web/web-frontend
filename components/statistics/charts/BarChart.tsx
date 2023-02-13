@@ -5,39 +5,6 @@ import uniqolor from 'uniqolor';
 
 ChartJS.register(...registerables);
 
-const options = {
-  maintainAspectRatio: false,
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false
-    }
-  },
-  scales: {
-    yAxis: {
-      ticks: {
-        display: true
-      }
-    },
-    xAxis: {
-      ticks: {
-        display: false
-      }
-    }
-  },
-  elements: {
-    point: {
-      backgroundColor: 'hsl(171, 100%, 41%)',
-      borderColor: 'hsl(171, 100%, 41%)',
-      radius: 2,
-      hoverRadius: 4
-    },
-    line: {
-      borderColor: 'hsla(171, 100%, 41%, 50%)'
-    }
-  }
-};
-
 const parseData = (data: Record<string | number, number>) => {
   return {
     labels: Object.keys(data),
@@ -52,9 +19,37 @@ const parseData = (data: Record<string | number, number>) => {
 interface Props {
   id: string
   data: Record<string | number, number>
+  yTitle?: string
+  xTitle?: string
 }
 
-const BarChart: React.FC<Props> = ({ id, data }) => {
+const BarChart: React.FC<Props> = ({ id, data, yTitle, xTitle }) => {
+  const options = {
+    maintainAspectRatio: false,
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false
+      }
+    },
+    scales: {
+      y: {
+        display: true,
+        title: {
+          display: !!yTitle,
+          text: yTitle
+        }
+      },
+      x: {
+        display: true,
+        title: {
+          display: !!xTitle,
+          text: xTitle
+        }
+      }
+    }
+  };
+
   return (
     <Bar
       data={parseData(data)}

@@ -2,18 +2,9 @@ import React from 'react';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from 'chart.js';
 import uniqolor from 'uniqolor';
+import { LegendPosition } from './types';
 
 ChartJS.register(...registerables);
-
-const options = {
-  maintainAspectRatio: false,
-  responsive: true,
-  plugins: {
-    legend: {
-      display: true
-    }
-  }
-};
 
 const parseData = (data: Record<string | number, number>) => {
   return {
@@ -29,9 +20,22 @@ const parseData = (data: Record<string | number, number>) => {
 interface Props {
   id: string
   data: Record<string | number, number>
+
+  legendPosition?: LegendPosition
 }
 
-const PieChart: React.FC<Props> = ({ id, data }) => {
+const PieChart: React.FC<Props> = ({ id, data, legendPosition }) => {
+  const options = {
+    maintainAspectRatio: false,
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: legendPosition ?? 'bottom' as const
+      }
+    }
+  };
+
   return (
     <Pie
       data={parseData(data)}
