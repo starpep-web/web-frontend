@@ -1,28 +1,9 @@
 import React from 'react';
-import { Chart } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, registerables } from 'chart.js';
 import uniqolor from 'uniqolor';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
+ChartJS.register(...registerables);
 
 const options = {
   maintainAspectRatio: false,
@@ -75,8 +56,7 @@ interface Props {
 
 const BarChart: React.FC<Props> = ({ id, data }) => {
   return (
-    <Chart
-      type="bar"
+    <Bar
       data={parseData(data)}
       options={options}
       key={id}

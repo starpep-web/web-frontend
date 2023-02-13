@@ -1,18 +1,9 @@
 import React from 'react';
-import { Chart } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Legend,
-  Tooltip
-} from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, registerables } from 'chart.js';
 import uniqolor from 'uniqolor';
 
-ChartJS.register(
-  ArcElement,
-  Legend,
-  Tooltip
-);
+ChartJS.register(...registerables);
 
 const options = {
   maintainAspectRatio: false,
@@ -42,8 +33,7 @@ interface Props {
 
 const PieChart: React.FC<Props> = ({ id, data }) => {
   return (
-    <Chart
-      type="pie"
+    <Pie
       data={parseData(data)}
       options={options}
       key={id}
