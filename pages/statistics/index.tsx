@@ -25,15 +25,15 @@ const StatisticsPage: React.FC<Props> = ({ statistics }) => {
       <NumberStatistic title="2. Total Peptides with Unusual AA's" value={statistics.unusualCount} />
 
       <WithTitledBox title="3. Peptide Distribution by Sequence Length" height={400}>
-        <BarChart id="length-distribution" data={statistics.lengthDistribution} />
+        <BarChart id="length-distribution" data={statistics.lengthDistribution} yTitle="Frequency" xTitle="Sequence Length" />
       </WithTitledBox>
 
       <WithTitledBox title="4. Peptide Distribution by Function" height={400}>
-        <PieChart id="function-distribution" data={statistics.functionDistribution} />
+        <PieChart id="function-distribution" data={statistics.functionDistribution} legendPosition="right" />
       </WithTitledBox>
 
       <WithTitledBox title="5. Peptide Distribution by Database" height={400}>
-        <PieChart id="database-distribution" data={statistics.databaseDistribution} />
+        <PieChart id="database-distribution" data={statistics.databaseDistribution} legendPosition="right" />
       </WithTitledBox>
     </PageWrapper>
   );
