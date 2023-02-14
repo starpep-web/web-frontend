@@ -1,5 +1,5 @@
 import React from 'react';
-import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { getPeptideBySequence } from '@lib/services/graphDb/peptideService';

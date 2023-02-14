@@ -1,5 +1,5 @@
 import React from 'react';
-import type { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { Heading } from 'react-bulma-components';
 import { useRouter } from 'next/router';
 import { PageMetadata } from '@components/common/pageMetadata';

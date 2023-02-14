@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import type { Node, Edge } from './types';
+import { Node, Edge } from './types';
 import { Network, Data, Options } from 'vis-network/esnext/umd/vis-network.min';
 import { DataSet } from 'vis-data/esnext/umd/vis-data.min';
 
