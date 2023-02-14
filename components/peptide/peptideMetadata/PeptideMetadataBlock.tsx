@@ -1,5 +1,6 @@
 import React from 'react';
 import { Heading, Block } from 'react-bulma-components';
+import { MultiColumnList } from '@components/common/multiColumnList';
 import { getFriendlyRelationshipLabel, RelationshipLabel } from '@lib/models/peptide';
 
 interface Props {
@@ -8,7 +9,6 @@ interface Props {
 }
 
 const PeptideMetadataBlock: React.FC<Props> = ({ title, values }) => {
-  console.log(title);
   return (
     <Block>
       <Heading size={4}>
@@ -16,7 +16,7 @@ const PeptideMetadataBlock: React.FC<Props> = ({ title, values }) => {
       </Heading>
 
       <Block>
-        {values.toString()}
+        <MultiColumnList ordered={false} items={values} />
       </Block>
     </Block>
   );
