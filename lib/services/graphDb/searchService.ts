@@ -2,7 +2,7 @@ import { readTransaction } from './dbService';
 import { NodeLabel } from '@lib/models/peptide';
 
 export const getMetadataSuggestions = async (nodeLabel: Omit<NodeLabel, 'Peptide'>, name: string): Promise<string[]> => {
-  const query = `MATCH (n:${nodeLabel}) WHERE n.name STARTS WITH $name RETURN n.name AS name LIMIT 30`; // We can interpolate the nodeLabel because this is never user generated.
+  const query = `MATCH (n:${nodeLabel}) WHERE toLower(n.name) STARTS WITH toLower($name) RETURN n.name AS name LIMIT 30`; // We can interpolate the nodeLabel because this is never user generated.
   const result = await readTransaction(query, { name });
 
   return result.records.map((record) => {
