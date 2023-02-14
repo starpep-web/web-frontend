@@ -1,5 +1,5 @@
 import React from 'react';
-import type { AppProps } from 'next/app';
+import { AppProps } from 'next/app';
 import 'bulma/css/bulma.min.css';
 import '@styles/main.scss';
 

@@ -2,3 +2,10 @@ html, body, #__next {
   min-height: 100vh;
   height: 1px; // Weird hack to cascade down height while only having min-height specified.
 }
+
+.absolute-center {
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

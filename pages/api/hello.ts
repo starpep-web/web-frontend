@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import HttpStatus from 'http-status-codes';
 import { ResponseBuilder, ResponseBody } from '@lib/utils/http';
 

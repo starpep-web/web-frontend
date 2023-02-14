@@ -1,32 +1,12 @@
 import { readTransaction } from './dbService';
-import type { PathSegment } from 'neo4j-driver';
 import {
   Peptide,
   FullPeptide,
+  PeptideMetadata,
   RawRelationshipLabel,
-  getRelationshipLabelFromRaw,
-  RelationshipLabel
+  getRelationshipLabelFromRaw
 } from '@lib/models/peptide';
 import { WithPagination, createPagination } from '@lib/utils/pagination';
-
-// eslint-disable-next-line no-warning-comments
-// TODO: Remove this function.
-export const getPeptidesConstitutedBy = async () => {
-  const query = 'MATCH p=()-[r:constituted_by]->() RETURN p LIMIT 25';
-  const result = await readTransaction(query);
-
-  return result.records.map((r) => {
-    return r.get('p').segments.map((s: PathSegment<any>) => {
-      return {
-        start: s.start.identity.toString(),
-        startName: s.start.properties.seq,
-        end: s.end.identity.toString(),
-        endName: s.end.properties.name,
-        relationshipType: s.relationship.type
-      };
-    });
-  });
-};
 
 export const getPeptideBySequence = async (sequence: string): Promise<FullPeptide | null> => {
   const query = 'MATCH (n:Peptide {seq: $sequence})-[r]->(v) RETURN n, r, v';
@@ -38,17 +18,23 @@ export const getPeptideBySequence = async (sequence: string): Promise<FullPeptid
   }
 
   const peptideNode = firstRecord.get('n');
-  const metadata: [RelationshipLabel, string][] = result.records.map((record) => {
+  const metadata: PeptideMetadata = result.records.reduce((metadata, record) => {
     const rawRelationship: RawRelationshipLabel = record.get('r').type;
     const relationship = getRelationshipLabelFromRaw(rawRelationship);
     const value = record.get('v').properties.name;
 
-    return [relationship, value];
-  });
+    if (!metadata[relationship]) {
+      metadata[relationship] = [value];
+    } else {
+      metadata[relationship]!.push(value);
+    }
+
+    return metadata;
+  }, {} as PeptideMetadata);
 
   return {
     sequence: peptideNode.properties.seq,
-    metadata: Object.fromEntries(metadata)
+    metadata
   };
 };
 
