@@ -3,9 +3,9 @@ import type { PathSegment } from 'neo4j-driver';
 import {
   Peptide,
   FullPeptide,
+  PeptideMetadata,
   RawRelationshipLabel,
   getRelationshipLabelFromRaw,
-  RelationshipLabel
 } from '@lib/models/peptide';
 import { WithPagination, createPagination } from '@lib/utils/pagination';
 
@@ -38,17 +38,23 @@ export const getPeptideBySequence = async (sequence: string): Promise<FullPeptid
   }
 
   const peptideNode = firstRecord.get('n');
-  const metadata: [RelationshipLabel, string][] = result.records.map((record) => {
+  const metadata: PeptideMetadata = result.records.reduce((metadata, record) => {
     const rawRelationship: RawRelationshipLabel = record.get('r').type;
     const relationship = getRelationshipLabelFromRaw(rawRelationship);
     const value = record.get('v').properties.name;
 
-    return [relationship, value];
-  });
+    if (!metadata[relationship]) {
+      metadata[relationship] = [value];
+    } else {
+      metadata[relationship]!.push(value);
+    }
+
+    return metadata;
+  }, {} as PeptideMetadata);
 
   return {
     sequence: peptideNode.properties.seq,
-    metadata: Object.fromEntries(metadata)
+    metadata
   };
 };
 

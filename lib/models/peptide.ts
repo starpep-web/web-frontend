@@ -27,7 +27,7 @@ export type Peptide = {
 }
 
 export type PeptideMetadata = {
-  [K in RelationshipLabel]?: string
+  [K in RelationshipLabel]?: string[]
 }
 
 export type FullPeptide = Peptide & {
