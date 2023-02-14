@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { PeptideSearchResult } from '@components/search/peptideSearchResult';
-import { listAllPeptidesPaginated, searchPeptidesSingleQueryPaginated } from '@lib/services/graphDb/peptideService';
+import { searchPeptidesSingleQueryPaginated } from '@lib/services/graphDb/peptideService';
 import { Peptide } from '@lib/models/peptide';
 import { Pagination } from '@lib/utils/pagination';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
@@ -52,7 +52,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
   const page = pageString ? parseInt(pageString, 10) : 1;
 
   try {
-    const paginatedResult = query ? await searchPeptidesSingleQueryPaginated(query, page) : await listAllPeptidesPaginated(page);
+    const paginatedResult = await searchPeptidesSingleQueryPaginated(query, page);
 
     return {
       props: {
