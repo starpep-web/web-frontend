@@ -2,6 +2,7 @@ import React from 'react';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
+import { PeptideGraph } from '@components/graphs/peptideGraph';
 import { getPeptideBySequence } from '@lib/services/graphDb/peptideService';
 import { FullPeptide } from '@lib/models/peptide';
 
@@ -19,6 +20,8 @@ const PeptidePage: React.FC<Props> = ({ peptide }) => {
       <PageMetadata title={peptide.sequence} />
 
       Peptide Page for {peptide.sequence}
+
+      <PeptideGraph peptide={peptide} width="100%" />
 
       <pre>
         {JSON.stringify(peptide, null, 2)}

@@ -27,6 +27,10 @@ const Graph: React.FC<Props> = ({ nodes, edges, options, width = DEFAULT_WIDTH, 
     };
 
     const network = new Network(containerRef.current!, data, options ?? {});
+    if (!options?.physics?.enabled) {
+      network.stabilize();
+    }
+
     network.once('afterDrawing', () => {
       setLoading(false);
     });
@@ -34,7 +38,7 @@ const Graph: React.FC<Props> = ({ nodes, edges, options, width = DEFAULT_WIDTH, 
     return () => {
       network.destroy();
     };
-  }, []);
+  }, [nodes, edges, options]);
 
   return (
     <div style={{ width, height, position: 'relative' }}>
