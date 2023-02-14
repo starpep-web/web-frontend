@@ -1,4 +1,5 @@
 export interface Pagination {
+  currentIndex: number
   total: number
 
   currentPage: number
@@ -40,6 +41,7 @@ export const createPagination = (start: number, total: number, step: number): Pa
   const totalPages = Math.ceil(total / step);
 
   return {
+    currentIndex: start,
     total,
 
     currentPage,

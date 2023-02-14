@@ -9,7 +9,7 @@ interface Props extends Pagination {
   onPageChange: (page: number) => void
 }
 
-const PeptideSearchResult: React.FC<Props> = ({ onPageChange, peptides, currentPage, totalPages }) => {
+const PeptideSearchResult: React.FC<Props> = ({ onPageChange, peptides, currentPage, totalPages, currentIndex }) => {
   const handlePaginationChange = (page: number) => {
     onPageChange(page);
   };
@@ -25,8 +25,8 @@ const PeptideSearchResult: React.FC<Props> = ({ onPageChange, peptides, currentP
   return (
     <Box>
       {
-        peptides.map((peptide) => (
-          <PeptideSearchResultItem key={peptide.sequence} {...peptide} />
+        peptides.map((peptide, idx) => (
+          <PeptideSearchResultItem key={peptide.sequence} index={currentIndex + idx + 1} {...peptide} />
         ))
       }
 
