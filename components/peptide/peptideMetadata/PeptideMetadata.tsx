@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heading, Block, Notification } from 'react-bulma-components';
 import PeptideMetadataBlock from './PeptideMetadataBlock';
-import { PeptideMetadata as PeptideMetadataType } from '@lib/models/peptide';
+import { PeptideMetadata as PeptideMetadataType, RelationshipLabel } from '@lib/models/peptide';
 
 interface Props {
   metadata: PeptideMetadataType
@@ -17,7 +17,7 @@ const PeptideMetadata: React.FC<Props> = ({ metadata }) => {
 
         {
           Object.entries(metadata).map(([title, values]) => (
-            <PeptideMetadataBlock key={title} title={title} values={values} />
+            <PeptideMetadataBlock key={title} title={title as RelationshipLabel} values={values} />
           ))
         }
       </Notification>
