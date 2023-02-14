@@ -25,6 +25,10 @@ interface Props extends ServerSideProps {
 const SingleQuerySearchPage: React.FC<Props> = ({ page, query, peptides, pagination }) => {
   const router = useRouter();
 
+  const title = query ?
+    `Found ${pagination.total} results for ${query} (Page: ${page})` :
+    `Found ${pagination.total} results (Page: ${page})`;
+
   const handlePageChange = (newPage: number) => {
     return router.push(DYNAMIC_ROUTES.singleQuery(query, newPage));
   };
@@ -34,7 +38,7 @@ const SingleQuerySearchPage: React.FC<Props> = ({ page, query, peptides, paginat
       <PageMetadata title="Single Query" />
 
       <Heading>
-        Search results for {query} (Page: {page})
+        {title}
       </Heading>
 
       <PeptideSearchResult peptides={peptides} {...pagination} onPageChange={handlePageChange} />
