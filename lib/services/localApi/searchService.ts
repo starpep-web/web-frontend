@@ -1,13 +1,18 @@
 import axios from 'axios';
 
 export const getMetadataSuggestions = async (metadataName: string, name: string): Promise<string[]> => {
-  const response = await axios.get(`/api/search/metadata/suggestions/${metadataName}`, {
-    params: {
-      name
-    }
-  });
+  try {
+    const response = await axios.get(`/api/search/metadata/suggestions/${metadataName}`, {
+      params: {
+        name
+      }
+    });
 
-  return response.data.data;
+    return response.data.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
 };
 
 export const getDatabaseSuggestions = (name: string) => {
