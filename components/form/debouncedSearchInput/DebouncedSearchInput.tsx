@@ -1,26 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { DropdownInput } from '@components/form/dropdownInput';
 import { useDebounce } from '@components/hooks/debounce';
-import { getDatabaseSuggestions } from '@lib/services/localApi/searchService';
 
-const DebouncedSearchInput = () => {
+interface Props {
+  dataFetch: (value: string) => Promise<string[]>
+}
+
+const DebouncedSearchInput: React.FC<Props> = ({ dataFetch }) => {
   const [options, setOptions] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
   const debouncedValue = useDebounce(value, 500);
 
   useEffect(() => {
-    getDatabaseSuggestions(debouncedValue)
+    dataFetch(debouncedValue)
       .then((results) => {
         setOptions(results);
+      })
+      .catch(() => {
+        setOptions([]);
       });
   }, [debouncedValue]);
 
-  const handleChange = (newValue: string) => {
+  const handleInputChange = (newValue: string) => {
     setValue(newValue);
   };
 
   return (
-    <DropdownInput value={value} onChange={handleChange} options={options} />
+    <DropdownInput value={value} onChange={handleInputChange} options={options} />
   );
 };
 

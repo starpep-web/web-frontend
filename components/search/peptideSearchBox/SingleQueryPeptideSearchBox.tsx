@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'react-bulma-components';
+import { Form, Button, Box } from 'react-bulma-components';
 import { useRouter } from 'next/router';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 import { DebouncedSearchInput } from '@components/form/debouncedSearchInput';
+import { getDatabaseSuggestions, getFunctionSuggestions } from '@lib/services/localApi/searchService';
 
 const SingleQueryPeptideSearchBox = () => {
   const router = useRouter();
@@ -33,7 +34,14 @@ const SingleQueryPeptideSearchBox = () => {
         </Form.Control>
       </Form.Field>
 
-      <DebouncedSearchInput />
+      <Box>
+        <Form.Label>
+          Filter By Metadata
+        </Form.Label>
+
+        <DebouncedSearchInput dataFetch={getDatabaseSuggestions} />
+        <DebouncedSearchInput dataFetch={getFunctionSuggestions} />
+      </Box>
 
       <Button.Group align="center">
         <Button color="primary">
