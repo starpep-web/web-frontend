@@ -50,109 +50,115 @@ const SingleQueryPeptideSearchBox = () => {
       </Form.Field>
 
       <Box>
-        <Form.Label>
-          Filter By Metadata
-        </Form.Label>
-        <hr />
+        <details>
+          <summary>
+            <strong>
+              Filter By Metadata
+            </strong>
+          </summary>
+          <p>
+            <hr />
 
-        <Form.Field>
-          <Form.Label>
-            Compiled In
-          </Form.Label>
+            <Form.Field>
+              <Form.Label>
+                Compiled In
+              </Form.Label>
 
-          <DebouncedSearchInput
-            dataFetch={getDatabaseSuggestions}
-            label="Database"
-            placeholder="Search by Database"
-            icon="database"
-          />
-        </Form.Field>
+              <DebouncedSearchInput
+                dataFetch={getDatabaseSuggestions}
+                label="Database"
+                placeholder="Search by Database"
+                icon="database"
+              />
+            </Form.Field>
 
-        <Form.Field>
-          <Form.Label>
-            Related To
-          </Form.Label>
+            <Form.Field>
+              <Form.Label>
+                Related To
+              </Form.Label>
 
-          <DebouncedSearchInput
-            dataFetch={getFunctionSuggestions}
-            label="Function"
-            placeholder="Search by Function"
-            icon="atom"
-          />
-        </Form.Field>
+              <DebouncedSearchInput
+                dataFetch={getFunctionSuggestions}
+                label="Function"
+                placeholder="Search by Function"
+                icon="atom"
+              />
+            </Form.Field>
 
-        <Form.Field>
-          <Form.Label>
-            Produced By
-          </Form.Label>
+            <Form.Field>
+              <Form.Label>
+                Produced By
+              </Form.Label>
 
-          <DebouncedSearchInput
-            dataFetch={getOriginSuggestions}
-            label="Origin"
-            placeholder="Search by Origin"
-            icon="star-of-life"
-          />
-        </Form.Field>
+              <DebouncedSearchInput
+                dataFetch={getOriginSuggestions}
+                label="Origin"
+                placeholder="Search by Origin"
+                icon="star-of-life"
+              />
+            </Form.Field>
 
-        <Form.Field>
-          <Form.Label>
-            Assessed Against
-          </Form.Label>
+            <Form.Field>
+              <Form.Label>
+                Assessed Against
+              </Form.Label>
 
-          <DebouncedSearchInput
-            dataFetch={getTargetSuggestions}
-            label="Target"
-            placeholder="Search by Target"
-            icon="bullseye"
-          />
-        </Form.Field>
+              <DebouncedSearchInput
+                dataFetch={getTargetSuggestions}
+                label="Target"
+                placeholder="Search by Target"
+                icon="bullseye"
+              />
+            </Form.Field>
 
-        <Form.Field>
-          <Form.Label>
-            Modified By
-          </Form.Label>
+            <Form.Field>
+              <Form.Label>
+                Modified By
+              </Form.Label>
 
-          <Form.Field kind="group" style={{ gap: '3rem' }}>
-            <DebouncedSearchInput
-              dataFetch={getCTerminusSuggestions}
-              label="CTerminus"
-              placeholder="Search by CTerminus"
-              icon="c"
-            />
-            <DebouncedSearchInput
-              dataFetch={getNTerminusSuggestions}
-              label="NTerminus"
-              placeholder="Search by NTerminus"
-              icon="n"
-            />
-          </Form.Field>
-        </Form.Field>
+              <Form.Field kind="group" style={{ gap: '3rem' }}>
+                <DebouncedSearchInput
+                  dataFetch={getCTerminusSuggestions}
+                  label="CTerminus"
+                  placeholder="Search by CTerminus"
+                  icon="c"
+                />
+                <DebouncedSearchInput
+                  dataFetch={getNTerminusSuggestions}
+                  label="NTerminus"
+                  placeholder="Search by NTerminus"
+                  icon="n"
+                />
+              </Form.Field>
+            </Form.Field>
 
-        <Form.Field>
-          <Form.Label>
-            Constituted By
-          </Form.Label>
+            <Form.Field>
+              <Form.Label>
+                Constituted By
+              </Form.Label>
 
-          <DebouncedSearchInput
-            dataFetch={getUnusualAASuggestions}
-            label="UnusualAA"
-            placeholder="Search by UnusualAA"
-            icon="link-slash"
-          />
-        </Form.Field>
+              <DebouncedSearchInput
+                dataFetch={getUnusualAASuggestions}
+                label="UnusualAA"
+                placeholder="Search by UnusualAA"
+                icon="link-slash"
+              />
+            </Form.Field>
 
-        <Form.Field>
-          <Form.Label>
-            Linked To
-          </Form.Label>
+            <Form.Field>
+              <Form.Label>
+                Linked To
+              </Form.Label>
 
-          <DebouncedSearchInput
-            dataFetch={getCrossRefSuggestions}
-            label="CrossRef"
-            placeholder="Search by CrossRef"
-            icon="file-lines"
-          />
-        </Form.Field>
+              <DebouncedSearchInput
+                dataFetch={getCrossRefSuggestions}
+                label="CrossRef"
+                placeholder="Search by CrossRef"
+                icon="file-lines"
+              />
+            </Form.Field>
+          </p>
+        </details>
       </Box>
 
       <Button.Group align="center">
