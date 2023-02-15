@@ -4,7 +4,7 @@ import { BUILDING_STAGE, NEO4J_DB_URI } from '@lib/config';
 // Don't start a connection while building.
 export const driver = (BUILDING_STAGE !== 'true' ? neo4j.driver(NEO4J_DB_URI) : null)!;
 
-process.on('beforeExit', () => {
+process.once('beforeExit', () => {
   return driver.close();
 });
 
