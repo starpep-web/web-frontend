@@ -56,7 +56,7 @@ const SingleQueryPeptideSearchBox = () => {
               Filter By Metadata
             </strong>
           </summary>
-          <p>
+          <div>
             <hr />
 
             <Form.Field>
@@ -157,7 +157,7 @@ const SingleQueryPeptideSearchBox = () => {
                 icon="file-lines"
               />
             </Form.Field>
-          </p>
+          </div>
         </details>
       </Box>
 
