@@ -1,3 +1,5 @@
+import { SingleQueryMetadataFilters } from '@lib/models/peptide';
+
 export const ROUTES = {
   home: '/',
   about: '/about',
@@ -11,8 +13,8 @@ export const ROUTES = {
 
 export const DYNAMIC_ROUTES = {
   peptide: (sequence: string) => `/peptide/${sequence}`,
-  singleQuery: (query: string, page: number = 1) => {
-    const params = new URLSearchParams({ query, page: page.toString() });
+  singleQuery: (query: string, metadataFilters: SingleQueryMetadataFilters = {}, page: number = 1) => {
+    const params = new URLSearchParams({ query, ...metadataFilters, page: page.toString() });
     return `/search/single-query?${params.toString()}`;
   }
 };

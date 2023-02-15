@@ -47,3 +47,5 @@ export type PeptideMetadata = {
 export type FullPeptide = Peptide & {
   metadata: PeptideMetadata
 }
+
+export type SingleQueryMetadataFilters = Partial<Record<NodeLabel, string>>;

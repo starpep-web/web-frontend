@@ -5,13 +5,14 @@ import { useDebounce } from '@components/hooks/debounce';
 
 interface Props {
   dataFetch: (value: string) => Promise<string[]>
+  onChange?: (value: string) => void
 
   label?: string
   placeholder?: string
   icon?: IconProp
 }
 
-const DebouncedSearchInput: React.FC<Props> = ({ dataFetch, label, placeholder, icon }) => {
+const DebouncedSearchInput: React.FC<Props> = ({ dataFetch, onChange, label, placeholder, icon }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [options, setOptions] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
@@ -30,6 +31,7 @@ const DebouncedSearchInput: React.FC<Props> = ({ dataFetch, label, placeholder, 
   const handleInputChange = (newValue: string) => {
     setValue(newValue);
     setOpen(true);
+    onChange?.(newValue);
   };
 
   const handleDropdownOpen = () => {

@@ -6,7 +6,7 @@ import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { PeptideSearchResult } from '@components/search/peptideSearchResult';
 import { searchPeptidesSingleQueryPaginated } from '@lib/services/graphDb/peptideService';
-import { Peptide } from '@lib/models/peptide';
+import { Peptide, SingleQueryMetadataFilters } from '@lib/models/peptide';
 import { Pagination } from '@lib/utils/pagination';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 
@@ -16,13 +16,14 @@ interface ServerSideProps {
 
   peptides: Peptide[]
   pagination: Pagination
+  metadataFilters: SingleQueryMetadataFilters
 }
 
 interface Props extends ServerSideProps {
 
 }
 
-const SingleQuerySearchPage: React.FC<Props> = ({ page, query, peptides, pagination }) => {
+const SingleQuerySearchPage: React.FC<Props> = ({ page, query, peptides, pagination, metadataFilters }) => {
   const router = useRouter();
 
   const title = query ?
@@ -30,7 +31,7 @@ const SingleQuerySearchPage: React.FC<Props> = ({ page, query, peptides, paginat
     `Found ${pagination.total} results (Page: ${page})`;
 
   const handlePageChange = (newPage: number) => {
-    return router.push(DYNAMIC_ROUTES.singleQuery(query, newPage));
+    return router.push(DYNAMIC_ROUTES.singleQuery(query, metadataFilters, newPage));
   };
 
   return (
@@ -47,9 +48,15 @@ const SingleQuerySearchPage: React.FC<Props> = ({ page, query, peptides, paginat
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<ServerSideProps>> => {
-  const query = context.query?.query ? (Array.isArray(context.query.query) ? context.query.query[0] : context.query.query).toUpperCase() : '';
-  const pageString = Array.isArray(context.query?.page) ? context.query.page[0] : context.query.page;
+  const { query: queryParam, page: pageParam, ...metadataFiltersParams } = context.query ?? {};
+
+  const query = queryParam ? (Array.isArray(queryParam) ? queryParam[0] : queryParam).toUpperCase() : '';
+  const pageString = Array.isArray(pageParam) ? pageParam[0] : pageParam;
   const page = pageString ? parseInt(pageString, 10) : 1;
+
+  const metadataFilters: SingleQueryMetadataFilters = Object.fromEntries(Object.entries(metadataFiltersParams).map(([nodeLabel, value]) => {
+    return [nodeLabel, Array.isArray(value) ? value[0] : value];
+  }));
 
   try {
     const paginatedResult = await searchPeptidesSingleQueryPaginated(query, page);
@@ -60,7 +67,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
         page,
 
         peptides: paginatedResult.data,
-        pagination: paginatedResult.pagination
+        pagination: paginatedResult.pagination,
+        metadataFilters
       }
     };
   } catch (error) {

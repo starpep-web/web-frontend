@@ -14,18 +14,27 @@ import {
   getCrossRefSuggestions
 } from '@lib/services/localApi/searchService';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
+import { SingleQueryMetadataFilters, NodeLabel } from '@lib/models/peptide';
 
 const SingleQueryPeptideSearchBox = () => {
   const router = useRouter();
   const [query, setQuery] = useState<string>('');
+  const [metadataFilters, setMetadataFilters] = useState<SingleQueryMetadataFilters>({});
 
   const handleOnSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    return router.push(DYNAMIC_ROUTES.singleQuery(query));
+    return router.push(DYNAMIC_ROUTES.singleQuery(query, metadataFilters));
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value.toUpperCase());
+  };
+
+  const handleMetadataFilterChange = (nodeLabel: NodeLabel) => (value: string) => {
+    setMetadataFilters({
+      ...metadataFilters,
+      [nodeLabel]: value
+    });
   };
 
   return (
@@ -66,6 +75,7 @@ const SingleQueryPeptideSearchBox = () => {
 
               <DebouncedSearchInput
                 dataFetch={getDatabaseSuggestions}
+                onChange={handleMetadataFilterChange('Database')}
                 label="Database"
                 placeholder="Search by Database"
                 icon="database"
@@ -79,6 +89,7 @@ const SingleQueryPeptideSearchBox = () => {
 
               <DebouncedSearchInput
                 dataFetch={getFunctionSuggestions}
+                onChange={handleMetadataFilterChange('Function')}
                 label="Function"
                 placeholder="Search by Function"
                 icon="atom"
@@ -92,6 +103,7 @@ const SingleQueryPeptideSearchBox = () => {
 
               <DebouncedSearchInput
                 dataFetch={getOriginSuggestions}
+                onChange={handleMetadataFilterChange('Origin')}
                 label="Origin"
                 placeholder="Search by Origin"
                 icon="star-of-life"
@@ -105,6 +117,7 @@ const SingleQueryPeptideSearchBox = () => {
 
               <DebouncedSearchInput
                 dataFetch={getTargetSuggestions}
+                onChange={handleMetadataFilterChange('Target')}
                 label="Target"
                 placeholder="Search by Target"
                 icon="bullseye"
@@ -119,12 +132,14 @@ const SingleQueryPeptideSearchBox = () => {
               <Form.Field kind="group" style={{ gap: '3rem' }}>
                 <DebouncedSearchInput
                   dataFetch={getCTerminusSuggestions}
+                  onChange={handleMetadataFilterChange('Cterminus')}
                   label="CTerminus"
                   placeholder="Search by CTerminus"
                   icon="c"
                 />
                 <DebouncedSearchInput
                   dataFetch={getNTerminusSuggestions}
+                  onChange={handleMetadataFilterChange('Nterminus')}
                   label="NTerminus"
                   placeholder="Search by NTerminus"
                   icon="n"
@@ -139,6 +154,7 @@ const SingleQueryPeptideSearchBox = () => {
 
               <DebouncedSearchInput
                 dataFetch={getUnusualAASuggestions}
+                onChange={handleMetadataFilterChange('UnusualAA')}
                 label="UnusualAA"
                 placeholder="Search by UnusualAA"
                 icon="link-slash"
@@ -152,6 +168,7 @@ const SingleQueryPeptideSearchBox = () => {
 
               <DebouncedSearchInput
                 dataFetch={getCrossRefSuggestions}
+                onChange={handleMetadataFilterChange('CrossRef')}
                 label="CrossRef"
                 placeholder="Search by CrossRef"
                 icon="file-lines"
