@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { DropdownInput } from '@components/form/dropdownInput';
 import { useDebounce } from '@components/hooks/debounce';
 
@@ -7,7 +8,7 @@ interface Props {
 
   label?: string
   placeholder?: string
-  icon?: string
+  icon?: IconProp
 }
 
 const DebouncedSearchInput: React.FC<Props> = ({ dataFetch, label, placeholder, icon }) => {

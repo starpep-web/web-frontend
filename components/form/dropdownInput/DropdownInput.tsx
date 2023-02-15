@@ -1,11 +1,13 @@
 import React, { ChangeEvent, MouseEvent, KeyboardEvent, FocusEvent } from 'react';
 import { Form, Icon } from 'react-bulma-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import clsx from 'clsx';
 import styles from './DropdownInput.module.scss';
 
 interface Props {
   label?: string
-  icon?: string
+  icon?: IconProp
 
   open: boolean
   options: string[]
@@ -56,8 +58,8 @@ const DropdownInput: React.FC<Props> = ({
   };
 
   return (
-    <div className={clsx('dropdown', { 'is-active': open })}>
-      <div className="dropdown-trigger">
+    <div className={clsx('dropdown w-100', { 'is-active': open })}>
+      <div className="dropdown-trigger w-100">
         <Form.Field aria-haspopup aria-controls="dropdown-menu">
           {
             label &&
@@ -78,15 +80,15 @@ const DropdownInput: React.FC<Props> = ({
 
             {
               icon &&
-              <Icon align="left" size="small">
-                {icon}
+              <Icon align="left">
+                <FontAwesomeIcon icon={icon} />
               </Icon>
             }
           </Form.Control>
         </Form.Field>
       </div>
 
-      <div className="dropdown-menu" id="dropdown-menu" role="menu">
+      <div className="dropdown-menu w-100" id="dropdown-menu" role="menu">
         <div className="dropdown-content">
           {
             options.map((option, idx) => (
