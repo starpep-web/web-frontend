@@ -89,7 +89,7 @@ const DropdownInput: React.FC<Props> = ({
       </div>
 
       <div className="dropdown-menu w-100" id="dropdown-menu" role="menu">
-        <div className="dropdown-content">
+        <div className={clsx('dropdown-content', styles.dropdownContent)}>
           {
             options.map((option, idx) => (
               <div
