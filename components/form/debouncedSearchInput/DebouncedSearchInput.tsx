@@ -4,9 +4,13 @@ import { useDebounce } from '@components/hooks/debounce';
 
 interface Props {
   dataFetch: (value: string) => Promise<string[]>
+
+  label?: string
+  placeholder?: string
+  icon?: string
 }
 
-const DebouncedSearchInput: React.FC<Props> = ({ dataFetch }) => {
+const DebouncedSearchInput: React.FC<Props> = ({ dataFetch, label, placeholder, icon }) => {
   const [options, setOptions] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
   const debouncedValue = useDebounce(value, 500);
@@ -26,7 +30,15 @@ const DebouncedSearchInput: React.FC<Props> = ({ dataFetch }) => {
   };
 
   return (
-    <DropdownInput value={value} onChange={handleInputChange} options={options} />
+    <DropdownInput
+      label={label}
+      placeholder={placeholder}
+      icon={icon}
+      value={value}
+      onChange={handleInputChange}
+      open
+      options={options}
+    />
   );
 };
 

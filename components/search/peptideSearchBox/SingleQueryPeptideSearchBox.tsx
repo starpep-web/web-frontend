@@ -39,8 +39,8 @@ const SingleQueryPeptideSearchBox = () => {
           Filter By Metadata
         </Form.Label>
 
-        <DebouncedSearchInput dataFetch={getDatabaseSuggestions} />
-        <DebouncedSearchInput dataFetch={getFunctionSuggestions} />
+        <DebouncedSearchInput dataFetch={getDatabaseSuggestions} label="Database" placeholder="Search by Database" icon="d" />
+        <DebouncedSearchInput dataFetch={getFunctionSuggestions} label="Function" placeholder="Search by Function" icon="f" />
       </Box>
 
       <Button.Group align="center">

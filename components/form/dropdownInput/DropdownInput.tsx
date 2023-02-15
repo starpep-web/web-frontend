@@ -1,26 +1,60 @@
 import React, { ChangeEvent } from 'react';
-import { Form } from 'react-bulma-components';
+import { Form, Icon } from 'react-bulma-components';
+import clsx from 'clsx';
 
 interface Props {
+  label?: string
+  placeholder?: string
+  icon?: string
+
   value: string
   onChange: (value: string) => void
 
+  open: boolean
   options: string[]
 }
 
-const DropdownInput: React.FC<Props> = ({ value, onChange, options }) => {
+const DropdownInput: React.FC<Props> = ({ label, placeholder, icon, value, onChange, open, options }) => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     onChange(e.currentTarget.value);
   };
 
   return (
-    <div>
-      <Form.Input value={value} onChange={handleInputChange} placeholder="Search" />
+    <div className={clsx({ dropdown: true, 'is-active': open })}>
+      <div className="dropdown-trigger">
+        <Form.Field>
+          {
+            label &&
+              <Form.Label>
+                {label}
+              </Form.Label>
+          }
 
-      <pre>
-        {JSON.stringify(options, null, 2)}
-      </pre>
+          <Form.Control>
+            <Form.Input type="text" value={value} onChange={handleInputChange} placeholder={placeholder} />
+
+            {
+              icon &&
+              <Icon align="left" size="small">
+                {icon}
+              </Icon>
+            }
+          </Form.Control>
+        </Form.Field>
+      </div>
+
+      <div className="dropdown-menu" id="dropdown-menu" role="menu">
+        <div className="dropdown-content">
+          {
+            options.map((option, idx) => (
+              <div key={idx} className="dropdown-item">
+                {option}
+              </div>
+            ))
+          }
+        </div>
+      </div>
     </div>
   );
 };
