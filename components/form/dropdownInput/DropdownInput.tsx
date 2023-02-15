@@ -1,28 +1,62 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, MouseEvent, KeyboardEvent, FocusEvent } from 'react';
 import { Form, Icon } from 'react-bulma-components';
 import clsx from 'clsx';
 import styles from './DropdownInput.module.scss';
 
 interface Props {
   label?: string
-  placeholder?: string
   icon?: string
-
-  value: string
-  onChange: (value: string) => void
 
   open: boolean
   options: string[]
+
+  onChange?: (value: string) => void
+  onSelect?: (value: string) => void
+  placeholder?: string
+  value: string
+  onBlur?: () => void
+  onFocus?: () => void
 }
 
-const DropdownInput: React.FC<Props> = ({ label, placeholder, icon, value, onChange, open, options }) => {
+const DropdownInput: React.FC<Props> = ({
+  label,
+  icon,
+  open,
+  options,
+  onChange,
+  onSelect,
+  placeholder,
+  value,
+  onBlur,
+  onFocus
+}) => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    onChange(e.currentTarget.value);
+    onChange?.(e.currentTarget.value);
+  };
+
+  const handleInputBlur = (e: FocusEvent<HTMLInputElement>) => {
+    if (e.relatedTarget?.className.includes('dropdown-item')) {
+      return;
+    }
+
+    onBlur?.();
+  };
+
+  const handleOptionClick = ({ currentTarget: { textContent } }: MouseEvent<HTMLDivElement>) => {
+    onChange?.(textContent ?? '');
+    onSelect?.(textContent ?? '');
+  };
+
+  const handleOptionEnter = ({ key, currentTarget: { textContent } }: KeyboardEvent<HTMLDivElement>) => {
+    if (key === 'Enter') {
+      onChange?.(textContent ?? '');
+      onSelect?.(textContent ?? '');
+    }
   };
 
   return (
-    <div className={clsx({ dropdown: true, 'is-active': open })}>
+    <div className={clsx('dropdown', { 'is-active': open })}>
       <div className="dropdown-trigger">
         <Form.Field aria-haspopup aria-controls="dropdown-menu">
           {
@@ -33,7 +67,14 @@ const DropdownInput: React.FC<Props> = ({ label, placeholder, icon, value, onCha
           }
 
           <Form.Control>
-            <Form.Input type="text" value={value} onChange={handleInputChange} placeholder={placeholder} />
+            <Form.Input
+              type="text"
+              placeholder={placeholder}
+              value={value}
+              onChange={handleInputChange}
+              onFocus={onFocus}
+              onBlur={handleInputBlur}
+            />
 
             {
               icon &&
@@ -49,7 +90,14 @@ const DropdownInput: React.FC<Props> = ({ label, placeholder, icon, value, onCha
         <div className="dropdown-content">
           {
             options.map((option, idx) => (
-              <div key={idx} className={clsx('dropdown-item', styles.dropdownItem)} tabIndex={0}>
+              <div
+                key={idx}
+                role="menuitem"
+                className={clsx('dropdown-item', styles.dropdownItem)}
+                tabIndex={-1}
+                onClick={handleOptionClick}
+                onKeyDown={handleOptionEnter}
+              >
                 {option}
               </div>
             ))

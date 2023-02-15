@@ -11,6 +11,7 @@ interface Props {
 }
 
 const DebouncedSearchInput: React.FC<Props> = ({ dataFetch, label, placeholder, icon }) => {
+  const [open, setOpen] = useState<boolean>(false);
   const [options, setOptions] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
   const debouncedValue = useDebounce(value, 500);
@@ -27,6 +28,15 @@ const DebouncedSearchInput: React.FC<Props> = ({ dataFetch, label, placeholder, 
 
   const handleInputChange = (newValue: string) => {
     setValue(newValue);
+    setOpen(true);
+  };
+
+  const handleDropdownOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDropdownClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -36,7 +46,10 @@ const DebouncedSearchInput: React.FC<Props> = ({ dataFetch, label, placeholder, 
       icon={icon}
       value={value}
       onChange={handleInputChange}
-      open
+      onSelect={handleDropdownClose}
+      onBlur={handleDropdownClose}
+      onFocus={handleDropdownOpen}
+      open={open}
       options={options}
     />
   );
