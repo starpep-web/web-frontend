@@ -1,6 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { Form, Icon } from 'react-bulma-components';
 import clsx from 'clsx';
+import styles from './DropdownInput.module.scss';
 
 interface Props {
   label?: string
@@ -23,7 +24,7 @@ const DropdownInput: React.FC<Props> = ({ label, placeholder, icon, value, onCha
   return (
     <div className={clsx({ dropdown: true, 'is-active': open })}>
       <div className="dropdown-trigger">
-        <Form.Field>
+        <Form.Field aria-haspopup aria-controls="dropdown-menu">
           {
             label &&
               <Form.Label>
@@ -48,7 +49,7 @@ const DropdownInput: React.FC<Props> = ({ label, placeholder, icon, value, onCha
         <div className="dropdown-content">
           {
             options.map((option, idx) => (
-              <div key={idx} className="dropdown-item">
+              <div key={idx} className={clsx('dropdown-item', styles.dropdownItem)} tabIndex={0}>
                 {option}
               </div>
             ))
