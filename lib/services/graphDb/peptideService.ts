@@ -89,7 +89,7 @@ export const searchPeptidesRegexQueryPaginated = async (regex: string, page: num
   const pagination = createPagination(start, total, limit);
 
   return {
-    data: await searchPeptidesTextQuery(regex, limit, start),
+    data: await searchPeptidesRegexQuery(regex, limit, start),
     pagination
   };
 };
