@@ -60,7 +60,7 @@ const TextQueryPeptideSearchBox = () => {
 
       <Form.Field>
         <Form.Checkbox checked={regexEnabled} onChange={handleRegexCheckboxChange}>
-          Search with Regex
+          Search with Regex (Toggling clears query)
         </Form.Checkbox>
         <RegexHelpMessage show={regexEnabled} />
       </Form.Field>
