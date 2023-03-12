@@ -26,6 +26,10 @@ interface Props extends ServerSideProps {
 const TextQuerySearchPage: React.FC<Props> = ({ page, query, peptides, pagination, metadataFilters }) => {
   const router = useRouter();
 
+  const pageTitle = query ?
+    `${query} - Text Query` :
+    'Text Query';
+
   const title = query ?
     `Found ${pagination.total} results for ${query} (Page: ${page})` :
     `Found ${pagination.total} results (Page: ${page})`;
@@ -36,7 +40,7 @@ const TextQuerySearchPage: React.FC<Props> = ({ page, query, peptides, paginatio
 
   return (
     <PageWrapper>
-      <PageMetadata title="Text Query" />
+      <PageMetadata title={pageTitle} />
 
       <Heading>
         {title}
