@@ -2,16 +2,16 @@ import { createPagination } from './pagination';
 
 describe('Utils: Pagination', () => {
   describe('createPagination()', () => {
-    it('should throw RangeError if start is not a non-negative integer.', () => {
+    it('should throw RangeError if start is not a positive integer.', () => {
       expect(() => createPagination(-1, 100, 25)).toThrow(RangeError);
       expect(() => createPagination(1.5, 100, 25)).toThrow(RangeError);
       expect(() => createPagination(NaN, 100, 25)).toThrow(RangeError);
     });
 
-    it('should throw RangeError if total is not a non-zero positive integer.', () => {
+    it('should throw RangeError if total is not a positive integer.', () => {
       expect(() => createPagination(0, -1, 25)).toThrow(RangeError);
       expect(() => createPagination(0, 1.5, 25)).toThrow(RangeError);
-      expect(() => createPagination(0, 0, 25)).toThrow(RangeError);
+      expect(() => createPagination(0, 0, 25)).not.toThrow(RangeError);
       expect(() => createPagination(0, NaN, 25)).toThrow(RangeError);
     });
 
@@ -25,6 +25,7 @@ describe('Utils: Pagination', () => {
     it('should throw RangeError if start is not lesser than total.', () => {
       expect(() => createPagination(10, 10, 5)).toThrow(RangeError);
       expect(() => createPagination(11, 10, 5)).toThrow(RangeError);
+      expect(() => createPagination(11, 0, 5)).not.toThrow(RangeError);
     });
 
     it('should return the correct number for totalPages.', () => {
@@ -114,6 +115,29 @@ describe('Utils: Pagination', () => {
       it('should return isLastPage as true.', () => {
         expect(createPagination(75, 100, 25).isLastPage).toBe(true);
         expect(createPagination(99, 100, 33).isLastPage).toBe(true);
+      });
+    });
+
+    describe('Total === 0', () => {
+      it('should return the correct number for currentPage.', () => {
+        expect(createPagination(10, 0, 25).currentPage).toBe(1);
+        expect(createPagination(50, 0, 25).currentPage).toBe(1);
+      });
+
+      it('should return the correct number for previousStart.', () => {
+        expect(createPagination(75, 0, 25).previousStart).toBe(0);
+      });
+
+      it('should return the last valid nextStart for nextStart.', () => {
+        expect(createPagination(75, 0, 25).nextStart).toBe(0);
+      });
+
+      it('should return isFirstPage as true.', () => {
+        expect(createPagination(75, 0, 25).isFirstPage).toBe(true);
+      });
+
+      it('should return isLastPage as true.', () => {
+        expect(createPagination(75, 0, 25).isLastPage).toBe(true);
       });
     });
 
