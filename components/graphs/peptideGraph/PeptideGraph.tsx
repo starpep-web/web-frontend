@@ -55,13 +55,15 @@ const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
 
     Object.entries(peptide.metadata).forEach(([relationship, metadataValues]) => {
       metadataValues.forEach((metadataValue) => {
-        nodes.push({
-          id: metadataValue,
-          label: metadataValue,
-          title: metadataValue,
-          color: nodeColorsByRelationship[relationship as RelationshipLabel],
-          group: relationship
-        });
+        if (!nodes.some((node) => node.id === metadataValue)) {
+          nodes.push({
+            id: metadataValue,
+            label: metadataValue,
+            title: metadataValue,
+            color: nodeColorsByRelationship[relationship as RelationshipLabel],
+            group: relationship
+          });
+        }
 
         edges.push({
           id: `${relationship}-${metadataValue}`,
