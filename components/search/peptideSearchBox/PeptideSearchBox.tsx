@@ -12,9 +12,9 @@ const searchComponents: Record<SearchMode, React.FC> = {
 };
 
 const searchTabOptions = [
-  { text: 'Text query', mode: 'text' as SearchMode },
-  { text: 'Single query', mode: 'single' as SearchMode },
-  { text: 'Multi query', mode: 'multi' as SearchMode }
+  { text: 'Text Query', mode: 'text' as SearchMode },
+  { text: 'Single Query', mode: 'single' as SearchMode },
+  { text: 'Multi Query', mode: 'multi' as SearchMode }
 ];
 
 const PeptideSearchBox = () => {
