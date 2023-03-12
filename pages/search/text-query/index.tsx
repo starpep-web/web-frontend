@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { PeptideSearchResult } from '@components/search/peptideSearchResult';
-import { searchPeptidesSingleQueryPaginated } from '@lib/services/graphDb/peptideService';
-import { Peptide, SingleQueryMetadataFilters } from '@lib/models/peptide';
+import { searchPeptidesTextQueryPaginated } from '@lib/services/graphDb/peptideService';
+import { Peptide, TextQueryMetadataFilters } from '@lib/models/peptide';
 import { Pagination } from '@lib/utils/pagination';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 
@@ -16,14 +16,14 @@ interface ServerSideProps {
 
   peptides: Peptide[]
   pagination: Pagination
-  metadataFilters: SingleQueryMetadataFilters
+  metadataFilters: TextQueryMetadataFilters
 }
 
 interface Props extends ServerSideProps {
 
 }
 
-const SingleQuerySearchPage: React.FC<Props> = ({ page, query, peptides, pagination, metadataFilters }) => {
+const TextQuerySearchPage: React.FC<Props> = ({ page, query, peptides, pagination, metadataFilters }) => {
   const router = useRouter();
 
   const title = query ?
@@ -31,12 +31,12 @@ const SingleQuerySearchPage: React.FC<Props> = ({ page, query, peptides, paginat
     `Found ${pagination.total} results (Page: ${page})`;
 
   const handlePageChange = (newPage: number) => {
-    return router.push(DYNAMIC_ROUTES.singleQuery(query, metadataFilters, newPage));
+    return router.push(DYNAMIC_ROUTES.textQuery(query, metadataFilters, newPage));
   };
 
   return (
     <PageWrapper>
-      <PageMetadata title="Single Query" />
+      <PageMetadata title="Text Query" />
 
       <Heading>
         {title}
@@ -54,12 +54,12 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
   const pageString = Array.isArray(pageParam) ? pageParam[0] : pageParam;
   const page = pageString ? parseInt(pageString, 10) : 1;
 
-  const metadataFilters: SingleQueryMetadataFilters = Object.fromEntries(Object.entries(metadataFiltersParams).map(([nodeLabel, value]) => {
+  const metadataFilters: TextQueryMetadataFilters = Object.fromEntries(Object.entries(metadataFiltersParams).map(([nodeLabel, value]) => {
     return [nodeLabel, Array.isArray(value) ? value[0] : value];
   }));
 
   try {
-    const paginatedResult = await searchPeptidesSingleQueryPaginated(query, page);
+    const paginatedResult = await searchPeptidesTextQueryPaginated(query, page);
 
     return {
       props: {
@@ -78,4 +78,4 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
   }
 };
 
-export default SingleQuerySearchPage;
+export default TextQuerySearchPage;

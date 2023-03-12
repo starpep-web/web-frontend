@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 import { Box, Tabs } from 'react-bulma-components';
+import TextQueryPeptideSearchBox from './TextQueryPeptideSearchBox';
 import SingleQueryPeptideSearchBox from './SingleQueryPeptideSearchBox';
 import MultiQueryPeptideSearchBox from './MultiQueryPeptideSearchBox';
 
-type SearchMode = 'single' | 'multi';
+type SearchMode = 'text' | 'single' | 'multi';
 const searchComponents: Record<SearchMode, React.FC> = {
+  text: TextQueryPeptideSearchBox,
   single: SingleQueryPeptideSearchBox,
   multi: MultiQueryPeptideSearchBox
 };
 
 const searchTabOptions = [
+  { text: 'Text query', mode: 'text' as SearchMode },
   { text: 'Single query', mode: 'single' as SearchMode },
   { text: 'Multi query', mode: 'multi' as SearchMode }
 ];
 
 const PeptideSearchBox = () => {
-  const [searchMode, setSearchMode] = useState<SearchMode>('single');
+  const [searchMode, setSearchMode] = useState<SearchMode>('text');
   const SearchComponent = searchComponents[searchMode];
 
   const handleSearchTabClick = (mode: SearchMode) => () => {

@@ -38,7 +38,7 @@ export const getPeptideBySequence = async (sequence: string): Promise<FullPeptid
   };
 };
 
-export const searchPeptidesSingleQuery = async (sequence: string, limit: number, skip: number): Promise<Peptide[]> => {
+export const searchPeptidesTextQuery = async (sequence: string, limit: number, skip: number): Promise<Peptide[]> => {
   const query = 'MATCH (n:Peptide) WHERE n.seq CONTAINS $sequence RETURN n SKIP $skip LIMIT $limit';
   const result = await readTransaction(query, { sequence: sequence.toUpperCase(), limit, skip });
 
@@ -51,7 +51,7 @@ export const searchPeptidesSingleQuery = async (sequence: string, limit: number,
   });
 };
 
-export const searchPeptidesSingleQueryPaginated = async (sequence: string, page: number, limit = 50): Promise<WithPagination<Peptide[]>> => {
+export const searchPeptidesTextQueryPaginated = async (sequence: string, page: number, limit = 50): Promise<WithPagination<Peptide[]>> => {
   const start = (page - 1) * limit;
 
   const countQuery = 'MATCH (n:Peptide) WHERE n.seq CONTAINS $sequence RETURN COUNT(n) AS c';
@@ -61,7 +61,7 @@ export const searchPeptidesSingleQueryPaginated = async (sequence: string, page:
   const pagination = createPagination(start, total, limit);
 
   return {
-    data: await searchPeptidesSingleQuery(sequence, limit, start),
+    data: await searchPeptidesTextQuery(sequence, limit, start),
     pagination
   };
 };
