@@ -65,3 +65,31 @@ export const searchPeptidesTextQueryPaginated = async (sequence: string, page: n
     pagination
   };
 };
+
+export const searchPeptidesRegexQuery = async (regex: string, limit: number, skip: number): Promise<Peptide[]> => {
+  const query = 'MATCH (n:Peptide) WHERE n.seq =~ $regex RETURN n SKIP $skip LIMIT $limit';
+  const result = await readTransaction(query, { regex, limit, skip });
+
+  return result.records.map((r) => {
+    const node = r.get('n');
+
+    return {
+      sequence: node.properties.seq
+    };
+  });
+};
+
+export const searchPeptidesRegexQueryPaginated = async (regex: string, page: number, limit = 50): Promise<WithPagination<Peptide[]>> => {
+  const start = (page - 1) * limit;
+
+  const countQuery = 'MATCH (n:Peptide) WHERE n.seq =~ $regex RETURN COUNT(n) AS c';
+  const result = await readTransaction(countQuery, { regex });
+  const total = result.records[0]?.get('c').toInt() ?? 0;
+
+  const pagination = createPagination(start, total, limit);
+
+  return {
+    data: await searchPeptidesTextQuery(regex, limit, start),
+    pagination
+  };
+};

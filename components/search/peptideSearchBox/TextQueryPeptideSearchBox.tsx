@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Box, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/router';
+import TextSearchInput from './TextSearchInput';
+import RegexHelpMessage from './RegexHelpMessage';
 import { DebouncedSearchInput } from '@components/form/debouncedSearchInput';
 import {
   getDatabaseSuggestions,
@@ -19,15 +21,24 @@ import { TextQueryMetadataFilters, NodeLabel } from '@lib/models/peptide';
 const TextQueryPeptideSearchBox = () => {
   const router = useRouter();
   const [query, setQuery] = useState<string>('');
+  const [regexEnabled, setRegexEnabled] = useState<boolean>(false);
   const [metadataFilters, setMetadataFilters] = useState<TextQueryMetadataFilters>({});
+
+  useEffect(() => {
+    setQuery('');
+  }, [regexEnabled]);
 
   const handleOnSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    return router.push(DYNAMIC_ROUTES.textQuery(query, metadataFilters));
+    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, metadataFilters));
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value.toUpperCase());
+  const handleInputChange = (value: string) => {
+    setQuery(value);
+  };
+
+  const handleRegexCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRegexEnabled(event.target.checked);
   };
 
   const handleMetadataFilterChange = (nodeLabel: NodeLabel) => (value: string) => {
@@ -44,18 +55,14 @@ const TextQueryPeptideSearchBox = () => {
           Search
         </Form.Label>
 
-        <Form.Control>
-          <Form.Input
-            type="text"
-            placeholder="Insert a sequence to search"
-            onChange={handleInputChange}
-            value={query}
-          />
+        <TextSearchInput onChange={handleInputChange} value={query} regexEnabled={regexEnabled} />
+      </Form.Field>
 
-          <Icon align="left">
-            <FontAwesomeIcon icon="search" />
-          </Icon>
-        </Form.Control>
+      <Form.Field>
+        <Form.Checkbox checked={regexEnabled} onChange={handleRegexCheckboxChange}>
+          Search with Regex
+        </Form.Checkbox>
+        <RegexHelpMessage show={regexEnabled} />
       </Form.Field>
 
       <Box>
