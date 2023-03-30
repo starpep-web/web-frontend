@@ -12,7 +12,7 @@ const searchComponents: Record<SearchMode, React.FC> = {
 };
 
 const searchTabOptions = [
-  { text: 'Text Query', mode: 'text' as SearchMode },
+  { text: 'Filter', mode: 'text' as SearchMode },
   { text: 'Single Query', mode: 'single' as SearchMode },
   { text: 'Multi Query', mode: 'multi' as SearchMode }
 ];
