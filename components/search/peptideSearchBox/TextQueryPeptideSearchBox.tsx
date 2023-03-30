@@ -52,7 +52,7 @@ const TextQueryPeptideSearchBox = () => {
     <form onSubmit={handleOnSubmit}>
       <Form.Field>
         <Form.Label>
-          Search
+          Text Search
         </Form.Label>
 
         <TextSearchInput onChange={handleInputChange} value={query} regexEnabled={regexEnabled} />
