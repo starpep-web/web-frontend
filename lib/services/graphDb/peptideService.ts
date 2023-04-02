@@ -4,7 +4,8 @@ import {
   FullPeptide,
   PeptideMetadata,
   RawRelationshipLabel,
-  getRelationshipLabelFromRaw
+  getRelationshipLabelFromRaw,
+  getPeptideId
 } from '@lib/models/peptide';
 import { WithPagination, createPagination } from '@lib/utils/pagination';
 
@@ -33,20 +34,24 @@ export const getPeptideBySequence = async (sequence: string): Promise<FullPeptid
   }, {} as PeptideMetadata);
 
   return {
+    id: getPeptideId(peptideNode.identity.toInt()),
     sequence: peptideNode.properties.seq,
+    length: peptideNode.properties.seq.length,
     metadata
   };
 };
 
 export const searchPeptidesTextQuery = async (sequence: string, limit: number, skip: number): Promise<Peptide[]> => {
-  const query = 'MATCH (n:Peptide) WHERE n.seq CONTAINS $sequence RETURN n SKIP $skip LIMIT $limit';
+  const query = 'MATCH (n:Peptide) WHERE n.seq CONTAINS $sequence RETURN n ORDER BY ID(n) ASC SKIP $skip LIMIT $limit';
   const result = await readTransaction(query, { sequence: sequence.toUpperCase(), limit, skip });
 
   return result.records.map((r) => {
     const node = r.get('n');
 
     return {
-      sequence: node.properties.seq
+      id: getPeptideId(node.identity.toInt()),
+      sequence: node.properties.seq,
+      length: node.properties.seq.length
     };
   });
 };
@@ -67,14 +72,16 @@ export const searchPeptidesTextQueryPaginated = async (sequence: string, page: n
 };
 
 export const searchPeptidesRegexQuery = async (regex: string, limit: number, skip: number): Promise<Peptide[]> => {
-  const query = 'MATCH (n:Peptide) WHERE n.seq =~ $regex RETURN n SKIP $skip LIMIT $limit';
+  const query = 'MATCH (n:Peptide) WHERE n.seq =~ $regex RETURN n ORDER BY ID(n) ASC SKIP $skip LIMIT $limit';
   const result = await readTransaction(query, { regex, limit, skip });
 
   return result.records.map((r) => {
     const node = r.get('n');
 
     return {
-      sequence: node.properties.seq
+      id: getPeptideId(node.identity.toInt()),
+      sequence: node.properties.seq,
+      length: node.properties.seq.length
     };
   });
 };

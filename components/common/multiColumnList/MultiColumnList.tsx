@@ -8,10 +8,9 @@ interface Props {
 
 const MultiColumnList: React.FC<Props> = ({ ordered, items }) => {
   const ListComponent = ordered ? 'ol' : 'ul';
-  console.log(ListComponent);
 
   return (
-    <ul className={styles.multiColumnList}>
+    <ListComponent className={styles.multiColumnList}>
       {
         items.map((item, idx) => (
           <li key={idx}>
@@ -19,7 +18,7 @@ const MultiColumnList: React.FC<Props> = ({ ordered, items }) => {
           </li>
         ))
       }
-    </ul>
+    </ListComponent>
   );
 };
 
