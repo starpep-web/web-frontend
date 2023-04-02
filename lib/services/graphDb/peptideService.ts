@@ -4,7 +4,8 @@ import {
   FullPeptide,
   PeptideMetadata,
   RawRelationshipLabel,
-  getRelationshipLabelFromRaw
+  getRelationshipLabelFromRaw,
+  getPeptideId
 } from '@lib/models/peptide';
 import { WithPagination, createPagination } from '@lib/utils/pagination';
 
@@ -33,7 +34,9 @@ export const getPeptideBySequence = async (sequence: string): Promise<FullPeptid
   }, {} as PeptideMetadata);
 
   return {
+    id: getPeptideId(peptideNode.identity.toInt()),
     sequence: peptideNode.properties.seq,
+    length: peptideNode.properties.seq.length,
     metadata
   };
 };
@@ -46,7 +49,9 @@ export const searchPeptidesTextQuery = async (sequence: string, limit: number, s
     const node = r.get('n');
 
     return {
-      sequence: node.properties.seq
+      id: getPeptideId(node.identity.toInt()),
+      sequence: node.properties.seq,
+      length: node.properties.seq.length
     };
   });
 };
@@ -74,7 +79,9 @@ export const searchPeptidesRegexQuery = async (regex: string, limit: number, ski
     const node = r.get('n');
 
     return {
-      sequence: node.properties.seq
+      id: getPeptideId(node.identity.toInt()),
+      sequence: node.properties.seq,
+      length: node.properties.seq.length
     };
   });
 };

@@ -37,7 +37,9 @@ export const getFriendlyRelationshipLabel = (relationship: RelationshipLabel): F
 };
 
 export type Peptide = {
+  id: string
   sequence: string
+  length: number
 }
 
 export type PeptideMetadata = {
@@ -49,3 +51,12 @@ export type FullPeptide = Peptide & {
 }
 
 export type TextQueryMetadataFilters = Partial<Record<NodeLabel, string>>;
+
+export const getPeptideId = (identifier: number) => {
+  const formattedNumber = identifier.toLocaleString('en-US', {
+    minimumIntegerDigits: 5,
+    useGrouping: false
+  });
+
+  return `starPep_${formattedNumber}`;
+};
