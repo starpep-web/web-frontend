@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Pagination as BulmaPagination } from 'react-bulma-components';
-import PeptideSearchResultItem from './PeptideSearchResultItem';
+import PeptideSearchResultItemRow from './PeptideSearchResultItemRow';
+import { Table } from '@components/common/table';
 import { Peptide } from '@lib/models/peptide';
 import { Pagination } from '@lib/utils/pagination';
 
@@ -24,11 +25,15 @@ const PeptideSearchResult: React.FC<Props> = ({ onPageChange, peptides, currentP
 
   return (
     <Box>
-      {
-        peptides.map((peptide, idx) => (
-          <PeptideSearchResultItem key={peptide.sequence} index={currentIndex + idx + 1} {...peptide} />
-        ))
-      }
+      <Table
+        headers={['Index', 'ID', 'Sequence', 'Length']}
+      >
+        {
+          peptides.map((peptide, idx) => (
+            <PeptideSearchResultItemRow key={peptide.id} index={currentIndex + idx + 1} {...peptide} />
+          ))
+        }
+      </Table>
 
       <BulmaPagination current={currentPage} showFirstLast total={totalPages} onChange={handlePaginationChange} />
     </Box>
