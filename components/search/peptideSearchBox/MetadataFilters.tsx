@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Form } from 'react-bulma-components';
-import { DebouncedSearchInput } from '@components/form/debouncedSearchInput';
+import { DebouncedInfiniteSearchInput } from '@components/form/debouncedInfiniteSearchInput';
 import { NodeLabel, TextQueryMetadataFilters } from '@lib/models/peptide';
 import {
   getCrossRefSuggestions,
@@ -43,7 +43,7 @@ const MetadataFilters: React.FC<Props> = ({ onChange }) => {
               Compiled In
             </Form.Label>
 
-            <DebouncedSearchInput
+            <DebouncedInfiniteSearchInput
               dataFetch={getDatabaseSuggestions}
               onChange={handleMetadataFilterChange('Database')}
               label="Database"
@@ -57,7 +57,7 @@ const MetadataFilters: React.FC<Props> = ({ onChange }) => {
               Related To
             </Form.Label>
 
-            <DebouncedSearchInput
+            <DebouncedInfiniteSearchInput
               dataFetch={getFunctionSuggestions}
               onChange={handleMetadataFilterChange('Function')}
               label="Function"
@@ -71,7 +71,7 @@ const MetadataFilters: React.FC<Props> = ({ onChange }) => {
               Produced By
             </Form.Label>
 
-            <DebouncedSearchInput
+            <DebouncedInfiniteSearchInput
               dataFetch={getOriginSuggestions}
               onChange={handleMetadataFilterChange('Origin')}
               label="Origin"
@@ -85,7 +85,7 @@ const MetadataFilters: React.FC<Props> = ({ onChange }) => {
               Assessed Against
             </Form.Label>
 
-            <DebouncedSearchInput
+            <DebouncedInfiniteSearchInput
               dataFetch={getTargetSuggestions}
               onChange={handleMetadataFilterChange('Target')}
               label="Target"
@@ -100,14 +100,14 @@ const MetadataFilters: React.FC<Props> = ({ onChange }) => {
             </Form.Label>
 
             <Form.Field kind="group" style={{ gap: '3rem' }}>
-              <DebouncedSearchInput
+              <DebouncedInfiniteSearchInput
                 dataFetch={getCTerminusSuggestions}
                 onChange={handleMetadataFilterChange('Cterminus')}
                 label="CTerminus"
                 placeholder="Search by CTerminus"
                 icon="c"
               />
-              <DebouncedSearchInput
+              <DebouncedInfiniteSearchInput
                 dataFetch={getNTerminusSuggestions}
                 onChange={handleMetadataFilterChange('Nterminus')}
                 label="NTerminus"
@@ -122,7 +122,7 @@ const MetadataFilters: React.FC<Props> = ({ onChange }) => {
               Constituted By
             </Form.Label>
 
-            <DebouncedSearchInput
+            <DebouncedInfiniteSearchInput
               dataFetch={getUnusualAASuggestions}
               onChange={handleMetadataFilterChange('UnusualAA')}
               label="UnusualAA"
@@ -136,7 +136,7 @@ const MetadataFilters: React.FC<Props> = ({ onChange }) => {
               Linked To
             </Form.Label>
 
-            <DebouncedSearchInput
+            <DebouncedInfiniteSearchInput
               dataFetch={getCrossRefSuggestions}
               onChange={handleMetadataFilterChange('CrossRef')}
               label="CrossRef"
