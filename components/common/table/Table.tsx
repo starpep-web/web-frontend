@@ -10,7 +10,7 @@ interface Props {
 const Table: React.FC<Props> = ({ headers, children }) => {
   return (
     <BulmaTable.Container>
-      <BulmaTable>
+      <BulmaTable style={{ minWidth: '100%' }}>
         <thead>
           <tr>
             {
