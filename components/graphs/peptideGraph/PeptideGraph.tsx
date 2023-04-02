@@ -3,12 +3,12 @@ import { Node, Edge, Options, Color } from 'vis-network/esnext/umd/vis-network.m
 import { Graph } from '../graph';
 import { FullPeptide, RelationshipLabel } from '@lib/models/peptide';
 
-const createNodeColor = (background: string, hightlight: string, border: string): Color => {
+const createNodeColor = (background: string, highlight: string, border: string): Color => {
   return {
     border,
     background,
-    highlight: { border, background: hightlight },
-    hover: { border, background: hightlight }
+    highlight: { border, background: highlight },
+    hover: { border, background: highlight }
   };
 };
 
@@ -33,8 +33,6 @@ interface Props {
 }
 
 const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
-  console.log(nodeColorsByRelationship);
-
   const [nodes, edges] = useMemo(() => {
     const nodes: Node[] = [];
     const edges: Edge[] = [];
