@@ -1,6 +1,8 @@
-import React, { ChangeEvent, MouseEvent, KeyboardEvent, FocusEvent } from 'react';
+import React, { ChangeEvent, MouseEvent, KeyboardEvent, FocusEvent, useRef } from 'react';
 import { Form, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { BounceLoader } from 'react-spinners';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import clsx from 'clsx';
 import styles from './InfiniteDropdownInput.module.scss';
@@ -11,6 +13,10 @@ interface Props {
 
   open: boolean
   options: string[]
+
+  onShouldFetch?: () => void
+  moreDataAvailable?: boolean
+  loading?: boolean
 
   onChange?: (value: string) => void
   onSelect?: (value: string) => void
@@ -25,6 +31,9 @@ const InfiniteDropdownInput: React.FC<Props> = ({
   icon,
   open,
   options,
+  onShouldFetch,
+  moreDataAvailable,
+  loading,
   onChange,
   onSelect,
   placeholder,
@@ -32,6 +41,8 @@ const InfiniteDropdownInput: React.FC<Props> = ({
   onBlur,
   onFocus
 }) => {
+  const scrollTargetRef = useRef<HTMLDivElement>(null);
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     onChange?.(e.currentTarget.value);
@@ -55,6 +66,10 @@ const InfiniteDropdownInput: React.FC<Props> = ({
       onChange?.(textContent ?? '');
       onSelect?.(textContent ?? '');
     }
+  };
+
+  const handleScrollNext = () => {
+    onShouldFetch?.();
   };
 
   return (
@@ -88,8 +103,15 @@ const InfiniteDropdownInput: React.FC<Props> = ({
         </Form.Field>
       </div>
 
-      <div className="dropdown-menu w-100" id="dropdown-menu" role="menu">
-        <div className={clsx('dropdown-content', styles.dropdownContent)}>
+      <div className="dropdown-menu w-100" id="dropdown-menu" role="menu" ref={scrollTargetRef}>
+        <InfiniteScroll
+          className={clsx('dropdown-content', styles.dropdownContent)}
+          next={handleScrollNext}
+          hasMore={moreDataAvailable ?? true}
+          loader={null}
+          dataLength={options.length}
+          height={scrollTargetRef.current?.scrollHeight ?? 200}
+        >
           {
             options.map((option, idx) => (
               <div
@@ -104,7 +126,15 @@ const InfiniteDropdownInput: React.FC<Props> = ({
               </div>
             ))
           }
-        </div>
+
+          {
+            loading && (
+              <div className={styles.dropdownLoaderContainer}>
+                <BounceLoader className={styles.dropdownLoader} loading size={14} />
+              </div>
+            )
+          }
+        </InfiniteScroll>
       </div>
     </div>
   );

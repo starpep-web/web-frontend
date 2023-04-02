@@ -11,3 +11,15 @@
   max-height: 12em;
   overflow: scroll;
 }
+
+.dropdownLoaderContainer {
+  position: relative;
+  height: 2em;
+}
+
+.dropdownLoader {
+  position: absolute !important;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 20px;
+}

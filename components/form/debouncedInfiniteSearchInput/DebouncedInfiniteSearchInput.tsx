@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { InfiniteDropdownInput } from '@components/form/infiniteDropdownInput';
 import { useDebounce } from '@components/hooks/debounce';
+import { usePrevious } from '@components/hooks/previous';
 import { WithPagination } from '@lib/utils/pagination';
 
 interface Props {
-  dataFetch: (value: string) => Promise<WithPagination<string[]>>
+  dataFetch: (value: string, page: number) => Promise<WithPagination<string[]>>
   onChange?: (value: string) => void
 
   label?: string
@@ -15,19 +16,34 @@ interface Props {
 
 const DebouncedInfiniteSearchInput: React.FC<Props> = ({ dataFetch, onChange, label, placeholder, icon }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [options, setOptions] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [allOptions, setAllOptions] = useState<string[]>([]);
+  const [hasMoreData, setHasMoreData] = useState<boolean>(true);
   const debouncedValue = useDebounce(value, 500);
+  const previousDebouncedValue = usePrevious(debouncedValue);
 
   useEffect(() => {
-    dataFetch(debouncedValue)
+    setLoading(true);
+    dataFetch(debouncedValue, currentPage)
       .then((results) => {
-        setOptions(results.data);
+        if (debouncedValue === previousDebouncedValue) {
+          setAllOptions([...allOptions, ...results.data]);
+        } else {
+          setAllOptions(results.data);
+        }
+
+        setHasMoreData(!results.pagination.isLastPage);
       })
       .catch(() => {
-        setOptions([]);
+        setAllOptions([]);
+        setHasMoreData(false);
+      })
+      .finally(() => {
+        setLoading(false);
       });
-  }, [debouncedValue]);
+  }, [debouncedValue, currentPage]);
 
   const handleInputChange = (newValue: string) => {
     setValue(newValue);
@@ -43,18 +59,27 @@ const DebouncedInfiniteSearchInput: React.FC<Props> = ({ dataFetch, onChange, la
     setOpen(false);
   };
 
+  const handleShouldFetch = () => {
+    if (hasMoreData && !loading) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   return (
     <InfiniteDropdownInput
       label={label}
       placeholder={placeholder}
       icon={icon}
       value={value}
+      onShouldFetch={handleShouldFetch}
+      moreDataAvailable={hasMoreData}
+      loading={loading}
       onChange={handleInputChange}
       onSelect={handleDropdownClose}
       onBlur={handleDropdownClose}
       onFocus={handleDropdownOpen}
       open={open}
-      options={options}
+      options={allOptions}
     />
   );
 };
