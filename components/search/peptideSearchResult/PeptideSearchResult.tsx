@@ -26,7 +26,7 @@ const PeptideSearchResult: React.FC<Props> = ({ onPageChange, peptides, currentP
   return (
     <Box>
       <Table
-        headers={['Index', 'ID', 'Sequence', 'Length']}
+        headers={['#', 'ID', 'Sequence', 'Length']}
       >
         {
           peptides.map((peptide, idx) => (
