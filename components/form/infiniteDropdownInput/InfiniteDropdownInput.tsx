@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEvent, KeyboardEvent, FocusEvent, useRef } from 'react';
+import React, { ChangeEvent, MouseEvent, KeyboardEvent, FocusEvent } from 'react';
 import { Form, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BounceLoader } from 'react-spinners';
@@ -41,8 +41,6 @@ const InfiniteDropdownInput: React.FC<Props> = ({
   onBlur,
   onFocus
 }) => {
-  const scrollTargetRef = useRef<HTMLDivElement>(null);
-
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     onChange?.(e.currentTarget.value);
@@ -103,14 +101,14 @@ const InfiniteDropdownInput: React.FC<Props> = ({
         </Form.Field>
       </div>
 
-      <div className="dropdown-menu w-100" id="dropdown-menu" role="menu" ref={scrollTargetRef}>
+      <div className="dropdown-menu w-100" id="dropdown-menu" role="menu">
         <InfiniteScroll
           className={clsx('dropdown-content', styles.dropdownContent)}
           next={handleScrollNext}
           hasMore={moreDataAvailable ?? true}
           loader={null}
           dataLength={options.length}
-          height={scrollTargetRef.current?.scrollHeight ?? 200}
+          height={192}
         >
           {
             options.map((option, idx) => (
