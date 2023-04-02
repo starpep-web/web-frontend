@@ -42,7 +42,7 @@ export const getPeptideBySequence = async (sequence: string): Promise<FullPeptid
 };
 
 export const searchPeptidesTextQuery = async (sequence: string, limit: number, skip: number): Promise<Peptide[]> => {
-  const query = 'MATCH (n:Peptide) WHERE n.seq CONTAINS $sequence RETURN n SKIP $skip LIMIT $limit';
+  const query = 'MATCH (n:Peptide) WHERE n.seq CONTAINS $sequence RETURN n ORDER BY ID(n) ASC SKIP $skip LIMIT $limit';
   const result = await readTransaction(query, { sequence: sequence.toUpperCase(), limit, skip });
 
   return result.records.map((r) => {
@@ -72,7 +72,7 @@ export const searchPeptidesTextQueryPaginated = async (sequence: string, page: n
 };
 
 export const searchPeptidesRegexQuery = async (regex: string, limit: number, skip: number): Promise<Peptide[]> => {
-  const query = 'MATCH (n:Peptide) WHERE n.seq =~ $regex RETURN n SKIP $skip LIMIT $limit';
+  const query = 'MATCH (n:Peptide) WHERE n.seq =~ $regex RETURN n ORDER BY ID(n) ASC SKIP $skip LIMIT $limit';
   const result = await readTransaction(query, { regex, limit, skip });
 
   return result.records.map((r) => {
