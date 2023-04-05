@@ -51,6 +51,7 @@ const parseSearchFilter = (filters?: TextQueryMetadataFilters): string => {
   }
 
   return Object.values(filters)
+    .filter((filter) => filter)
     .map((filter) => `v.name = "${sanitizeInput(filter)}"`)
     .join(' AND ');
 };
