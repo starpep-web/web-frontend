@@ -86,7 +86,7 @@ LIMIT $limit
   };
 };
 
-export const getDatabaseStatistics = async (partialsLimit = 50): Promise<DatabaseStatistics> => {
+export const getDatabaseStatistics = async (partialsLimit = 25): Promise<DatabaseStatistics> => {
   return {
     count: await getPeptideCount(),
     unusualCount: await getUnusualCount(),
