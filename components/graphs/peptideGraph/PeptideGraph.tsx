@@ -1,6 +1,7 @@
-import React, { useMemo } from 'react';
-import { Node, Edge, Options, Color } from 'vis-network/esnext/umd/vis-network.min';
+import React, { useMemo, useState } from 'react';
+import { Network, Node, Edge, Options, Color } from 'vis-network/esnext/umd/vis-network.min';
 import { Graph } from '../graph';
+import { ZoomOverlay } from '../zoomOverlay';
 import { FullPeptide, RelationshipLabel } from '@lib/models/peptide';
 
 const createNodeColor = (background: string, highlight: string, border: string): Color => {
@@ -25,6 +26,37 @@ const nodeColorsByRelationship: Record<RelationshipLabel, Color> = {
   relatedTo: createNodeColor('#565AA0', '#6064A9', '#4F5292')
 };
 
+const options: Options = {
+  nodes: {
+    shape: 'circle',
+    widthConstraint: 50,
+    scaling: {
+      label: {
+        enabled: true
+      }
+    }
+  },
+  edges: {
+    arrows: {
+      to: {
+        enabled: true
+      }
+    },
+    color: '#000'
+  },
+  physics: {
+    enabled: false,
+    solver: 'repulsion',
+    repulsion: {
+      nodeDistance: 250
+    }
+  },
+  interaction: {
+    dragView: false,
+    zoomView: false
+  }
+};
+
 interface Props {
   peptide: FullPeptide
 
@@ -33,6 +65,10 @@ interface Props {
 }
 
 const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
+  const [network, setNetwork] = useState<Network | null>(null);
+  const minZoom = 0.25;
+  const maxZoom = 2;
+
   const [nodes, edges] = useMemo(() => {
     const nodes: Node[] = [];
     const edges: Edge[] = [];
@@ -76,35 +112,30 @@ const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
     return [nodes, edges];
   }, [peptide]);
 
-  const options: Options = {
-    nodes: {
-      shape: 'circle',
-      widthConstraint: 50,
-      scaling: {
-        label: {
-          enabled: true
-        }
-      }
-    },
-    edges: {
-      arrows: {
-        to: {
-          enabled: true
-        }
-      },
-      color: '#000'
-    },
-    physics: {
-      enabled: false,
-      solver: 'repulsion',
-      repulsion: {
-        nodeDistance: 250
-      }
-    }
+  const handleReady = (network: Network) => {
+    setNetwork(network);
+  };
+
+  const handleZoomChange = (step: number) => {
+    const scale = network?.getScale() ?? 0;
+    const newScale = Math.max(minZoom, Math.min(scale + step, maxZoom));
+    network?.moveTo({ scale: newScale });
   };
 
   return (
-    <Graph nodes={nodes} edges={edges} options={options} width={width} height={height} />
+    <Graph
+      nodes={nodes}
+      edges={edges}
+      options={options}
+      width={width}
+      height={height}
+      minZoom={minZoom}
+      maxZoom={maxZoom}
+      centerZoom
+      onReady={handleReady}
+    >
+      <ZoomOverlay step={0.1} onChange={handleZoomChange} />
+    </Graph>
   );
 };
 
