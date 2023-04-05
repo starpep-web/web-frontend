@@ -84,7 +84,9 @@ const Graph: React.FC<Props> = ({
     <div style={{ width, height, position: 'relative' }}>
       <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
       <BounceLoader className="absolute-center" loading={loading} />
-      {children}
+      {
+        !loading && children
+      }
     </div>
   );
 };
