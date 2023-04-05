@@ -5,7 +5,7 @@ import { createPagination, WithPagination } from '@lib/utils/pagination';
 
 
 export const getMetadataSuggestions = async (nodeLabel: Omit<NodeLabel, 'Peptide'>, name: string, limit: number, skip: number): Promise<string[]> => {
-  const query = `MATCH (n:${nodeLabel}) WHERE toLower(n.name) STARTS WITH toLower($name) RETURN n.name AS name ORDER BY name ASC SKIP $skip LIMIT $limit`; // We can interpolate the nodeLabel because this is never user generated.
+  const query = `MATCH (p:Peptide)-[]-(n:${nodeLabel}) WHERE toLower(n.name) STARTS WITH toLower($name) RETURN DISTINCT(n.name) AS name ORDER BY name ASC SKIP $skip LIMIT $limit`; // We can interpolate the nodeLabel because this is never user generated.
   const result = await readTransaction(query, { name, limit, skip });
 
   return result.records.map((record) => {
@@ -16,7 +16,7 @@ export const getMetadataSuggestions = async (nodeLabel: Omit<NodeLabel, 'Peptide
 export const getMetadataSuggestionsPaginated = async (nodeLabel: Omit<NodeLabel, 'Peptide'>, name: string, page: number, limit = 100): Promise<WithPagination<string[]>> => {
   const start = (page - 1) * limit;
 
-  const countQuery = `MATCH (n:${nodeLabel}) WHERE toLower(n.name) STARTS WITH toLower($name) RETURN COUNT(n) AS c`;
+  const countQuery = `MATCH (n:${nodeLabel}) WHERE toLower(n.name) STARTS WITH toLower($name) RETURN COUNT(DISTINCT(n)) AS c`;
   const result = await readTransaction(countQuery, { name });
   const total = result.records[0]?.get('c').toInt() ?? 0;
 
