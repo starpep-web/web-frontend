@@ -23,3 +23,10 @@ export const readTransaction = async (query: string, params?: Record<string, str
   await session.close();
   return result;
 };
+
+// According to this: https://neo4j.com/developer/kb/protecting-against-cypher-injection/#_escape_characters_in_cypher
+export const sanitizeInput = (input: string): string => {
+  return input.replace(/'|\\u0027|"|\\u0022|`|\\u0060/g, (replacement) => {
+    return `\\${replacement}`;
+  });
+};

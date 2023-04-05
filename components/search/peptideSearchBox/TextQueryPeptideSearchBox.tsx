@@ -13,6 +13,7 @@ const TextQueryPeptideSearchBox = () => {
   const [query, setQuery] = useState<string>('');
   const [regexEnabled, setRegexEnabled] = useState<boolean>(false);
   const [metadataFilters, setMetadataFilters] = useState<TextQueryMetadataFilters>({});
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setQuery('');
@@ -20,6 +21,7 @@ const TextQueryPeptideSearchBox = () => {
 
   const handleOnSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    setLoading(true);
     return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, metadataFilters));
   };
 
@@ -55,7 +57,7 @@ const TextQueryPeptideSearchBox = () => {
       <MetadataFilters onChange={handleMetadataFiltersChange} />
 
       <Button.Group align="center">
-        <Button color="primary">
+        <Button color="primary" loading={loading} disabled={loading}>
           <Icon align="left">
             <FontAwesomeIcon icon="search" />
           </Icon>

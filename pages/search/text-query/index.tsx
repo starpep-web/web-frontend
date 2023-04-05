@@ -66,8 +66,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
 
   try {
     const paginatedResult = regexEnabled ?
-      await searchPeptidesRegexQueryPaginated(query, page) :
-      await searchPeptidesTextQueryPaginated(query, page);
+      await searchPeptidesRegexQueryPaginated(query, page, metadataFilters) :
+      await searchPeptidesTextQueryPaginated(query, page, metadataFilters);
 
     return {
       props: {
