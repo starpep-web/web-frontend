@@ -7,15 +7,34 @@ const DEFAULT_WIDTH = 600;
 const DEFAULT_HEIGHT = 400;
 
 interface Props {
+  children?: React.ReactNode
+
   nodes: Node[]
   edges: Edge[]
   options?: Options
 
   width?: number | string
   height?: number | string
+
+  centerZoom?: boolean
+  minZoom?: number
+  maxZoom?: number
+
+  onReady?: (network: Network) => void
 }
 
-const Graph: React.FC<Props> = ({ nodes, edges, options, width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT }) => {
+const Graph: React.FC<Props> = ({
+  children,
+  nodes,
+  edges,
+  options,
+  width = DEFAULT_WIDTH,
+  height = DEFAULT_HEIGHT,
+  centerZoom,
+  minZoom,
+  maxZoom,
+  onReady
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -33,6 +52,27 @@ const Graph: React.FC<Props> = ({ nodes, edges, options, width = DEFAULT_WIDTH, 
 
     network.once('afterDrawing', () => {
       setLoading(false);
+      onReady?.(network);
+    });
+
+    network.on('zoom', () => {
+      const scale = network.getScale();
+
+      if (centerZoom) {
+        network.moveTo({
+          position: { x: 0, y: 0 }
+        });
+      }
+
+      if (minZoom && scale < minZoom) {
+        network.moveTo({
+          scale: minZoom
+        });
+      } else if (maxZoom && scale > maxZoom) {
+        network.moveTo({
+          scale: maxZoom
+        });
+      }
     });
 
     return () => {
@@ -44,6 +84,7 @@ const Graph: React.FC<Props> = ({ nodes, edges, options, width = DEFAULT_WIDTH, 
     <div style={{ width, height, position: 'relative' }}>
       <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
       <BounceLoader className="absolute-center" loading={loading} />
+      {children}
     </div>
   );
 };
