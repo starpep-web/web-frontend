@@ -3,7 +3,7 @@ import { GetServerSidePropsResult } from 'next';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { NumberStatistic } from '@components/statistics/numberStatistic';
-import { BarChart, PieChart } from '@components/statistics/charts';
+import { BarChart } from '@components/statistics/charts';
 import { WithTitledBox } from '@components/common/withTitledBox';
 import { DatabaseStatistics } from '@lib/models/statistics';
 import { getDatabaseStatistics } from '@lib/services/graphDb/statisticsService';
@@ -29,11 +29,11 @@ const StatisticsPage: React.FC<Props> = ({ statistics }) => {
       </WithTitledBox>
 
       <WithTitledBox title="4. Peptide Distribution by Function" height={400}>
-        <PieChart id="function-distribution" data={statistics.functionDistribution} legendPosition="right" />
+        <BarChart id="function-distribution" data={statistics.functionDistribution} />
       </WithTitledBox>
 
       <WithTitledBox title="5. Peptide Distribution by Database" height={400}>
-        <PieChart id="database-distribution" data={statistics.databaseDistribution} legendPosition="right" />
+        <BarChart id="database-distribution" data={statistics.databaseDistribution} />
       </WithTitledBox>
     </PageWrapper>
   );
