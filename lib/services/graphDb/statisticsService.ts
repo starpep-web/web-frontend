@@ -86,6 +86,76 @@ LIMIT $limit
   };
 };
 
+export const getPartialPeptideCTerminusDistribution = async (limit: number): Promise<PartialRelationStatistics> => {
+  const query = `
+MATCH (n:Peptide)-[r:modified_by]->(v:Cterminus)
+WITH v.name AS cModifier, COUNT(*) AS frequency
+WITH COLLECT({\`cModifier\`: cModifier, \`freq\`: frequency}) as aggregate, SUM(frequency) AS total
+UNWIND aggregate AS agg
+WITH agg.cModifier AS cModifier, agg.freq AS frequency, total
+RETURN cModifier, frequency, total, toFloat(frequency) / total AS percentage
+ORDER BY frequency DESC
+LIMIT $limit
+  `;
+  const result = await readTransaction(query, { limit });
+
+  const distribution = Object.fromEntries(result.records.map((record) => {
+    const cModifier = record.get('cModifier');
+    const frequency = record.get('frequency').toInt();
+
+    return [cModifier, frequency];
+  }));
+  const percentage = Object.fromEntries(result.records.map((record) => {
+    const cModifier = record.get('cModifier');
+    const percentage = record.get('percentage');
+
+    return [cModifier, percentage];
+  }));
+  const total = result.records[0]?.get('total').toInt() ?? 0;
+
+  return {
+    distribution,
+    percentage,
+    total,
+    partialSize: limit
+  };
+};
+
+export const getPartialPeptideNTerminusDistribution = async (limit: number): Promise<PartialRelationStatistics> => {
+  const query = `
+MATCH (n:Peptide)-[r:modified_by]->(v:Nterminus)
+WITH v.name AS nModifier, COUNT(*) AS frequency
+WITH COLLECT({\`nModifier\`: nModifier, \`freq\`: frequency}) as aggregate, SUM(frequency) AS total
+UNWIND aggregate AS agg
+WITH agg.nModifier AS nModifier, agg.freq AS frequency, total
+RETURN nModifier, frequency, total, toFloat(frequency) / total AS percentage
+ORDER BY frequency DESC
+LIMIT $limit
+  `;
+  const result = await readTransaction(query, { limit });
+
+  const distribution = Object.fromEntries(result.records.map((record) => {
+    const nModifier = record.get('nModifier');
+    const frequency = record.get('frequency').toInt();
+
+    return [nModifier, frequency];
+  }));
+  const percentage = Object.fromEntries(result.records.map((record) => {
+    const nModifier = record.get('nModifier');
+    const percentage = record.get('percentage');
+
+    return [nModifier, percentage];
+  }));
+  const total = result.records[0]?.get('total').toInt() ?? 0;
+
+  return {
+    distribution,
+    percentage,
+    total,
+    partialSize: limit
+  };
+};
+
 export const getDatabaseStatistics = async (partialsLimit = 25): Promise<DatabaseStatistics> => {
   return {
     count: await getPeptideCount(),
@@ -93,6 +163,8 @@ export const getDatabaseStatistics = async (partialsLimit = 25): Promise<Databas
     lengthDistribution: await getPeptideLengthDistribution(),
     functionDistribution: await getPeptideFunctionDistribution(),
     databaseDistribution: await getPeptideDatabaseDistribution(),
-    targetDistribution: await getPartialPeptideTargetDistribution(partialsLimit)
+    targetDistribution: await getPartialPeptideTargetDistribution(partialsLimit),
+    cTerminusDistribution: await getPartialPeptideCTerminusDistribution(partialsLimit),
+    nTerminusDistribution: await getPartialPeptideNTerminusDistribution(partialsLimit)
   };
 };

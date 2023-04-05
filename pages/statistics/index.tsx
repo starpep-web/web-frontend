@@ -49,6 +49,28 @@ const StatisticsPage: React.FC<Props> = ({ statistics }) => {
           </Columns.Column>
         </Columns>
       </WithTitledBox>
+
+      <WithTitledBox title={`7. Top ${statistics.cTerminusDistribution.partialSize} Peptide Distribution by CTerminus Modification`}>
+        <Columns>
+          <Columns.Column style={{ height: graphHeight }} tablet={{ size: 12 }} desktop={{ size: 6 }}>
+            <BarChart id="cterminus-distribution" data={statistics.cTerminusDistribution.distribution} />
+          </Columns.Column>
+          <Columns.Column style={{ height: graphHeight }} tablet={{ size: 12 }} desktop={{ size: 6 }}>
+            <BarChart id="cterminus-percentage" data={statistics.cTerminusDistribution.percentage} />
+          </Columns.Column>
+        </Columns>
+      </WithTitledBox>
+
+      <WithTitledBox title={`8. Top ${statistics.nTerminusDistribution.partialSize} Peptide Distribution by NTerminus Modification`}>
+        <Columns>
+          <Columns.Column style={{ height: graphHeight }} tablet={{ size: 12 }} desktop={{ size: 6 }}>
+            <BarChart id="nterminus-distribution" data={statistics.nTerminusDistribution.distribution} />
+          </Columns.Column>
+          <Columns.Column style={{ height: graphHeight }} tablet={{ size: 12 }} desktop={{ size: 6 }}>
+            <BarChart id="nterminus-percentage" data={statistics.nTerminusDistribution.percentage} />
+          </Columns.Column>
+        </Columns>
+      </WithTitledBox>
     </PageWrapper>
   );
 };
