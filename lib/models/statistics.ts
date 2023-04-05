@@ -12,6 +12,7 @@ export interface DatabaseStatistics {
   functionDistribution: Record<string, number>,
   databaseDistribution: Record<string, number>,
   targetDistribution: PartialRelationStatistics,
+  originDistribution: PartialRelationStatistics,
   cTerminusDistribution: PartialRelationStatistics,
   nTerminusDistribution: PartialRelationStatistics
 }

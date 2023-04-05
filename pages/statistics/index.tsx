@@ -50,7 +50,18 @@ const StatisticsPage: React.FC<Props> = ({ statistics }) => {
         </Columns>
       </WithTitledBox>
 
-      <WithTitledBox title={`7. Top ${statistics.cTerminusDistribution.partialSize} Peptide Distribution by CTerminus Modification`}>
+      <WithTitledBox title={`7. Top ${statistics.originDistribution.partialSize} Peptide Distribution by Origin`}>
+        <Columns>
+          <Columns.Column style={{ height: graphHeight }} tablet={{ size: 12 }} desktop={{ size: 6 }}>
+            <BarChart id="origin-distribution" data={statistics.originDistribution.distribution} />
+          </Columns.Column>
+          <Columns.Column style={{ height: graphHeight }} tablet={{ size: 12 }} desktop={{ size: 6 }}>
+            <BarChart id="origin-percentage" data={statistics.originDistribution.percentage} />
+          </Columns.Column>
+        </Columns>
+      </WithTitledBox>
+
+      <WithTitledBox title={`8. Top ${statistics.cTerminusDistribution.partialSize} Peptide Distribution by CTerminus Modification`}>
         <Columns>
           <Columns.Column style={{ height: graphHeight }} tablet={{ size: 12 }} desktop={{ size: 6 }}>
             <BarChart id="cterminus-distribution" data={statistics.cTerminusDistribution.distribution} />
@@ -61,7 +72,7 @@ const StatisticsPage: React.FC<Props> = ({ statistics }) => {
         </Columns>
       </WithTitledBox>
 
-      <WithTitledBox title={`8. Top ${statistics.nTerminusDistribution.partialSize} Peptide Distribution by NTerminus Modification`}>
+      <WithTitledBox title={`9. Top ${statistics.nTerminusDistribution.partialSize} Peptide Distribution by NTerminus Modification`}>
         <Columns>
           <Columns.Column style={{ height: graphHeight }} tablet={{ size: 12 }} desktop={{ size: 6 }}>
             <BarChart id="nterminus-distribution" data={statistics.nTerminusDistribution.distribution} />
