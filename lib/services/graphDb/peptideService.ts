@@ -46,7 +46,7 @@ export const getPeptideBySequence = async (sequence: string): Promise<FullPeptid
 
 // Return TRUE if empty so the cypher query contains an AND TRUE filter clause.
 const parseSearchFilter = (filters?: TextQueryMetadataFilters): string => {
-  if (!filters || !Object.values(filters)) {
+  if (!filters || !Object.values(filters).length) {
     return 'TRUE';
   }
 
@@ -57,7 +57,7 @@ const parseSearchFilter = (filters?: TextQueryMetadataFilters): string => {
 };
 
 export const searchPeptidesTextQuery = async (sequence: string, limit: number, skip: number, sanitizedFilter: string): Promise<Peptide[]> => {
-  const query = `MATCH (n:Peptide)-[]->(v) WHERE n.seq CONTAINS $sequence AND ${sanitizedFilter} RETURN n ORDER BY ID(n) ASC SKIP $skip LIMIT $limit`;
+  const query = `MATCH (n:Peptide)-[]->(v) WHERE n.seq CONTAINS $sequence AND ${sanitizedFilter} RETURN DISTINCT(n) ORDER BY ID(n) ASC SKIP $skip LIMIT $limit`;
   const result = await readTransaction(query, { sequence: sequence.toUpperCase(), limit, skip });
 
   return result.records.map((r) => {
@@ -75,7 +75,7 @@ export const searchPeptidesTextQueryPaginated = async (sequence: string, page: n
   const start = (page - 1) * limit;
   const sanitizedFilter = parseSearchFilter(filters);
 
-  const countQuery = `MATCH (n:Peptide)-[]->(v) WHERE n.seq CONTAINS $sequence AND ${sanitizedFilter} RETURN COUNT(n) AS c`;
+  const countQuery = `MATCH (n:Peptide)-[]->(v) WHERE n.seq CONTAINS $sequence AND ${sanitizedFilter} RETURN COUNT(DISTINCT(n)) AS c`;
   const result = await readTransaction(countQuery, { sequence: sequence.toUpperCase() });
   const total = result.records[0]?.get('c').toInt() ?? 0;
 
@@ -88,7 +88,7 @@ export const searchPeptidesTextQueryPaginated = async (sequence: string, page: n
 };
 
 export const searchPeptidesRegexQuery = async (regex: string, limit: number, skip: number, sanitizedFilter: string): Promise<Peptide[]> => {
-  const query = `MATCH (n:Peptide)-[]->(v) WHERE n.seq =~ $regex AND ${sanitizedFilter} RETURN n ORDER BY ID(n) ASC SKIP $skip LIMIT $limit`;
+  const query = `MATCH (n:Peptide)-[]->(v) WHERE n.seq =~ $regex AND ${sanitizedFilter} RETURN DISTINCT(n) ORDER BY ID(n) ASC SKIP $skip LIMIT $limit`;
   const result = await readTransaction(query, { regex, limit, skip });
 
   return result.records.map((r) => {
@@ -106,7 +106,7 @@ export const searchPeptidesRegexQueryPaginated = async (regex: string, page: num
   const start = (page - 1) * limit;
   const sanitizedFilter = parseSearchFilter(filters);
 
-  const countQuery = `MATCH (n:Peptide)-[]->(v) WHERE n.seq =~ $regex AND ${sanitizedFilter} RETURN COUNT(n) AS c`;
+  const countQuery = `MATCH (n:Peptide)-[]->(v) WHERE n.seq =~ $regex AND ${sanitizedFilter} RETURN COUNT(DISTINCT(n)) AS c`;
   const result = await readTransaction(countQuery, { regex });
   const total = result.records[0]?.get('c').toInt() ?? 0;
 
