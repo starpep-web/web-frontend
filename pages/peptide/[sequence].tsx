@@ -23,7 +23,7 @@ const PeptidePage: React.FC<Props> = ({ peptide }) => {
       <PageMetadata title={peptide.sequence} />
 
       <PeptideTitle sequence={peptide.sequence} />
-      <PeptideGraph peptide={peptide} width="100%" />
+      <PeptideGraph peptide={peptide} width="100%" height="100vh" />
 
       <PeptideInfo {...peptide} />
       <PeptideMetadata metadata={peptide.metadata} />
