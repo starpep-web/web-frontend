@@ -1,9 +1,12 @@
+/* eslint-disable max-len */
+/* eslint-disable max-params */
 import { readTransaction } from './dbService';
 import {
   Peptide,
   FullPeptide,
   PeptideMetadata,
   RawRelationshipLabel,
+  TextQueryMetadataFilters,
   getRelationshipLabelFromRaw,
   getPeptideId
 } from '@lib/models/peptide';
@@ -41,7 +44,8 @@ export const getPeptideBySequence = async (sequence: string): Promise<FullPeptid
   };
 };
 
-export const searchPeptidesTextQuery = async (sequence: string, limit: number, skip: number): Promise<Peptide[]> => {
+export const searchPeptidesTextQuery = async (sequence: string, limit: number, skip: number, filters?: TextQueryMetadataFilters): Promise<Peptide[]> => {
+  console.log(filters);
   const query = 'MATCH (n:Peptide) WHERE n.seq CONTAINS $sequence RETURN n ORDER BY ID(n) ASC SKIP $skip LIMIT $limit';
   const result = await readTransaction(query, { sequence: sequence.toUpperCase(), limit, skip });
 
@@ -56,7 +60,7 @@ export const searchPeptidesTextQuery = async (sequence: string, limit: number, s
   });
 };
 
-export const searchPeptidesTextQueryPaginated = async (sequence: string, page: number, limit = 50): Promise<WithPagination<Peptide[]>> => {
+export const searchPeptidesTextQueryPaginated = async (sequence: string, page: number, filters?: TextQueryMetadataFilters, limit = 50): Promise<WithPagination<Peptide[]>> => {
   const start = (page - 1) * limit;
 
   const countQuery = 'MATCH (n:Peptide) WHERE n.seq CONTAINS $sequence RETURN COUNT(n) AS c';
@@ -66,12 +70,13 @@ export const searchPeptidesTextQueryPaginated = async (sequence: string, page: n
   const pagination = createPagination(start, total, limit);
 
   return {
-    data: await searchPeptidesTextQuery(sequence, limit, start),
+    data: await searchPeptidesTextQuery(sequence, limit, start, filters),
     pagination
   };
 };
 
-export const searchPeptidesRegexQuery = async (regex: string, limit: number, skip: number): Promise<Peptide[]> => {
+export const searchPeptidesRegexQuery = async (regex: string, limit: number, skip: number, filters?: TextQueryMetadataFilters): Promise<Peptide[]> => {
+  console.log(filters);
   const query = 'MATCH (n:Peptide) WHERE n.seq =~ $regex RETURN n ORDER BY ID(n) ASC SKIP $skip LIMIT $limit';
   const result = await readTransaction(query, { regex, limit, skip });
 
@@ -86,7 +91,7 @@ export const searchPeptidesRegexQuery = async (regex: string, limit: number, ski
   });
 };
 
-export const searchPeptidesRegexQueryPaginated = async (regex: string, page: number, limit = 50): Promise<WithPagination<Peptide[]>> => {
+export const searchPeptidesRegexQueryPaginated = async (regex: string, page: number, filters?: TextQueryMetadataFilters, limit = 50): Promise<WithPagination<Peptide[]>> => {
   const start = (page - 1) * limit;
 
   const countQuery = 'MATCH (n:Peptide) WHERE n.seq =~ $regex RETURN COUNT(n) AS c';
@@ -96,7 +101,7 @@ export const searchPeptidesRegexQueryPaginated = async (regex: string, page: num
   const pagination = createPagination(start, total, limit);
 
   return {
-    data: await searchPeptidesRegexQuery(regex, limit, start),
+    data: await searchPeptidesRegexQuery(regex, limit, start, filters),
     pagination
   };
 };
