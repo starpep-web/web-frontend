@@ -9,7 +9,8 @@ export const ROUTES = {
   help: '/help',
   search: '/search',
   statistics: '/statistics',
-  tools: '/tools'
+  tools: '/tools',
+  downloads: '/downloads'
 };
 
 export const DYNAMIC_ROUTES = {

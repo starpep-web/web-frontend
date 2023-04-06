@@ -10,6 +10,7 @@ const navbarItems = [
   { text: 'Search', href: ROUTES.search },
   { text: 'Statistics', href: ROUTES.statistics },
   { text: 'Tools', href: ROUTES.tools },
+  { text: 'Downloads', href: ROUTES.downloads },
   { text: 'FAQ', href: ROUTES.faq },
   { text: 'Help', href: ROUTES.help },
   { text: 'About', href: ROUTES.about },
