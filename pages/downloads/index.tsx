@@ -3,14 +3,14 @@ import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { ComingSoonPlaceholder } from '@components/common/comingSoon';
 
-const ToolsPage = () => {
+const DownloadsPage = () => {
   return (
     <PageWrapper>
-      <PageMetadata title="Tools" />
+      <PageMetadata title="Downloads" />
 
       <ComingSoonPlaceholder absoluteCenter />
     </PageWrapper>
   );
 };
 
-export default ToolsPage;
+export default DownloadsPage;
