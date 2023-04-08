@@ -1,3 +1,4 @@
+import { Integer } from 'neo4j-driver';
 import { readTransaction } from './dbService';
 import { DatabaseStatistics, PartialRelationStatistics } from '@lib/models/statistics';
 
@@ -203,4 +204,24 @@ export const getDatabaseStatistics = async (partialsLimit = 25): Promise<Databas
     cTerminusDistribution: await getPartialPeptideCTerminusDistribution(partialsLimit),
     nTerminusDistribution: await getPartialPeptideNTerminusDistribution(partialsLimit)
   };
+};
+
+export const getTotalAAFrequency = async (): Promise<Record<string, number>> => {
+  const query = "MATCH (n:Peptide) WITH apoc.text.join(COLLECT(n.seq), '') AS seqText WITH apoc.coll.frequenciesAsMap(SPLIT(seqText, '')) AS freq RETURN freq";
+  const result = await readTransaction(query);
+  const resultObject: Record<string, Integer> = result.records[0]?.get('freq') ?? {};
+
+  return Object.fromEntries(Object.entries(resultObject).map(([k, v]) => {
+    return [k, v.toInt()];
+  }));
+};
+
+export const getFilterAAFrequency = async (filter: string): Promise<Record<string, number>> => {
+  const query = "MATCH (n:Peptide)-[]-(v) WHERE v.name = $filter WITH apoc.text.join(COLLECT(n.seq), '') AS seqText WITH apoc.coll.frequenciesAsMap(SPLIT(seqText, '')) AS freq RETURN freq";
+  const result = await readTransaction(query, { filter });
+  const resultObject: Record<string, Integer> = result.records[0]?.get('freq') ?? {};
+
+  return Object.fromEntries(Object.entries(resultObject).map(([k, v]) => {
+    return [k, v.toInt()];
+  }));
 };
