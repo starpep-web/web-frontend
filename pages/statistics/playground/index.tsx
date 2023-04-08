@@ -1,5 +1,5 @@
 import React from 'react';
-import { GetServerSidePropsResult } from 'next';
+import { GetServerSidePropsResult, GetServerSidePropsContext } from 'next';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { getTotalAAFrequency, getFilterAAFrequency } from '@lib/services/graphDb/statisticsService';
@@ -24,9 +24,12 @@ const StatisticsPlaygroundPage: React.FC<Props> = ({ totalAAFrequency, filterAAF
   );
 };
 
-export const getServerSideProps = async (): Promise<GetServerSidePropsResult<ServerSideProps>> => {
+export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<ServerSideProps>> => {
+  const { filter: filterParam } = context.query;
+  const filter = filterParam ? (Array.isArray(filterParam) ? filterParam[0] : filterParam) : null;
+
   const totalAAFrequency = await getTotalAAFrequency();
-  const filterAAFrequency = await getFilterAAFrequency('ADAM');
+  const filterAAFrequency = filter ? await getFilterAAFrequency(filter) : {};
 
   return {
     props: {
