@@ -25,11 +25,11 @@ const StatisticsPlaygroundPage: React.FC<Props> = ({ totalAAFrequency, filterAAF
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<ServerSideProps>> => {
-  const { filter: filterParam } = context.query;
-  const filter = filterParam ? (Array.isArray(filterParam) ? filterParam[0] : filterParam) : null;
+  const { frequencyFilter: frequencyFilterParam } = context.query;
+  const frequencyFilter = frequencyFilterParam ? (Array.isArray(frequencyFilterParam) ? frequencyFilterParam[0] : frequencyFilterParam) : null;
 
   const totalAAFrequency = await getTotalAAFrequency();
-  const filterAAFrequency = filter ? await getFilterAAFrequency(filter) : {};
+  const filterAAFrequency = frequencyFilter ? await getFilterAAFrequency(frequencyFilter) : {};
 
   return {
     props: {
