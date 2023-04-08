@@ -9,6 +9,7 @@ export const ROUTES = {
   help: '/help',
   search: '/search',
   statistics: '/statistics',
+  statisticsPlayground: '/statistics/playground',
   tools: '/tools',
   downloads: '/downloads'
 };
