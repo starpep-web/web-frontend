@@ -1,6 +1,7 @@
 import React from 'react';
 import { GetServerSidePropsResult, GetServerSidePropsContext } from 'next';
 import { Box } from 'react-bulma-components';
+import { useRouter } from 'next/router';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import {
@@ -12,6 +13,7 @@ import { WithTitledBox } from '@components/common/withTitledBox';
 import { BarChart } from '@components/statistics/charts';
 import { PlaygroundFilter } from '@components/statistics/playgroundFilter';
 import { NODE_LABELS } from '@lib/models/peptide';
+import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 
 interface ServerSideProps {
   totalAAFrequency: Record<string, number>
@@ -25,10 +27,13 @@ interface Props extends ServerSideProps {
 }
 
 const StatisticsPlaygroundPage: React.FC<Props> = ({ totalAAFrequency, filterAAFrequency, frequencyFilterType, frequencyFilterValue }) => {
+  const router = useRouter();
+
   const graphHeight = 400;
 
-  const handleFrequencyFilterChange = (...args: any[]) => {
-    console.log(args);
+  const handleFrequencyFilterChange = (type: FrequencyFilterType, value: string) => {
+    const params = { ...router.query, frequencyFilterType: type, frequencyFilterValue: value } as Record<string, string>;
+    return router.push(DYNAMIC_ROUTES.statisticsPlayground(params));
   };
 
   return (

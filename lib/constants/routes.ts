@@ -24,5 +24,9 @@ export const DYNAMIC_ROUTES = {
       regex: regexEnabled ? 'true' : 'false'
     });
     return `/search/text-query?${params.toString()}`;
+  },
+  statisticsPlayground: (queryParams?: Record<string, string>) => {
+    const params = new URLSearchParams(queryParams ?? {});
+    return `${ROUTES.statisticsPlayground}?${params.toString()}`;
   }
 };
