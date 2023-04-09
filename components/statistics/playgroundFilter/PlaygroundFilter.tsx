@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Block, Button } from 'react-bulma-components';
+import { Block, Button, Heading } from 'react-bulma-components';
 import { DebouncedInfiniteSearchInput } from '@components/form/debouncedInfiniteSearchInput';
 import { Dropdown } from '@components/form/dropdown';
 import {
@@ -54,27 +54,34 @@ const PlaygroundFilter: React.FC<Props> = ({ defaultType, defaultValue, onSubmit
   };
 
   return (
-    <Block className={styles.playgroundFilter}>
-      <Dropdown
-        value={type as string}
-        onChange={handleTypeChange}
-        options={Object.keys(fetchFunctions)}
-        placeholder="Pick a filter"
-        icon="filter"
-      />
+    <Block mt={6}>
+      <Heading style={{ textAlign: 'center' }} size={5}>
+        Pick a Filter for this Graph
+      </Heading>
 
-      <DebouncedInfiniteSearchInput
-        dataFetch={fetchFunction}
-        onChange={handleValueChange}
-        placeholder={`Search by ${type}`}
-        initialValue={value}
-        icon={metadataFilterIcons[type]}
-        key={type} // We pass a key here to re-create this component once type changes.
-      />
+      <Block className={styles.playgroundFilter}>
+        <Dropdown
+          className={styles.playgroundFilterDropdown}
+          value={type as string}
+          onChange={handleTypeChange}
+          options={Object.keys(fetchFunctions)}
+          placeholder="Pick a filter"
+          icon="filter"
+        />
 
-      <Button onClick={handleSubmit} color="primary">
-        Filter
-      </Button>
+        <DebouncedInfiniteSearchInput
+          dataFetch={fetchFunction}
+          onChange={handleValueChange}
+          placeholder={`Search by ${type}`}
+          initialValue={value}
+          icon={metadataFilterIcons[type]}
+          key={type} // We pass a key here to re-create this component once type changes.
+        />
+
+        <Button onClick={handleSubmit} color="primary">
+          Filter
+        </Button>
+      </Block>
     </Block>
   );
 };
