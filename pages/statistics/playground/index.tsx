@@ -2,15 +2,20 @@ import React from 'react';
 import { GetServerSidePropsResult, GetServerSidePropsContext } from 'next';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
-import { getTotalAAFrequency, getFilterAAFrequency } from '@lib/services/graphDb/statisticsService';
+import {
+  getTotalAAFrequency,
+  getFilterAAFrequency,
+  FrequencyFilterType
+} from '@lib/services/graphDb/statisticsService';
 import { WithTitledBox } from '@components/common/withTitledBox';
 import { BarChart } from '@components/statistics/charts';
-import { NodeLabel, NODE_LABELS } from '@lib/models/peptide';
+import { PlaygroundFilter } from '@components/statistics/playgroundFilter';
+import { NODE_LABELS } from '@lib/models/peptide';
 
 interface ServerSideProps {
   totalAAFrequency: Record<string, number>
   filterAAFrequency: Record<string, number>
-  frequencyFilterType: NodeLabel | null
+  frequencyFilterType: FrequencyFilterType | null
   frequencyFilterValue: string | null
 }
 
@@ -21,14 +26,17 @@ interface Props extends ServerSideProps {
 const StatisticsPlaygroundPage: React.FC<Props> = ({ totalAAFrequency, filterAAFrequency, frequencyFilterType, frequencyFilterValue }) => {
   const graphHeight = 400;
 
+  const handleFrequencyFilterChange = (...args: any[]) => {
+    console.log(args);
+  };
+
   return (
     <PageWrapper>
       <PageMetadata title="Statistics Playground" />
 
-      <WithTitledBox title="Overall Amino Acid Distribution Compared" height={graphHeight}>
-        <div>
-          {frequencyFilterType} {frequencyFilterValue}
-        </div>
+      <WithTitledBox title={`Overall Amino Acid Distribution Compared ${frequencyFilterType}: ${frequencyFilterValue}`} height={graphHeight}>
+        <PlaygroundFilter defaultType={frequencyFilterType} defaultValue={frequencyFilterValue} onSubmit={handleFrequencyFilterChange} />
+
         <BarChart id="aa-distribution" data={{ total: totalAAFrequency, filtered: filterAAFrequency }} yTitle="Overall Frequency" xTitle="Amino Acid" />
       </WithTitledBox>
     </PageWrapper>
@@ -41,7 +49,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
     (Array.isArray(frequencyFilterValueParam) ? frequencyFilterValueParam[0] : frequencyFilterValueParam) :
     null;
   const frequencyFilterType = frequencyFilterTypeParam ?
-    (Array.isArray(frequencyFilterTypeParam) ? frequencyFilterTypeParam[0] : frequencyFilterTypeParam) as NodeLabel :
+    (Array.isArray(frequencyFilterTypeParam) ? frequencyFilterTypeParam[0] : frequencyFilterTypeParam) as FrequencyFilterType :
     null;
 
   const isFrequencyFilterTypeValid = frequencyFilterType && NODE_LABELS.includes(frequencyFilterType);
