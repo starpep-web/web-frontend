@@ -37,19 +37,27 @@ interface Props {
 const PlaygroundFilter: React.FC<Props> = ({ defaultType, defaultValue, onSubmit }) => {
   const [type, setType] = useState<FrequencyFilterType>(defaultType ?? 'Database');
   const [value, setValue] = useState<string>(defaultValue ?? '');
+  const [error, setError] = useState<string | null>(null);
 
   const fetchFunction = fetchFunctions[type];
 
   const handleTypeChange = (type: string) => {
     setValue('');
     setType(type as FrequencyFilterType);
+    setError(null);
   };
 
   const handleValueChange = (value: string) => {
     setValue(value);
+    setError(null);
   };
 
   const handleSubmit = () => {
+    if (!value || !type) {
+      setError('You need to specify a filter first.');
+      return;
+    }
+
     onSubmit?.(type, value);
   };
 
@@ -78,9 +86,17 @@ const PlaygroundFilter: React.FC<Props> = ({ defaultType, defaultValue, onSubmit
           key={type} // We pass a key here to re-create this component once type changes.
         />
 
-        <Button onClick={handleSubmit} color="primary">
-          Filter
-        </Button>
+        {
+          error ? (
+            <Button color="danger">
+              {error}
+            </Button>
+          ) : (
+            <Button onClick={handleSubmit} color="primary">
+            Filter
+            </Button>
+          )
+        }
       </Block>
     </Block>
   );
