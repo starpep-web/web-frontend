@@ -1,6 +1,7 @@
 import React from 'react';
 import { GetServerSidePropsResult } from 'next';
-import { Columns } from 'react-bulma-components';
+import Link from 'next/link';
+import { Columns, Button, Container } from 'react-bulma-components';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { NumberStatistic } from '@components/statistics/numberStatistic';
@@ -8,6 +9,7 @@ import { BarChart } from '@components/statistics/charts';
 import { WithTitledBox } from '@components/common/withTitledBox';
 import { DatabaseStatistics } from '@lib/models/statistics';
 import { getDatabaseStatistics } from '@lib/services/graphDb/statisticsService';
+import { ROUTES } from '@lib/constants/routes';
 
 interface ServerSideProps {
   statistics: DatabaseStatistics
@@ -82,6 +84,12 @@ const StatisticsPage: React.FC<Props> = ({ statistics }) => {
           </Columns.Column>
         </Columns>
       </WithTitledBox>
+
+      <Container style={{ textAlign: 'center' }} mt={6} mb={4}>
+        <Button renderAs={Link} href={ROUTES.statisticsPlayground} color="primary">
+          Visit the Statistics Playground
+        </Button>
+      </Container>
     </PageWrapper>
   );
 };

@@ -11,12 +11,13 @@ interface Props {
 
   label?: string
   placeholder?: string
+  initialValue?: string
   icon?: IconProp
 }
 
-const DebouncedInfiniteSearchInput: React.FC<Props> = ({ dataFetch, onChange, label, placeholder, icon }) => {
+const DebouncedInfiniteSearchInput: React.FC<Props> = ({ dataFetch, onChange, label, placeholder, initialValue, icon }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>(initialValue ?? '');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [allOptions, setAllOptions] = useState<string[]>([]);
@@ -43,7 +44,7 @@ const DebouncedInfiniteSearchInput: React.FC<Props> = ({ dataFetch, onChange, la
       .finally(() => {
         setLoading(false);
       });
-  }, [debouncedValue, currentPage]);
+  }, [dataFetch, debouncedValue, currentPage]);
 
   const handleInputChange = (newValue: string) => {
     setValue(newValue);
