@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, Form } from 'react-bulma-components';
 import { DebouncedInfiniteSearchInput } from '@components/form/debouncedInfiniteSearchInput';
 import { NodeLabel, TextQueryMetadataFilters } from '@lib/models/peptide';
+import { metadataFilterIcons } from '@lib/icons/metadataFilterIcons';
 import {
   getCrossRefSuggestions,
   getCTerminusSuggestions,
@@ -48,7 +49,7 @@ const MetadataFilters: React.FC<Props> = ({ onChange }) => {
               onChange={handleMetadataFilterChange('Database')}
               label="Database"
               placeholder="Search by Database"
-              icon="database"
+              icon={metadataFilterIcons.Database}
             />
           </Form.Field>
 
@@ -62,7 +63,7 @@ const MetadataFilters: React.FC<Props> = ({ onChange }) => {
               onChange={handleMetadataFilterChange('Function')}
               label="Function"
               placeholder="Search by Function"
-              icon="atom"
+              icon={metadataFilterIcons.Function}
             />
           </Form.Field>
 
@@ -76,7 +77,7 @@ const MetadataFilters: React.FC<Props> = ({ onChange }) => {
               onChange={handleMetadataFilterChange('Origin')}
               label="Origin"
               placeholder="Search by Origin"
-              icon="star-of-life"
+              icon={metadataFilterIcons.Origin}
             />
           </Form.Field>
 
@@ -90,7 +91,7 @@ const MetadataFilters: React.FC<Props> = ({ onChange }) => {
               onChange={handleMetadataFilterChange('Target')}
               label="Target"
               placeholder="Search by Target"
-              icon="bullseye"
+              icon={metadataFilterIcons.Target}
             />
           </Form.Field>
 
@@ -105,14 +106,14 @@ const MetadataFilters: React.FC<Props> = ({ onChange }) => {
                 onChange={handleMetadataFilterChange('Cterminus')}
                 label="CTerminus"
                 placeholder="Search by CTerminus"
-                icon="c"
+                icon={metadataFilterIcons.Cterminus}
               />
               <DebouncedInfiniteSearchInput
                 dataFetch={getNTerminusSuggestions}
                 onChange={handleMetadataFilterChange('Nterminus')}
                 label="NTerminus"
                 placeholder="Search by NTerminus"
-                icon="n"
+                icon={metadataFilterIcons.Nterminus}
               />
             </Form.Field>
           </Form.Field>
@@ -127,7 +128,7 @@ const MetadataFilters: React.FC<Props> = ({ onChange }) => {
               onChange={handleMetadataFilterChange('UnusualAA')}
               label="UnusualAA"
               placeholder="Search by UnusualAA"
-              icon="link-slash"
+              icon={metadataFilterIcons.UnusualAA}
             />
           </Form.Field>
 
@@ -141,7 +142,7 @@ const MetadataFilters: React.FC<Props> = ({ onChange }) => {
               onChange={handleMetadataFilterChange('CrossRef')}
               label="CrossRef"
               placeholder="Search by CrossRef"
-              icon="file-lines"
+              icon={metadataFilterIcons.CrossRef}
             />
           </Form.Field>
         </div>
