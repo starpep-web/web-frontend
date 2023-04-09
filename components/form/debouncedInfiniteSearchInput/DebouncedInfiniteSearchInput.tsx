@@ -44,7 +44,7 @@ const DebouncedInfiniteSearchInput: React.FC<Props> = ({ dataFetch, onChange, la
       .finally(() => {
         setLoading(false);
       });
-  }, [debouncedValue, currentPage]);
+  }, [dataFetch, debouncedValue, currentPage]);
 
   const handleInputChange = (newValue: string) => {
     setValue(newValue);
