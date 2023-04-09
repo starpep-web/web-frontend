@@ -1,5 +1,6 @@
 import React from 'react';
 import { GetServerSidePropsResult, GetServerSidePropsContext } from 'next';
+import { Box } from 'react-bulma-components';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import {
@@ -34,11 +35,13 @@ const StatisticsPlaygroundPage: React.FC<Props> = ({ totalAAFrequency, filterAAF
     <PageWrapper>
       <PageMetadata title="Statistics Playground" />
 
-      <WithTitledBox title={`Overall Amino Acid Distribution Compared ${frequencyFilterType}: ${frequencyFilterValue}`} height={graphHeight}>
+      <Box>
+        <WithTitledBox title={`Overall Amino Acid Distribution Compared${Object.keys(filterAAFrequency).length ? ` ${frequencyFilterType}: ${frequencyFilterValue}` : ''}`} height={graphHeight}>
+          <BarChart id="aa-distribution" data={{ total: totalAAFrequency, filtered: filterAAFrequency }} yTitle="Overall Frequency" xTitle="Amino Acid" />
+        </WithTitledBox>
         <PlaygroundFilter defaultType={frequencyFilterType} defaultValue={frequencyFilterValue} onSubmit={handleFrequencyFilterChange} />
+      </Box>
 
-        <BarChart id="aa-distribution" data={{ total: totalAAFrequency, filtered: filterAAFrequency }} yTitle="Overall Frequency" xTitle="Amino Acid" />
-      </WithTitledBox>
     </PageWrapper>
   );
 };
