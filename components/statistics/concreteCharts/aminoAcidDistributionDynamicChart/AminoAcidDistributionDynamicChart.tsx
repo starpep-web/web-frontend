@@ -36,10 +36,10 @@ const AminoAcidDistributionDynamicChart: React.FC<Props> = ({
 
   return (
     <Box>
-      <FullFilterPicker loading={loading} onSubmit={handleFilterSubmit} />
       <WithTitledBox title="Amino Acid Distribution Compared" height={height}>
         <BarChart id="aa-distribution" data={data ?? {}} yTitle="Frequency" xTitle="Amino Acid" />
       </WithTitledBox>
+      <FullFilterPicker loading={loading} onSubmit={handleFilterSubmit} />
     </Box>
   );
 };

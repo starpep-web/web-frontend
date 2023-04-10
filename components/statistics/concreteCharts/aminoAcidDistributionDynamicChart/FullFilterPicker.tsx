@@ -47,8 +47,8 @@ const FullFilterPicker: React.FC<Props> = ({ loading, onSubmit }) => {
       </Heading>
 
       <Block className={clsx(styles.responsiveFlex, styles.fullFilterBlock)}>
-        <SingleFilterPicker initialType={initialType} position="left" onChange={handleFilterChange} />
-        <SingleFilterPicker initialType={initialType} position="right" onChange={handleFilterChange} />
+        <SingleFilterPicker title="Left Filter" initialType={initialType} position="left" onChange={handleFilterChange} />
+        <SingleFilterPicker title="Right Filter" initialType={initialType} position="right" onChange={handleFilterChange} />
       </Block>
 
       <Block style={{ textAlign: 'center' }}>

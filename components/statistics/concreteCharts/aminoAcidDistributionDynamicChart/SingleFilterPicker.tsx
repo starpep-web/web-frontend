@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Heading } from 'react-bulma-components';
 import { DebouncedInfiniteSearchInput } from '@components/form/debouncedInfiniteSearchInput';
 import { Dropdown } from '@components/form/dropdown';
 import {
@@ -20,12 +21,13 @@ const suggestionsFetchFunctions: Record<FrequencyFilterType, MetadataSuggestionF
 };
 
 interface Props {
+  title: string
   initialType?: FrequencyFilterType
   position: GraphPosition
   onChange?: (data: FilterPickerValue) => void
 }
 
-const SingleFilterPicker: React.FC<Props> = ({ initialType, position, onChange }) => {
+const SingleFilterPicker: React.FC<Props> = ({ title, initialType, position, onChange }) => {
   const [type, setType] = useState<FrequencyFilterType>(initialType ?? 'Database');
   const [value, setValue] = useState<string>('');
 
@@ -51,7 +53,11 @@ const SingleFilterPicker: React.FC<Props> = ({ initialType, position, onChange }
   };
 
   return (
-    <div className={clsx(styles.responsiveFlex, styles.flexExpand, 'mb-2')}>
+    <div className={clsx(styles.flexExpand, 'mb-4')}>
+      <Heading style={{ textAlign: 'center' }} size={6}>
+        {title}
+      </Heading>
+
       <Dropdown
         className={styles.filterDropdown}
         value={type as string}
