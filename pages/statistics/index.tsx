@@ -6,6 +6,7 @@ import { PageWrapper } from '@components/common/pageWrapper';
 import { NumberStatistic } from '@components/statistics/numberStatistic';
 import { BarChart } from '@components/statistics/charts';
 import { WithTitledBox } from '@components/common/withTitledBox';
+import { AminoAcidDistributionDynamicChart } from '@components/statistics/concreteCharts/aminoAcidDistributionDynamicChart';
 import { DatabaseStatistics } from '@lib/models/statistics';
 import { getDatabaseStatistics } from '@lib/services/graphDb/statisticsService';
 
@@ -82,6 +83,10 @@ const StatisticsPage: React.FC<Props> = ({ statistics }) => {
           </Columns.Column>
         </Columns>
       </WithTitledBox>
+
+      <hr />
+
+      <AminoAcidDistributionDynamicChart height={graphHeight} />
     </PageWrapper>
   );
 };
