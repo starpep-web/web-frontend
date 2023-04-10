@@ -20,8 +20,8 @@ const AminoAcidDistributionDynamicChart: React.FC<Props> = ({
       return {} as CompositeFrequencyData;
     }
 
-    const leftKey = `${filters.left.type}: ${filters.left.value}`;
-    const rightKey = `${filters.right.type}: ${filters.right.value}`;
+    const leftKey = filters.left.value ? `${filters.left.type}: ${filters.left.value}` : 'Whole Database';
+    const rightKey = filters.right.value ? `${filters.right.type}: ${filters.right.value}` : 'Whole Database';
     return {
       [leftKey]: await getFilteredAAFrequency(filters.left.type, filters.left.value),
       [rightKey]: await getFilteredAAFrequency(filters.right.type, filters.right.value)
@@ -37,7 +37,7 @@ const AminoAcidDistributionDynamicChart: React.FC<Props> = ({
   return (
     <Box>
       <WithTitledBox title="Amino Acid Distribution Compared" height={height}>
-        <BarChart id="aa-distribution" data={data ?? {}} yTitle="Frequency" xTitle="Amino Acid" />
+        <BarChart id="aa-distribution" data={data ?? {}} yTitle="Frequency" xTitle="Amino Acid" showLegend />
       </WithTitledBox>
       <FullFilterPicker loading={loading} onSubmit={handleFilterSubmit} />
     </Box>
