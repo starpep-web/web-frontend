@@ -2,6 +2,7 @@ import { Integer } from 'neo4j-driver';
 import { readTransaction } from './dbService';
 import { DatabaseStatistics, PartialRelationStatistics } from '@lib/models/statistics';
 import { NodeLabel } from '@lib/models/peptide';
+import { createAlphabet } from '@lib/utils/array';
 
 export const getPeptideCount = async (): Promise<number> => {
   const query = 'MATCH (n:Peptide) RETURN COUNT(n) AS c';
@@ -214,8 +215,8 @@ export const getTotalAAFrequency = async (): Promise<Record<string, number>> => 
   const result = await readTransaction(query);
   const resultObject: Record<string, Integer> = result.records[0]?.get('freq') ?? {};
 
-  return Object.fromEntries(Object.entries(resultObject).map(([k, v]) => {
-    return [k, v.toInt()];
+  return Object.fromEntries(createAlphabet().map((letter) => {
+    return [letter, resultObject[letter]?.toInt() ?? 0];
   }));
 };
 
@@ -224,7 +225,7 @@ export const getFilterAAFrequency = async (filter: string): Promise<Record<strin
   const result = await readTransaction(query, { filter });
   const resultObject: Record<string, Integer> = result.records[0]?.get('freq') ?? {};
 
-  return Object.fromEntries(Object.entries(resultObject).map(([k, v]) => {
-    return [k, v.toInt()];
+  return Object.fromEntries(createAlphabet().map((letter) => {
+    return [letter, resultObject[letter]?.toInt() ?? 0];
   }));
 };
