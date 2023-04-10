@@ -1,7 +1,6 @@
 import { Integer } from 'neo4j-driver';
 import { readTransaction } from './dbService';
 import { DatabaseStatistics, PartialRelationStatistics } from '@lib/models/statistics';
-import { NodeLabel } from '@lib/models/peptide';
 import { createAlphabet } from '@lib/utils/array';
 
 export const getPeptideCount = async (): Promise<number> => {
@@ -208,7 +207,7 @@ export const getDatabaseStatistics = async (partialsLimit = 25): Promise<Databas
   };
 };
 
-export type FrequencyFilterType = Exclude<NodeLabel, 'Peptide'>;
+export type FrequencyFilterType = 'Database' | 'Function' | 'Origin';
 
 export const getTotalAAFrequency = async (): Promise<Record<string, number>> => {
   const query = "MATCH (n:Peptide) WITH apoc.text.join(COLLECT(n.seq), '') AS seqText WITH apoc.coll.frequenciesAsMap(SPLIT(seqText, '')) AS freq RETURN freq";
