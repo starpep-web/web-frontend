@@ -7,10 +7,11 @@ import clsx from 'clsx';
 import styles from './FilterPicker.module.scss';
 
 interface Props {
+  loading?: boolean
   onSubmit?: (filters: FullFilterPickerValues) => void
 }
 
-const FullFilterPicker: React.FC<Props> = ({ onSubmit }) => {
+const FullFilterPicker: React.FC<Props> = ({ loading, onSubmit }) => {
   const initialType: FrequencyFilterType = 'Database';
 
   const leftRef = useRef<FilterPickerValue>({
@@ -51,7 +52,7 @@ const FullFilterPicker: React.FC<Props> = ({ onSubmit }) => {
       </Block>
 
       <Block style={{ textAlign: 'center' }}>
-        <Button color="primary" className="w-100" onClick={handleSubmit}>
+        <Button color="primary" className="w-100" onClick={handleSubmit} loading={loading} disabled={loading}>
           Apply Filter
         </Button>
       </Block>

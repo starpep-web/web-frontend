@@ -28,7 +28,7 @@ const AminoAcidDistributionDynamicChart: React.FC<Props> = ({
     };
   }, [filters]);
 
-  const { data } = useFetch(filterRequest);
+  const { data, loading } = useFetch(filterRequest);
 
   const handleFilterSubmit = (filters: FullFilterPickerValues) => {
     setFilters(filters);
@@ -36,7 +36,7 @@ const AminoAcidDistributionDynamicChart: React.FC<Props> = ({
 
   return (
     <Box>
-      <FullFilterPicker onSubmit={handleFilterSubmit} />
+      <FullFilterPicker loading={loading} onSubmit={handleFilterSubmit} />
       <WithTitledBox title="Amino Acid Distribution Compared" height={height}>
         <BarChart id="aa-distribution" data={data ?? {}} yTitle="Frequency" xTitle="Amino Acid" />
       </WithTitledBox>
