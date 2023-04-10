@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Form } from 'react-bulma-components';
 import { DebouncedInfiniteSearchInput } from '@components/form/debouncedInfiniteSearchInput';
-import { NodeLabel, TextQueryMetadataFilters } from '@lib/models/peptide';
+import { MetadataLabel, TextQueryMetadataFilters } from '@lib/models/peptide';
 import { metadataFilterIcons } from '@lib/icons/metadataFilterIcons';
 import {
   getCrossRefSuggestions,
@@ -12,13 +12,13 @@ import {
 } from '@lib/services/localApi/searchService';
 
 interface Props {
-  onChange?: (metadataFilters: TextQueryMetadataFilters) => void
+  onChange?: (metadataFilters: Partial<TextQueryMetadataFilters>) => void
 }
 
 const MetadataFilters: React.FC<Props> = ({ onChange }) => {
-  const [metadataFilters, setMetadataFilters] = useState<TextQueryMetadataFilters>({});
+  const [metadataFilters, setMetadataFilters] = useState<Partial<TextQueryMetadataFilters>>({});
 
-  const handleMetadataFilterChange = (nodeLabel: NodeLabel) => (value: string) => {
+  const handleMetadataFilterChange = (nodeLabel: MetadataLabel) => (value: string) => {
     const newMetadataFilters = {
       ...metadataFilters,
       [nodeLabel]: value

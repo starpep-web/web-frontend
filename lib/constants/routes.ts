@@ -9,14 +9,13 @@ export const ROUTES = {
   help: '/help',
   search: '/search',
   statistics: '/statistics',
-  statisticsPlayground: '/statistics/playground',
   tools: '/tools',
   downloads: '/downloads'
 };
 
 export const DYNAMIC_ROUTES = {
   peptide: (sequence: string) => `/peptide/${sequence}`,
-  textQuery: (query: string, regexEnabled: boolean, metadataFilters: TextQueryMetadataFilters = {}, page: number = 1) => {
+  textQuery: (query: string, regexEnabled: boolean, metadataFilters: Partial<TextQueryMetadataFilters> = {}, page: number = 1) => {
     const params = new URLSearchParams({
       query,
       ...metadataFilters,
@@ -24,9 +23,5 @@ export const DYNAMIC_ROUTES = {
       regex: regexEnabled ? 'true' : 'false'
     });
     return `/search/text-query?${params.toString()}`;
-  },
-  statisticsPlayground: (queryParams?: Record<string, string>) => {
-    const params = new URLSearchParams(queryParams ?? {});
-    return `${ROUTES.statisticsPlayground}?${params.toString()}`;
   }
 };

@@ -43,15 +43,16 @@ interface Props {
   data: NumericDataProp
   yTitle?: string
   xTitle?: string
+  showLegend?: boolean
 }
 
-const BarChart: React.FC<Props> = ({ id, data, yTitle, xTitle }) => {
+const BarChart: React.FC<Props> = ({ id, data, yTitle, xTitle, showLegend }) => {
   const options = {
     maintainAspectRatio: false,
     responsive: true,
     plugins: {
       legend: {
-        display: false
+        display: showLegend ?? false
       }
     },
     scales: {

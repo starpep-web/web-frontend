@@ -1,7 +1,7 @@
-import { FrequencyFilterType } from '@lib/services/graphDb/statisticsService';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { MetadataLabel } from '@lib/models/peptide';
 
-export const metadataFilterIcons: Record<FrequencyFilterType, IconProp> = {
+export const metadataFilterIcons: Record<MetadataLabel, IconProp> = {
   Database: 'database',
   Function: 'atom',
   Origin: 'star-of-life',

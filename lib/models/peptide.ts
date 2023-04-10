@@ -50,7 +50,8 @@ export type FullPeptide = Peptide & {
   metadata: PeptideMetadata
 }
 
-export type TextQueryMetadataFilters = Partial<Record<NodeLabel, string>>;
+export type MetadataLabel = Exclude<NodeLabel, 'Peptide'>;
+export type TextQueryMetadataFilters = Record<MetadataLabel, string>;
 
 export const getPeptideId = (identifier: number) => {
   const formattedNumber = identifier.toLocaleString('en-US', {
