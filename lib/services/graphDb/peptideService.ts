@@ -45,7 +45,7 @@ export const getPeptideBySequence = async (sequence: string): Promise<FullPeptid
 };
 
 // Return TRUE if empty so the cypher query contains an AND TRUE filter clause.
-const parseSearchFilter = (filters?: TextQueryMetadataFilters): string => {
+const parseSearchFilter = (filters?: Partial<TextQueryMetadataFilters>): string => {
   if (!filters || !Object.values(filters).length) {
     return 'TRUE';
   }
@@ -71,7 +71,7 @@ export const searchPeptidesTextQuery = async (sequence: string, limit: number, s
   });
 };
 
-export const searchPeptidesTextQueryPaginated = async (sequence: string, page: number, filters?: TextQueryMetadataFilters, limit = 50): Promise<WithPagination<Peptide[]>> => {
+export const searchPeptidesTextQueryPaginated = async (sequence: string, page: number, filters?: Partial<TextQueryMetadataFilters>, limit = 50): Promise<WithPagination<Peptide[]>> => {
   const start = (page - 1) * limit;
   const sanitizedFilter = parseSearchFilter(filters);
 
@@ -102,7 +102,7 @@ export const searchPeptidesRegexQuery = async (regex: string, limit: number, ski
   });
 };
 
-export const searchPeptidesRegexQueryPaginated = async (regex: string, page: number, filters?: TextQueryMetadataFilters, limit = 50): Promise<WithPagination<Peptide[]>> => {
+export const searchPeptidesRegexQueryPaginated = async (regex: string, page: number, filters?: Partial<TextQueryMetadataFilters>, limit = 50): Promise<WithPagination<Peptide[]>> => {
   const start = (page - 1) * limit;
   const sanitizedFilter = parseSearchFilter(filters);
 

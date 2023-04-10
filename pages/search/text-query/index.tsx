@@ -17,7 +17,7 @@ interface ServerSideProps {
 
   peptides: Peptide[]
   pagination: Pagination
-  metadataFilters: TextQueryMetadataFilters
+  metadataFilters: Partial<TextQueryMetadataFilters>
 }
 
 interface Props extends ServerSideProps {
@@ -60,7 +60,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
   const pageString = Array.isArray(pageParam) ? pageParam[0] : pageParam;
   const page = pageString ? parseInt(pageString, 10) : 1;
 
-  const metadataFilters: TextQueryMetadataFilters = Object.fromEntries(Object.entries(metadataFiltersParams).map(([nodeLabel, value]) => {
+  const metadataFilters: Partial<TextQueryMetadataFilters> = Object.fromEntries(Object.entries(metadataFiltersParams).map(([nodeLabel, value]) => {
     return [nodeLabel, Array.isArray(value) ? value[0] : value];
   }));
 

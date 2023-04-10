@@ -12,7 +12,7 @@ const TextQueryPeptideSearchBox = () => {
   const router = useRouter();
   const [query, setQuery] = useState<string>('');
   const [regexEnabled, setRegexEnabled] = useState<boolean>(false);
-  const [metadataFilters, setMetadataFilters] = useState<TextQueryMetadataFilters>({});
+  const [metadataFilters, setMetadataFilters] = useState<Partial<TextQueryMetadataFilters>>({});
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const TextQueryPeptideSearchBox = () => {
     setRegexEnabled(event.target.checked);
   };
 
-  const handleMetadataFiltersChange = (metadataFilters: TextQueryMetadataFilters) => {
+  const handleMetadataFiltersChange = (metadataFilters: Partial<TextQueryMetadataFilters>) => {
     setMetadataFilters(metadataFilters);
   };
 
