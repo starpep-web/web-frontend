@@ -56,6 +56,10 @@ const FullFilterPicker: React.FC<Props> = ({ loading, onSubmit }) => {
           Apply Filter
         </Button>
       </Block>
+
+      <p>
+        * Leave any filter empty to compare the frequencies from the whole database.
+      </p>
     </Block>
   );
 };
