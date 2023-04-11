@@ -1,4 +1,4 @@
-export const ATOM_STYLES = ['line', 'cross', 'stick', 'sphere', 'cartoon', 'clicksphere'] as const;
+export const ATOM_STYLES = ['line', 'cross', 'stick', 'sphere', 'cartoon'] as const;
 export type AtomStyle = typeof ATOM_STYLES[number];
 
 export const COLOR_SCHEMES = [

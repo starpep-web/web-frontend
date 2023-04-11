@@ -4,9 +4,15 @@
   left: 10px;
   z-index: 10;
 
+  width: 20%;
   background-color: #e5e5e5;
 
   display: flex;
   gap: 1rem;
   flex-direction: column;
+}
+
+.optionsDropdown {
+  margin: 0;
+  width: 100%;
 }
