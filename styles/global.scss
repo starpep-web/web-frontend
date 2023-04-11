@@ -3,6 +3,10 @@ html, body, #__next {
   height: 1px; // Weird hack to cascade down height while only having min-height specified.
 }
 
+.pos-relative {
+  position: relative;
+}
+
 .absolute-center {
   position: absolute !important;
   top: 50%;
@@ -12,4 +16,25 @@ html, body, #__next {
 
 .w-100 {
   width: 100%;
+}
+
+.mw-100 {
+  min-width: 100%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.mh-100 {
+  min-height: 100%;
+}
+
+.align-center {
+  text-align: center;
+}
+
+ul.ul-bullets {
+  list-style-type: initial;
+  padding-left: 2em;
 }

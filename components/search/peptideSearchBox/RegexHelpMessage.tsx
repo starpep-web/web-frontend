@@ -28,7 +28,7 @@ const RegexHelpMessage: React.FC<Props> = ({ show = true }) => {
           Some examples that you can use:
         </Heading>
 
-        <ul style={{ listStyleType: 'initial', paddingLeft: '2em' }}>
+        <ul className="ul-bullets">
           <li>
             <code>^A.*</code> - Lists all peptides that begin with the <code>A</code> amino acid.
           </li>

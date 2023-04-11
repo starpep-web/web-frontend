@@ -10,6 +10,7 @@ import {
   getFunctionSuggestions, getNTerminusSuggestions,
   getOriginSuggestions, getTargetSuggestions, getUnusualAASuggestions
 } from '@lib/services/localApi/searchService';
+import styles from './PeptideSearchBox.module.scss';
 
 interface Props {
   onChange?: (metadataFilters: Partial<TextQueryMetadataFilters>) => void
@@ -100,7 +101,7 @@ const MetadataFilters: React.FC<Props> = ({ onChange }) => {
               Modified By
             </Form.Label>
 
-            <Form.Field kind="group" style={{ gap: '3rem' }}>
+            <Form.Field kind="group" className={styles.multiColumnMetadataFilter}>
               <DebouncedInfiniteSearchInput
                 dataFetch={getCTerminusSuggestions}
                 onChange={handleMetadataFilterChange('Cterminus')}

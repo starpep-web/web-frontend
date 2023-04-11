@@ -42,7 +42,7 @@ const FullFilterPicker: React.FC<Props> = ({ loading, onSubmit }) => {
 
   return (
     <Block mt={6}>
-      <Heading style={{ textAlign: 'center' }} size={5}>
+      <Heading className="align-center" size={5}>
         Pick a Filter for this Graph
       </Heading>
 
@@ -51,7 +51,7 @@ const FullFilterPicker: React.FC<Props> = ({ loading, onSubmit }) => {
         <SingleFilterPicker title="Right Filter" initialType={initialType} position="right" onChange={handleFilterChange} />
       </Block>
 
-      <Block style={{ textAlign: 'center' }}>
+      <Block className="align-center">
         <Button color="primary" className="w-100" onClick={handleSubmit} loading={loading} disabled={loading}>
           Apply Filter
         </Button>

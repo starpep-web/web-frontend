@@ -54,7 +54,7 @@ const SingleFilterPicker: React.FC<Props> = ({ title, initialType, position, onC
 
   return (
     <div className={clsx(styles.flexExpand, 'mb-4')}>
-      <Heading style={{ textAlign: 'center' }} size={6}>
+      <Heading className="align-center" size={6}>
         {title}
       </Heading>
 
