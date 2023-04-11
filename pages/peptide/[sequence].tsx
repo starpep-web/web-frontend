@@ -10,7 +10,7 @@ import { PeptideDownloads } from '@components/peptide/peptideDownloads';
 import { PeptideMetadata } from '@components/peptide/peptideMetadata';
 import { getPeptideBySequence } from '@lib/services/graphDb/peptideService';
 import { FullPeptide } from '@lib/models/peptide';
-import { getPeptidePdbContent } from '@lib/services/downloadServer/peptide';
+import { getPeptidePdbContentFromServer } from '@lib/services/downloadServer/peptide';
 
 interface ServerSideProps {
   peptide: FullPeptide
@@ -48,7 +48,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
     };
   }
 
-  const pdbString = await getPeptidePdbContent(peptide.id);
+  const pdbString = await getPeptidePdbContentFromServer(peptide.id);
 
   return {
     props: {
