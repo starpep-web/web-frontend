@@ -45,12 +45,12 @@ const PdbViewer: React.FC<Props> = ({
     setLoading(true);
 
     const load = async () => {
+      // This import injects an object to the window object. We need to import this inside an effect.
+      const { createViewer } = await import('3dmol');
+
       if (viewerRef.current) {
         return;
       }
-
-      // This import injects an object to the window object. We need to import this inside an effect.
-      const { createViewer } = await import('3dmol');
 
       viewerRef.current = createViewer(containerRef.current!);
       viewerRef.current.addModel(pdb, 'pdb');
@@ -65,12 +65,14 @@ const PdbViewer: React.FC<Props> = ({
 
     return () => {
       viewerRef.current?.clear();
+      viewerRef.current = null;
       containerRef.current?.replaceChildren();
     };
   }, [pdb]);
 
   useEffect(() => {
     viewerRef.current?.setStyle({}, createStyle(style, color));
+    viewerRef.current?.render();
   }, [style, color]);
 
   useEffect(() => {
