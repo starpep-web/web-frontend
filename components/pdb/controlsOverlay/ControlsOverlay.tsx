@@ -4,6 +4,9 @@ import { Dropdown } from '@components/form/dropdown';
 import { AtomStyle, ColorScheme, ATOM_STYLES, COLOR_SCHEMES } from '@components/pdb/pdbViewer/types';
 import styles from './ControlsOverlay.module.scss';
 
+const sortedStyles = ATOM_STYLES.map((s) => s).sort((a, b) => a.localeCompare(b));
+const sortedColors = COLOR_SCHEMES.map((s) => s).sort((a, b) => a.localeCompare(b));
+
 interface Props {
   defaultStyle?: AtomStyle
   defaultColor?: ColorScheme
@@ -45,7 +48,7 @@ const ControlsOverlay: React.FC<Props> = ({
           className={styles.optionsDropdown}
           value={defaultStyle as string}
           onChange={handleStyleChange}
-          options={ATOM_STYLES as unknown as string[]}
+          options={sortedStyles}
           // icon="filter"
         />
       </Block>
@@ -59,7 +62,7 @@ const ControlsOverlay: React.FC<Props> = ({
           className={styles.optionsDropdown}
           value={defaultColor as string}
           onChange={handleColorChange}
-          options={COLOR_SCHEMES as unknown as string[]}
+          options={sortedColors}
           // icon="filter"
         />
       </Block>
