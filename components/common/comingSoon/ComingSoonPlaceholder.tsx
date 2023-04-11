@@ -8,7 +8,7 @@ interface Props {
 
 const ComingSoonPlaceholder: React.FC<Props> = ({ absoluteCenter }) => {
   return (
-    <Block className={clsx({ 'absolute-center': absoluteCenter })} style={{ textAlign: 'center' }}>
+    <Block className={clsx({ 'absolute-center': absoluteCenter }, 'align-center')}>
       <Notification color="gray">
         <Container>
           <Heading>
