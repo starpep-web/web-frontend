@@ -1,5 +1,6 @@
-import React, { ChangeEvent } from 'react';
-import { Heading, Block, Form } from 'react-bulma-components';
+import React from 'react';
+import { Heading, Block, Button, Icon } from 'react-bulma-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown } from '@components/form/dropdown';
 import { AtomStyle, ColorScheme, ATOM_STYLES, COLOR_SCHEMES } from '@components/pdb/pdbViewer/types';
 import styles from './ControlsOverlay.module.scss';
@@ -10,20 +11,18 @@ const sortedColors = COLOR_SCHEMES.map((s) => s).sort((a, b) => a.localeCompare(
 interface Props {
   defaultStyle?: AtomStyle
   defaultColor?: ColorScheme
-  defaultSpin?: boolean
 
   onStyleChange?: (style: AtomStyle) => void
   onColorChange?: (color: ColorScheme) => void
-  onSpinChange?: (spin: boolean) => void
+  onSpinToggle?: () => void
 }
 
 const ControlsOverlay: React.FC<Props> = ({
   defaultStyle,
   defaultColor,
-  defaultSpin,
   onStyleChange,
   onColorChange,
-  onSpinChange
+  onSpinToggle
 }) => {
   const handleStyleChange = (value: string) => {
     onStyleChange?.(value as AtomStyle);
@@ -33,8 +32,8 @@ const ControlsOverlay: React.FC<Props> = ({
     onColorChange?.(value as ColorScheme);
   };
 
-  const handleSpinChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onSpinChange?.(e.currentTarget.checked);
+  const handleSpinChange = () => {
+    onSpinToggle?.();
   };
 
   return (
@@ -68,14 +67,13 @@ const ControlsOverlay: React.FC<Props> = ({
       </Block>
 
       <Block>
-        <Heading className="align-center" size={6}>
-          Spin
-        </Heading>
+        <Button color="primary" onClick={handleSpinChange}>
+          <Icon align="left" size="sm" mr={2}>
+            <FontAwesomeIcon icon="rotate" />
+          </Icon>
 
-        <Form.Checkbox
-          defaultChecked={defaultSpin}
-          onChange={handleSpinChange}
-        />
+          Toggle Spin
+        </Button>
       </Block>
     </div>
   );

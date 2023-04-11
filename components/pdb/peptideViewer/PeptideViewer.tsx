@@ -15,6 +15,10 @@ const PeptideViewer: React.FC<Props> = ({ pdb, width, height }) => {
   const [color, setColor] = useState<ColorScheme>('default');
   const [spin, setSpin] = useState<boolean>(false);
 
+  const handleToggleSpin = () => {
+    setSpin(!spin);
+  };
+
   return (
     <PdbViewer pdb={pdb} width={width} height={height} style={style} color={color} spin={spin}>
       <ControlsOverlay
@@ -22,8 +26,7 @@ const PeptideViewer: React.FC<Props> = ({ pdb, width, height }) => {
         onStyleChange={setStyle}
         defaultColor={color}
         onColorChange={setColor}
-        defaultSpin={spin}
-        onSpinChange={setSpin}
+        onSpinToggle={handleToggleSpin}
       />
     </PdbViewer>
   );
