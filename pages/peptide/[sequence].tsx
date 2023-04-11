@@ -5,6 +5,7 @@ import { PageWrapper } from '@components/common/pageWrapper';
 import { PeptideGraph } from '@components/graphs/peptideGraph';
 import { PeptideTitle } from '@components/peptide/peptideTitle';
 import { PeptideInfo } from '@components/peptide/peptideInfo';
+import { PeptideDownloads } from '@components/peptide/peptideDownloads';
 import { PeptideMetadata } from '@components/peptide/peptideMetadata';
 import { getPeptideBySequence } from '@lib/services/graphDb/peptideService';
 import { FullPeptide } from '@lib/models/peptide';
@@ -26,6 +27,7 @@ const PeptidePage: React.FC<Props> = ({ peptide }) => {
       <PeptideGraph peptide={peptide} width="100%" height="100vh" />
 
       <PeptideInfo {...peptide} />
+      <PeptideDownloads id={peptide.id} />
       <PeptideMetadata metadata={peptide.metadata} />
     </PageWrapper>
   );
