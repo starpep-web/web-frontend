@@ -49,7 +49,7 @@ const ControlsOverlay: React.FC<Props> = ({
           value={defaultStyle as string}
           onChange={handleStyleChange}
           options={sortedStyles}
-          // icon="filter"
+          icon="shapes"
         />
       </Block>
 
@@ -63,7 +63,7 @@ const ControlsOverlay: React.FC<Props> = ({
           value={defaultColor as string}
           onChange={handleColorChange}
           options={sortedColors}
-          // icon="filter"
+          icon="palette"
         />
       </Block>
 
