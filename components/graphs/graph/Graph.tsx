@@ -2,12 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { BounceLoader } from 'react-spinners';
 import { Network, Data, Options, Node, Edge } from 'vis-network/esnext/umd/vis-network.min';
 import { DataSet } from 'vis-data/esnext/umd/vis-data.min';
+import clsx from 'clsx';
 
 const DEFAULT_WIDTH = 600;
 const DEFAULT_HEIGHT = 400;
 
 interface Props {
   children?: React.ReactNode
+  className?: string
 
   nodes: Node[]
   edges: Edge[]
@@ -25,6 +27,7 @@ interface Props {
 
 const Graph: React.FC<Props> = ({
   children,
+  className,
   nodes,
   edges,
   options,
@@ -81,7 +84,7 @@ const Graph: React.FC<Props> = ({
   }, [nodes, edges, options]);
 
   return (
-    <div className="pos-relative" style={{ width, height }}>
+    <div className={clsx('pos-relative', className)} style={{ width, height }}>
       <div ref={containerRef} className="w-100 h-100" />
       <BounceLoader className="absolute-center" loading={loading} />
       {

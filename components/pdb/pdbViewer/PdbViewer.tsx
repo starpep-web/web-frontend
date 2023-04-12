@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { BounceLoader } from 'react-spinners';
 import { GLViewer } from '3dmol/build/types/GLViewer';
 import { AtomStyle, ColorScheme } from '@components/pdb/pdbViewer/types';
+import clsx from 'clsx';
 
 const DEFAULT_WIDTH = 600;
 const DEFAULT_HEIGHT = 400;
@@ -10,6 +11,7 @@ const DEFAULT_COLOR: ColorScheme = 'default';
 
 interface Props {
   children?: React.ReactNode
+  className?: string
 
   pdb: string
 
@@ -29,6 +31,7 @@ const createStyle = (style: AtomStyle, color: ColorScheme) => {
 
 const PdbViewer: React.FC<Props> = ({
   children,
+  className,
   pdb,
   width = DEFAULT_WIDTH,
   height = DEFAULT_HEIGHT,
@@ -84,7 +87,7 @@ const PdbViewer: React.FC<Props> = ({
   }, [spin]);
 
   return (
-    <div className="pos-relative" style={{ width, height }}>
+    <div className={clsx('pos-relative', className)} style={{ width, height }}>
       <div ref={containerRef} className="w-100 h-100" />
       <BounceLoader className="absolute-center" loading={loading} />
 
