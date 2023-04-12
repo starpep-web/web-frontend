@@ -3,8 +3,7 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { PeptideTitle } from '@components/peptide/peptideTitle';
-import { PeptideGraph } from '@components/graphs/peptideGraph';
-import { PeptideViewer } from '@components/pdb/peptideViewer';
+import { PeptideVisualization } from '@components/peptide/peptideVisualization';
 import { PeptideInfo } from '@components/peptide/peptideInfo';
 import { PeptideDownloads } from '@components/peptide/peptideDownloads';
 import { PeptideMetadata } from '@components/peptide/peptideMetadata';
@@ -26,10 +25,8 @@ const PeptidePage: React.FC<Props> = ({ peptide, pdbString }) => {
     <PageWrapper>
       <PageMetadata title={peptide.sequence} />
 
-      <PeptideViewer pdb={pdbString} width="100%" height="100vh" />
-
       <PeptideTitle sequence={peptide.sequence} />
-      <PeptideGraph peptide={peptide} width="100%" height="100vh" />
+      <PeptideVisualization peptide={peptide} pdbString={pdbString} />
 
       <PeptideInfo {...peptide} />
       <PeptideDownloads id={peptide.id} />
