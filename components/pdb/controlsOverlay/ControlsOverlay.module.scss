@@ -1,3 +1,6 @@
+@use "sass:map";
+@import "../../../styles/variables.scss";
+
 .controlsOverlay {
   position: absolute;
   top: 10px;
@@ -6,10 +9,37 @@
 
   width: 20%;
   background-color: #e5e5e5;
+  padding: 1rem;
+  border-radius: 10px;
 
   display: flex;
   gap: 1rem;
   flex-direction: column;
+
+  @media (max-width: map.get($breakpoints, 'desktop-max')) {
+    width: 30%;
+  }
+
+  @media (max-width: map.get($breakpoints, 'tablet-max')) {
+    width: 40%;
+  }
+
+  @media (max-width: map.get($breakpoints, 'phone-max')) {
+    width: 100%;
+  }
+
+}
+
+.control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.controlLabel {
+  width: 25%;
+  margin-right: 5%;
+  color: #000;
 }
 
 .optionsDropdown {

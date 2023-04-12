@@ -1,8 +1,9 @@
 import React from 'react';
-import { Heading, Block, Button, Icon } from 'react-bulma-components';
+import { Button, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown } from '@components/form/dropdown';
 import { AtomStyle, ColorScheme, ATOM_STYLES, COLOR_SCHEMES } from '@components/pdb/pdbViewer/types';
+import clsx from 'clsx';
 import styles from './ControlsOverlay.module.scss';
 
 const sortedStyles = ATOM_STYLES.map((s) => s).sort((a, b) => a.localeCompare(b));
@@ -38,10 +39,10 @@ const ControlsOverlay: React.FC<Props> = ({
 
   return (
     <div className={styles.controlsOverlay}>
-      <Block>
-        <Heading className="align-center" size={6}>
+      <div className={styles.control}>
+        <span className={styles.controlLabel}>
           Style
-        </Heading>
+        </span>
 
         <Dropdown
           className={styles.optionsDropdown}
@@ -50,12 +51,12 @@ const ControlsOverlay: React.FC<Props> = ({
           options={sortedStyles}
           icon="shapes"
         />
-      </Block>
+      </div>
 
-      <Block>
-        <Heading className="align-center" size={6}>
+      <div className={styles.control}>
+        <span className={styles.controlLabel}>
           Color
-        </Heading>
+        </span>
 
         <Dropdown
           className={styles.optionsDropdown}
@@ -64,17 +65,15 @@ const ControlsOverlay: React.FC<Props> = ({
           options={sortedColors}
           icon="palette"
         />
-      </Block>
+      </div>
 
-      <Block>
-        <Button color="primary" onClick={handleSpinChange}>
-          <Icon align="left" size="sm" mr={2}>
-            <FontAwesomeIcon icon="rotate" />
-          </Icon>
+      <Button className={clsx(styles.control, 'w-100')} color="primary" onClick={handleSpinChange}>
+        <Icon align="left" size="sm" mr={2}>
+          <FontAwesomeIcon icon="rotate" />
+        </Icon>
 
-          Toggle Spin
-        </Button>
-      </Block>
+        Toggle Spin
+      </Button>
     </div>
   );
 };
