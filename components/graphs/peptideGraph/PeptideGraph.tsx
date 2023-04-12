@@ -2,7 +2,9 @@ import React, { useMemo, useState } from 'react';
 import { Network, Node, Edge, Options, Color } from 'vis-network/esnext/umd/vis-network.min';
 import { Graph } from '../graph';
 import { ZoomOverlay } from '../zoomOverlay';
+import { FullScreenOverlay } from '@components/genericOverlays/fullScreenOverlay';
 import { FullPeptide, RelationshipLabel } from '@lib/models/peptide';
+import clsx from 'clsx';
 
 const createNodeColor = (background: string, highlight: string, border: string): Color => {
   return {
@@ -66,6 +68,7 @@ interface Props {
 
 const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
   const [network, setNetwork] = useState<Network | null>(null);
+  const [fullScreen, setFullScreen] = useState<boolean>(false);
   const minZoom = 0.25;
   const maxZoom = 2;
 
@@ -122,8 +125,13 @@ const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
     network?.moveTo({ scale: newScale });
   };
 
+  const handleFullScreenToggle = () => {
+    setFullScreen(!fullScreen);
+  };
+
   return (
     <Graph
+      className={clsx({ 'full-screen': fullScreen })}
       nodes={nodes}
       edges={edges}
       options={options}
@@ -135,6 +143,7 @@ const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
       onReady={handleReady}
     >
       <ZoomOverlay step={0.1} onChange={handleZoomChange} />
+      <FullScreenOverlay fullScreen={fullScreen} onToggle={handleFullScreenToggle} />
     </Graph>
   );
 };

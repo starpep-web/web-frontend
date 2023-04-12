@@ -1,13 +1,17 @@
 import axios from 'axios';
-import { DOWNLOAD_WEBSITE_URL } from '@lib/config';
+import { PUBLIC_DOWNLOADS_URL, SERVER_DOWNLOADS_URL } from '@lib/config';
 
-export const getPeptidePdbDownloadUrl = (starPepId: string) => {
-  return `${DOWNLOAD_WEBSITE_URL}/pdb/${starPepId}.pdb`;
+export const getPublicPeptidePdbDownloadUrl = (starPepId: string) => {
+  return `${PUBLIC_DOWNLOADS_URL}/pdb/${starPepId}.pdb`;
 };
 
-export const getPeptidePdbContent = async (starPepId: string): Promise<string> => {
+export const getServerPeptidePdbDownloadUrl = (starPepId: string) => {
+  return `${SERVER_DOWNLOADS_URL}/pdb/${starPepId}.pdb`;
+};
+
+export const getPeptidePdbContentFromServer = async (starPepId: string): Promise<string> => {
   try {
-    return (await axios.get(getPeptidePdbDownloadUrl(starPepId))).data;
+    return (await axios.get(getServerPeptidePdbDownloadUrl(starPepId))).data;
   } catch (error) {
     console.error(error);
     return '';

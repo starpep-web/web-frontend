@@ -2,7 +2,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import {
   faSearch, faDatabase, faAtom, faStarOfLife, faBullseye,
   faC, faN, faLinkSlash, faFileLines, faMagnifyingGlassPlus, faMagnifyingGlassMinus,
-  faFilter
+  faFilter, faPalette, faShapes, faRotate, faExpand, faCompress
 } from '@fortawesome/free-solid-svg-icons';
 
 const { config, library } = require('@fortawesome/fontawesome-svg-core');
@@ -13,5 +13,5 @@ config.autoAddCss = false;
 library.add(
   faSearch, faDatabase, faAtom, faStarOfLife, faBullseye,
   faC, faN, faLinkSlash, faFileLines, faMagnifyingGlassPlus, faMagnifyingGlassMinus,
-  faFilter
+  faFilter, faPalette, faShapes, faRotate, faExpand, faCompress
 );
