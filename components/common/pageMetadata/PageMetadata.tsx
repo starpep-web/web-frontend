@@ -13,7 +13,7 @@ interface Props {
 const PageMetadata: React.FC<Props> = ({ title, description, image, imageAlt }) => {
   const completeTitle = `${title} - ${SITE_TITLE}`;
   const descriptionText = description ?? DEFAULT_SITE_DESCRIPTION;
-  const imageUrl = image ?? `${WEBSITE_URL}/android-chrome-256x256.png`;
+  const imageUrl = image ?? `${WEBSITE_URL}/android-chrome-512x512.png`;
   const imageAltText = imageAlt ?? 'Peptide graph.';
 
   return (
@@ -28,8 +28,8 @@ const PageMetadata: React.FC<Props> = ({ title, description, image, imageAlt }) 
       <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
       <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
       <link rel="manifest" href="/site.webmanifest" />
-      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-      <meta name="msapplication-TileColor" content="#00aba9" />
+      <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#484848" />
+      <meta name="msapplication-TileColor" content="#ffffff" />
       <meta name="theme-color" content="#ffffff" />
 
       {/* OpenGraph meta tags. Spec available at: https://ogp.me/ */}
