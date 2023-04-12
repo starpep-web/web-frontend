@@ -13,8 +13,8 @@ interface Props {
 }
 
 const PeptideViewer: React.FC<Props> = ({ pdb, width, height }) => {
-  const [style, setStyle] = useState<AtomStyle>('stick');
-  const [color, setColor] = useState<ColorScheme>('default');
+  const [style, setStyle] = useState<AtomStyle>('cartoon');
+  const [color, setColor] = useState<ColorScheme>('ssJmol');
   const [spin, setSpin] = useState<boolean>(false);
   const [fullScreen, setFullScreen] = useState<boolean>(false);
 

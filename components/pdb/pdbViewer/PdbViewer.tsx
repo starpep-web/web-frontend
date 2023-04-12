@@ -6,8 +6,8 @@ import clsx from 'clsx';
 
 const DEFAULT_WIDTH = 600;
 const DEFAULT_HEIGHT = 400;
-const DEFAULT_STYLE: AtomStyle = 'stick';
-const DEFAULT_COLOR: ColorScheme = 'default';
+const DEFAULT_STYLE: AtomStyle = 'cartoon';
+const DEFAULT_COLOR: ColorScheme = 'ssJmol';
 
 interface Props {
   children?: React.ReactNode
