@@ -1,14 +1,14 @@
 import React from 'react';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
-import { ComingSoonPlaceholder } from '@components/common/comingSoon';
+import { ApplicationDownloads } from '@components/downloads/applicationDownloads';
 
 const DownloadsPage = () => {
   return (
     <PageWrapper>
       <PageMetadata title="Downloads" />
 
-      <ComingSoonPlaceholder absoluteCenter />
+      <ApplicationDownloads />
     </PageWrapper>
   );
 };

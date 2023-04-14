@@ -29,8 +29,8 @@ const PeptidePage: React.FC<Props> = ({ peptide, pdbString }) => {
       <PeptideVisualization peptide={peptide} pdbString={pdbString} />
 
       <PeptideInfo {...peptide} />
-      <PeptideDownloads id={peptide.id} />
       <PeptideMetadata metadata={peptide.metadata} />
+      <PeptideDownloads id={peptide.id} />
     </PageWrapper>
   );
 };
