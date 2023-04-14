@@ -17,3 +17,7 @@ export const getPeptidePdbContentFromServer = async (starPepId: string): Promise
     return '';
   }
 };
+
+export const getPublicPeptideFastaDownloadUrl = (starPepId: string) => {
+  return `${PUBLIC_DOWNLOADS_URL}/fasta/${starPepId}.fasta`;
+};
