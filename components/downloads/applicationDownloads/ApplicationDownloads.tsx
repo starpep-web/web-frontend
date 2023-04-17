@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Button, Heading, Notification } from 'react-bulma-components';
-import { DOWNLOADS_PDB_ARCHIVE, DOWNLOADS_FASTA_ARCHIVE, DOWNLOADS_DB_ARCHIVES } from '@lib/constants/site';
+import { DOWNLOADS_PDB_ARCHIVE, DOWNLOADS_FASTA_ARCHIVE, DOWNLOADS_DB_ARCHIVES, DOWNLOADS_FULL_FASTA, DOWNLOADS_FULL_METADATA_CSV } from '@lib/constants/site';
 import styles from './ApplicationDownloads.module.scss';
 
 const ApplicationDownloads = () => {
@@ -18,6 +18,22 @@ const ApplicationDownloads = () => {
 
           <Button color="primary" renderAs="a" href={DOWNLOADS_FASTA_ARCHIVE} target="_blank">
             FASTA Archive
+          </Button>
+        </div>
+      </Notification>
+
+      <Notification color="gray">
+        <Heading size={3}>
+          Full Files
+        </Heading>
+
+        <div className={styles.buttonsContainer}>
+          <Button color="primary" renderAs="a" href={DOWNLOADS_FULL_FASTA} target="_blank">
+            Full FASTA
+          </Button>
+
+          <Button color="primary" renderAs="a" href={DOWNLOADS_FULL_METADATA_CSV} target="_blank">
+            Full Metadata CSV
           </Button>
         </div>
       </Notification>
