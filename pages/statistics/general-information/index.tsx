@@ -3,6 +3,7 @@ import { GetServerSidePropsResult } from 'next';
 import { Columns } from 'react-bulma-components';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
+import { StatisticsTabs } from '@components/statistics/statisticsTabs';
 import { NumberStatistic } from '@components/statistics/numberStatistic';
 import { BarChart } from '@components/statistics/charts';
 import { WithTitledBox } from '@components/common/withTitledBox';
@@ -24,6 +25,8 @@ const GeneralInformationStatisticsPage: React.FC<Props> = ({ statistics }) => {
   return (
     <PageWrapper>
       <PageMetadata title="Statistics" />
+
+      <StatisticsTabs />
 
       <NumberStatistic title="1. Total Peptides" value={statistics.count} />
       <NumberStatistic title="2. Total Peptides with Unusual AA's" value={statistics.unusualCount} />
