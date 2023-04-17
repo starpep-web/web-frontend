@@ -21,3 +21,7 @@ export const getPeptidePdbContentFromServer = async (starPepId: string): Promise
 export const getPublicPeptideFastaDownloadUrl = (starPepId: string) => {
   return `${PUBLIC_DOWNLOADS_URL}/fasta/${starPepId}.fasta`;
 };
+
+export const getPublicPeptideMetadataCsvDownloadUrl = (starPepId: string) => {
+  return `${PUBLIC_DOWNLOADS_URL}/csv/metadata/${starPepId}.csv`;
+};

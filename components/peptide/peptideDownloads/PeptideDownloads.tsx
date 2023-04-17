@@ -1,6 +1,6 @@
 import React from 'react';
 import { Block, Notification, Heading, Button } from 'react-bulma-components';
-import { getPublicPeptidePdbDownloadUrl, getPublicPeptideFastaDownloadUrl } from '@lib/services/downloadServer/peptide';
+import { getPublicPeptidePdbDownloadUrl, getPublicPeptideFastaDownloadUrl, getPublicPeptideMetadataCsvDownloadUrl } from '@lib/services/downloadServer/peptide';
 import styles from './PeptideDownloads.module.scss';
 
 interface Props {
@@ -22,6 +22,10 @@ const PeptideDownloads: React.FC<Props> = ({ id }) => {
 
           <Button color="primary" renderAs="a" href={getPublicPeptideFastaDownloadUrl(id)} target="_blank">
             Sequence (.fasta)
+          </Button>
+
+          <Button color="primary" renderAs="a" href={getPublicPeptideMetadataCsvDownloadUrl(id)} target="_blank">
+            Metadata (.csv)
           </Button>
         </div>
       </Notification>
