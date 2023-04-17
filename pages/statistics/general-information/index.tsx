@@ -24,7 +24,7 @@ const GeneralInformationStatisticsPage: React.FC<Props> = ({ statistics }) => {
 
   return (
     <PageWrapper>
-      <PageMetadata title="Statistics" />
+      <PageMetadata title="Statistics - General Information" />
 
       <StatisticsTabs />
 
