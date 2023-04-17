@@ -11,3 +11,5 @@ export const DOWNLOADS_FASTA_ARCHIVE = `${PUBLIC_DOWNLOADS_URL}/zip/StarPepFASTA
 export const DOWNLOADS_DB_ARCHIVES = {
   ORIGINAL: `${PUBLIC_DOWNLOADS_URL}/db/StarPepDB-original.zip`
 };
+export const DOWNLOADS_FULL_FASTA = `${PUBLIC_DOWNLOADS_URL}/full/StarPepFASTA-Full.fasta`;
+export const DOWNLOADS_FULL_METADATA_CSV = `${PUBLIC_DOWNLOADS_URL}/full/StarPep-Metadata-Full.csv`;
