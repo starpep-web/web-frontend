@@ -6,11 +6,11 @@ import { PageMetadata } from '@components/common/pageMetadata';
 import { StatisticsTabs } from '@components/statistics/statisticsTabs';
 import { WithTitledBox } from '@components/common/withTitledBox';
 import { BarChart } from '@components/statistics/charts';
-import { DatabaseStatistics } from '@lib/models/statistics';
-import { getDatabaseStatistics } from '@lib/services/graphDb/statisticsService';
+import { DatabaseMetadataStatistics } from '@lib/models/statistics';
+import { getDatabaseMetadataStatistics } from '@lib/services/graphDb/statisticsService';
 
 interface ServerSideProps {
-  statistics: DatabaseStatistics
+  statistics: DatabaseMetadataStatistics
 }
 
 interface Props extends ServerSideProps {
@@ -86,7 +86,7 @@ const MetadataStatisticsPage: React.FC<Props> = ({ statistics }) => {
 };
 
 export const getServerSideProps = async (): Promise<GetServerSidePropsResult<ServerSideProps>> => {
-  const statistics = await getDatabaseStatistics();
+  const statistics = await getDatabaseMetadataStatistics();
 
   return {
     props: {

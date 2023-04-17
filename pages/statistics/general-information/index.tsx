@@ -5,11 +5,11 @@ import { PageWrapper } from '@components/common/pageWrapper';
 import { StatisticsTabs } from '@components/statistics/statisticsTabs';
 import { NumberStatistic } from '@components/statistics/numberStatistic';
 import { AminoAcidDistributionDynamicChart } from '@components/statistics/concreteCharts/aminoAcidDistributionDynamicChart';
-import { DatabaseStatistics } from '@lib/models/statistics';
-import { getDatabaseStatistics } from '@lib/services/graphDb/statisticsService';
+import { DatabaseGeneralInformationStatistics } from '@lib/models/statistics';
+import { getDatabaseGeneralInformationStatistics } from '@lib/services/graphDb/statisticsService';
 
 interface ServerSideProps {
-  statistics: DatabaseStatistics
+  statistics: DatabaseGeneralInformationStatistics
 }
 
 interface Props extends ServerSideProps {
@@ -36,7 +36,7 @@ const GeneralInformationStatisticsPage: React.FC<Props> = ({ statistics }) => {
 };
 
 export const getServerSideProps = async (): Promise<GetServerSidePropsResult<ServerSideProps>> => {
-  const statistics = await getDatabaseStatistics();
+  const statistics = await getDatabaseGeneralInformationStatistics();
 
   return {
     props: {
