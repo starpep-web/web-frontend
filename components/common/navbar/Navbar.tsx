@@ -4,11 +4,18 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { ROUTES } from '@lib/constants/routes';
+import styles from './Navbar.module.scss';
 
 const navbarItems = [
   { text: 'Home', href: ROUTES.home },
   { text: 'Search', href: ROUTES.search },
-  { text: 'Statistics', href: ROUTES.statistics },
+  { text: 'Statistics', href: ROUTES.statistics,
+    innerItems: [
+      { text: 'General Information', href: ROUTES.statisticsGeneralInformation },
+      { text: 'Metadata', href: ROUTES.statisticsMetadata },
+      { text: 'Features', href: ROUTES.statisticsFeatures }
+    ]
+  },
   { text: 'Tools', href: ROUTES.tools },
   { text: 'Downloads', href: ROUTES.downloads },
   { text: 'FAQ', href: ROUTES.faq },
@@ -53,10 +60,27 @@ const Navbar: React.FC<Props> = ({ isErrorPage }) => {
       <BulmaNavbar.Menu className={clsx({ 'is-active': open })}>
         <BulmaNavbar.Container>
           {
-            navbarItems.map(({ text, href }) => (
-              <BulmaNavbar.Item key={href} renderAs={Link} href={href} active={isItemActive(href)}>
-                {text}
-              </BulmaNavbar.Item>
+            navbarItems.map(({ text, href, innerItems }) => (
+              innerItems ? (
+                <BulmaNavbar.Item key={href} hoverable>
+                  <BulmaNavbar.Link renderAs={Link} href={href} className={clsx({ [styles.dropdownItemActive]: isItemActive(href) })}>
+                    {text}
+                  </BulmaNavbar.Link>
+                  <BulmaNavbar.Dropdown>
+                    {
+                      innerItems.map(({ text, href }) => (
+                        <BulmaNavbar.Item key={href} renderAs={Link} href={href} active={isItemActive(href)}>
+                          {text}
+                        </BulmaNavbar.Item>
+                      ))
+                    }
+                  </BulmaNavbar.Dropdown>
+                </BulmaNavbar.Item>
+              ) : (
+                <BulmaNavbar.Item key={href} renderAs={Link} href={href} active={isItemActive(href)}>
+                  {text}
+                </BulmaNavbar.Item>
+              )
             ))
           }
         </BulmaNavbar.Container>

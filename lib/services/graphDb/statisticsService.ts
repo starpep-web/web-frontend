@@ -1,6 +1,6 @@
 import { Integer } from 'neo4j-driver';
 import { readTransaction } from './dbService';
-import { DatabaseStatistics, PartialRelationStatistics } from '@lib/models/statistics';
+import { DatabaseGeneralInformationStatistics, DatabaseMetadataStatistics, PartialRelationStatistics } from '@lib/models/statistics';
 import { createAlphabet } from '@lib/utils/array';
 import { BadRequestError } from '@lib/errors/http';
 
@@ -194,10 +194,17 @@ LIMIT $limit
   };
 };
 
-export const getDatabaseStatistics = async (partialsLimit = 25): Promise<DatabaseStatistics> => {
+export const getDatabaseGeneralInformationStatistics = async (): Promise<DatabaseGeneralInformationStatistics> => {
   return {
     count: await getPeptideCount(),
     unusualCount: await getUnusualCount(),
+    functionDistribution: await getPeptideFunctionDistribution(),
+    databaseDistribution: await getPeptideDatabaseDistribution()
+  };
+};
+
+export const getDatabaseMetadataStatistics = async (partialsLimit = 25): Promise<DatabaseMetadataStatistics> => {
+  return {
     lengthDistribution: await getPeptideLengthDistribution(),
     functionDistribution: await getPeptideFunctionDistribution(),
     databaseDistribution: await getPeptideDatabaseDistribution(),

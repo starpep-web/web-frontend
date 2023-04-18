@@ -5,9 +5,14 @@ export interface PartialRelationStatistics {
   partialSize: number
 }
 
-export interface DatabaseStatistics {
+export interface DatabaseGeneralInformationStatistics {
   count: number,
   unusualCount: number,
+  functionDistribution: Record<string, number>,
+  databaseDistribution: Record<string, number>
+}
+
+export interface DatabaseMetadataStatistics {
   lengthDistribution: Record<number, number>,
   functionDistribution: Record<string, number>,
   databaseDistribution: Record<string, number>,
