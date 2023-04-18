@@ -4,6 +4,8 @@ import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { StatisticsTabs } from '@components/statistics/statisticsTabs';
 import { NumberStatistic } from '@components/statistics/numberStatistic';
+import { WithTitledBox } from '@components/common/withTitledBox';
+import { StatisticsTable } from '@components/statistics/statisticsTable';
 import { AminoAcidDistributionDynamicChart } from '@components/statistics/concreteCharts/aminoAcidDistributionDynamicChart';
 import { DatabaseGeneralInformationStatistics } from '@lib/models/statistics';
 import { getDatabaseGeneralInformationStatistics } from '@lib/services/graphDb/statisticsService';
@@ -27,6 +29,14 @@ const GeneralInformationStatisticsPage: React.FC<Props> = ({ statistics }) => {
 
       <NumberStatistic title="1. Total Peptides" value={statistics.count} />
       <NumberStatistic title="2. Total Peptides with Unusual AA's" value={statistics.unusualCount} />
+
+      <WithTitledBox title="3. Peptide Distribution by Function">
+        <StatisticsTable data={statistics.functionDistribution} headers={['Function', 'Count']} />
+      </WithTitledBox>
+
+      <WithTitledBox title="4. Peptide Distribution by Database">
+        <StatisticsTable data={statistics.databaseDistribution} headers={['Database', 'Count']} />
+      </WithTitledBox>
 
       <hr />
 

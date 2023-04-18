@@ -7,7 +7,9 @@ export interface PartialRelationStatistics {
 
 export interface DatabaseGeneralInformationStatistics {
   count: number,
-  unusualCount: number
+  unusualCount: number,
+  functionDistribution: Record<string, number>,
+  databaseDistribution: Record<string, number>
 }
 
 export interface DatabaseMetadataStatistics {

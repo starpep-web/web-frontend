@@ -197,7 +197,9 @@ LIMIT $limit
 export const getDatabaseGeneralInformationStatistics = async (): Promise<DatabaseGeneralInformationStatistics> => {
   return {
     count: await getPeptideCount(),
-    unusualCount: await getUnusualCount()
+    unusualCount: await getUnusualCount(),
+    functionDistribution: await getPeptideFunctionDistribution(),
+    databaseDistribution: await getPeptideDatabaseDistribution()
   };
 };
 
