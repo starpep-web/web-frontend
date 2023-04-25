@@ -1,6 +1,5 @@
 import React from 'react';
 import { AppProps } from 'next/app';
-import 'bulma/css/bulma.min.css';
 import '@styles/main.scss';
 import '@lib/icons';
 
