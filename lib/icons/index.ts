@@ -4,6 +4,7 @@ import {
   faC, faN, faLinkSlash, faFileLines, faMagnifyingGlassPlus, faMagnifyingGlassMinus,
   faFilter, faPalette, faShapes, faRotate, faExpand, faCompress
 } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 
 const { config, library } = require('@fortawesome/fontawesome-svg-core');
 
@@ -13,5 +14,5 @@ config.autoAddCss = false;
 library.add(
   faSearch, faDatabase, faAtom, faStarOfLife, faBullseye,
   faC, faN, faLinkSlash, faFileLines, faMagnifyingGlassPlus, faMagnifyingGlassMinus,
-  faFilter, faPalette, faShapes, faRotate, faExpand, faCompress
+  faFilter, faPalette, faShapes, faRotate, faExpand, faCompress, fab
 );
