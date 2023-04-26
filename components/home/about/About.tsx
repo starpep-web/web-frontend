@@ -17,7 +17,7 @@ const About = () => {
         </Content>
       </Columns.Column>
       <Columns.Column>
-        <BulmaImage src="/images/lab.png" />
+        <BulmaImage src="/static/images/lab.png" />
       </Columns.Column>
     </Columns>
   );

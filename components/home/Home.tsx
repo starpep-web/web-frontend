@@ -9,7 +9,7 @@ const Home = () => {
     <Fragment>
       <Hero className={styles.hero}>
         <Hero.Body>
-          <img alt="db-sources" src="/background/db-background.jpeg" />
+          <img alt="db-sources" src="/static/background/db-background.jpeg" />
           <Section className={styles['hero-text']}>
             <Heading size={5} subtitle>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lorem arcu, ullamcorper at erat sit amet, imperdiet tristique ante. Donec

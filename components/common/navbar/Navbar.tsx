@@ -49,7 +49,7 @@ const Navbar: React.FC<Props> = ({ isErrorPage }) => {
         <BulmaNavbar.Item renderAs={Link} href={ROUTES.home} className={styles['full-app-logo']}>
           <img
             alt="app logo"
-            src="/logo/full-logo.svg"
+            src="/static/logo/full-logo.svg"
           />
         </BulmaNavbar.Item>
 

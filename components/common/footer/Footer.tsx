@@ -11,7 +11,7 @@ const Footer = () => {
       <Container>
         <Level className={styles['footer-content']}>
           <Level.Side align="left" className={styles.brand}>
-            <img src="/logo/full-logo.svg" alt="app-logo" />
+            <img src="/static/logo/full-logo.svg" alt="app-logo" />
             <span>Copyright © 2023</span>
           </Level.Side>
           <Level.Side align="right" className={styles.links}>
