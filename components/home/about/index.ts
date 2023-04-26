@@ -1,4 +1,4 @@
-import About from '@components/home/about/About';
+import About from './About';
 
 export {
   About

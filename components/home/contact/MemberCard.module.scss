@@ -1,0 +1,28 @@
+.member-card {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  width: 100%;
+  max-width: 250px;
+  height: 100%;
+  word-wrap: anywhere;
+  margin: 0 auto;
+
+  &:first-child img {
+    border-radius: 999px;
+    width: 100%;
+    max-width: 100px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    margin: 0 auto;
+  }
+
+  .card-content {
+    flex-grow: 1;
+    h2 {
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+}

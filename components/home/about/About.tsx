@@ -9,17 +9,16 @@ const About = () => {
         <Content size="large" className={styles.content}>
           <h1>About StarPep Web</h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec
-            rutrum justo nibh eu lectus. Ut vulputate semper dui.</p>
+            rutrum justo nibh eu lectus. Ut vulputate semper dui.
+          </p>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec
-            rutrum justo nibh eu lectus. Ut vulputate semper dui.</p>
+            rutrum justo nibh eu lectus. Ut vulputate semper dui.
+          </p>
         </Content>
       </Columns.Column>
       <Columns.Column>
         <BulmaImage src="/images/lab.png" />
       </Columns.Column>
-      {/* <div className={styles.image}> */}
-      {/*    */}
-      {/* </div> */}
     </Columns>
   );
 };
