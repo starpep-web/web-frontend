@@ -1,3 +1,11 @@
-.dropdownItemActive {
-  color: #0a0a0a;
-};
+.app-navbar {
+  padding: 16px 12px;
+
+  .dropdownItemActive {
+    color: #0a0a0a;
+  };
+
+  .full-app-logo {
+    width: 250px;
+  }
+}

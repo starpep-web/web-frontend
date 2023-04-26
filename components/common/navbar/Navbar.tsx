@@ -7,8 +7,9 @@ import { ROUTES } from '@lib/constants/routes';
 import styles from './Navbar.module.scss';
 
 const navbarItems = [
-  { text: 'Home', href: ROUTES.home },
   { text: 'Search', href: ROUTES.search },
+  { text: 'About', href: ROUTES.about },
+  { text: 'Contact', href: ROUTES.contact },
   { text: 'Statistics', href: ROUTES.statistics,
     innerItems: [
       { text: 'General Information', href: ROUTES.statisticsGeneralInformation },
@@ -19,9 +20,7 @@ const navbarItems = [
   { text: 'Tools', href: ROUTES.tools },
   { text: 'Downloads', href: ROUTES.downloads },
   { text: 'FAQ', href: ROUTES.faq },
-  { text: 'Help', href: ROUTES.help },
-  { text: 'About', href: ROUTES.about },
-  { text: 'Contact', href: ROUTES.contact }
+  { text: 'Help', href: ROUTES.help }
 ];
 
 interface Props {
@@ -45,12 +44,12 @@ const Navbar: React.FC<Props> = ({ isErrorPage }) => {
   };
 
   return (
-    <BulmaNavbar>
+    <BulmaNavbar className={styles['app-navbar']}>
       <BulmaNavbar.Brand>
-        <BulmaNavbar.Item renderAs={Link} href={ROUTES.home}>
+        <BulmaNavbar.Item renderAs={Link} href={ROUTES.home} className={styles['full-app-logo']}>
           <img
             alt="app logo"
-            src="/android-chrome-192x192.png"
+            src="/static/logo/full-logo.svg"
           />
         </BulmaNavbar.Item>
 
