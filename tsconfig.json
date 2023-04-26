@@ -9,7 +9,8 @@
       "@lib/*": ["lib/*"],
       "@pages/*": ["pages/*"],
       "@api/*": ["pages/api/*"],
-      "@styles/*": ["styles/*"]
+      "@styles/*": ["styles/*"],
+      "@static/*": ["public/static/*"]
     },
 
     "target": "es5",
