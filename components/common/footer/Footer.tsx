@@ -16,13 +16,13 @@ const Footer = () => {
           </Level.Side>
           <Level.Side align="right" className={styles.links}>
             <Link href={ROUTES.home}>Home</Link>
-            <Link href={ROUTES.about}>About</Link>
-            <Link href={ROUTES.search}>Search</Link>
             <Link href={ROUTES.contact}>Contact</Link>
+            <Link href={ROUTES.downloads}>Downloads</Link>
+            <Link href={ROUTES.search}>Search</Link>
             <Link href={ROUTES.statistics}>Statistics</Link>
             <Link href={ROUTES.help}>Help</Link>
+            <Link href={ROUTES.about}>About</Link>
             <Link href={ROUTES.tools}>Tools</Link>
-            <Link href={ROUTES.downloads}>Downloads</Link>
           </Level.Side>
         </Level>
         <div className={styles.socials}>
