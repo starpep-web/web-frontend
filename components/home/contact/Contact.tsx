@@ -10,7 +10,7 @@ import styles from './Contact.module.scss';
 
 const Contact: React.FC = () => {
   return (
-    <div className={styles.contact}>
+    <div className={styles.contact} id="contact">
       <Content size="medium" textAlign="center" className={styles['header-container']}>
         <h2 className={styles.header}>Meet our Team</h2>
       </Content>

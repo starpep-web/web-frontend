@@ -4,7 +4,7 @@ import styles from './About.module.scss';
 
 const About = () => {
   return (
-    <Columns className={styles.about} vCentered breakpoint="tablet">
+    <Columns className={styles.about} vCentered breakpoint="tablet" id="about">
       <Columns.Column>
         <Content size="small" className={styles.content}>
           <h1>About StarPep Web</h1>
