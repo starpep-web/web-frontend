@@ -45,7 +45,7 @@ const MemberCard: React.FC<Props> = ({ email, shortCV, occupation, name, avatar,
 
       <Modal show={isOpen} onClose={() => setIsOpen(false)}>
         <Modal.Card>
-          <Modal.Card.Header showClose={false} textWeight="bold">{name}</Modal.Card.Header>
+          <Modal.Card.Header showClose={false} textWeight="bold" backgroundColor="primary" />
           <Modal.Card.Body>
             <Content size="medium">
               <p>{shortCV}</p>
