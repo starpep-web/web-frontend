@@ -3,10 +3,11 @@
   flex-direction: column;
   padding: 16px;
   width: 100%;
-  max-width: 250px;
+  max-width: 350px;
   height: 100%;
   word-wrap: anywhere;
   margin: 0 auto;
+  white-space: pre-line;
 
   &:first-child img {
     border-radius: 999px;

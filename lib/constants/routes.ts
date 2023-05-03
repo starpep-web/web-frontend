@@ -3,8 +3,8 @@ import { TextQueryMetadataFilters } from '@lib/models/peptide';
 
 export const ROUTES = {
   home: '/',
-  about: '/about',
-  contact: '/contact',
+  about: '/#about',
+  contact: '/#contact',
   faq: '/faq',
   help: '/help',
   search: '/search',

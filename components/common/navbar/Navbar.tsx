@@ -44,7 +44,7 @@ const Navbar: React.FC<Props> = ({ isErrorPage }) => {
   };
 
   return (
-    <BulmaNavbar className={styles['app-navbar']}>
+    <BulmaNavbar className={styles['app-navbar']} backgroundColor="primary-light">
       <BulmaNavbar.Brand>
         <BulmaNavbar.Item renderAs={Link} href={ROUTES.home} className={styles['full-app-logo']}>
           <img
