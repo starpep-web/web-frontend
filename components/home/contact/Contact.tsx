@@ -6,6 +6,7 @@ import imageNoel from '@static/avatars/noel-perez.jpg';
 import imageLongendri from '@static/avatars/longendri-aguilera.jpg';
 import imageYovani from '@static/avatars/yovani-marrero.jpg';
 import imageEmpty from '@static/avatars/boy.png';
+import imageRoberto from '@static/avatars/roberto-cardenas.jpg';
 import styles from './Contact.module.scss';
 
 const Contact: React.FC = () => {
@@ -114,9 +115,16 @@ const Contact: React.FC = () => {
             <MemberCard
               name="Roberto Cárdenas"
               email="jroberto.cardenasm@gmail.com"
-              shortCV="Short CV Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dignissim ante sit amet quam dictum, pellentesque mattis arcu ornare. Morbi et mauris posuere"
-              avatar={imageEmpty.src}
-              occupation={<p>Frontend Developer, UI Designer</p>}
+              shortCV="Roberto Cárdenas graduated in Computer Science Engineering in January 2023 from Universidad San Francisco de Quito (USFQ). Determined to learn and improve, his goal is to develop successful applications. His current interest is based on web and software development. Experience: Front-end development for biomass transformation web repository (Inter-American Development Bank), intern in the digital architecture management department (Pichincha Corp S.A)"
+              avatar={imageRoberto.src}
+              occupation={
+                <Fragment>
+                  <p>Front-End Web Developer</p>
+                  <p>User Interface Design</p>
+                  <p>Freelancer</p>
+                  <p>Quito, 170147 Pichincha, Ecuador.</p>
+                </Fragment>
+              }
             />
           </Columns.Column>
           <Columns.Column size="one-third">
@@ -125,7 +133,12 @@ const Contact: React.FC = () => {
               email="clopeza@alumni.usfq.edu.ec"
               shortCV="Short CV Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dignissim ante sit amet quam dictum, pellentesque mattis arcu ornare. Morbi et mauris posuere"
               avatar={imageEmpty.src}
-              occupation={<p>Software Developer</p>}
+              occupation={
+                <Fragment>
+                  <p>Software Developer</p>
+                  <p>Quito, Pichincha, Ecuador.</p>
+                </Fragment>
+              }
             />
           </Columns.Column>
         </Columns>
