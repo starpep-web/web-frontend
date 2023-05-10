@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
-import styles from './Home.module.scss';
+import styles from './HomeContainer.module.scss';
 import { Heading, Hero, Section } from 'react-bulma-components';
-import { About } from '@components/home/about';
-import { Contact } from '@components/home/contact';
+import { About } from 'components/home/about';
+import { Contact } from 'components/home/contact';
 import { Carousel } from 'react-responsive-carousel';
 
 const carouselImages = [
@@ -11,7 +11,7 @@ const carouselImages = [
   { alt: 'db-sources', src: '/static/background/db-background-2.jpeg' }
 ];
 
-const Home = () => {
+const HomeContainer = () => {
   return (
     <Fragment>
       <Hero className={styles.hero}>
@@ -40,4 +40,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeContainer;
