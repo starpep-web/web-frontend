@@ -41,7 +41,7 @@ const GeneralInformationStatisticsPage: React.FC<Props> = ({ statistics, dbHeatm
         <StatisticsTable data={statistics.databaseDistribution} headers={['Database', 'Count']} />
       </WithTitledBox>
 
-      <WithTitledBox title="5. Database Intersection Heatmap" height={graphHeight * 2}>
+      <WithTitledBox title="5. Database Intersection Heatmap" height={graphHeight * 2} minWidth={graphHeight * 2} noTitleMargin>
         <HeatMap
           id="database-intersection-heatmap"
           normalizedData={dbHeatmap.data.relative}
