@@ -1,5 +1,3 @@
-import heatmapJson from './heatmapData.json';
-
 export interface DatabaseHeatmap {
   labels: {
     x: string[]
@@ -11,4 +9,6 @@ export interface DatabaseHeatmap {
   }
 }
 
-export const dbHeatmap: DatabaseHeatmap = heatmapJson;
+export const getDbHeatmap = async (): Promise<DatabaseHeatmap> => {
+  return (await import('./heatmapData.json')).default;
+};
