@@ -1,40 +1,74 @@
-import React, { Fragment, ReactNode, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Button, Card, Content, Modal } from 'react-bulma-components';
+import { TeamMember } from '@lib/data/contact';
 import styles from './MemberCard.module.scss';
 
-interface Props {
+interface Props extends TeamMember {
   className?: string
-  name: string
-  occupation?: ReactNode
-  email: string
-  shortCV: string
-  avatar: string
-  website?: string
-  phone?: string
 }
 
-const MemberCard: React.FC<Props> = ({ email, shortCV, occupation, name, avatar, className, website, phone }) => {
+const MemberCard: React.FC<Props> = ({
+  className,
+  name,
+  email,
+  shortCv,
+  avatarUrl,
+  website,
+  phone,
+  occupation,
+  affiliations,
+  location
+}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleClick = () => {
-    console.log('open');
     setIsOpen(true);
   };
 
   return (
     <Fragment>
       <Card className={`${styles['member-card']} ${className ? className : ''}`}>
-        <Card.Image src={avatar} alt="member-avatar" rounded />
+        <Card.Image src={avatarUrl} alt="member-avatar" rounded />
         <Card.Content className={styles['card-content']}>
-          <h2>{name}</h2>
-          {occupation}
-          <a href={`mailto:${email}`}>{email}</a>
-          {phone && (
-            <p>Phone: <a href={`tel:${phone}`}>{phone}</a></p>
-          )}
-          {website && (
-            <p><a href={website} target="_blank" rel="noreferrer">{website}</a></p>
-          )}
+          <h2>
+            {name}
+          </h2>
+
+          {
+            occupation && (
+              <p>
+                {occupation}
+              </p>
+            )
+          }
+
+          {
+            affiliations.length > 0 && (
+              affiliations.map((affiliation, idx) => (
+                <p key={idx}>
+                  {affiliation}
+                </p>
+              ))
+            )
+          }
+
+          <p>
+            {location}
+          </p>
+
+          <a href={`mailto:${email}`}>
+            {email}
+          </a>
+          {
+            phone && (
+              <p>Phone: <a href={`tel:${phone}`}>{phone}</a></p>
+            )
+          }
+          {
+            website && (
+              <p><a href={website} target="_blank" rel="noreferrer">{website}</a></p>
+            )
+          }
         </Card.Content>
         <Card.Footer>
           <Card.Footer.Item>
@@ -48,7 +82,7 @@ const MemberCard: React.FC<Props> = ({ email, shortCV, occupation, name, avatar,
           <Modal.Card.Header showClose={false} textWeight="bold" backgroundColor="primary" />
           <Modal.Card.Body>
             <Content size="medium">
-              <p>{shortCV}</p>
+              <p>{shortCv}</p>
             </Content>
           </Modal.Card.Body>
         </Modal.Card>
