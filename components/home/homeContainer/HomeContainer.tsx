@@ -1,24 +1,29 @@
 import React, { Fragment } from 'react';
-import styles from './Home.module.scss';
+import styles from './HomeContainer.module.scss';
 import { Heading, Hero, Section } from 'react-bulma-components';
-import { About } from '@components/home/about';
-import { Contact } from '@components/home/contact';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { About } from 'components/home/about';
+import { Contact } from 'components/home/contact';
 import { Carousel } from 'react-responsive-carousel';
 
-const Home = () => {
-  const carouselImages = [
-    <img key={0} alt="db-sources" src="/static/background/db-background.jpeg" />,
-    <img key={1} alt="db-sources" src="/static/background/db-background-1.jpeg" />,
-    <img key={2} alt="db-sources" src="/static/background/db-background-2.jpeg" />
-  ];
+const carouselImages = [
+  { alt: 'db-sources', src: '/static/background/db-background.jpeg' },
+  { alt: 'db-sources', src: '/static/background/db-background-1.jpeg' },
+  { alt: 'db-sources', src: '/static/background/db-background-2.jpeg' }
+];
+
+const HomeContainer = () => {
   return (
     <Fragment>
       <Hero className={styles.hero}>
         <Hero.Body>
           <Carousel>
-            {carouselImages}
+            {
+              carouselImages.map(({ alt, src }, idx) => (
+                <img key={idx} alt={alt} src={src} />
+              ))
+            }
           </Carousel>
+
           <Section className={styles['hero-text']}>
             <Heading size={5} subtitle>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras lorem arcu, ullamcorper at erat sit amet, imperdiet tristique ante. Donec
@@ -28,10 +33,11 @@ const Home = () => {
           </Section>
         </Hero.Body>
       </Hero>
+
       <About />
       <Contact />
     </Fragment>
   );
 };
 
-export default Home;
+export default HomeContainer;
