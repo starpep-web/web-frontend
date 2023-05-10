@@ -3,7 +3,6 @@ import styles from './Home.module.scss';
 import { Heading, Hero, Section } from 'react-bulma-components';
 import { About } from '@components/home/about';
 import { Contact } from '@components/home/contact';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 
 const Home = () => {
