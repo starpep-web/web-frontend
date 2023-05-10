@@ -6,19 +6,22 @@ import { StatisticsTabs } from '@components/statistics/statisticsTabs';
 import { NumberStatistic } from '@components/statistics/numberStatistic';
 import { WithTitledBox } from '@components/common/withTitledBox';
 import { StatisticsTable } from '@components/statistics/statisticsTable';
+import { HeatMap } from '@components/statistics/charts';
 import { AminoAcidDistributionDynamicChart } from '@components/statistics/concreteCharts/aminoAcidDistributionDynamicChart';
 import { DatabaseGeneralInformationStatistics } from '@lib/models/statistics';
 import { getDatabaseGeneralInformationStatistics } from '@lib/services/graphDb/statisticsService';
+import { DatabaseHeatmap, getDbHeatmap } from '@lib/data/dbHeatmap';
 
 interface ServerSideProps {
   statistics: DatabaseGeneralInformationStatistics
+  dbHeatmap: DatabaseHeatmap
 }
 
 interface Props extends ServerSideProps {
 
 }
 
-const GeneralInformationStatisticsPage: React.FC<Props> = ({ statistics }) => {
+const GeneralInformationStatisticsPage: React.FC<Props> = ({ statistics, dbHeatmap }) => {
   const graphHeight = 400;
 
   return (
@@ -38,6 +41,17 @@ const GeneralInformationStatisticsPage: React.FC<Props> = ({ statistics }) => {
         <StatisticsTable data={statistics.databaseDistribution} headers={['Database', 'Count']} />
       </WithTitledBox>
 
+      <WithTitledBox title="5. Database Intersection Heatmap" height={graphHeight * 2}>
+        <HeatMap
+          id="database-intersection-heatmap"
+          normalizedData={dbHeatmap.data.relative}
+          realData={dbHeatmap.data.absolute}
+          xLabels={dbHeatmap.labels.x}
+          yLabels={dbHeatmap.labels.y}
+          showValues={false}
+        />
+      </WithTitledBox>
+
       <hr />
 
       <AminoAcidDistributionDynamicChart height={graphHeight} />
@@ -47,10 +61,12 @@ const GeneralInformationStatisticsPage: React.FC<Props> = ({ statistics }) => {
 
 export const getServerSideProps = async (): Promise<GetServerSidePropsResult<ServerSideProps>> => {
   const statistics = await getDatabaseGeneralInformationStatistics();
+  const dbHeatmap = await getDbHeatmap();
 
   return {
     props: {
-      statistics
+      statistics,
+      dbHeatmap
     }
   };
 };
