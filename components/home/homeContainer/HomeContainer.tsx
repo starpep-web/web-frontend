@@ -16,7 +16,7 @@ const HomeContainer = () => {
     <Fragment>
       <Hero className={styles.hero}>
         <Hero.Body>
-          <Carousel>
+          <Carousel autoPlay interval={3000} infiniteLoop>
             {
               carouselImages.map(({ alt, src }, idx) => (
                 <img key={idx} alt={alt} src={src} />
