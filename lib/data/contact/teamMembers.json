@@ -93,13 +93,15 @@
   {
     "name": "Christian López",
     "role": "Developers",
-    "email": "clopeza@alumni.usfq.edu.ec",
-    "shortCv": "Short CV Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dignissim ante sit amet quam dictum, pellentesque mattis arcu ornare. Morbi et mauris posuere",
-    "avatarUrl": "/static/avatars/boy.png",
+    "email": "christian.lopez99@outlook.com",
+    "shortCv": "Christian López received a B.Eng. degree in computer science from Universidad San Francisco de Quito, Ecuador in 2023. His interests lie in the development of scalable software solutions with a focus on current technologies. Experience as a Full-Stack developer for a biomass transformation web repository (Inter-American Development Bank).",
+    "avatarUrl": "/static/avatars/christian-lopez.jpg",
     "website": null,
     "phone": null,
     "occupation": "Full-Stack Software Developer",
-    "affiliations": [],
+    "affiliations": [
+      "Freelancer"
+    ],
     "location": "Quito, Pichincha, Ecuador"
   }
 ]
