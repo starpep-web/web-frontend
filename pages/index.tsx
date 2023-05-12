@@ -6,7 +6,7 @@ import { HomeContainer } from 'components/home/homeContainer';
 const HomePage = () => {
   return (
     <PageWrapper>
-      <PageMetadata title="HomeContainer" />
+      <PageMetadata title="Home" />
 
       <HomeContainer />
     </PageWrapper>
