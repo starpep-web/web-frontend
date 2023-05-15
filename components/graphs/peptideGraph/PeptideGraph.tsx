@@ -102,13 +102,15 @@ const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
           });
         }
 
-        edges.push({
-          id: `${relationship}-${metadataValue}`,
-          label: relationship,
-          title: relationship,
-          from: peptide.sequence,
-          to: metadataValue
-        });
+        if (!edges.some((node) => node.id === `${relationship}-${metadataValue}`)) {
+          edges.push({
+            id: `${relationship}-${metadataValue}`,
+            label: relationship,
+            title: relationship,
+            from: peptide.sequence,
+            to: metadataValue
+          });
+        }
       });
     });
 
