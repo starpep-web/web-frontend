@@ -7,9 +7,10 @@ import { PeptideVisualization } from '@components/peptide/peptideVisualization';
 import { PeptideInfo } from '@components/peptide/peptideInfo';
 import { PeptideDownloads } from '@components/peptide/peptideDownloads';
 import { PeptideMetadata } from '@components/peptide/peptideMetadata';
+import { ShareButtons } from '@components/common/shareButtons';
 import { getPeptideBySequence } from '@lib/services/graphDb/peptideService';
 import { FullPeptide } from '@lib/models/peptide';
-import { getPeptidePdbContentFromServer } from '@lib/services/downloadServer/peptide';
+import { getPeptidePdbContentFromServer, getPublicPeptidePdbPreviewImageUrl } from '@lib/services/downloadServer/peptide';
 
 interface ServerSideProps {
   peptide: FullPeptide
@@ -23,7 +24,11 @@ interface Props extends ServerSideProps {
 const PeptidePage: React.FC<Props> = ({ peptide, pdbString }) => {
   return (
     <PageWrapper>
-      <PageMetadata title={peptide.sequence} />
+      <PageMetadata
+        title={peptide.sequence}
+        image={getPublicPeptidePdbPreviewImageUrl(peptide.id)}
+        imageAlt="Visualization of Peptide 3D Structure"
+      />
 
       <PeptideTitle sequence={peptide.sequence} />
       <PeptideVisualization peptide={peptide} pdbString={pdbString} />
@@ -31,6 +36,8 @@ const PeptidePage: React.FC<Props> = ({ peptide, pdbString }) => {
       <PeptideInfo {...peptide} />
       <PeptideMetadata metadata={peptide.metadata} />
       <PeptideDownloads id={peptide.id} />
+
+      <ShareButtons />
     </PageWrapper>
   );
 };

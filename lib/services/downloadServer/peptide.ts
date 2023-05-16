@@ -25,3 +25,7 @@ export const getPublicPeptideFastaDownloadUrl = (starPepId: string) => {
 export const getPublicPeptideMetadataCsvDownloadUrl = (starPepId: string) => {
   return `${PUBLIC_DOWNLOADS_URL}/peptides/csv/metadata/${starPepId}.csv`;
 };
+
+export const getPublicPeptidePdbPreviewImageUrl = (starPepId: string) => {
+  return `${PUBLIC_DOWNLOADS_URL}/peptides/previews/pdb/${starPepId}.png`;
+};
