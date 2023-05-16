@@ -2,10 +2,10 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import {
   faSearch, faDatabase, faAtom, faStarOfLife, faBullseye,
   faC, faN, faLinkSlash, faFileLines, faMagnifyingGlassPlus, faMagnifyingGlassMinus,
-  faFilter, faPalette, faShapes, faRotate, faExpand, faCompress
+  faFilter, faPalette, faShapes, faRotate, faExpand, faCompress, faClipboard
 } from '@fortawesome/free-solid-svg-icons';
 import {
-  faFacebook, faInstagram, faLinkedin
+  faFacebook, faInstagram, faLinkedin, faTwitter
 } from '@fortawesome/free-brands-svg-icons';
 
 const { config, library } = require('@fortawesome/fontawesome-svg-core');
@@ -16,10 +16,10 @@ config.autoAddCss = false;
 library.add(
   faSearch, faDatabase, faAtom, faStarOfLife, faBullseye,
   faC, faN, faLinkSlash, faFileLines, faMagnifyingGlassPlus, faMagnifyingGlassMinus,
-  faFilter, faPalette, faShapes, faRotate, faExpand, faCompress
+  faFilter, faPalette, faShapes, faRotate, faExpand, faCompress, faClipboard
 );
 
 // @fortawesome/free-brands-svg-icons
 library.add(
-  faFacebook, faInstagram, faLinkedin
+  faFacebook, faInstagram, faLinkedin, faTwitter
 );
