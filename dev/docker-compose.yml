@@ -12,8 +12,8 @@ services:
       - TZ=America/Guayaquil
       - NEO4J_AUTH=none
 
-  datamining_api:
-    image: code.moonstar-x.dev/webpep/datamining-api:latest
+  python_rest_api:
+    image: code.moonstar-x.dev/webpep/python-rest-api:latest
     restart: unless-stopped
     ports:
       - 8080:8080
