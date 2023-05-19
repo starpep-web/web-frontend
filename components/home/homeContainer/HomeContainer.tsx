@@ -6,9 +6,8 @@ import { Contact } from 'components/home/contact';
 import { Carousel } from 'react-responsive-carousel';
 
 const carouselImages = [
-  { alt: 'db-sources', src: '/static/background/db-background.jpeg' },
-  { alt: 'db-sources', src: '/static/background/db-background-1.jpeg' },
-  { alt: 'db-sources', src: '/static/background/db-background-2.jpeg' }
+  { alt: 'db-sources', src: '/static/background/db-background.webp' },
+  { alt: 'db-sources', src: '/static/background/db-background-1.webp' }
 ];
 
 const HomeContainer = () => {
