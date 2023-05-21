@@ -1,5 +1,6 @@
 import React from 'react';
 import GenericShareButton from './GenericShareButton';
+import clsx from 'clsx';
 import style from './ShareButton.module.scss';
 
 const createShareUrl = (url: string): string => {
@@ -7,19 +8,22 @@ const createShareUrl = (url: string): string => {
 };
 
 interface Props {
-  text?: string
+  withText?: boolean
+  withStyle?: boolean
   url: string
 }
 
-const LinkedInShareButton: React.FC<Props> = ({ text, url }) => {
-  const buttonText = text ?? 'Share on LinkedIn';
+const LinkedInShareButton: React.FC<Props> = ({ withText, withStyle, url }) => {
+  const buttonText = withText ? 'Share on LinkedIn' : null;
+  const titleText = !buttonText ? 'Share on LinkedIn' : null;
 
   return (
     <GenericShareButton
       text={buttonText}
+      title={titleText}
       url={createShareUrl(url)}
       icon={['fab', 'linkedin']}
-      className={style['share-button-linkedin']}
+      className={clsx({ [style['share-button-linkedin']]: withStyle })}
     />
   );
 };

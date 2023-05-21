@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Block, Notification } from 'react-bulma-components';
 import FacebookShareButton from './buttons/FacebookShareButton';
 import TwitterShareButton from './buttons/TwitterShareButton';
 import LinkedInButton from './buttons/LinkedInButton';
 import CopyToClipboardShareButton from './buttons/CopyToClipboardShareButton';
-import style from './ShareButtons.module.scss';
+import clsx from 'clsx';
 
 interface Props {
   url?: string | null
+  withText?: boolean
+  withStyle?: boolean
+  withCopyToClipboard?: boolean
+  className?: string
 }
 
-const ShareButtons: React.FC<Props> = ({ url }) => {
+const ShareButtons: React.FC<Props> = ({ url, withText, withStyle, withCopyToClipboard, className }) => {
   const [shareUrl, setShareUrl] = useState<string>(url ?? '#');
 
   useEffect(() => {
@@ -18,14 +21,17 @@ const ShareButtons: React.FC<Props> = ({ url }) => {
   }, [url]);
 
   return (
-    <Block>
-      <Notification color="gray" className={style['buttons-container']}>
-        <FacebookShareButton url={shareUrl} />
-        <TwitterShareButton url={shareUrl} />
-        <LinkedInButton url={shareUrl} />
-        <CopyToClipboardShareButton url={shareUrl} />
-      </Notification>
-    </Block>
+    <div className={clsx(className)}>
+      <FacebookShareButton url={shareUrl} withText={withText} withStyle={withStyle} />
+      <TwitterShareButton url={shareUrl} withText={withText} withStyle={withStyle} />
+      <LinkedInButton url={shareUrl} withText={withText} withStyle={withStyle} />
+
+      {
+        withCopyToClipboard && (
+          <CopyToClipboardShareButton url={shareUrl} withText={withText} />
+        )
+      }
+    </div>
   );
 };
 
