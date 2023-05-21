@@ -1,27 +1,34 @@
 import React from 'react';
-import { Button, Icon } from 'react-bulma-components';
+import { Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import clsx from 'clsx';
 
 interface Props {
-  text?: string
+  withText?: boolean
   url: string
+  className?: string
 }
 
-const CopyToClipboardShareButton: React.FC<Props> = ({ text, url }) => {
-  const buttonText = text ?? 'Copy to Clipboard';
+const CopyToClipboardShareButton: React.FC<Props> = ({ withText, url, className }) => {
+  const buttonText = withText ? 'Copy to Clipboard' : null;
+  const titleText = !buttonText ? 'Copy to Clipboard' : null;
 
   return (
     <CopyToClipboard text={url}>
-      <Button color="primary">
+      <div role="button" className={clsx(className)} title={titleText ?? ''}>
         <Icon>
           <FontAwesomeIcon icon="clipboard" />
         </Icon>
 
-        <span>
-          {buttonText}
-        </span>
-      </Button>
+        {
+          buttonText && (
+            <span>
+              {buttonText}
+            </span>
+          )
+        }
+      </div>
     </CopyToClipboard>
   );
 };
