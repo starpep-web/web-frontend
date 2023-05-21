@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
-import { Container, Footer as BulmaFooter, Icon, Level } from 'react-bulma-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Container, Footer as BulmaFooter, Level } from 'react-bulma-components';
+import { ShareButtons } from '@components/common/shareButtons';
 import { ROUTES } from '@lib/constants/routes';
+import { WEBSITE_URL } from '@lib/config';
 import styles from './Footer.module.scss';
 
 const footerLinks = [
@@ -15,12 +15,6 @@ const footerLinks = [
   { text: 'Help', href: ROUTES.help },
   { text: 'About', href: ROUTES.about },
   { text: 'Tools', href: ROUTES.tools }
-];
-
-const socialLinks: { icon: IconProp, href: string }[] = [
-  { icon: ['fab', 'facebook'], href: '#' },
-  { icon: ['fab', 'instagram'], href: '#' },
-  { icon: ['fab', 'linkedin'], href: '#' }
 ];
 
 const Footer = () => {
@@ -44,17 +38,13 @@ const Footer = () => {
           </Level.Side>
         </Level>
 
-        <div className={styles.socials}>
-          {
-            socialLinks.map(({ icon, href }, idx) => (
-              <Link key={idx} href={href}>
-                <Icon>
-                  <FontAwesomeIcon icon={icon} />
-                </Icon>
-              </Link>
-            ))
-          }
-        </div>
+        <ShareButtons
+          className={styles.socials}
+          url={WEBSITE_URL}
+          withText={false}
+          withCopyToClipboard={false}
+          withStyle={false}
+        />
       </Container>
     </BulmaFooter>
   );
