@@ -7,7 +7,6 @@ import { PeptideVisualization } from '@components/peptide/peptideVisualization';
 import { PeptideInfo } from '@components/peptide/peptideInfo';
 import { PeptideDownloads } from '@components/peptide/peptideDownloads';
 import { PeptideMetadata } from '@components/peptide/peptideMetadata';
-import { ShareButtons } from '@components/common/shareButtons';
 import { getPeptideBySequence } from '@lib/services/graphDb/peptideService';
 import { FullPeptide } from '@lib/models/peptide';
 import { getPeptidePdbContentFromServer, getPublicPeptidePdbPreviewImageUrl } from '@lib/services/downloadServer/peptide';
@@ -36,8 +35,6 @@ const PeptidePage: React.FC<Props> = ({ peptide, pdbString }) => {
       <PeptideInfo {...peptide} />
       <PeptideMetadata metadata={peptide.metadata} />
       <PeptideDownloads id={peptide.id} />
-
-      <ShareButtons />
     </PageWrapper>
   );
 };
