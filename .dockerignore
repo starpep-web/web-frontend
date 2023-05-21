@@ -1,7 +1,16 @@
-node_modules
-.next
-.github
-.git
-dev
+# Ignore everything by default
+*
 
-*.env
+# Allow the public project files.
+!Dockerfile
+!README.md
+!package.json
+!package-lock.json
+!next-env.d.ts
+!next.config.js
+!tsconfig.json
+!components
+!lib
+!pages
+!public
+!styles
