@@ -18,7 +18,7 @@ pipeline {
       environment {
         MAC_MINI_KEYCHAIN = credentials('mac_mini_keychain')
       }
-            
+
       steps {
         script {
           def isMac = sh(script: 'uname -a', returnStdout: true).contains('Darwin')
@@ -28,10 +28,11 @@ pipeline {
             sh "security unlock-keychain -p $MAC_MINI_KEYCHAIN"
           } else {
             echo "Current agent is not macOS, skipping..."
+          }
         }
       }
     }
-    
+
     stage('Run Tests') {
       agent {
         docker {
