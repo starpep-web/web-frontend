@@ -25,7 +25,7 @@ pipeline {
       steps {
         echo 'Running tests...'
 
-        sh 'npm ci'
+        sh 'npm ci --cache="./cache"'
         sh 'npm run lint'
         sh 'npm test'
       }
