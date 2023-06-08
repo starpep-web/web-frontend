@@ -1,6 +1,6 @@
 pipeline {
   agent {
-    label 'local-agent'
+    label 'mac-mini'
   }
 
   options {
