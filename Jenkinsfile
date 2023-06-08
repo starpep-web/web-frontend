@@ -66,8 +66,16 @@ pipeline {
         echo 'Deploying docker image to registry...'
 
         script {
-          docker.withRegistry(DOCKER_REGISTRY, 'gitea_packages_account') {
-            image.push('latest')
+          def isMac = sh(script: 'uname -a', returnStdout: true).contains('Darwin')
+          
+          if (isMac) {
+            docker.withRegistry(DOCKER_REGISTRY) {
+              image.push('latest')
+            } 
+          } else {
+            docker.withRegistry(DOCKER_REGISTRY, 'gitea_packages_account') {
+              image.push('latest')
+            } 
           }
         }
       }
