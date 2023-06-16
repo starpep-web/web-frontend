@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { http } from './apiService';
 import { FrequencyFilterType } from '@lib/services/graphDb/statisticsService';
 
 export const getFilteredAAFrequency = async (type?: FrequencyFilterType, value?: string): Promise<Record<string, number>> => {
@@ -11,7 +11,7 @@ export const getFilteredAAFrequency = async (type?: FrequencyFilterType, value?:
   }
 
   try {
-    const response = await axios.get('/api/statistics/amino-acids/frequency', { params });
+    const response = await http.get('/api/statistics/amino-acids/frequency', { params });
     return response.data.data;
   } catch (error) {
     console.error(error);

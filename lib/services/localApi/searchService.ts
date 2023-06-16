@@ -1,9 +1,9 @@
-import axios from 'axios';
+import { http } from './apiService';
 import { createPagination, WithPagination } from '@lib/utils/pagination';
 
 export const getMetadataSuggestions = async (metadataName: string, name: string, page: number): Promise<WithPagination<string[]>> => {
   try {
-    const response = await axios.get(`/api/search/metadata/suggestions/${metadataName}`, {
+    const response = await http.get(`/api/search/metadata/suggestions/${metadataName}`, {
       params: {
         name,
         page
