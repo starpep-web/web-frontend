@@ -47,7 +47,7 @@ const SingleQueryPeptideSearchBox = () => {
         Alignment Options
       </Form.Label>
 
-      <SingleQueryAlignmentOptions onChange={handleOptionsChange} />
+      <SingleQueryAlignmentOptionsForm onChange={handleOptionsChange} />
 
       <Button.Group align="center">
         <Button color="primary" loading={loading} disabled={loading}>
