@@ -1,5 +1,5 @@
 version: "3.9"
-name: webpep-dev
+name: webpep-web-frontend-dev
 
 services:
   db:
@@ -12,6 +12,14 @@ services:
       - TZ=America/Guayaquil
       - NEO4J_AUTH=none
 
+  cache:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    environment:
+      - TZ=America/Guayaquil
+
   python_rest_api:
     image: code.moonstar-x.dev/webpep/python-rest-api:latest
     restart: unless-stopped
@@ -20,6 +28,9 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      cache:
+        condition: service_started
     environment:
       - TZ=America/Guayaquil
       - NEO4J_DB_URI=bolt://db:7687
+      - REDIS_URI=redis://cache:6379
