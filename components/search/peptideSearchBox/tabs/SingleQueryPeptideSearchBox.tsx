@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
 import { Form, Button, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Dropdown } from '@components/form/dropdown';
+import SingleQueryAlignmentOptions from '../helpers/SingleQueryAlignmentOptions';
 
 const queryPlaceholder = '>Query\nGIGAVLKVLTTGLPALISWIKRKRQQ';
 
 const SingleQueryPeptideSearchBox = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [query, setQuery] = useState<string>('');
+  const [options, setOptions] = useState<Record<string, any>>({});
 
   const handleOnSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
-    console.log('submit');
+    console.log({ query, options });
+  };
+
+  const handleQueryChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setQuery(event.currentTarget.value);
+  };
+
+  const handleOptionsChange = (options: Record<string, any>) => {
+    setOptions(options);
   };
 
   return (
@@ -22,7 +32,12 @@ const SingleQueryPeptideSearchBox = () => {
         </Form.Label>
 
         <Form.Control>
-          <Form.Textarea fixedSize placeholder={queryPlaceholder} />
+          <Form.Textarea
+            fixedSize
+            placeholder={queryPlaceholder}
+            value={query}
+            onChange={handleQueryChange}
+          />
         </Form.Control>
       </Form.Field>
 
@@ -32,12 +47,7 @@ const SingleQueryPeptideSearchBox = () => {
         Alignment Options
       </Form.Label>
 
-      <Dropdown
-        label="Substitution Matrix"
-        options={['']}
-        value=""
-        onChange={() => null}
-      />
+      <SingleQueryAlignmentOptions onChange={handleOptionsChange} />
 
       <Button.Group align="center">
         <Button color="primary" loading={loading} disabled={loading}>
