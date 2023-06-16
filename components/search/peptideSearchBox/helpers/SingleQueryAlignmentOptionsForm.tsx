@@ -1,29 +1,16 @@
 import React, { Fragment, useReducer, useEffect } from 'react';
 import { Form } from 'react-bulma-components';
 import { Dropdown } from '@components/form/dropdown';
-import { SUPPORTED_ALGORITHMS, SUPPORTED_MATRIX_NAMES, DEFAULT_MATRIX_NAME, DEFAULT_ALGORITHM } from '@lib/constants/search';
-
-type ReducerState = {
-  matrix: string
-  alg: string
-  threshold: number
-  max_quantity: number | null
-};
+import { SUPPORTED_ALGORITHMS, SUPPORTED_MATRIX_NAMES, DEFAULT_SINGLE_ALIGNMENT_OPTIONS } from '@lib/constants/search';
+import { SingleQueryAlignmentOptions } from '@lib/models/search';
 
 type ReducerAction =
-  | { type: 'SET_MATRIX', payload: string }
-  | { type: 'SET_ALGORITHM', payload: string }
-  | { type: 'SET_THRESHOLD', payload: number }
-  | { type: 'SET_MAX_QUANTITY', payload: number | null };
+  | { type: 'SET_MATRIX', payload: SingleQueryAlignmentOptions['matrix'] }
+  | { type: 'SET_ALGORITHM', payload: SingleQueryAlignmentOptions['alg'] }
+  | { type: 'SET_THRESHOLD', payload: SingleQueryAlignmentOptions['threshold'] }
+  | { type: 'SET_MAX_QUANTITY', payload: SingleQueryAlignmentOptions['max_quantity'] };
 
-const INITIAL_STATE: ReducerState = {
-  matrix: DEFAULT_MATRIX_NAME,
-  alg: DEFAULT_ALGORITHM,
-  threshold: 1,
-  max_quantity: null
-};
-
-const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
+const reducer = (state: SingleQueryAlignmentOptions, action: ReducerAction): SingleQueryAlignmentOptions => {
   switch (action.type) {
     case 'SET_MATRIX':
       return { ...state, matrix: action.payload };
@@ -39,11 +26,11 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
 };
 
 interface Props {
-  onChange?: (options: ReducerState) => void
+  onChange?: (options: SingleQueryAlignmentOptions) => void
 }
 
-const SingleQueryAlignmentOptions: React.FC<Props> = ({ onChange }) => {
-  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+const SingleQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
+  const [state, dispatch] = useReducer(reducer, DEFAULT_SINGLE_ALIGNMENT_OPTIONS);
 
   useEffect(() => {
     onChange?.(state);
@@ -132,4 +119,4 @@ const SingleQueryAlignmentOptions: React.FC<Props> = ({ onChange }) => {
   );
 };
 
-export default SingleQueryAlignmentOptions;
+export default SingleQueryAlignmentOptionsForm;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import SingleQueryAlignmentOptions from '../helpers/SingleQueryAlignmentOptions';
+import SingleQueryAlignmentOptionsForm from '../helpers/SingleQueryAlignmentOptionsForm';
 
 const queryPlaceholder = '>Query\nGIGAVLKVLTTGLPALISWIKRKRQQ';
 
