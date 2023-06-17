@@ -1,5 +1,7 @@
 import { http } from './apiService';
 import { createPagination, WithPagination } from '@lib/utils/pagination';
+import { SingleQueryAlignmentOptions } from '@lib/models/search';
+import { InitialAsyncTaskResponse } from '@lib/services/pythonRestApi/apiService';
 
 export const getMetadataSuggestions = async (metadataName: string, name: string, page: number): Promise<WithPagination<string[]>> => {
   try {
@@ -52,4 +54,17 @@ export const getUnusualAASuggestions: MetadataSuggestionFunction = (name: string
 
 export const getCrossRefSuggestions: MetadataSuggestionFunction = (name: string, page = 1) => {
   return getMetadataSuggestions('crossref', name, page);
+};
+
+export const postSingleQuerySearch = async (fastaQuery: string, options?: SingleQueryAlignmentOptions): Promise<InitialAsyncTaskResponse> => {
+  try {
+    const response = await http.post('/api/search/single-query', fastaQuery, {
+      params: options ?? {}
+    });
+
+    return response.data.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
