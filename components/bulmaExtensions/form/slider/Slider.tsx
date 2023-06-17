@@ -15,6 +15,7 @@ const Slider: React.FC<Props> = ({
   grabberSize,
   circle,
   showValue,
+  value,
   ...props
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -23,6 +24,7 @@ const Slider: React.FC<Props> = ({
     <Fragment>
       <input
         {...props}
+        value={value}
         ref={inputRef}
         type="range"
         className={
@@ -40,7 +42,7 @@ const Slider: React.FC<Props> = ({
       {
         showValue && (
           <output>
-            {inputRef.current?.value}
+            {inputRef.current?.value ?? value}
           </output>
         )
       }

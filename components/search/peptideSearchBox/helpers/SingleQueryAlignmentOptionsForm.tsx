@@ -1,6 +1,7 @@
 import React, { Fragment, useReducer, useEffect } from 'react';
 import { Form } from 'react-bulma-components';
 import { Dropdown } from '@components/form/dropdown';
+import { Slider } from '@components/bulmaExtensions/form/slider';
 import { SUPPORTED_ALGORITHMS, SUPPORTED_MATRIX_NAMES, DEFAULT_SINGLE_ALIGNMENT_OPTIONS } from '@lib/constants/search';
 import { SingleQueryAlignmentOptions } from '@lib/models/search';
 
@@ -89,13 +90,15 @@ const SingleQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
         </Form.Label>
 
         <Form.Control>
-          <Form.Input
-            type="range"
+          <Slider
             min={0.01}
             max={1}
             step={0.01}
             value={state.threshold}
             onChange={handleThresholdChange}
+            color="primary"
+            circle
+            showValue
           />
         </Form.Control>
       </Form.Field>
