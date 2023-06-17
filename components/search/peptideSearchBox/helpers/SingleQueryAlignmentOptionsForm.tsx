@@ -116,8 +116,9 @@ const SingleQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
             type="number"
             min={0}
             step={1}
-            value={state.max_quantity}
+            value={state.max_quantity ?? ''}
             onChange={handleMaxQuantityChange}
+            placeholder="Leave this blank to get all the results"
           />
         </Form.Control>
       </Form.Field>
