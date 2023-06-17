@@ -1,9 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import HttpStatus from 'http-status-codes';
 import { ResponseBuilder, ResponseBody } from '@lib/utils/http';
+import { createHandler } from '@lib/utils/api';
 import { FREQUENCY_FILTER_TYPES, FrequencyFilterType, getFilterAAFrequency, getTotalAAFrequency } from '@lib/services/graphDb/statisticsService';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<ResponseBody>) => {
+const getHandler = async (req: NextApiRequest, res: NextApiResponse<ResponseBody>) => {
   const type = Array.isArray(req.query.type) ? req.query.type[0] : req.query.type ?? '';
   const value = Array.isArray(req.query.value) ? req.query.value[0] : req.query.value ?? '';
 
@@ -19,4 +20,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<ResponseBody>) 
   res.status(response.statusCode).send(response.build());
 };
 
-export default handler;
+export default createHandler({
+  GET: getHandler
+});
