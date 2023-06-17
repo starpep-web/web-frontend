@@ -1,4 +1,4 @@
-import PeptideSearchResult from './PeptideSearchResult';
+import PeptideSearchResult from './tables/PeptideSearchResult';
 
 export {
   PeptideSearchResult
