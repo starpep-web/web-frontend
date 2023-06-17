@@ -26,5 +26,12 @@ export const DYNAMIC_ROUTES = {
       regex: regexEnabled ? 'true' : 'false'
     });
     return `/search/text-query?${params.toString()}`;
+  },
+  singleQuery: (queryId: string, page: number = 1) => {
+    const params = new URLSearchParams({
+      query: queryId,
+      page: page.toString()
+    });
+    return `/search/single-query?${params.toString()}`;
   }
 };
