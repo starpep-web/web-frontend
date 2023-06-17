@@ -1,26 +1,43 @@
 import React, { useState } from 'react';
 import { Form, Button, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRouter } from 'next/router';
 import SingleQueryAlignmentOptionsForm from '../helpers/SingleQueryAlignmentOptionsForm';
+import { postSingleQuerySearch } from '@lib/services/localApi/searchService';
+import { DYNAMIC_ROUTES } from '@lib/constants/routes';
+import { DEFAULT_SINGLE_ALIGNMENT_OPTIONS } from '@lib/constants/search';
+import { SingleQueryAlignmentOptions } from '@lib/models/search';
 
 const queryPlaceholder = '>Query\nGIGAVLKVLTTGLPALISWIKRKRQQ';
 
 const SingleQueryPeptideSearchBox = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [query, setQuery] = useState<string>('');
-  const [options, setOptions] = useState<Record<string, any>>({});
+  const [options, setOptions] = useState<SingleQueryAlignmentOptions>(DEFAULT_SINGLE_ALIGNMENT_OPTIONS);
+  const [_, setError] = useState<Error | null>(null);
 
-  const handleOnSubmit = (event: React.FormEvent) => {
+  const handleOnSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
     setLoading(true);
-    console.log({ query, options });
+    try {
+      const { id } = await postSingleQuerySearch(query, options);
+      return router.push(DYNAMIC_ROUTES.singleQuery(id));
+    } catch (error) {
+      setError(error as Error);
+    } finally {
+      setLoading(false);
+    }
+
+    return null;
   };
 
   const handleQueryChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuery(event.currentTarget.value);
   };
 
-  const handleOptionsChange = (options: Record<string, any>) => {
+  const handleOptionsChange = (options: SingleQueryAlignmentOptions) => {
     setOptions(options);
   };
 
