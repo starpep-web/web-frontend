@@ -1,6 +1,6 @@
 import { createHandler } from './api';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { MethodNotAllowedError } from '@lib/errors/http';
+import { InternalServerError, MethodNotAllowedError, ResourceNotFoundError } from '@lib/errors/http';
 
 const mockedResponse = {
   send: jest.fn()
@@ -17,7 +17,13 @@ describe('Utils: Api', () => {
 
   describe('createHandler()', () => {
     const testHandler = createHandler({
-      GET: (_, res) => res.send('test')
+      GET: (_, res) => res.send('test'),
+      DELETE: () => {
+        throw new Error('Oops.');
+      },
+      PUT: () => {
+        throw new ResourceNotFoundError('Oops');
+      }
     });
 
     it('should call the correct handler if the given method is supported.', () => {
@@ -28,15 +34,34 @@ describe('Utils: Api', () => {
     });
 
     it('should call the method not supported handler if the given method is not supported.', () => {
+      const mockedRequest = { method: 'POST' } as NextApiRequest;
+      testHandler(mockedRequest, mockedResponse);
+
+      expect((mockedResponse.send as jest.Mock).mock.calls[0][0]).toMatchObject({
+        error: {
+          name: new MethodNotAllowedError().name
+        }
+      });
+    });
+
+    it('should call the error handler with InternalServerError if the given handler throws any Error.', () => {
       const mockedRequest = { method: 'DELETE' } as NextApiRequest;
       testHandler(mockedRequest, mockedResponse);
 
-      const error = new MethodNotAllowedError();
       expect((mockedResponse.send as jest.Mock).mock.calls[0][0]).toMatchObject({
         error: {
-          message: error.message,
-          name: error.name,
-          description: error.description
+          name: new InternalServerError().name
+        }
+      });
+    });
+
+    it('should call the error handler with HttpError if the given handler throws a HttpError.', () => {
+      const mockedRequest = { method: 'PUT' } as NextApiRequest;
+      testHandler(mockedRequest, mockedResponse);
+
+      expect((mockedResponse.send as jest.Mock).mock.calls[0][0]).toMatchObject({
+        error: {
+          name: new ResourceNotFoundError('').name
         }
       });
     });
