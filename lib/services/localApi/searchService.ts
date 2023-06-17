@@ -1,7 +1,7 @@
 import { http } from './apiService';
 import { createPagination, WithPagination } from '@lib/utils/pagination';
 import { SingleQueryAlignmentOptions } from '@lib/models/search';
-import { InitialAsyncTaskResponse } from '@lib/services/pythonRestApi/apiService';
+import { FASTA_CONTENT_TYPE, InitialAsyncTaskResponse } from '@lib/services/pythonRestApi/apiService';
 
 export const getMetadataSuggestions = async (metadataName: string, name: string, page: number): Promise<WithPagination<string[]>> => {
   try {
@@ -59,7 +59,10 @@ export const getCrossRefSuggestions: MetadataSuggestionFunction = (name: string,
 export const postSingleQuerySearch = async (fastaQuery: string, options?: SingleQueryAlignmentOptions): Promise<InitialAsyncTaskResponse> => {
   try {
     const response = await http.post('/api/search/single-query', fastaQuery, {
-      params: options ?? {}
+      params: options ?? {},
+      headers: {
+        'Content-Type': FASTA_CONTENT_TYPE
+      }
     });
 
     return response.data.data;
