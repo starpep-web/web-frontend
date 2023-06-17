@@ -4,7 +4,7 @@ import { Heading } from 'react-bulma-components';
 import { useRouter } from 'next/router';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
-import { PeptideSearchResult } from '@components/search/peptideSearchResult';
+import { SingleAlignedPeptideSearchResult } from '@components/search/peptideSearchResult';
 import { getSingleQuerySearch } from '@lib/services/pythonRestApi/searchService';
 import { AsyncTaskResponse } from '@lib/services/pythonRestApi/apiService';
 import { SingleAlignedPeptide } from '@lib/models/search';
@@ -64,7 +64,7 @@ const SingleQuerySearchPage: React.FC<Props> = ({ queryId, page, result }) => {
         {`Found ${pagination.total} results (Page: ${page})`}
       </Heading>
 
-      <PeptideSearchResult peptides={peptides} {...pagination} onPageChange={handlePageChange} />
+      <SingleAlignedPeptideSearchResult peptides={peptides} {...pagination} onPageChange={handlePageChange} />
     </PageWrapper>
   );
 };
