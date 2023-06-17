@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { http, AsyncTaskResponse, InitialAsyncTaskResponse, FASTA_CONTENT_TYPE } from './apiService';
+import { http, AsyncTaskResponse, InitialAsyncTaskResponse, FASTA_CONTENT_TYPE, resolveAxiosError } from './apiService';
 import { SingleQueryAlignmentOptions, SingleAlignedPeptide } from '@lib/models/search';
 import { WithPagination } from '@lib/utils/pagination';
 
@@ -14,8 +14,7 @@ export const postSingleQuerySearch = async (fastaQuery: string, options?: Single
 
     return response.data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    throw resolveAxiosError(error);
   }
 };
 
@@ -29,7 +28,6 @@ export const getSingleQuerySearch = async (taskId: string, page: number = 1): Pr
 
     return response.data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    throw resolveAxiosError(error);
   }
 };
