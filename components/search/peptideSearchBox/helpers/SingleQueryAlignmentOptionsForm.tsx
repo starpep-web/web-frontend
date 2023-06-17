@@ -1,6 +1,7 @@
 import React, { Fragment, useReducer, useEffect } from 'react';
 import { Form } from 'react-bulma-components';
 import { Dropdown } from '@components/form/dropdown';
+import { Radio } from '@components/bulmaExtensions/form/radio';
 import { Slider } from '@components/bulmaExtensions/form/slider';
 import { SUPPORTED_ALGORITHMS, SUPPORTED_MATRIX_NAMES, DEFAULT_SINGLE_ALIGNMENT_OPTIONS } from '@lib/constants/search';
 import { SingleQueryAlignmentOptions } from '@lib/models/search';
@@ -71,14 +72,16 @@ const SingleQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
         <Form.Control>
           {
             Object.entries(SUPPORTED_ALGORITHMS).map(([key, value]) => (
-              <Form.Radio
+              <Radio
                 key={key}
+                id={key}
                 value={key}
+                label={value}
                 checked={state.alg === key}
                 onChange={handleAlgorithmChange}
-              >
-                {value}
-              </Form.Radio>
+                color="primary"
+                name="alignment-alg"
+              />
             ))
           }
         </Form.Control>
