@@ -1,13 +1,11 @@
 import React from 'react';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import HttpStatus from 'http-status-codes';
 import { Heading } from 'react-bulma-components';
 import { useRouter } from 'next/router';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { PeptideSearchResult } from '@components/search/peptideSearchResult';
 import { getSingleQuerySearch } from '@lib/services/pythonRestApi/searchService';
-import { HttpError } from '@lib/errors/http';
 import { AsyncTaskResponse } from '@lib/services/pythonRestApi/apiService';
 import { SingleAlignedPeptide } from '@lib/models/search';
 import { WithPagination } from '@lib/utils/pagination';
@@ -95,10 +93,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
       }
     };
   } catch (error) {
-    if (!(error instanceof HttpError) || error.statusCode !== HttpStatus.NOT_FOUND) {
-      console.error(error);
-    }
-
+    console.error(error);
     return {
       notFound: true
     };
