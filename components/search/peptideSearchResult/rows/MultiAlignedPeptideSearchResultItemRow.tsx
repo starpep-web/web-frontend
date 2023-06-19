@@ -20,7 +20,9 @@ const MultiAlignedPeptideSearchResultItemRow: React.FC<RowProps<MultiAlignedPept
         {index}
       </th>
       <td>
-        {id}
+        <Link href={DYNAMIC_ROUTES.peptide(id)}>
+          {id}
+        </Link>
       </td>
       <td>
         {score.toLocaleString('en-US', {
@@ -47,9 +49,7 @@ const MultiAlignedPeptideSearchResultItemRow: React.FC<RowProps<MultiAlignedPept
         })}
       </td>
       <td>
-        <Link href={DYNAMIC_ROUTES.peptide(sequence)}>
-          {sequence}
-        </Link>
+        {sequence}
       </td>
       <td>
         {length}

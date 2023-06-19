@@ -7,7 +7,7 @@ import { PeptideVisualization } from '@components/peptide/peptideVisualization';
 import { PeptideInfo } from '@components/peptide/peptideInfo';
 import { PeptideDownloads } from '@components/peptide/peptideDownloads';
 import { PeptideMetadata } from '@components/peptide/peptideMetadata';
-import { getPeptideBySequence } from '@lib/services/graphDb/peptideService';
+import { getPeptideById } from '@lib/services/graphDb/peptideService';
 import { FullPeptide } from '@lib/models/peptide';
 import { getPeptidePdbContentFromServer, getPublicPeptidePdbPreviewImageUrl } from '@lib/services/downloadServer/peptide';
 
@@ -40,8 +40,8 @@ const PeptidePage: React.FC<Props> = ({ peptide, pdbString }) => {
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<ServerSideProps>> => {
-  const sequence = context.params!.sequence as string;
-  const peptide = await getPeptideBySequence(sequence);
+  const id = context.params!.id as string;
+  const peptide = await getPeptideById(id);
 
   if (!peptide) {
     return {

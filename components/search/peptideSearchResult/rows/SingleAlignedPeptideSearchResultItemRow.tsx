@@ -11,7 +11,9 @@ const SingleAlignedPeptideSearchResultItemRow: React.FC<RowProps<SingleAlignedPe
         {index}
       </th>
       <td>
-        {id}
+        <Link href={DYNAMIC_ROUTES.peptide(id)}>
+          {id}
+        </Link>
       </td>
       <td>
         {score.toLocaleString('en-US', {
@@ -20,9 +22,7 @@ const SingleAlignedPeptideSearchResultItemRow: React.FC<RowProps<SingleAlignedPe
         })}
       </td>
       <td>
-        <Link href={DYNAMIC_ROUTES.peptide(sequence)}>
-          {sequence}
-        </Link>
+        {sequence}
       </td>
       <td>
         {length}
