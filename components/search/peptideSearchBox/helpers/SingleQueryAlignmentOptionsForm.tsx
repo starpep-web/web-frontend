@@ -1,5 +1,5 @@
-import React, { Fragment, useReducer, useEffect } from 'react';
-import { Form } from 'react-bulma-components';
+import React, { useReducer, useEffect } from 'react';
+import { Form, Columns } from 'react-bulma-components';
 import { Dropdown } from '@components/form/dropdown';
 import { Radio } from '@components/bulmaExtensions/form/radio';
 import { Slider } from '@components/bulmaExtensions/form/slider';
@@ -56,73 +56,77 @@ const SingleQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
   };
 
   return (
-    <Fragment>
-      <Dropdown
-        label="Substitution Matrix"
-        options={SUPPORTED_MATRIX_NAMES}
-        value={state.matrix}
-        onChange={handleMatrixChange}
-      />
+    <Columns>
+      <Columns.Column mobile={{ size: 12 }} tablet={{ size: 12 }} desktop={{ size: 6 }} widescreen={{ size: 6 }} fullhd={{ size: 6 }}>
+        <Dropdown
+          label="Substitution Matrix"
+          options={SUPPORTED_MATRIX_NAMES}
+          value={state.matrix}
+          onChange={handleMatrixChange}
+        />
 
-      <Form.Field>
-        <Form.Label>
-          Alignment Algorithm
-        </Form.Label>
+        <Form.Field>
+          <Form.Label>
+            Alignment Algorithm
+          </Form.Label>
 
-        <Form.Control>
-          {
-            Object.entries(SUPPORTED_ALGORITHMS).map(([key, value]) => (
-              <Radio
-                key={key}
-                id={key}
-                value={key}
-                label={value}
-                checked={state.alg === key}
-                onChange={handleAlgorithmChange}
-                color="primary"
-                name="alignment-alg"
-              />
-            ))
-          }
-        </Form.Control>
-      </Form.Field>
+          <Form.Control>
+            {
+              Object.entries(SUPPORTED_ALGORITHMS).map(([key, value]) => (
+                <Radio
+                  key={key}
+                  id={key}
+                  value={key}
+                  label={value}
+                  checked={state.alg === key}
+                  onChange={handleAlgorithmChange}
+                  color="primary"
+                  name="alignment-alg"
+                />
+              ))
+            }
+          </Form.Control>
+        </Form.Field>
+      </Columns.Column>
 
-      <Form.Field>
-        <Form.Label>
-          Threshold
-        </Form.Label>
+      <Columns.Column mobile={{ size: 12 }} tablet={{ size: 12 }} desktop={{ size: 6 }} widescreen={{ size: 6 }} fullhd={{ size: 6 }}>
+        <Form.Field>
+          <Form.Label>
+            Threshold
+          </Form.Label>
 
-        <Form.Control>
-          <Slider
-            min={0.01}
-            max={1}
-            step={0.01}
-            value={state.threshold}
-            onChange={handleThresholdChange}
-            color="primary"
-            circle
-            showValue
-          />
-        </Form.Control>
-      </Form.Field>
+          <Form.Control>
+            <Slider
+              min={0.01}
+              max={1}
+              step={0.01}
+              value={state.threshold}
+              onChange={handleThresholdChange}
+              color="primary"
+              circle
+              showValue
+            />
+          </Form.Control>
+        </Form.Field>
 
-      <Form.Field>
-        <Form.Label>
-          Max Results
-        </Form.Label>
+        <Form.Field>
+          <Form.Label>
+            Max Results
+          </Form.Label>
 
-        <Form.Control>
-          <Form.Input
-            type="number"
-            min={0}
-            step={1}
-            value={state.max_quantity ?? ''}
-            onChange={handleMaxQuantityChange}
-            placeholder="Leave this blank to get all the results"
-          />
-        </Form.Control>
-      </Form.Field>
-    </Fragment>
+          <Form.Control>
+            <Form.Input
+              type="number"
+              min={0}
+              step={1}
+              value={state.max_quantity ?? ''}
+              onChange={handleMaxQuantityChange}
+              placeholder="Leave this blank to get all the results"
+            />
+          </Form.Control>
+        </Form.Field>
+      </Columns.Column>
+    </Columns>
   );
 };
 
