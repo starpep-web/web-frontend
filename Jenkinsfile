@@ -37,7 +37,7 @@ pipeline {
       agent {
         docker {
           image 'node:16-alpine'
-          args '-v $JENKINS_HOME/cache/npm:/usr/share/npm_cache'
+          args '-v $HOME/cache/npm:/usr/share/npm_cache'
           reuseNode true
         }
       }
@@ -55,7 +55,7 @@ pipeline {
         steps {
             echo 'Applying permissions to cache folder...'
 
-            sh 'chmod -R 777 $JENKINS_HOME/cache'
+            sh 'chmod -R 777 $HOME/cache'
         }
     }
 
