@@ -5,11 +5,7 @@ export const SUPPORTED_ALGORITHMS = {
   local: 'Local (Smith-Waterman)',
   global: 'Global (Needleman-Wunsch)'
 };
-export const SUPPORTED_CRITERIA = {
-  avg: 'Average',
-  max: 'Maximum',
-  min: 'Minimum'
-};
+export const SUPPORTED_CRITERIA = ['avg', 'max', 'min'];
 
 export const DEFAULT_MATRIX_NAME = 'BLOSUM62';
 export const DEFAULT_ALGORITHM = 'local';
