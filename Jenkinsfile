@@ -37,7 +37,7 @@ pipeline {
       agent {
         docker {
           image 'node:16-alpine'
-          args '-v $HOME/cache:/usr/share/npm_cache'
+          args '-u $UID:$GID -v $HOME/cache/npm:/usr/share/npm_cache'
           reuseNode true
         }
       }
