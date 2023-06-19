@@ -7,8 +7,7 @@ import { postSingleQuerySearch } from '@lib/services/localApi/searchService';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 import { DEFAULT_SINGLE_ALIGNMENT_OPTIONS } from '@lib/constants/search';
 import { SingleQueryAlignmentOptions } from '@lib/models/search';
-
-const queryPlaceholder = '>Query\nGIGAVLKVLTTGLPALISWIKRKRQQ';
+import TextSearchInput from '@components/search/peptideSearchBox/helpers/TextSearchInput';
 
 const SingleQueryPeptideSearchBox = () => {
   const router = useRouter();
@@ -22,7 +21,7 @@ const SingleQueryPeptideSearchBox = () => {
 
     setLoading(true);
     try {
-      const { id } = await postSingleQuerySearch(query, options);
+      const { id } = await postSingleQuerySearch(`>Query\n${query}`, options);
       return router.push(DYNAMIC_ROUTES.singleQuery(id));
     } catch (error) {
       setError(error as Error);
@@ -33,8 +32,8 @@ const SingleQueryPeptideSearchBox = () => {
     return null;
   };
 
-  const handleQueryChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setQuery(event.currentTarget.value);
+  const handleQueryChange = (value: string) => {
+    setQuery(value);
   };
 
   const handleOptionsChange = (options: SingleQueryAlignmentOptions) => {
@@ -45,15 +44,14 @@ const SingleQueryPeptideSearchBox = () => {
     <form onSubmit={handleOnSubmit}>
       <Form.Field>
         <Form.Label>
-          Single Query in FASTA Format
+          Single Query
         </Form.Label>
 
         <Form.Control>
-          <Form.Textarea
-            fixedSize
-            placeholder={queryPlaceholder}
-            value={query}
+          <TextSearchInput
             onChange={handleQueryChange}
+            value={query}
+            regexEnabled={false}
           />
         </Form.Control>
       </Form.Field>
