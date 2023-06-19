@@ -4,12 +4,14 @@ import { Heading } from 'react-bulma-components';
 import { useRouter } from 'next/router';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
+import { SearchLoader } from '@components/search/searchLoader';
 import { SingleAlignedPeptideSearchResult } from '@components/search/peptideSearchResult';
 import { getSingleQuerySearch } from '@lib/services/pythonRestApi/searchService';
 import { AsyncTaskResponse } from '@lib/services/pythonRestApi/apiService';
 import { SingleAlignedPeptide } from '@lib/models/search';
 import { WithPagination } from '@lib/utils/pagination';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
+import { DEFAULT_AUTO_RELOAD_INTERVAL } from '@lib/constants/site';
 
 interface ServerSideProps {
   queryId: string
@@ -35,7 +37,12 @@ const SingleQuerySearchPage: React.FC<Props> = ({ queryId, page, result }) => {
         <PageMetadata
           title="Loading... - Single Query Alignment Search"
         />
-        LOADING...
+
+        <SearchLoader
+          title="Aligning your query..."
+          subtitle="The page will automatically refresh until the alignment is done."
+          refreshInterval={DEFAULT_AUTO_RELOAD_INTERVAL}
+        />
       </PageWrapper>
     );
   }
