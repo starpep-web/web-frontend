@@ -37,7 +37,7 @@ pipeline {
       agent {
         docker {
           image 'node:16-alpine'
-          args '-v $HOME/cache:/usr/share/npm_cache'
+          args '-v $HOME/cache/npm:/usr/share/npm_cache'
           reuseNode true
         }
       }
@@ -49,6 +49,14 @@ pipeline {
         sh 'npm run lint'
         sh 'npm test'
       }
+    }
+
+    stage('Fix Cache Permissions') {
+        steps {
+            echo 'Applying permissions to cache folder...'
+
+            sh 'chmod -R 777 $HOME/cache'
+        }
     }
 
     stage('Build Docker Image') {

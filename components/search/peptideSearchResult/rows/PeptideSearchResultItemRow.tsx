@@ -11,12 +11,12 @@ const PeptideSearchResultItemRow: React.FC<RowProps<Peptide>> = ({ index, id, se
         {index}
       </th>
       <td>
-        {id}
+        <Link href={DYNAMIC_ROUTES.peptide(id)}>
+          {id}
+        </Link>
       </td>
       <td>
-        <Link href={DYNAMIC_ROUTES.peptide(sequence)}>
-          {sequence}
-        </Link>
+        {sequence}
       </td>
       <td>
         {length}
