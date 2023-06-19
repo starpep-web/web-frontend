@@ -1,6 +1,6 @@
 import { http } from './apiService';
 import { createPagination, WithPagination } from '@lib/utils/pagination';
-import { SingleQueryAlignmentOptions } from '@lib/models/search';
+import { SingleQueryAlignmentOptions, MultiQueryAlignmentOptions } from '@lib/models/search';
 import { FASTA_CONTENT_TYPE, InitialAsyncTaskResponse } from '@lib/services/pythonRestApi/apiService';
 import { AxiosError } from 'axios';
 
@@ -60,6 +60,22 @@ export const getCrossRefSuggestions: MetadataSuggestionFunction = (name: string,
 export const postSingleQuerySearch = async (fastaQuery: string, options?: SingleQueryAlignmentOptions): Promise<InitialAsyncTaskResponse> => {
   try {
     const response = await http.post('/api/search/single-query', fastaQuery, {
+      params: options ?? {},
+      headers: {
+        'Content-Type': FASTA_CONTENT_TYPE
+      }
+    });
+
+    return response.data.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error(((error as AxiosError).response?.data as any).error?.message ?? (error as Error).message);
+  }
+};
+
+export const postMultiQuerySearch = async (fastaQuery: string, options?: MultiQueryAlignmentOptions): Promise<InitialAsyncTaskResponse> => {
+  try {
+    const response = await http.post('/api/search/multi-query', fastaQuery, {
       params: options ?? {},
       headers: {
         'Content-Type': FASTA_CONTENT_TYPE
