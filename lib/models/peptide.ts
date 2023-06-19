@@ -53,11 +53,19 @@ export type FullPeptide = Peptide & {
 export type MetadataLabel = Exclude<NodeLabel, 'Peptide'>;
 export type TextQueryMetadataFilters = Record<MetadataLabel, string>;
 
+export const ID_PREFIX = 'starPep_';
+export const ID_LENGTH = 5;
+
 export const getPeptideId = (identifier: number) => {
   const formattedNumber = identifier.toLocaleString('en-US', {
-    minimumIntegerDigits: 5,
+    minimumIntegerDigits: ID_LENGTH,
     useGrouping: false
   });
 
-  return `starPep_${formattedNumber}`;
+  return `${ID_PREFIX}${formattedNumber}`;
+};
+
+export const extractIdentityFromId = (id: string): string | null => {
+  const identity = id.slice(ID_PREFIX.length);
+  return identity.match(/^\d{5}$/) ? identity : null;
 };

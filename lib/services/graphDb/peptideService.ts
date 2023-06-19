@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable max-params */
+import { QueryResult, int } from 'neo4j-driver';
 import { readTransaction, sanitizeInput } from './dbService';
 import {
   Peptide,
@@ -8,13 +9,11 @@ import {
   RawRelationshipLabel,
   TextQueryMetadataFilters,
   getRelationshipLabelFromRaw,
-  getPeptideId
+  getPeptideId, extractIdentityFromId
 } from '@lib/models/peptide';
 import { WithPagination, createPagination } from '@lib/utils/pagination';
 
-export const getPeptideBySequence = async (sequence: string): Promise<FullPeptide | null> => {
-  const query = 'MATCH (n:Peptide {seq: $sequence})-[r]->(v) RETURN n, r, v';
-  const result = await readTransaction(query, { sequence: sequence.toUpperCase() });
+const parseFullPeptideFromQueryResult = (result: QueryResult): FullPeptide | null => {
   const [firstRecord] = result.records;
 
   if (!firstRecord) {
@@ -42,6 +41,25 @@ export const getPeptideBySequence = async (sequence: string): Promise<FullPeptid
     length: peptideNode.properties.seq.length,
     metadata
   };
+};
+
+export const getPeptideById = async (id: string): Promise<FullPeptide | null> => {
+  const identity = extractIdentityFromId(id);
+  if (!identity) {
+    return null;
+  }
+
+  const query = 'MATCH (n:Peptide)-[r]->(v) WHERE ID(n) = $id RETURN n, r, v';
+  const result = await readTransaction(query, { id: int(identity) });
+
+  return parseFullPeptideFromQueryResult(result);
+};
+
+export const getPeptideBySequence = async (sequence: string): Promise<FullPeptide | null> => {
+  const query = 'MATCH (n:Peptide {seq: $sequence})-[r]->(v) RETURN n, r, v';
+  const result = await readTransaction(query, { sequence: sequence.toUpperCase() });
+
+  return parseFullPeptideFromQueryResult(result);
 };
 
 // Return TRUE if empty so the cypher query contains an AND TRUE filter clause.
