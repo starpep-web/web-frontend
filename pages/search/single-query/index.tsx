@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { SearchLoader } from '@components/search/searchLoader';
+import { ErrorMessage } from '@components/common/errorMessage';
 import { SingleAlignedPeptideSearchResult } from '@components/search/peptideSearchResult';
 import { getSingleQuerySearch } from '@lib/services/pythonRestApi/searchService';
 import { AsyncTaskResponse } from '@lib/services/pythonRestApi/apiService';
@@ -54,7 +55,12 @@ const SingleQuerySearchPage: React.FC<Props> = ({ queryId, page, result }) => {
           title="Error - Single Query Alignment Search"
         />
 
-        {result.data}
+        <ErrorMessage
+          show
+          error={`Server responded with: ${result.data}`}
+          header="Could not get your single query alignment"
+          description="Try re-running your single query search."
+        />
       </PageWrapper>
     );
   }
