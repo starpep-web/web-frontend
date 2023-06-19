@@ -37,7 +37,7 @@ pipeline {
       agent {
         docker {
           image 'node:16-alpine'
-          args '-v $HOME/cache:/tmp/cache'
+          args '-v $HOME/cache:/usr/share/npm_cache'
           reuseNode true
         }
       }
@@ -45,7 +45,7 @@ pipeline {
       steps {
         echo 'Running tests...'
 
-        sh 'npm ci --cache="/tmp/cache"'
+        sh 'npm ci --cache="/usr/share/npm_cache"'
         sh 'npm run lint'
         sh 'npm test'
       }
