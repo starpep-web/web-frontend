@@ -4,11 +4,17 @@ import { Message } from 'react-bulma-components';
 interface Props {
   warning?: boolean
   header?: string
-  error: string
+  description?: string
+  error?: string
+  show?: boolean
 }
 
-const ErrorMessage: React.FC<Props> = ({ header, warning = false, error }) => {
+const ErrorMessage: React.FC<Props> = ({ header, description, warning = false, error, show }) => {
   const color = warning ? 'warning' : 'danger';
+
+  if (!show) {
+    return null;
+  }
 
   return (
     <Message color={color}>
@@ -17,7 +23,17 @@ const ErrorMessage: React.FC<Props> = ({ header, warning = false, error }) => {
       </Message.Header>
 
       <Message.Body>
-        {error}
+        <p>
+          {error}
+        </p>
+
+        {
+          !!description && (
+            <p>
+              {description}
+            </p>
+          )
+        }
       </Message.Body>
     </Message>
   );

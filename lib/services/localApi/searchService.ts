@@ -2,6 +2,7 @@ import { http } from './apiService';
 import { createPagination, WithPagination } from '@lib/utils/pagination';
 import { SingleQueryAlignmentOptions } from '@lib/models/search';
 import { FASTA_CONTENT_TYPE, InitialAsyncTaskResponse } from '@lib/services/pythonRestApi/apiService';
+import { AxiosError } from 'axios';
 
 export const getMetadataSuggestions = async (metadataName: string, name: string, page: number): Promise<WithPagination<string[]>> => {
   try {
@@ -68,6 +69,6 @@ export const postSingleQuerySearch = async (fastaQuery: string, options?: Single
     return response.data.data;
   } catch (error) {
     console.error(error);
-    throw error;
+    throw new Error(((error as AxiosError).response?.data as any).error?.message ?? (error as Error).message);
   }
 };
