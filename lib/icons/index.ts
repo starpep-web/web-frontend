@@ -2,7 +2,8 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 import {
   faSearch, faDatabase, faAtom, faStarOfLife, faBullseye,
   faC, faN, faLinkSlash, faFileLines, faMagnifyingGlassPlus, faMagnifyingGlassMinus,
-  faFilter, faPalette, faShapes, faRotate, faExpand, faCompress, faClipboard
+  faFilter, faPalette, faShapes, faRotate, faExpand, faCompress, faClipboard,
+  faHome, faTriangleExclamation, faQuestionCircle
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faFacebook, faInstagram, faLinkedin, faTwitter
@@ -16,7 +17,8 @@ config.autoAddCss = false;
 library.add(
   faSearch, faDatabase, faAtom, faStarOfLife, faBullseye,
   faC, faN, faLinkSlash, faFileLines, faMagnifyingGlassPlus, faMagnifyingGlassMinus,
-  faFilter, faPalette, faShapes, faRotate, faExpand, faCompress, faClipboard
+  faFilter, faPalette, faShapes, faRotate, faExpand, faCompress, faClipboard,
+  faHome, faTriangleExclamation, faQuestionCircle
 );
 
 // @fortawesome/free-brands-svg-icons
