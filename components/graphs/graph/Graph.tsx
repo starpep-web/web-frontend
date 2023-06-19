@@ -3,6 +3,7 @@ import { BounceLoader } from 'react-spinners';
 import { Network, Data, Options, Node, Edge } from 'vis-network/esnext/umd/vis-network.min';
 import { DataSet } from 'vis-data/esnext/umd/vis-data.min';
 import clsx from 'clsx';
+import { LOADER_COLOR } from '@lib/constants/styling';
 
 const DEFAULT_WIDTH = 600;
 const DEFAULT_HEIGHT = 400;
@@ -86,7 +87,7 @@ const Graph: React.FC<Props> = ({
   return (
     <div className={clsx('pos-relative', className)} style={{ width, height }}>
       <div ref={containerRef} className="w-100 h-100" />
-      <BounceLoader className="absolute-center" loading={loading} />
+      <BounceLoader className="absolute-center" loading={loading} color={LOADER_COLOR} />
       {
         !loading && children
       }

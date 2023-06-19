@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/router';
-import TextSearchInput from './TextSearchInput';
-import RegexHelpMessage from './RegexHelpMessage';
-import MetadataFilters from './MetadataFilters';
+import TextSearchInput from '../helpers/TextSearchInput';
+import RegexHelpMessage from '../helpers/RegexHelpMessage';
+import MetadataFilters from '../helpers/MetadataFilters';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 import { TextQueryMetadataFilters } from '@lib/models/peptide';
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Box, Tabs } from 'react-bulma-components';
-import TextQueryPeptideSearchBox from './TextQueryPeptideSearchBox';
-import SingleQueryPeptideSearchBox from './SingleQueryPeptideSearchBox';
-import MultiQueryPeptideSearchBox from './MultiQueryPeptideSearchBox';
+import TextQueryPeptideSearchBox from './tabs/TextQueryPeptideSearchBox';
+import SingleQueryPeptideSearchBox from './tabs/SingleQueryPeptideSearchBox';
+import MultiQueryPeptideSearchBox from './tabs/MultiQueryPeptideSearchBox';
 
 type SearchMode = 'text' | 'single' | 'multi';
 const searchComponents: Record<SearchMode, React.FC> = {

@@ -10,7 +10,7 @@ import {
   getFunctionSuggestions, getNTerminusSuggestions,
   getOriginSuggestions, getTargetSuggestions, getUnusualAASuggestions
 } from '@lib/services/localApi/searchService';
-import styles from './PeptideSearchBox.module.scss';
+import styles from '../PeptideSearchBox.module.scss';
 
 interface Props {
   onChange?: (metadataFilters: Partial<TextQueryMetadataFilters>) => void

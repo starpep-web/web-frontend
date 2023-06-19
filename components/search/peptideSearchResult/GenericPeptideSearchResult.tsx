@@ -1,16 +1,29 @@
 import React from 'react';
 import { Box, Pagination as BulmaPagination } from 'react-bulma-components';
-import PeptideSearchResultItemRow from './PeptideSearchResultItemRow';
 import { Table } from '@components/common/table';
 import { Peptide } from '@lib/models/peptide';
 import { Pagination } from '@lib/utils/pagination';
+import { RowProps } from './rows/types';
 
-interface Props extends Pagination {
-  peptides: Peptide[]
+interface Props<T extends Peptide> extends Pagination {
+  peptides: T[]
   onPageChange: (page: number) => void
+
+  headers: string[]
+  rowComponent: React.JSXElementConstructor<RowProps<T>>
 }
 
-const PeptideSearchResult: React.FC<Props> = ({ onPageChange, peptides, currentPage, totalPages, currentIndex }) => {
+const GenericPeptideSearchResult = <T extends Peptide>({
+  onPageChange,
+  peptides,
+  headers,
+  rowComponent,
+  currentPage,
+  totalPages,
+  currentIndex
+}: Props<T>) => {
+  const RowComponent = rowComponent;
+
   const handlePaginationChange = (page: number) => {
     onPageChange(page);
   };
@@ -26,11 +39,11 @@ const PeptideSearchResult: React.FC<Props> = ({ onPageChange, peptides, currentP
   return (
     <Box>
       <Table
-        headers={['#', 'ID', 'Sequence', 'Length']}
+        headers={headers}
       >
         {
           peptides.map((peptide, idx) => (
-            <PeptideSearchResultItemRow key={peptide.id} index={currentIndex + idx + 1} {...peptide} />
+            <RowComponent key={peptide.id} index={currentIndex + idx + 1} {...peptide} />
           ))
         }
       </Table>
@@ -40,4 +53,4 @@ const PeptideSearchResult: React.FC<Props> = ({ onPageChange, peptides, currentP
   );
 };
 
-export default PeptideSearchResult;
+export default GenericPeptideSearchResult;

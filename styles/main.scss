@@ -1,4 +1,7 @@
 @import 'variables.scss';
 @import 'mixins.scss';
 @import 'global.scss';
+
+@import '../node_modules/bulma-slider/src/sass';
+@import '../node_modules/bulma-checkradio/src/sass';
 @import '../node_modules/bulma/bulma';

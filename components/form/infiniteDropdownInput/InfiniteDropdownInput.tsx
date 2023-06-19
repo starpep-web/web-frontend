@@ -5,6 +5,7 @@ import { BounceLoader } from 'react-spinners';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import clsx from 'clsx';
+import { LOADER_COLOR } from '@lib/constants/styling';
 import styles from './InfiniteDropdownInput.module.scss';
 
 interface Props {
@@ -128,7 +129,7 @@ const InfiniteDropdownInput: React.FC<Props> = ({
           {
             loading && (
               <div className={styles.dropdownLoaderContainer}>
-                <BounceLoader className={styles.dropdownLoader} loading size={14} />
+                <BounceLoader className={styles.dropdownLoader} loading size={14} color={LOADER_COLOR} />
               </div>
             )
           }

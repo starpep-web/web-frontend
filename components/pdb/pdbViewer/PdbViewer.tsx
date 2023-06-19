@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { BounceLoader } from 'react-spinners';
 import { GLViewer } from '3dmol/build/types/GLViewer';
-import { AtomStyle, ColorScheme } from '@components/pdb/pdbViewer/types';
 import clsx from 'clsx';
+import { AtomStyle, ColorScheme } from '@components/pdb/pdbViewer/types';
+import { LOADER_COLOR } from '@lib/constants/styling';
 
 const DEFAULT_WIDTH = 600;
 const DEFAULT_HEIGHT = 400;
@@ -89,7 +90,7 @@ const PdbViewer: React.FC<Props> = ({
   return (
     <div className={clsx('pos-relative', className)} style={{ width, height }}>
       <div ref={containerRef} className="w-100 h-100" />
-      <BounceLoader className="absolute-center" loading={loading} />
+      <BounceLoader className="absolute-center" loading={loading} color={LOADER_COLOR} />
 
       {
         !loading && children
