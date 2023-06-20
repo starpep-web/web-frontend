@@ -2,10 +2,10 @@ import { Peptide, MetadataLabel, NODE_LABELS } from '@lib/models/peptide';
 import { FILTER_SEPARATOR } from '@lib/constants/search';
 
 // Text Query (Filter)
-export const SUPPORTED_OPERATORS = ['AND', 'OR'] as const;
+export const SUPPORTED_OPERATORS = ['AND', 'OR', 'XOR'] as const;
 export type FilterOperator = typeof SUPPORTED_OPERATORS[number];
 
-export const SUPPORTED_COMPARATORS = ['EQUALS', 'NOT_EQUALS', 'STARTS_WITH', 'NOT_STARTS_WITH', 'ENDS_WITH', 'NOT_ENDS_WITH', 'CONTAINS', 'NOT_CONTAINS'] as const;
+export const SUPPORTED_COMPARATORS = ['EQUALS', 'NOT_EQUALS'] as const;
 export type FilterComparator = typeof SUPPORTED_COMPARATORS[number];
 
 export type TextQueryFilter = [FilterOperator, MetadataLabel, FilterComparator, string];

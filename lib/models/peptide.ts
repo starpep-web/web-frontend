@@ -51,7 +51,6 @@ export type FullPeptide = Peptide & {
 }
 
 export type MetadataLabel = Exclude<NodeLabel, 'Peptide'>;
-export type TextQueryMetadataFilters = Record<MetadataLabel, string>; // TODO: To delete.
 
 export const ID_PREFIX = 'starPep_';
 export const ID_LENGTH = 5;
