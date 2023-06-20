@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import TextSearchInput from '../helpers/TextSearchInput';
 import RegexHelpMessage from '../helpers/RegexHelpMessage';
 import MetadataFiltersHelpMessage from '../helpers/MetadataFiltersHelpMessage';
 import MetadataFiltersForm from '../helpers/MetadataFiltersForm';
-// import { DYNAMIC_ROUTES } from '@lib/constants/routes';
-import { TextQueryFilter } from '@lib/models/search';
+import { DYNAMIC_ROUTES } from '@lib/constants/routes';
+import { TextQueryFilter, convertFilterToParam } from '@lib/models/search';
 
 const TextQueryPeptideSearchBox = () => {
-  // const router = useRouter();
+  const router = useRouter();
   const [query, setQuery] = useState<string>('');
   const [regexEnabled, setRegexEnabled] = useState<boolean>(false);
   const [filters, setFilters] = useState<TextQueryFilter[]>([]);
-  const [_, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setQuery('');
@@ -23,8 +23,7 @@ const TextQueryPeptideSearchBox = () => {
   const handleOnSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
-    console.log(filters);
-    // return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled));
+    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, filters.map(convertFilterToParam)));
   };
 
   const handleInputChange = (value: string) => {
@@ -66,8 +65,7 @@ const TextQueryPeptideSearchBox = () => {
       <MetadataFiltersForm onChange={handleFiltersChange} />
 
       <Button.Group align="center">
-        {/*<Button color="primary" loading={loading} disabled={loading}>*/}
-        <Button color="primary">
+        <Button color="primary" loading={loading} disabled={loading}>
           <Icon align="left">
             <FontAwesomeIcon icon="search" />
           </Icon>
