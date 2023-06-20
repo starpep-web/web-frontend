@@ -2,6 +2,7 @@ import { SingleQueryAlignmentOptions, MultiQueryAlignmentOptions, TextQueryFilte
 
 // Text Query (Filter)
 export const DEFAULT_FILTER: TextQueryFilter = ['AND', 'Database', 'EQUALS', ''];
+export const FILTER_SEPARATOR = ';';
 
 // Single and Multi Query
 export const SUPPORTED_MATRIX_NAMES = ['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250'];
