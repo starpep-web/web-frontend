@@ -3,7 +3,7 @@ import {
   faSearch, faDatabase, faAtom, faStarOfLife, faBullseye,
   faC, faN, faLinkSlash, faFileLines, faMagnifyingGlassPlus, faMagnifyingGlassMinus,
   faFilter, faPalette, faShapes, faRotate, faExpand, faCompress, faClipboard,
-  faHome, faTriangleExclamation, faQuestionCircle
+  faHome, faTriangleExclamation, faQuestionCircle, faPlus, faX
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faFacebook, faInstagram, faLinkedin, faTwitter
@@ -18,7 +18,7 @@ library.add(
   faSearch, faDatabase, faAtom, faStarOfLife, faBullseye,
   faC, faN, faLinkSlash, faFileLines, faMagnifyingGlassPlus, faMagnifyingGlassMinus,
   faFilter, faPalette, faShapes, faRotate, faExpand, faCompress, faClipboard,
-  faHome, faTriangleExclamation, faQuestionCircle
+  faHome, faTriangleExclamation, faQuestionCircle, faPlus, faX
 );
 
 // @fortawesome/free-brands-svg-icons

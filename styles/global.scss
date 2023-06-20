@@ -1,3 +1,6 @@
+@use "sass:map";
+@import "./variables";
+
 html, body, #__next {
   min-height: 100vh;
   height: 1px; // Weird hack to cascade down height while only having min-height specified.
@@ -16,6 +19,18 @@ html, body, #__next {
 
 .w-100 {
   width: 100%;
+}
+
+.w-100-mobile-only {
+  @media (max-width: map.get($breakpoints, 'phone-max')) {
+    width: 100%;
+  }
+}
+
+.w-100-until-tablet {
+  @media (max-width: map.get($breakpoints, 'tablet-max')) {
+    width: 100%;
+  }
 }
 
 .mw-100 {

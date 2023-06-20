@@ -1,5 +1,4 @@
 /* eslint-disable max-params */
-import { TextQueryMetadataFilters } from '@lib/models/peptide';
 
 export const ROUTES = {
   home: '/',
@@ -18,12 +17,14 @@ export const ROUTES = {
 
 export const DYNAMIC_ROUTES = {
   peptide: (id: string) => `/peptide/${id}`,
-  textQuery: (query: string, regexEnabled: boolean, metadataFilters: Partial<TextQueryMetadataFilters> = {}, page: number = 1) => {
+  textQuery: (query: string, regexEnabled: boolean, filtersParam: string[] = [], page: number = 1) => {
     const params = new URLSearchParams({
       query,
-      ...metadataFilters,
       page: page.toString(),
       regex: regexEnabled ? 'true' : 'false'
+    });
+    filtersParam.forEach((filter) => {
+      params.append('f', filter);
     });
     return `/search/text-query?${params.toString()}`;
   },

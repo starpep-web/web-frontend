@@ -4,15 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/router';
 import TextSearchInput from '../helpers/TextSearchInput';
 import RegexHelpMessage from '../helpers/RegexHelpMessage';
-import MetadataFilters from '../helpers/MetadataFilters';
+import MetadataFiltersHelpMessage from '../helpers/MetadataFiltersHelpMessage';
+import MetadataFiltersForm from '../helpers/MetadataFiltersForm';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
-import { TextQueryMetadataFilters } from '@lib/models/peptide';
+import { TextQueryFilter, convertFilterToParam } from '@lib/models/search';
 
 const TextQueryPeptideSearchBox = () => {
   const router = useRouter();
   const [query, setQuery] = useState<string>('');
   const [regexEnabled, setRegexEnabled] = useState<boolean>(false);
-  const [metadataFilters, setMetadataFilters] = useState<Partial<TextQueryMetadataFilters>>({});
+  const [filters, setFilters] = useState<TextQueryFilter[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const TextQueryPeptideSearchBox = () => {
   const handleOnSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
-    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, metadataFilters));
+    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, filters.map(convertFilterToParam)));
   };
 
   const handleInputChange = (value: string) => {
@@ -33,8 +34,8 @@ const TextQueryPeptideSearchBox = () => {
     setRegexEnabled(event.target.checked);
   };
 
-  const handleMetadataFiltersChange = (metadataFilters: Partial<TextQueryMetadataFilters>) => {
-    setMetadataFilters(metadataFilters);
+  const handleFiltersChange = (filters: TextQueryFilter[]) => {
+    setFilters(filters);
   };
 
   return (
@@ -54,7 +55,14 @@ const TextQueryPeptideSearchBox = () => {
         <RegexHelpMessage show={regexEnabled} />
       </Form.Field>
 
-      <MetadataFilters onChange={handleMetadataFiltersChange} />
+      <hr />
+
+      <Form.Label>
+        Metadata Filters
+      </Form.Label>
+
+      <MetadataFiltersHelpMessage />
+      <MetadataFiltersForm onChange={handleFiltersChange} />
 
       <Button.Group align="center">
         <Button color="primary" loading={loading} disabled={loading}>
