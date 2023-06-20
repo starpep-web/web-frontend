@@ -1,5 +1,4 @@
 /* eslint-disable max-params */
-import { TextQueryFilter } from '@lib/models/search';
 
 export const ROUTES = {
   home: '/',
