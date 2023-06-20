@@ -28,7 +28,7 @@ const MultiQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
 
   useEffect(() => {
     onChange?.(state);
-  }, [state, onChange]);
+  }, [state]);
 
   const handleSingleAlignmentOptionsChange = (options: SingleQueryAlignmentOptions) => {
     dispatch({ type: 'SET_SINGLE_ALIGNMENT_OPTIONS', payload: options });

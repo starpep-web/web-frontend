@@ -36,7 +36,7 @@ const SingleQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
 
   useEffect(() => {
     onChange?.(state);
-  }, [state, onChange]);
+  }, [state]);
 
   const handleMatrixChange = (matrix: string) => {
     dispatch({ type: 'SET_MATRIX', payload: matrix });
