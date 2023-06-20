@@ -1,5 +1,15 @@
-import { Peptide } from '@lib/models/peptide';
+import { Peptide, MetadataLabel } from '@lib/models/peptide';
 
+// Text Query (Filter)
+export const SUPPORTED_OPERATORS = ['AND', 'OR'] as const;
+export type FilterOperator = typeof SUPPORTED_OPERATORS[number];
+
+export const SUPPORTED_COMPARATORS = ['EQUALS', 'NOT_EQUALS', 'STARTS_WITH', 'NOT_STARTS_WITH', 'ENDS_WITH', 'NOT_ENDS_WITH', 'CONTAINS', 'NOT_CONTAINS'] as const;
+export type FilterComparator = typeof SUPPORTED_COMPARATORS[number];
+
+export type TextQueryFilter = [FilterOperator, MetadataLabel, FilterComparator, string];
+
+// Single Query
 export interface SingleQueryAlignmentOptions {
   matrix: string
   alg: string
@@ -11,6 +21,7 @@ export type SingleAlignedPeptide = Peptide & {
   score: number
 }
 
+// Multi Query
 export interface MultiQueryAlignmentOptions extends SingleQueryAlignmentOptions {
   criterion: string
 }
