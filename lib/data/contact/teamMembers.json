@@ -61,16 +61,16 @@
     "location": "Baja California, México"
   },
   {
-    "name": "Cesar Jaca",
+    "name": "Cesar Raul Garcia-Jacas",
     "role": "Collaborators",
     "email": "cesar@email.com",
-    "shortCv": "Short CV Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dignissim ante sit amet quam dictum, pellentesque mattis arcu ornare. Morbi et mauris posuere",
-    "avatarUrl": "/static/avatars/boy.png",
+    "shortCv": "Researcher at the Department of Computer Science, Centro de Investigación Científica y de Educación Superior de Ensenada (CICESE), Baja California, Mexico. He received his Ph.D. in Technical Science (2015) and M.Sc. in Computer Science (2013) from the Universidad Central \"Marta Abreu\" de las Villas, Cuba; as well as his B.Eng. in Informatic Science (2009) from the Universidad de las Ciencias Informáticas, La Habana, Cuba. ORCID: https://orcid.org/0000-0002-3962-7658.",
+    "avatarUrl": "/static/avatars/cesar-jacas.jpg",
     "website": null,
     "phone": null,
     "occupation": null,
     "affiliations": [
-      "Cátedras CONACYT (research SNI I)",
+      "Researcher",
       "Centro de Investigación Científica y de Educación Superior de Ensenada (CICESE)"
     ],
     "location": "Baja California, México"
