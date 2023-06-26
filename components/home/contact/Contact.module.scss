@@ -7,6 +7,13 @@
     max-width: 450px;
   }
 
+  // Noel avatar image offset
+  .head-project-card:last-child {
+    img {
+      object-position: 0 -2px;
+    }
+  }
+
   .header-container {
     position: relative;
     margin-right: calc(50% - 50vw); // hack to escape parent width constraint
