@@ -80,14 +80,14 @@
     ],
     "avatarUrl": "/static/avatars/felix-martinez.jpeg",
     "website": "https://www.scopus.com/authid/detail.uri?authorId=24339038500",
-    "phone": "+52 5521299929",
+    "phone": null,
     "occupation": "Senior Research Professor,",
     "affiliations": [
       "Facultad de Ingeniería",
       "SNI nivel I Área Físico Matemáticas",
-      "Universidad Panamericana, México."
+      "Universidad Panamericana"
     ],
-    "location": "Augusto Rodin 498, Ciudad de México, 03920, México."
+    "location": "Ciudad de México, 03920, México."
   },
   {
     "name": "Cesar Raul Garcia-Jacas",
