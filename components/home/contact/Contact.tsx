@@ -26,10 +26,10 @@ const Contact = () => {
           <h3 className={styles['collaborators-header']}>Collaborators</h3>
         </Content>
 
-        <Columns breakpoint="tablet" centered>
+        <Columns centered>
           {
             teamMembersByRole.Collaborators.map((member) => (
-              <Columns.Column size="one-third" key={member.name}>
+              <Columns.Column tablet={{ size: 'half' }} desktop={{ size: 'half' }} mobile={{ size: 12 }} widescreen={{ size: 'one-quarter' }} fullhd={{ size: 'one-quarter' }} key={member.name}>
                 <MemberCard {...member} />
               </Columns.Column>
             ))

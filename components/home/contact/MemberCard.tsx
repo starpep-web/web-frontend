@@ -77,12 +77,20 @@ const MemberCard: React.FC<Props> = ({
         </Card.Footer>
       </Card>
 
-      <Modal show={isOpen} onClose={() => setIsOpen(false)}>
+      <Modal show={isOpen} onClose={() => setIsOpen(false)} className={styles.modal}>
         <Modal.Card>
           <Modal.Card.Header showClose={false} textWeight="bold" backgroundColor="primary" />
           <Modal.Card.Body>
-            <Content size="medium">
-              <p>{shortCv}</p>
+            <Content>
+              {
+                shortCv.length > 0 && (
+                  shortCv.map((shortCv, idx) => (
+                    <p key={idx}>
+                      {shortCv}
+                    </p>
+                  ))
+                )
+              }
             </Content>
           </Modal.Card.Body>
         </Modal.Card>
