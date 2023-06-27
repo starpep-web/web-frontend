@@ -61,6 +61,22 @@
     "location": "Baja California, México"
   },
   {
+    "name": "Prof. Dr. Felix Martinez-Rios",
+    "role": "Collaborators",
+    "email": "felix.martinez@up.edu.mx",
+    "shortCv": "He studied Physics with a specialization in Materials Science at the University of Havana Cuba, 1985. Master’s Degree in Computational Sciences, Tecnológico de Monterrey, Mexico, 2006. PhD in Computational Sciences, Tecnológico de Monterrey, México, 2009. High Business Management, IPADE, Mexico, 2009. Philosophical Anthropology, Universidad Panamericana, Mexico 2021. Data Science, MIT, Boston, USA, 2022.Active member of associations: American Society for Engineering Education, Society of Automotive Engineering (ASEE), Association for Computing Machinery (ACM) and Institute of Electrical and Electronics Engineers (IEEE).He has published more than 40 research articles in Scopus-indexed journals. He has edited two books with Springer Publishing. He is the author of two new algorithms: the first one to solve the packing problem based on the theory of nano-electromagnetic fields and the second algorithm for the deconvolution of Mossbauer spectra based on chaotic swarm of particles.",
+    "avatarUrl": "/static/avatars/felix-martinez.jpeg",
+    "website": "https://www.scopus.com/authid/detail.uri?authorId=24339038500",
+    "phone": "+52 5521299929",
+    "occupation": "Full Professor Researcher,",
+    "affiliations": [
+      "Facultad de Ingeniería",
+      "SNI nivel I Área Físico Matemáticas",
+      "Universidad Panamericana, México."
+    ],
+    "location": "Augusto Rodin 498, Ciudad de México, 03920, México."
+  },
+  {
     "name": "Cesar Raul Garcia-Jacas",
     "role": "Collaborators",
     "email": "cesar@email.com",
