@@ -6,7 +6,7 @@ export interface TeamMember {
   name: string
   role: TeamMemberRole
   email: string
-  shortCv: string
+  shortCv: string[]
   avatarUrl: string
   website: string | null
   phone: string | null

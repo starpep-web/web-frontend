@@ -82,7 +82,15 @@ const MemberCard: React.FC<Props> = ({
           <Modal.Card.Header showClose={false} textWeight="bold" backgroundColor="primary" />
           <Modal.Card.Body>
             <Content size="medium">
-              <p>{shortCv}</p>
+              {
+                shortCv.length > 0 && (
+                  shortCv.map((shortCv, idx) => (
+                    <p key={idx}>
+                      {shortCv}
+                    </p>
+                  ))
+                )
+              }
             </Content>
           </Modal.Card.Body>
         </Modal.Card>
