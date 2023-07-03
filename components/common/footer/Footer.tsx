@@ -12,9 +12,7 @@ const footerLinks = [
   { text: 'Downloads', href: ROUTES.downloads },
   { text: 'Search', href: ROUTES.search },
   { text: 'Statistics', href: ROUTES.statistics },
-  { text: 'Help', href: ROUTES.help },
-  { text: 'About', href: ROUTES.about },
-  { text: 'Tools', href: ROUTES.tools }
+  { text: 'About', href: ROUTES.about }
 ];
 
 const Footer = () => {

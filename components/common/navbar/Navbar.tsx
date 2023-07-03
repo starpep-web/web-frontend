@@ -17,10 +17,8 @@ const navbarItems = [
       { text: 'Features', href: ROUTES.statisticsFeatures }
     ]
   },
-  { text: 'Tools', href: ROUTES.tools },
   { text: 'Downloads', href: ROUTES.downloads },
-  { text: 'FAQ', href: ROUTES.faq },
-  { text: 'Help', href: ROUTES.help }
+  { text: 'FAQ', href: ROUTES.faq }
 ];
 
 interface Props {
