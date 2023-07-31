@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, forwardRef } from 'react';
 import { BounceLoader } from 'react-spinners';
 import { Network, Data, Options, Node, Edge } from 'vis-network/esnext/umd/vis-network.min';
 import { DataSet } from 'vis-data/esnext/umd/vis-data.min';
@@ -26,7 +26,7 @@ interface Props {
   onReady?: (network: Network) => void
 }
 
-const Graph: React.FC<Props> = ({
+const Graph = forwardRef<HTMLDivElement, Props>(({
   children,
   className,
   nodes,
@@ -38,7 +38,7 @@ const Graph: React.FC<Props> = ({
   minZoom,
   maxZoom,
   onReady
-}) => {
+}, forwardedRef) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -86,13 +86,15 @@ const Graph: React.FC<Props> = ({
 
   return (
     <div className={clsx('pos-relative', className)} style={{ width, height }}>
-      <div ref={containerRef} className="w-100 h-100" />
+      <div ref={forwardedRef} className="w-100 h-100">
+        <div ref={containerRef} className="w-100 h-100" />
+      </div>
       <BounceLoader className="absolute-center" loading={loading} color={LOADER_COLOR} />
       {
         !loading && children
       }
     </div>
   );
-};
+});
 
 export default Graph;

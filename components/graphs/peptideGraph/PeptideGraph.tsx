@@ -3,8 +3,10 @@ import { Network, Node, Edge, Options, Color } from 'vis-network/esnext/umd/vis-
 import { Graph } from '../graph';
 import { ZoomOverlay } from '../zoomOverlay';
 import { FullScreenOverlay } from '@components/genericOverlays/fullScreenOverlay';
-import { FullPeptide, RelationshipLabel } from '@lib/models/peptide';
+import { ExportOverlay } from '@components/genericOverlays/exportOverlay';
+import { useExport } from '@components/hooks/export';
 import clsx from 'clsx';
+import { FullPeptide, RelationshipLabel } from '@lib/models/peptide';
 
 const createNodeColor = (background: string, highlight: string, border: string): Color => {
   return {
@@ -69,6 +71,7 @@ interface Props {
 const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
   const [network, setNetwork] = useState<Network | null>(null);
   const [fullScreen, setFullScreen] = useState<boolean>(false);
+  const [ref, exportRef] = useExport<HTMLDivElement>(`Graph-${peptide.id}`);
   const minZoom = 0.25;
   const maxZoom = 2;
 
@@ -143,9 +146,11 @@ const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
       maxZoom={maxZoom}
       centerZoom
       onReady={handleReady}
+      ref={ref}
     >
       <ZoomOverlay step={0.1} onChange={handleZoomChange} />
       <FullScreenOverlay fullScreen={fullScreen} onToggle={handleFullScreenToggle} />
+      <ExportOverlay onClick={exportRef} />
     </Graph>
   );
 };
