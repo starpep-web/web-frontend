@@ -1,8 +1,8 @@
-import React, { CSSProperties, createRef } from 'react';
+import React, { CSSProperties, RefObject } from 'react';
 import { Box, Heading, Block } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx';
-import html2canvas from 'html2canvas';
+import { useExport } from '@components/hooks/export';
 import styles from './WithTitledBox.module.scss';
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
 }
 
 const WithExportableTitledBox: React.FC<Props> = ({ title, exportedFilename, disabled, children, width, height, minWidth, minHeight, noTitleMargin }) => {
-  const ref = createRef<'div'>();
+  const [ref, exportRef] = useExport<HTMLDivElement>(exportedFilename);
 
   const outerStyle: CSSProperties = {
     width: width ?? '100%',
@@ -32,23 +32,8 @@ const WithExportableTitledBox: React.FC<Props> = ({ title, exportedFilename, dis
     minHeight: minHeight ?? '100%'
   };
 
-  const handleExportClick = async () => {
-    const canvas = await html2canvas(ref.current! as unknown as HTMLDivElement, {
-      onclone: (_, element) => {
-        element.style.boxShadow = 'none';
-      }
-    });
-
-    const a = document.createElement('a');
-    a.href = canvas.toDataURL('image/png', 1);
-    a.download = exportedFilename;
-
-    a.click();
-    a.remove();
-  };
-
   return (
-    <Box domRef={ref}>
+    <Box domRef={ref as unknown as RefObject<'div'>}>
       <div className={styles['exportable-heading-wrapper']}>
         <Heading className={clsx({ [styles['no-title-margin']]: noTitleMargin }, styles['exportable-heading'])}>
           {title}
@@ -56,7 +41,7 @@ const WithExportableTitledBox: React.FC<Props> = ({ title, exportedFilename, dis
 
         {
           !disabled && (
-            <FontAwesomeIcon title="Export as Image" className={styles['export-icon']} icon="up-right-from-square" onClick={handleExportClick} />
+            <FontAwesomeIcon title="Export as Image" className={styles['export-icon']} icon="up-right-from-square" onClick={exportRef} />
           )
         }
       </div>

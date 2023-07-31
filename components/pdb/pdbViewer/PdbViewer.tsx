@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, forwardRef } from 'react';
 import { BounceLoader } from 'react-spinners';
 import { GLViewer } from '3dmol/build/types/GLViewer';
 import clsx from 'clsx';
@@ -30,7 +30,7 @@ const createStyle = (style: AtomStyle, color: ColorScheme) => {
   return { [style]: { colorscheme: color } };
 };
 
-const PdbViewer: React.FC<Props> = ({
+const PdbViewer = forwardRef<HTMLDivElement, Props>(({
   children,
   className,
   pdb,
@@ -40,7 +40,7 @@ const PdbViewer: React.FC<Props> = ({
   color = DEFAULT_COLOR,
   spin,
   onReady
-}) => {
+}, forwardedRef) => {
   const viewerRef = useRef<GLViewer | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -89,7 +89,9 @@ const PdbViewer: React.FC<Props> = ({
 
   return (
     <div className={clsx('pos-relative', className)} style={{ width, height }}>
-      <div ref={containerRef} className="w-100 h-100" />
+      <div ref={forwardedRef} className="w-100 h-100">
+        <div ref={containerRef} className="w-100 h-100" />
+      </div>
       <BounceLoader className="absolute-center" loading={loading} color={LOADER_COLOR} />
 
       {
@@ -97,6 +99,6 @@ const PdbViewer: React.FC<Props> = ({
       }
     </div>
   );
-};
+});
 
 export default PdbViewer;

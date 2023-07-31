@@ -15,7 +15,7 @@ const PeptideVisualization: React.FC<Props> = ({ peptide, pdbString }) => {
   return (
     <div className={styles.visualizationContainer}>
       <PeptideGraph peptide={peptide} width="100%" height={height} />
-      <PeptideViewer pdb={pdbString} width="100%" height={height} />
+      <PeptideViewer peptide={peptide} pdb={pdbString} width="100%" height={height} />
     </div>
   );
 };
