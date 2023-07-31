@@ -1,6 +1,13 @@
 import React from 'react';
 import { Block, Notification, Heading, Button } from 'react-bulma-components';
-import { getPublicPeptidePdbDownloadUrl, getPublicPeptideFastaDownloadUrl, getPublicPeptideMetadataCsvDownloadUrl } from '@lib/services/downloadServer/peptide';
+import {
+  getPublicPeptidePdbDownloadUrl,
+  getPublicPeptideFastaDownloadUrl,
+  getPublicPeptideMetadataCsvDownloadUrl,
+  getPublicPeptideEmbeddingEsmMeanDownloadUrl,
+  getPublicPeptideEmbeddingIFeatureAacDownloadUrl,
+  getPublicPeptideEmbeddingIFeatureDpcDownloadUrl
+} from '@lib/services/downloadServer/peptide';
 import styles from './PeptideDownloads.module.scss';
 
 interface Props {
@@ -26,6 +33,18 @@ const PeptideDownloads: React.FC<Props> = ({ id }) => {
 
           <Button color="primary" renderAs="a" href={getPublicPeptideMetadataCsvDownloadUrl(id)} target="_blank">
             Metadata (.csv)
+          </Button>
+
+          <Button color="primary" renderAs="a" href={getPublicPeptideEmbeddingEsmMeanDownloadUrl(id)} target="_blank">
+            ESM-mean Embedding (.csv)
+          </Button>
+
+          <Button color="primary" renderAs="a" href={getPublicPeptideEmbeddingIFeatureAacDownloadUrl(id)} target="_blank">
+            iFeature AAC-20 Embedding (.csv)
+          </Button>
+
+          <Button color="primary" renderAs="a" href={getPublicPeptideEmbeddingIFeatureDpcDownloadUrl(id)} target="_blank">
+            iFeature DPC-400 Embedding (.csv)
           </Button>
         </div>
       </Notification>

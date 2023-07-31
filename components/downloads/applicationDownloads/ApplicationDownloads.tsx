@@ -1,6 +1,14 @@
 import React, { Fragment } from 'react';
 import { Button, Heading, Notification, Block } from 'react-bulma-components';
-import { DOWNLOADS_PDB_ARCHIVE, DOWNLOADS_FASTA_BY_DB_ARCHIVE, DOWNLOADS_DB_ARCHIVES, DOWNLOADS_STARPEP_FASTA, DOWNLOADS_FULL_METADATA_CSV, DOWNLOADS_FASTA_BY_DB } from '@lib/constants/site';
+import {
+  DOWNLOADS_PDB_ARCHIVE,
+  DOWNLOADS_FASTA_BY_DB_ARCHIVE,
+  DOWNLOADS_DB_ARCHIVES,
+  DOWNLOADS_STARPEP_FASTA,
+  DOWNLOADS_FULL_METADATA_CSV,
+  DOWNLOADS_FASTA_BY_DB,
+  DOWNLOADS_FULL_EMBEDDINGS
+} from '@lib/constants/site';
 import styles from './ApplicationDownloads.module.scss';
 
 const ApplicationDownloads = () => {
@@ -27,6 +35,14 @@ const ApplicationDownloads = () => {
           <Button color="primary" renderAs="a" href={DOWNLOADS_FULL_METADATA_CSV} target="_blank">
             Full Metadata (.csv)
           </Button>
+
+          {
+            Object.entries(DOWNLOADS_FULL_EMBEDDINGS).map(([embeddingName, url], idx) => (
+              <Button key={idx} color="primary" renderAs="a" href={url} target="_blank">
+                Full Embedding [{embeddingName}] (.csv)
+              </Button>
+            ))
+          }
         </div>
       </Notification>
 

@@ -29,3 +29,15 @@ export const getPublicPeptideMetadataCsvDownloadUrl = (starPepId: string) => {
 export const getPublicPeptidePdbPreviewImageUrl = (starPepId: string) => {
   return `${PUBLIC_DOWNLOADS_URL}/peptides/previews/pdb/${starPepId}.png`;
 };
+
+export const getPublicPeptideEmbeddingEsmMeanDownloadUrl = (starPepId: string) => {
+  return `${PUBLIC_DOWNLOADS_URL}/peptides/csv/embeddings/esm-mean/${starPepId}.csv`;
+};
+
+export const getPublicPeptideEmbeddingIFeatureAacDownloadUrl = (starPepId: string) => {
+  return `${PUBLIC_DOWNLOADS_URL}/peptides/csv/embeddings/ifeature-aac-20/${starPepId}.csv`;
+};
+
+export const getPublicPeptideEmbeddingIFeatureDpcDownloadUrl = (starPepId: string) => {
+  return `${PUBLIC_DOWNLOADS_URL}/peptides/csv/embeddings/ifeature-dpc-400/${starPepId}.csv`;
+};
