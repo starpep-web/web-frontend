@@ -8,11 +8,16 @@ export const DEFAULT_SITE_DESCRIPTION = `${SITE_TITLE} is a non-redundant databa
 export const DEFAULT_AUTO_RELOAD_INTERVAL = 5000;
 
 /* General Download Links */
-
 export const DOWNLOADS_PDB_ARCHIVE = `${PUBLIC_DOWNLOADS_URL}/zip/StarPepPDB.zip`;
 export const DOWNLOADS_FASTA_BY_DB_ARCHIVE = `${PUBLIC_DOWNLOADS_URL}/zip/StarPepFASTA-Databases.zip`;
 
 export const DOWNLOADS_FULL_METADATA_CSV = `${PUBLIC_DOWNLOADS_URL}/full/csv/StarPep-Metadata-Full.csv`;
+
+export const DOWNLOADS_FULL_EMBEDDINGS = {
+  ESM_mean: `${PUBLIC_DOWNLOADS_URL}/full/csv/StarPep-Embeddings-ESM_mean.csv`,
+  iFeature_AAC_20: `${PUBLIC_DOWNLOADS_URL}/full/csv/StarPep-Embeddings-iFeature_AAC_20.csv`,
+  iFeature_DPC_400: `${PUBLIC_DOWNLOADS_URL}/full/csv/StarPep-Embeddings-iFeature_DPC_400.csv`
+};
 
 export const DOWNLOADS_DB_ARCHIVES = {
   ORIGINAL: `${PUBLIC_DOWNLOADS_URL}/db/StarPepDB-original.zip`
