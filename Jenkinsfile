@@ -45,7 +45,7 @@ pipeline {
       steps {
         echo 'Running tests...'
 
-        sh 'mkdir node_modules' // Possible fix for slow dependency install: https://github.com/npm/cli/issues/2011#issuecomment-1004607950
+        sh 'mkdir -p node_modules' // Possible fix for slow dependency install: https://github.com/npm/cli/issues/2011#issuecomment-1004607950
         sh 'npm ci'
         sh 'npm run lint'
         sh 'npm test'
