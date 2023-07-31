@@ -29,7 +29,6 @@ const AminoAcidDistributionDynamicChart: React.FC<Props> = ({
   }, [filters]);
 
   const { data, loading } = useFetch(filterRequest);
-  console.log(data);
 
   const handleFilterSubmit = (filters: FullFilterPickerValues) => {
     setFilters(filters);
