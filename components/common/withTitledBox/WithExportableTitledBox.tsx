@@ -8,6 +8,7 @@ import styles from './WithTitledBox.module.scss';
 interface Props {
   title: string
   exportedFilename: string
+  disabled?: boolean
   children: React.ReactNode
   width?: string | number
   height?: string | number
@@ -16,7 +17,7 @@ interface Props {
   noTitleMargin?: boolean
 }
 
-const WithExportableTitledBox: React.FC<Props> = ({ title, exportedFilename, children, width, height, minWidth, minHeight, noTitleMargin }) => {
+const WithExportableTitledBox: React.FC<Props> = ({ title, exportedFilename, disabled, children, width, height, minWidth, minHeight, noTitleMargin }) => {
   const ref = createRef<'div'>();
 
   const outerStyle: CSSProperties = {
@@ -53,7 +54,11 @@ const WithExportableTitledBox: React.FC<Props> = ({ title, exportedFilename, chi
           {title}
         </Heading>
 
-        <FontAwesomeIcon title="Export as Image" className={styles['export-icon']} icon="up-right-from-square" onClick={handleExportClick} />
+        {
+          !disabled && (
+            <FontAwesomeIcon title="Export as Image" className={styles['export-icon']} icon="up-right-from-square" onClick={handleExportClick} />
+          )
+        }
       </div>
 
       <Block style={outerStyle}>
