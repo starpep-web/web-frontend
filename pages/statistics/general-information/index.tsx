@@ -4,7 +4,7 @@ import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { StatisticsTabs } from '@components/statistics/statisticsTabs';
 import { NumberStatistic } from '@components/statistics/numberStatistic';
-import { WithTitledBox } from '@components/common/withTitledBox';
+import { WithExportableTitledBox } from '@components/common/withTitledBox';
 import { StatisticsTable } from '@components/statistics/statisticsTable';
 import { HeatMap } from '@components/statistics/charts';
 import { AminoAcidDistributionDynamicChart } from '@components/statistics/concreteCharts/aminoAcidDistributionDynamicChart';
@@ -33,15 +33,15 @@ const GeneralInformationStatisticsPage: React.FC<Props> = ({ statistics, dbHeatm
       <NumberStatistic title="1. Total Peptides" value={statistics.count} />
       <NumberStatistic title="2. Total Peptides with Unusual AA's" value={statistics.unusualCount} />
 
-      <WithTitledBox title="3. Peptide Distribution by Function">
+      <WithExportableTitledBox title="3. Peptide Distribution by Function" exportedFilename="statistics-general-information-distribution-table-by-function">
         <StatisticsTable data={statistics.functionDistribution} headers={['Function', 'Count']} />
-      </WithTitledBox>
+      </WithExportableTitledBox>
 
-      <WithTitledBox title="4. Peptide Distribution by Database">
+      <WithExportableTitledBox title="4. Peptide Distribution by Database" exportedFilename="statistics-general-information-distribution-table-by-database">
         <StatisticsTable data={statistics.databaseDistribution} headers={['Database', 'Count']} />
-      </WithTitledBox>
+      </WithExportableTitledBox>
 
-      <WithTitledBox title="5. Database Intersection Heatmap" height={graphHeight * 2} minWidth={graphHeight * 2} noTitleMargin>
+      <WithExportableTitledBox title="5. Database Intersection Heatmap" height={graphHeight * 2} minWidth={graphHeight * 2} noTitleMargin exportedFilename="statistics-general-information-database-intersection-heatmap">
         <HeatMap
           id="database-intersection-heatmap"
           normalizedData={dbHeatmap.data.relative}
@@ -50,7 +50,7 @@ const GeneralInformationStatisticsPage: React.FC<Props> = ({ statistics, dbHeatm
           yLabels={dbHeatmap.labels.y}
           showValues={false}
         />
-      </WithTitledBox>
+      </WithExportableTitledBox>
 
       <hr />
 

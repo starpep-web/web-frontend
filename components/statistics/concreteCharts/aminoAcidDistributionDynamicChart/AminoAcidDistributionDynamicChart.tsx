@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Box } from 'react-bulma-components';
-import { WithTitledBox } from '@components/common/withTitledBox';
+import { WithExportableTitledBox } from '@components/common/withTitledBox';
 import { BarChart } from '@components/statistics/charts';
 import FullFilterPicker from './FullFilterPicker';
 import { FullFilterPickerValues, CompositeFrequencyData } from './types';
@@ -29,6 +29,7 @@ const AminoAcidDistributionDynamicChart: React.FC<Props> = ({
   }, [filters]);
 
   const { data, loading } = useFetch(filterRequest);
+  console.log(data);
 
   const handleFilterSubmit = (filters: FullFilterPickerValues) => {
     setFilters(filters);
@@ -36,9 +37,9 @@ const AminoAcidDistributionDynamicChart: React.FC<Props> = ({
 
   return (
     <Box>
-      <WithTitledBox title="Amino Acid Distribution Compared" height={height}>
+      <WithExportableTitledBox title="Amino Acid Distribution Compared" height={height} exportedFilename="statistics-aa-distribution" disabled={!data || !Object.keys(data).length}>
         <BarChart id="aa-distribution" data={data ?? {}} yTitle="Frequency" xTitle="Amino Acid" showLegend />
-      </WithTitledBox>
+      </WithExportableTitledBox>
       <FullFilterPicker loading={loading} onSubmit={handleFilterSubmit} />
     </Box>
   );

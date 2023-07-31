@@ -4,7 +4,7 @@ import { GetServerSidePropsResult } from 'next';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { StatisticsTabs } from '@components/statistics/statisticsTabs';
-import { WithTitledBox } from '@components/common/withTitledBox';
+import { WithExportableTitledBox } from '@components/common/withTitledBox';
 import { BarChart } from '@components/statistics/charts';
 import { DatabaseMetadataStatistics } from '@lib/models/statistics';
 import { getDatabaseMetadataStatistics } from '@lib/services/graphDb/statisticsService';
@@ -26,19 +26,19 @@ const MetadataStatisticsPage: React.FC<Props> = ({ statistics }) => {
 
       <StatisticsTabs />
 
-      <WithTitledBox title="1. Peptide Distribution by Sequence Length" height={graphHeight}>
+      <WithExportableTitledBox title="1. Peptide Distribution by Sequence Length" height={graphHeight} exportedFilename="statistics-metadata-distribution-by-sequence-length">
         <BarChart id="length-distribution" data={statistics.lengthDistribution} yTitle="Frequency" xTitle="Sequence Length" />
-      </WithTitledBox>
+      </WithExportableTitledBox>
 
-      <WithTitledBox title="2. Peptide Distribution by Function" height={graphHeight}>
+      <WithExportableTitledBox title="2. Peptide Distribution by Function" height={graphHeight} exportedFilename="statistics-metadata-distribution-by-function">
         <BarChart id="function-distribution" data={statistics.functionDistribution} />
-      </WithTitledBox>
+      </WithExportableTitledBox>
 
-      <WithTitledBox title="3. Peptide Distribution by Database" height={graphHeight}>
+      <WithExportableTitledBox title="3. Peptide Distribution by Database" height={graphHeight} exportedFilename="statistics-metadata-distribution-by-database">
         <BarChart id="database-distribution" data={statistics.databaseDistribution} />
-      </WithTitledBox>
+      </WithExportableTitledBox>
 
-      <WithTitledBox title={`4. Top ${statistics.targetDistribution.partialSize} Peptide Distribution by Target`}>
+      <WithExportableTitledBox title={`4. Top ${statistics.targetDistribution.partialSize} Peptide Distribution by Target`} exportedFilename="statistics-metadata-distribution-by-top-targets">
         <Columns>
           <Columns.Column style={{ height: graphHeight }} tablet={{ size: 12 }} desktop={{ size: 6 }}>
             <BarChart id="target-distribution" data={statistics.targetDistribution.distribution} />
@@ -47,9 +47,9 @@ const MetadataStatisticsPage: React.FC<Props> = ({ statistics }) => {
             <BarChart id="target-percentage" data={statistics.targetDistribution.percentage} />
           </Columns.Column>
         </Columns>
-      </WithTitledBox>
+      </WithExportableTitledBox>
 
-      <WithTitledBox title={`5. Top ${statistics.originDistribution.partialSize} Peptide Distribution by Origin`}>
+      <WithExportableTitledBox title={`5. Top ${statistics.originDistribution.partialSize} Peptide Distribution by Origin`} exportedFilename="statistics-metadata-distribution-by-top-origins">
         <Columns>
           <Columns.Column style={{ height: graphHeight }} tablet={{ size: 12 }} desktop={{ size: 6 }}>
             <BarChart id="origin-distribution" data={statistics.originDistribution.distribution} />
@@ -58,9 +58,9 @@ const MetadataStatisticsPage: React.FC<Props> = ({ statistics }) => {
             <BarChart id="origin-percentage" data={statistics.originDistribution.percentage} />
           </Columns.Column>
         </Columns>
-      </WithTitledBox>
+      </WithExportableTitledBox>
 
-      <WithTitledBox title={`6. Top ${statistics.cTerminusDistribution.partialSize} Peptide Distribution by CTerminus Modification`}>
+      <WithExportableTitledBox title={`6. Top ${statistics.cTerminusDistribution.partialSize} Peptide Distribution by CTerminus Modification`} exportedFilename="statistics-metadata-distribution-by-top-cterminus">
         <Columns>
           <Columns.Column style={{ height: graphHeight }} tablet={{ size: 12 }} desktop={{ size: 6 }}>
             <BarChart id="cterminus-distribution" data={statistics.cTerminusDistribution.distribution} />
@@ -69,9 +69,9 @@ const MetadataStatisticsPage: React.FC<Props> = ({ statistics }) => {
             <BarChart id="cterminus-percentage" data={statistics.cTerminusDistribution.percentage} />
           </Columns.Column>
         </Columns>
-      </WithTitledBox>
+      </WithExportableTitledBox>
 
-      <WithTitledBox title={`7. Top ${statistics.nTerminusDistribution.partialSize} Peptide Distribution by NTerminus Modification`}>
+      <WithExportableTitledBox title={`7. Top ${statistics.nTerminusDistribution.partialSize} Peptide Distribution by NTerminus Modification`} exportedFilename="statistics-metadata-distribution-by-top-nterminus">
         <Columns>
           <Columns.Column style={{ height: graphHeight }} tablet={{ size: 12 }} desktop={{ size: 6 }}>
             <BarChart id="nterminus-distribution" data={statistics.nTerminusDistribution.distribution} />
@@ -80,7 +80,7 @@ const MetadataStatisticsPage: React.FC<Props> = ({ statistics }) => {
             <BarChart id="nterminus-percentage" data={statistics.nTerminusDistribution.percentage} />
           </Columns.Column>
         </Columns>
-      </WithTitledBox>
+      </WithExportableTitledBox>
     </PageWrapper>
   );
 };
