@@ -5,6 +5,7 @@
   display: flex;
   gap: 1rem;
   flex-direction: row;
+  flex-wrap: wrap;
 
   @media (max-width: map.get($breakpoints, 'phone-max')) {
     flex-direction: column;
