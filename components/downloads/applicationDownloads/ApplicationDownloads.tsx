@@ -103,7 +103,7 @@ const ApplicationDownloads = () => {
           {
             Object.entries(DOWNLOADS_DB_ARCHIVES).map(([version, url], idx) => (
               <Button key={idx} color="primary" renderAs="a" href={url} target="_blank">
-                Neo4j Database ({version})
+                Neo4j (3.5) Database [{version}] (.zip)
               </Button>
             ))
           }
