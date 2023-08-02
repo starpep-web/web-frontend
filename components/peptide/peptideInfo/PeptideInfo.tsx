@@ -16,13 +16,13 @@ const PeptideInfo: React.FC<Props> = ({ id, sequence, length }) => {
 
         <Block>
           <p>
-            <strong>ID: </strong> {id}
+            <strong>ID:</strong> {id}
           </p>
           <p>
-            <strong>Sequence: </strong> {sequence}
+            <strong>Sequence:</strong> {sequence}
           </p>
           <p>
-            <strong>Length: </strong> {length}
+            <strong>Length:</strong> {length}
           </p>
         </Block>
       </Notification>

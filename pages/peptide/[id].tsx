@@ -5,6 +5,7 @@ import { PageWrapper } from '@components/common/pageWrapper';
 import { PeptideTitle } from '@components/peptide/peptideTitle';
 import { PeptideVisualization } from '@components/peptide/peptideVisualization';
 import { PeptideInfo } from '@components/peptide/peptideInfo';
+import { PeptideAttributes } from '@components/peptide/peptideAttributes';
 import { PeptideDownloads } from '@components/peptide/peptideDownloads';
 import { PeptideMetadata } from '@components/peptide/peptideMetadata';
 import { getPeptideById } from '@lib/services/graphDb/peptideService';
@@ -33,6 +34,7 @@ const PeptidePage: React.FC<Props> = ({ peptide, pdbString }) => {
       <PeptideVisualization peptide={peptide} pdbString={pdbString} />
 
       <PeptideInfo {...peptide} />
+      <PeptideAttributes {...peptide.attributes} />
       <PeptideMetadata metadata={peptide.metadata} />
       <PeptideDownloads id={peptide.id} />
     </PageWrapper>
