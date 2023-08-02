@@ -37,6 +37,9 @@ export const getFriendlyRelationshipLabel = (relationship: RelationshipLabel): F
   return FRIENDLY_RELATIONSHIP_LABEL_MAP[relationship];
 };
 
+export type MetadataLabel = Exclude<NodeLabel, 'Peptide' | 'Attributes'>;
+export type MetadataRelationshipLabel = Exclude<RelationshipLabel, 'characterizedBy'>;
+
 export type Peptide = {
   id: string
   sequence: string
@@ -44,7 +47,7 @@ export type Peptide = {
 }
 
 export type PeptideMetadata = {
-  [K in RelationshipLabel]?: string[]
+  [K in MetadataRelationshipLabel]?: string[]
 }
 
 export type Neo4jPeptideAttributesProperties = {
@@ -105,8 +108,6 @@ export type FullPeptide = Peptide & {
   metadata: PeptideMetadata
   attributes: FullPeptideAttributes
 };
-
-export type MetadataLabel = Exclude<NodeLabel, 'Peptide' | 'Attributes'>;
 
 export const ID_PREFIX = 'starPep_';
 export const ID_LENGTH = 5;

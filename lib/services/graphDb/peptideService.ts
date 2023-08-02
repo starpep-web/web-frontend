@@ -9,6 +9,7 @@ import {
   Neo4jPeptideAttributesProperties,
   FullPeptideAttributes,
   RawRelationshipLabel,
+  MetadataRelationshipLabel,
   getRelationshipLabelFromRaw,
   getPeptideId, extractIdentityFromId
 } from '@lib/models/peptide';
@@ -53,7 +54,7 @@ const parseFullPeptideFromQueryResult = (result: QueryResult): FullPeptide | nul
       peptideData[1] = parseFullPeptideAttributes(record.get('v').properties);
     } else {
       const peptideDataObject = peptideData[0];
-      const relationship = getRelationshipLabelFromRaw(rawRelationship);
+      const relationship = getRelationshipLabelFromRaw(rawRelationship) as MetadataRelationshipLabel;
       const value = record.get('v').properties.name;
 
       if (!peptideDataObject[relationship]) {

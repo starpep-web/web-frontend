@@ -6,7 +6,7 @@ import { FullScreenOverlay } from '@components/genericOverlays/fullScreenOverlay
 import { ExportOverlay } from '@components/genericOverlays/exportOverlay';
 import { useExport } from '@components/hooks/export';
 import clsx from 'clsx';
-import { FullPeptide, RelationshipLabel } from '@lib/models/peptide';
+import { FullPeptide, MetadataRelationshipLabel } from '@lib/models/peptide';
 
 const createNodeColor = (background: string, highlight: string, border: string): Color => {
   return {
@@ -19,7 +19,7 @@ const createNodeColor = (background: string, highlight: string, border: string):
 
 const peptideNodeColor = createNodeColor('#FF595E', '#FF7075', '#FF474E');
 
-const nodeColorsByRelationship: Record<RelationshipLabel, Color> = {
+const nodeColorsByRelationship: Record<MetadataRelationshipLabel, Color> = {
   assessedAgainst: createNodeColor('#FF9A5C', '#FFA770', '#FF8E47'),
   compiledIn: createNodeColor('#FFCA3A', '#FFD35C', '#FFC933'),
   constitutedBy: createNodeColor('#C5CA30', '#D0D449', '#C1C62F'),
@@ -100,7 +100,7 @@ const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
             id: metadataValue,
             label: metadataValue,
             title: metadataValue,
-            color: nodeColorsByRelationship[relationship as RelationshipLabel],
+            color: nodeColorsByRelationship[relationship as MetadataRelationshipLabel],
             group: relationship
           });
         }
