@@ -20,7 +20,8 @@ export const DOWNLOADS_FULL_EMBEDDINGS = {
 };
 
 export const DOWNLOADS_DB_ARCHIVES = {
-  ORIGINAL: `${PUBLIC_DOWNLOADS_URL}/db/StarPepDB-original.zip`
+  v1: `${PUBLIC_DOWNLOADS_URL}/db/StarPepDB-v1.zip`,
+  v2: `${PUBLIC_DOWNLOADS_URL}/db/StarPepDB-v2.zip`
 };
 
 const STARPEP_FASTA_VERSIONS = ['1.00', '0.90', '0.80', '0.70', '0.60', '0.50'];
