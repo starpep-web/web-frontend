@@ -6,12 +6,37 @@ import {
   Peptide,
   FullPeptide,
   PeptideMetadata,
+  Neo4jPeptideAttributesProperties,
+  FullPeptideAttributes,
   RawRelationshipLabel,
   getRelationshipLabelFromRaw,
   getPeptideId, extractIdentityFromId
 } from '@lib/models/peptide';
 import { WithPagination, createPagination } from '@lib/utils/pagination';
 import { TextQueryFilter } from '@lib/models/search';
+
+const parseFullPeptideAttributes = (properties: Neo4jPeptideAttributesProperties): FullPeptideAttributes => {
+  return {
+    hydropathicity: properties.hydropathicity,
+    charge: properties.charge.toInt(),
+    isoelectricPoint: properties.isoelectric_point,
+    bomanIndex: properties.boman_index,
+    gaacAlphatic: properties.gaac_alphatic,
+    gaacAromatic: properties.gaac_aromatic,
+    gaacPostiveCharge: properties.gaac_postive_charge,
+    gaacNegativeCharge: properties.gaac_negative_charge,
+    gaacUncharge: properties.gaac_uncharge,
+    hydrophobicity: properties.hydrophobicity,
+    solvation: properties.solvation,
+    amphiphilicity: properties.amphiphilicity,
+    hydrophilicity: properties.hydrophilicity,
+    hemolyticProbScore: properties.hemolytic_prob_score,
+    stericHindrance: properties.steric_hindrance,
+    netHydrogen: properties.net_hydrogen.toInt(),
+    molWt: properties.mol_wt,
+    aliphaticIndex: properties.aliphatic_index
+  };
+};
 
 const parseFullPeptideFromQueryResult = (result: QueryResult): FullPeptide | null => {
   const [firstRecord] = result.records;
@@ -21,25 +46,32 @@ const parseFullPeptideFromQueryResult = (result: QueryResult): FullPeptide | nul
   }
 
   const peptideNode = firstRecord.get('n');
-  const metadata: PeptideMetadata = result.records.reduce((metadata, record) => {
+  const [metadata, attributes]: [PeptideMetadata, FullPeptideAttributes] = result.records.reduce((peptideData, record) => {
     const rawRelationship: RawRelationshipLabel = record.get('r').type;
-    const relationship = getRelationshipLabelFromRaw(rawRelationship);
-    const value = record.get('v').properties.name;
 
-    if (!metadata[relationship]) {
-      metadata[relationship] = [value];
+    if (rawRelationship === 'characterized_by') {
+      peptideData[1] = parseFullPeptideAttributes(record.get('v').properties);
     } else {
-      metadata[relationship]!.push(value);
+      const peptideDataObject = peptideData[0];
+      const relationship = getRelationshipLabelFromRaw(rawRelationship);
+      const value = record.get('v').properties.name;
+
+      if (!peptideDataObject[relationship]) {
+        peptideDataObject[relationship] = [value];
+      } else {
+        peptideDataObject[relationship]!.push(value);
+      }
     }
 
-    return metadata;
-  }, {} as PeptideMetadata);
+    return peptideData;
+  }, [{}, {}] as [PeptideMetadata, FullPeptideAttributes]);
 
   return {
     id: getPeptideId(peptideNode.identity.toInt()),
     sequence: peptideNode.properties.seq,
     length: peptideNode.properties.seq.length,
-    metadata
+    metadata,
+    attributes
   };
 };
 
@@ -62,6 +94,7 @@ export const getPeptideBySequence = async (sequence: string): Promise<FullPeptid
   return parseFullPeptideFromQueryResult(result);
 };
 
+// TODO: Search filters should work with attributes too. Implementation for them maybe different than these.
 const parseSearchFilter = (filters?: TextQueryFilter[]): string => {
   if (!filters || !filters.length) {
     return '';
@@ -75,6 +108,7 @@ const parseSearchFilter = (filters?: TextQueryFilter[]): string => {
   }, '');
 };
 
+// TODO: This should return a SearchResultPeptide.
 export const searchPeptidesTextQuery = async (sequence: string, limit: number, skip: number, sanitizedFilter: string): Promise<Peptide[]> => {
   const query = `MATCH (n:Peptide) WHERE n.seq CONTAINS $sequence ${sanitizedFilter} RETURN DISTINCT(n) ORDER BY ID(n) ASC SKIP $skip LIMIT $limit`;
   const result = await readTransaction(query, { sequence: sequence.toUpperCase(), limit, skip });
@@ -106,6 +140,7 @@ export const searchPeptidesTextQueryPaginated = async (sequence: string, page: n
   };
 };
 
+// TODO: This should return a SearchResultPeptide.
 export const searchPeptidesRegexQuery = async (regex: string, limit: number, skip: number, sanitizedFilter: string): Promise<Peptide[]> => {
   const query = `MATCH (n:Peptide) WHERE n.seq =~ $regex ${sanitizedFilter} RETURN DISTINCT(n) ORDER BY ID(n) ASC SKIP $skip LIMIT $limit`;
   const result = await readTransaction(query, { regex, limit, skip });
