@@ -1,5 +1,3 @@
-/* eslint-disable max-params */
-
 export const ROUTES = {
   home: '/',
   about: '/#about',

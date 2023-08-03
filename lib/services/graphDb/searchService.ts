@@ -1,8 +1,6 @@
-/* eslint-disable max-params */
 import { readTransaction } from './dbService';
 import { NodeLabel } from '@lib/models/peptide';
 import { createPagination, WithPagination } from '@lib/utils/pagination';
-
 
 export const getMetadataSuggestions = async (nodeLabel: Omit<NodeLabel, 'Peptide'>, name: string, limit: number, skip: number): Promise<string[]> => {
   const query = `MATCH (p:Peptide)-[]-(n:${nodeLabel}) WHERE toLower(n.name) STARTS WITH toLower($name) RETURN DISTINCT(n.name) AS name ORDER BY name ASC SKIP $skip LIMIT $limit`; // We can interpolate the nodeLabel because this is never user generated.

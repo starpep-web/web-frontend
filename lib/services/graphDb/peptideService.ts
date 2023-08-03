@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable max-params */
 import { QueryResult, int } from 'neo4j-driver';
 import { readTransaction, sanitizeInput } from './dbService';
 import {
