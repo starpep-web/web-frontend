@@ -1,4 +1,4 @@
-import { Peptide, MetadataLabel, NODE_LABELS } from '@lib/models/peptide';
+import { SearchResultPeptide, MetadataLabel, NODE_LABELS } from '@lib/models/peptide';
 import { FILTER_SEPARATOR } from '@lib/constants/search';
 
 // Text Query (Filter)
@@ -36,7 +36,7 @@ export interface SingleQueryAlignmentOptions {
   max_quantity: number | null
 }
 
-export type SingleAlignedPeptide = Peptide & {
+export type SingleAlignedPeptide = SearchResultPeptide & {
   score: number
 }
 

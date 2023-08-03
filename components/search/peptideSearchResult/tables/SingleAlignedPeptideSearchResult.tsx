@@ -14,7 +14,22 @@ const SingleAlignedPeptideSearchResult: React.FC<Props> = ({ onPageChange, pepti
     <GenericPeptideSearchResult
       peptides={peptides}
       onPageChange={onPageChange}
-      headers={['#', 'ID', 'Score', 'Sequence', 'Length']}
+      headers={[
+        '#',
+        'ID',
+        'Score',
+        'Sequence',
+        'Length',
+        'Hydropathicity',
+        'Charge',
+        'Isoelectric Point',
+        'Boman Index',
+        'GAAC - Alphatic',
+        'GAAC - Aromatic',
+        'GAAC - Positive Charge',
+        'GAAC - Negative Charge',
+        'GAAC - Uncharge'
+      ]}
       rowComponent={SingleAlignedPeptideSearchResultItemRow}
       {...pagination}
     />
