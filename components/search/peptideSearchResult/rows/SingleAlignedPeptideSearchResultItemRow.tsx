@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 import { SingleAlignedPeptide } from '@lib/models/search';
 import { RowProps } from './types';
+import { formatNumberDecimals } from '@lib/utils/number';
 
 const SingleAlignedPeptideSearchResultItemRow: React.FC<RowProps<SingleAlignedPeptide>> = ({ index, id, sequence, length, score, attributes }) => {
   return (
@@ -16,10 +17,7 @@ const SingleAlignedPeptideSearchResultItemRow: React.FC<RowProps<SingleAlignedPe
         </Link>
       </td>
       <td>
-        {score.toLocaleString('en-US', {
-          maximumFractionDigits: 2,
-          minimumFractionDigits: 2
-        })}
+        {formatNumberDecimals(score, 2)}
       </td>
       <td>
         {sequence}

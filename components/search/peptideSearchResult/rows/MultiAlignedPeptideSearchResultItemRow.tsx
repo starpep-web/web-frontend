@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 import { MultiAlignedPeptide } from '@lib/models/search';
 import { RowProps } from './types';
+import { formatNumberDecimals } from '@lib/utils/number';
 
 const MultiAlignedPeptideSearchResultItemRow: React.FC<RowProps<MultiAlignedPeptide>> = ({
   index,
@@ -25,28 +26,16 @@ const MultiAlignedPeptideSearchResultItemRow: React.FC<RowProps<MultiAlignedPept
         </Link>
       </td>
       <td>
-        {score.toLocaleString('en-US', {
-          maximumFractionDigits: 2,
-          minimumFractionDigits: 2
-        })}
+        {formatNumberDecimals(score, 2)}
       </td>
       <td>
-        {avg_score.toLocaleString('en-US', {
-          maximumFractionDigits: 2,
-          minimumFractionDigits: 2
-        })}
+        {formatNumberDecimals(avg_score, 2)}
       </td>
       <td>
-        {max_score.toLocaleString('en-US', {
-          maximumFractionDigits: 2,
-          minimumFractionDigits: 2
-        })}
+        {formatNumberDecimals(max_score, 2)}
       </td>
       <td>
-        {min_score.toLocaleString('en-US', {
-          maximumFractionDigits: 2,
-          minimumFractionDigits: 2
-        })}
+        {formatNumberDecimals(min_score, 2)}
       </td>
       <td>
         {sequence}

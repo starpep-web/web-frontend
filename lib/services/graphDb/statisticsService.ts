@@ -1,8 +1,19 @@
 import { Integer } from 'neo4j-driver';
 import { readTransaction } from './dbService';
-import { DatabaseGeneralInformationStatistics, DatabaseMetadataStatistics, PartialRelationStatistics } from '@lib/models/statistics';
+import {
+  DatabaseFeaturesStatistics,
+  DatabaseGeneralInformationStatistics,
+  DatabaseMetadataStatistics,
+  HistogramData,
+  HistogramWidthMethod,
+  PartialRelationStatistics
+} from '@lib/models/statistics';
+import { Neo4jPeptideAttributesProperties } from '@lib/models/peptide';
 import { createAlphabet } from '@lib/utils/array';
+import { formatNumberDecimals } from '@lib/utils/number';
 import { BadRequestError } from '@lib/errors/http';
+
+/* Static Statistics Functions */
 
 export const getPeptideCount = async (): Promise<number> => {
   const query = 'MATCH (n:Peptide) RETURN COUNT(n) AS c';
@@ -194,6 +205,58 @@ LIMIT $limit
   };
 };
 
+// Interpolation in query should be fine since this function is only called statically.
+const generateHistogramQueryForAttribute = (attributeName: keyof Neo4jPeptideAttributesProperties, widthMethod: HistogramWidthMethod): string => {
+  const widthQuery = widthMethod === 'scott' ?
+    '3.49 * s * n^(-1.0/3)' :
+    '2 * (q3 - q1) * n^(-1.0/3)';
+
+  return `
+MATCH (m:Attributes)
+WITH m.${attributeName} AS a
+WITH MIN(a) AS min, MAX(a) AS max, COUNT(a) AS n, stDev(a) AS s, percentileCont(a, 0.75) AS q3, percentileCont(a, 0.25) AS q1
+WITH min, max, n, max - min AS r, ${widthQuery} AS w
+WITH min, max, n, r, w, toInteger(round(r / w)) AS k
+MATCH (m:Attributes)
+WITH m.${attributeName} AS a, min, max, n, r, w, k
+WITH min, max, w, k, toInteger(round((a - min) / w)) AS kn, COUNT(*) AS f ORDER BY kn
+RETURN toFloat(min) as min, toFloat(max) as max, toFloat(w) AS width, k AS numOfBins, COLLECT({ classNum: kn, frequency: f }) AS bins
+  `;
+};
+
+const computeHistogramDataForAttribute = async (attributeName: keyof Neo4jPeptideAttributesProperties, widthMethod: HistogramWidthMethod = 'scott'): Promise<HistogramData> => {
+  const query = generateHistogramQueryForAttribute(attributeName, widthMethod);
+  const result = await readTransaction(query);
+  const [record] = result.records;
+
+  return {
+    min: record.get('min'),
+    max: record.get('max'),
+    width: record.get('width'),
+    numOfBins: record.get('numOfBins').toInt(),
+    bins: record.get('bins').map((bin: { classNum: Integer, frequency: Integer }) => ({
+      classNum: bin.classNum.toInt(),
+      frequency: bin.frequency.toInt()
+    }))
+  };
+};
+
+const parseHistogramData = (data: HistogramData, binMaxDigits: number): Record<string, number> => {
+  const histogram: Record<string, number> = {};
+
+  for (let i = 0; i < data.numOfBins; i++) {
+    const start = formatNumberDecimals(data.min + (data.width * i), binMaxDigits);
+    const end = formatNumberDecimals(data.min + (data.width * (i + 1)), binMaxDigits);
+    const key = `${start}; ${end}`;
+
+    histogram[key] = data.bins.find((bin) => bin.classNum === i)?.frequency ?? 0;
+  }
+
+  return histogram;
+};
+
+/* Static Statistics Groups by Tab */
+
 export const getDatabaseGeneralInformationStatistics = async (): Promise<DatabaseGeneralInformationStatistics> => {
   return {
     count: await getPeptideCount(),
@@ -214,6 +277,26 @@ export const getDatabaseMetadataStatistics = async (partialsLimit = 25): Promise
     nTerminusDistribution: await getPartialPeptideNTerminusDistribution(partialsLimit)
   };
 };
+
+export const getDatabaseFeaturesStatistics = async (): Promise<DatabaseFeaturesStatistics> => {
+  return {
+    hydropathicityHistogram: parseHistogramData(await computeHistogramDataForAttribute('hydropathicity'), 3),
+    chargeHistogram: parseHistogramData(await computeHistogramDataForAttribute('charge'), 3),
+    isoelectricPointHistogram: parseHistogramData(await computeHistogramDataForAttribute('isoelectric_point'), 3),
+    bomanIndexHistogram: parseHistogramData(await computeHistogramDataForAttribute('boman_index'), 3),
+    gaacAlphaticHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_alphatic'), 3),
+    gaacAromaticHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_aromatic'), 3),
+    gaacPositiveChargeHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_postive_charge'), 3),
+    gaacNegativeChargeHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_negative_charge'), 3),
+    gaacUnchargeHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_uncharge'), 3),
+    hydrophobicityHistogram: parseHistogramData(await computeHistogramDataForAttribute('hydrophobicity'), 3),
+    solvationHistogram: parseHistogramData(await computeHistogramDataForAttribute('solvation'), 3),
+    amphiphilicityHistogram: parseHistogramData(await computeHistogramDataForAttribute('amphiphilicity'), 3),
+    hydrophilicityHistogram: parseHistogramData(await computeHistogramDataForAttribute('hydrophilicity'), 3)
+  };
+};
+
+/* Dynamic Statistics Functions */
 
 export const FREQUENCY_FILTER_TYPES = ['Database', 'Function', 'Origin'] as const;
 export type FrequencyFilterType = typeof FREQUENCY_FILTER_TYPES[number];
