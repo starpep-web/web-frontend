@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box, Pagination as BulmaPagination } from 'react-bulma-components';
 import { Table } from '@components/common/table';
-import { Peptide } from '@lib/models/peptide';
+import { SearchResultPeptide } from '@lib/models/peptide';
 import { Pagination } from '@lib/utils/pagination';
 import { RowProps } from './rows/types';
 
-interface Props<T extends Peptide> extends Pagination {
+interface Props<T extends SearchResultPeptide> extends Pagination {
   peptides: T[]
   onPageChange: (page: number) => void
 
@@ -13,7 +13,7 @@ interface Props<T extends Peptide> extends Pagination {
   rowComponent: React.JSXElementConstructor<RowProps<T>>
 }
 
-const GenericPeptideSearchResult = <T extends Peptide>({
+const GenericPeptideSearchResult = <T extends SearchResultPeptide>({
   onPageChange,
   peptides,
   headers,
