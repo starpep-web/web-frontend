@@ -29,7 +29,7 @@ export interface DatabaseFeaturesStatistics {
   bomanIndexHistogram: Record<string, number>
   gaacAlphaticHistogram: Record<string, number>
   gaacAromaticHistogram: Record<string, number>
-  gaacPostiveChargeHistogram: Record<string, number>
+  gaacPositiveChargeHistogram: Record<string, number>
   gaacNegativeChargeHistogram: Record<string, number>
   gaacUnchargeHistogram: Record<string, number>
   hydrophobicityHistogram: Record<string, number>

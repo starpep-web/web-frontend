@@ -286,7 +286,7 @@ export const getDatabaseFeaturesStatistics = async (): Promise<DatabaseFeaturesS
     bomanIndexHistogram: parseHistogramData(await computeHistogramDataForAttribute('boman_index'), 3),
     gaacAlphaticHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_alphatic'), 3),
     gaacAromaticHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_aromatic'), 3),
-    gaacPostiveChargeHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_postive_charge'), 3),
+    gaacPositiveChargeHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_postive_charge'), 3),
     gaacNegativeChargeHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_negative_charge'), 3),
     gaacUnchargeHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_uncharge'), 3),
     hydrophobicityHistogram: parseHistogramData(await computeHistogramDataForAttribute('hydrophobicity'), 3),
