@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { http, AsyncTaskResponse, InitialAsyncTaskResponse, FASTA_CONTENT_TYPE, resolveAxiosError } from './apiService';
 import { SingleQueryAlignmentOptions, SingleAlignedPeptide, MultiQueryAlignmentOptions, MultiAlignedPeptide } from '@lib/models/search';
 import { WithPagination } from '@lib/utils/pagination';

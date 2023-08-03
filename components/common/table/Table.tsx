@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { Table as BulmaTable } from 'react-bulma-components';
 

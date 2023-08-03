@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import assert from 'assert';
 import { Integer } from 'neo4j-driver';
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import GenericPeptideSearchResult from '../GenericPeptideSearchResult';
 import PeptideSearchResultItemRow from '../rows/PeptideSearchResultItemRow';
-import { Peptide } from '@lib/models/peptide';
+import { SearchResultPeptide } from '@lib/models/peptide';
 import { Pagination } from '@lib/utils/pagination';
 
 interface Props extends Pagination {
-  peptides: Peptide[]
+  peptides: SearchResultPeptide[]
   onPageChange: (page: number) => void
 }
 
@@ -14,7 +14,21 @@ const PeptideSearchResult: React.FC<Props> = ({ onPageChange, peptides, ...pagin
     <GenericPeptideSearchResult
       peptides={peptides}
       onPageChange={onPageChange}
-      headers={['#', 'ID', 'Sequence', 'Length']}
+      headers={[
+        '#',
+        'ID',
+        'Sequence',
+        'Length',
+        'Hydropathicity',
+        'Charge',
+        'Isoelectric Point',
+        'Boman Index',
+        'GAAC - Alphatic',
+        'GAAC - Aromatic',
+        'GAAC - Positive Charge',
+        'GAAC - Negative Charge',
+        'GAAC - Uncharge'
+      ]}
       rowComponent={PeptideSearchResultItemRow}
       {...pagination}
     />

@@ -4,7 +4,7 @@ import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 import { SingleAlignedPeptide } from '@lib/models/search';
 import { RowProps } from './types';
 
-const SingleAlignedPeptideSearchResultItemRow: React.FC<RowProps<SingleAlignedPeptide>> = ({ index, id, sequence, length, score }) => {
+const SingleAlignedPeptideSearchResultItemRow: React.FC<RowProps<SingleAlignedPeptide>> = ({ index, id, sequence, length, score, attributes }) => {
   return (
     <tr>
       <th>
@@ -26,6 +26,33 @@ const SingleAlignedPeptideSearchResultItemRow: React.FC<RowProps<SingleAlignedPe
       </td>
       <td>
         {length}
+      </td>
+      <td>
+        {attributes.hydropathicity}
+      </td>
+      <td>
+        {attributes.charge}
+      </td>
+      <td>
+        {attributes.isoelectricPoint}
+      </td>
+      <td>
+        {attributes.bomanIndex}
+      </td>
+      <td>
+        {attributes.gaacAlphatic}
+      </td>
+      <td>
+        {attributes.gaacAromatic}
+      </td>
+      <td>
+        {attributes.gaacPostiveCharge}
+      </td>
+      <td>
+        {attributes.gaacNegativeCharge}
+      </td>
+      <td>
+        {attributes.gaacUncharge}
       </td>
     </tr>
   );

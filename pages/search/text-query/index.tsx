@@ -6,7 +6,7 @@ import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { PeptideSearchResult } from '@components/search/peptideSearchResult';
 import { searchPeptidesTextQueryPaginated, searchPeptidesRegexQueryPaginated } from '@lib/services/graphDb/peptideService';
-import { Peptide } from '@lib/models/peptide';
+import { SearchResultPeptide } from '@lib/models/peptide';
 import { convertFilterToParam, parseParamToFilter, TextQueryFilter } from '@lib/models/search';
 import { Pagination } from '@lib/utils/pagination';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
@@ -16,7 +16,7 @@ interface ServerSideProps {
   regexEnabled: boolean
   page: number
 
-  peptides: Peptide[]
+  peptides: SearchResultPeptide[]
   pagination: Pagination
   filters: TextQueryFilter[]
 }

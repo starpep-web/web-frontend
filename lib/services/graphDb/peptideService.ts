@@ -1,12 +1,11 @@
-/* eslint-disable max-len */
-/* eslint-disable max-params */
 import { QueryResult, int } from 'neo4j-driver';
 import { readTransaction, sanitizeInput } from './dbService';
 import {
-  Peptide,
+  SearchResultPeptide,
   FullPeptide,
   PeptideMetadata,
   Neo4jPeptideAttributesProperties,
+  SearchPeptideAttributes,
   FullPeptideAttributes,
   RawRelationshipLabel,
   MetadataRelationshipLabel,
@@ -16,7 +15,7 @@ import {
 import { WithPagination, createPagination } from '@lib/utils/pagination';
 import { TextQueryFilter } from '@lib/models/search';
 
-const parseFullPeptideAttributes = (properties: Neo4jPeptideAttributesProperties): FullPeptideAttributes => {
+const parseSearchPeptideAttributes = (properties: Neo4jPeptideAttributesProperties): SearchPeptideAttributes => {
   return {
     hydropathicity: properties.hydropathicity,
     charge: properties.charge.toInt(),
@@ -26,7 +25,13 @@ const parseFullPeptideAttributes = (properties: Neo4jPeptideAttributesProperties
     gaacAromatic: properties.gaac_aromatic,
     gaacPostiveCharge: properties.gaac_postive_charge,
     gaacNegativeCharge: properties.gaac_negative_charge,
-    gaacUncharge: properties.gaac_uncharge,
+    gaacUncharge: properties.gaac_uncharge
+  };
+};
+
+const parseFullPeptideAttributes = (properties: Neo4jPeptideAttributesProperties): FullPeptideAttributes => {
+  return {
+    ...parseSearchPeptideAttributes(properties),
     hydrophobicity: properties.hydrophobicity,
     solvation: properties.solvation,
     amphiphilicity: properties.amphiphilicity,
@@ -109,23 +114,24 @@ const parseSearchFilter = (filters?: TextQueryFilter[]): string => {
   }, '');
 };
 
-// TODO: This should return a SearchResultPeptide.
-export const searchPeptidesTextQuery = async (sequence: string, limit: number, skip: number, sanitizedFilter: string): Promise<Peptide[]> => {
-  const query = `MATCH (n:Peptide) WHERE n.seq CONTAINS $sequence ${sanitizedFilter} RETURN DISTINCT(n) ORDER BY ID(n) ASC SKIP $skip LIMIT $limit`;
+export const searchPeptidesTextQuery = async (sequence: string, limit: number, skip: number, sanitizedFilter: string): Promise<SearchResultPeptide[]> => {
+  const query = `MATCH (n:Peptide)-[]->(v:Attributes) WHERE n.seq CONTAINS $sequence ${sanitizedFilter} RETURN DISTINCT(n), v ORDER BY ID(n) ASC SKIP $skip LIMIT $limit`;
   const result = await readTransaction(query, { sequence: sequence.toUpperCase(), limit, skip });
 
   return result.records.map((r) => {
     const node = r.get('n');
+    const attributes = parseSearchPeptideAttributes(r.get('v').properties);
 
     return {
       id: getPeptideId(node.identity.toInt()),
       sequence: node.properties.seq,
-      length: node.properties.seq.length
+      length: node.properties.seq.length,
+      attributes
     };
   });
 };
 
-export const searchPeptidesTextQueryPaginated = async (sequence: string, page: number, filters?: TextQueryFilter[], limit = 50): Promise<WithPagination<Peptide[]>> => {
+export const searchPeptidesTextQueryPaginated = async (sequence: string, page: number, filters?: TextQueryFilter[], limit = 50): Promise<WithPagination<SearchResultPeptide[]>> => {
   const start = (page - 1) * limit;
   const sanitizedFilter = parseSearchFilter(filters);
 
@@ -141,23 +147,24 @@ export const searchPeptidesTextQueryPaginated = async (sequence: string, page: n
   };
 };
 
-// TODO: This should return a SearchResultPeptide.
-export const searchPeptidesRegexQuery = async (regex: string, limit: number, skip: number, sanitizedFilter: string): Promise<Peptide[]> => {
-  const query = `MATCH (n:Peptide) WHERE n.seq =~ $regex ${sanitizedFilter} RETURN DISTINCT(n) ORDER BY ID(n) ASC SKIP $skip LIMIT $limit`;
+export const searchPeptidesRegexQuery = async (regex: string, limit: number, skip: number, sanitizedFilter: string): Promise<SearchResultPeptide[]> => {
+  const query = `MATCH (n:Peptide)-[]->(v:Attributes) WHERE n.seq =~ $regex ${sanitizedFilter} RETURN DISTINCT(n), v ORDER BY ID(n) ASC SKIP $skip LIMIT $limit`;
   const result = await readTransaction(query, { regex, limit, skip });
 
   return result.records.map((r) => {
     const node = r.get('n');
+    const attributes = parseSearchPeptideAttributes(r.get('v').properties);
 
     return {
       id: getPeptideId(node.identity.toInt()),
       sequence: node.properties.seq,
-      length: node.properties.seq.length
+      length: node.properties.seq.length,
+      attributes
     };
   });
 };
 
-export const searchPeptidesRegexQueryPaginated = async (regex: string, page: number, filters?: TextQueryFilter[], limit = 50): Promise<WithPagination<Peptide[]>> => {
+export const searchPeptidesRegexQueryPaginated = async (regex: string, page: number, filters?: TextQueryFilter[], limit = 50): Promise<WithPagination<SearchResultPeptide[]>> => {
   const start = (page - 1) * limit;
   const sanitizedFilter = parseSearchFilter(filters);
 

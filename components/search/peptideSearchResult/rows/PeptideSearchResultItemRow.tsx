@@ -1,10 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
-import { Peptide } from '@lib/models/peptide';
+import { SearchResultPeptide } from '@lib/models/peptide';
 import { RowProps } from './types';
 
-const PeptideSearchResultItemRow: React.FC<RowProps<Peptide>> = ({ index, id, sequence, length }) => {
+const PeptideSearchResultItemRow: React.FC<RowProps<SearchResultPeptide>> = ({ index, id, sequence, length, attributes }) => {
   return (
     <tr>
       <th>
@@ -20,6 +20,33 @@ const PeptideSearchResultItemRow: React.FC<RowProps<Peptide>> = ({ index, id, se
       </td>
       <td>
         {length}
+      </td>
+      <td>
+        {attributes.hydropathicity}
+      </td>
+      <td>
+        {attributes.charge}
+      </td>
+      <td>
+        {attributes.isoelectricPoint}
+      </td>
+      <td>
+        {attributes.bomanIndex}
+      </td>
+      <td>
+        {attributes.gaacAlphatic}
+      </td>
+      <td>
+        {attributes.gaacAromatic}
+      </td>
+      <td>
+        {attributes.gaacPostiveCharge}
+      </td>
+      <td>
+        {attributes.gaacNegativeCharge}
+      </td>
+      <td>
+        {attributes.gaacUncharge}
       </td>
     </tr>
   );
