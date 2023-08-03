@@ -6,7 +6,11 @@ import { NumericDataProp } from './types';
 
 ChartJS.register(...registerables);
 
-const parseData = (data: NumericDataProp) => {
+interface ParseDataOptions {
+  color?: string
+}
+
+const parseData = (data: NumericDataProp, options: ParseDataOptions = {}) => {
   const keys = Object.keys(data);
   const values = Object.values(data);
   const [firstValue] = values;
@@ -22,7 +26,7 @@ const parseData = (data: NumericDataProp) => {
         return {
           label: key,
           data: innerValues,
-          backgroundColor: uniqolor(key, { format: 'rgb' }).color
+          backgroundColor: options?.color ?? uniqolor(key, { format: 'rgb' }).color
         };
       })
     };
@@ -33,7 +37,7 @@ const parseData = (data: NumericDataProp) => {
     datasets: [{
       label: '',
       data: values,
-      backgroundColor: (values as number[]).map((value) => uniqolor(value, { format: 'rgb' }).color)
+      backgroundColor: (values as number[]).map((value) => options?.color ?? uniqolor(value, { format: 'rgb' }).color)
     }]
   };
 };
@@ -44,9 +48,10 @@ interface Props {
   yTitle?: string
   xTitle?: string
   showLegend?: boolean
+  color?: string
 }
 
-const BarChart: React.FC<Props> = ({ id, data, yTitle, xTitle, showLegend }) => {
+const BarChart: React.FC<Props> = ({ id, data, yTitle, xTitle, showLegend, color }) => {
   const options = {
     maintainAspectRatio: false,
     responsive: true,
@@ -75,7 +80,7 @@ const BarChart: React.FC<Props> = ({ id, data, yTitle, xTitle, showLegend }) => 
 
   return (
     <Bar
-      data={parseData(data)}
+      data={parseData(data, { color })}
       options={options}
       key={id}
       datasetIdKey={id}
