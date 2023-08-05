@@ -207,6 +207,9 @@ LIMIT $limit
 
 // Interpolation in query should be fine since this function is only called statically.
 const generateHistogramQueryForAttribute = (attributeName: keyof Neo4jPeptideAttributesProperties, widthMethod: HistogramWidthMethod): string => {
+  const dependencyQuery = widthMethod === 'scott' ?
+    'stDev(a) AS s' :
+    'percentileCont(a, 0.75) AS q3, percentileCont(a, 0.25) AS q1';
   const widthQuery = widthMethod === 'scott' ?
     '3.49 * s * n^(-1.0/3)' :
     '2 * (q3 - q1) * n^(-1.0/3)';
@@ -214,7 +217,7 @@ const generateHistogramQueryForAttribute = (attributeName: keyof Neo4jPeptideAtt
   return `
 MATCH (m:Attributes)
 WITH m.${attributeName} AS a
-WITH MIN(a) AS min, MAX(a) AS max, COUNT(a) AS n, stDev(a) AS s, percentileCont(a, 0.75) AS q3, percentileCont(a, 0.25) AS q1
+WITH MIN(a) AS min, MAX(a) AS max, COUNT(a) AS n, ${dependencyQuery}
 WITH min, max, n, max - min AS r, ${widthQuery} AS w
 WITH min, max, n, r, w, toInteger(round(r / w)) AS k
 MATCH (m:Attributes)
