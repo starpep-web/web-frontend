@@ -1,6 +1,8 @@
 import React from 'react';
 import { Block, Notification, Heading } from 'react-bulma-components';
 import { FullPeptideAttributes } from '@lib/models/peptide';
+import { formatNumberMaxDecimals } from '@lib/utils/number';
+import { PEPTIDE_ATTRIBUTE_MAX_DECIMALS } from '@lib/constants/site';
 
 interface Props extends FullPeptideAttributes {
 
@@ -35,58 +37,58 @@ const PeptideAttributes: React.FC<Props> = ({
 
         <Block>
           <p>
-            <strong>Hemolytic PROB Score: </strong> {hemolyticProbScore}
+            <strong>Hemolytic PROB Score: </strong> {formatNumberMaxDecimals(hemolyticProbScore, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>Hydrophobicity: </strong> {hydrophobicity}
+            <strong>Hydrophobicity: </strong> {formatNumberMaxDecimals(hydrophobicity, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>Steric Hindrance: </strong> {stericHindrance}
+            <strong>Steric Hindrance: </strong> {formatNumberMaxDecimals(stericHindrance, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>Solvation: </strong> {solvation}
+            <strong>Solvation: </strong> {formatNumberMaxDecimals(solvation, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>Hydropathicity: </strong> {hydropathicity}
+            <strong>Hydropathicity: </strong> {formatNumberMaxDecimals(hydropathicity, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>Amphilicity: </strong> {amphiphilicity}
+            <strong>Amphilicity: </strong> {formatNumberMaxDecimals(amphiphilicity, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>Hydrophilicity: </strong> {hydrophilicity}
+            <strong>Hydrophilicity: </strong> {formatNumberMaxDecimals(hydrophilicity, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>Net Hydrogen: </strong> {netHydrogen}
+            <strong>Net Hydrogen: </strong> {formatNumberMaxDecimals(netHydrogen, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>Charge: </strong> {charge}
+            <strong>Charge: </strong> {formatNumberMaxDecimals(charge, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>Isoelectric Point: </strong> {isoelectricPoint}
+            <strong>Isoelectric Point: </strong> {formatNumberMaxDecimals(isoelectricPoint, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>Molar Weight: </strong> {molWt}
+            <strong>Molar Weight: </strong> {formatNumberMaxDecimals(molWt, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>Aliphatic Index: </strong> {aliphaticIndex}
+            <strong>Aliphatic Index: </strong> {formatNumberMaxDecimals(aliphaticIndex, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>Boman Index: </strong> {bomanIndex}
+            <strong>Boman Index: </strong> {formatNumberMaxDecimals(bomanIndex, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>GAAC - Alphatic: </strong> {gaacAlphatic}
+            <strong>GAAC - Alphatic: </strong> {formatNumberMaxDecimals(gaacAlphatic, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>GAAC - Aromatic: </strong> {gaacAromatic}
+            <strong>GAAC - Aromatic: </strong> {formatNumberMaxDecimals(gaacAromatic, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>GAAC - Positive Charge: </strong> {gaacPostiveCharge}
+            <strong>GAAC - Positive Charge: </strong> {formatNumberMaxDecimals(gaacPostiveCharge, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>GAAC - Negative Charge: </strong> {gaacNegativeCharge}
+            <strong>GAAC - Negative Charge: </strong> {formatNumberMaxDecimals(gaacNegativeCharge, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
           <p>
-            <strong>GAAC - Uncharge: </strong> {gaacUncharge}
+            <strong>GAAC - Uncharge: </strong> {formatNumberMaxDecimals(gaacUncharge, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
           </p>
         </Block>
       </Notification>
