@@ -12,6 +12,7 @@ export const DOWNLOADS_PDB_ARCHIVE = `${PUBLIC_DOWNLOADS_URL}/zip/StarPepPDB.zip
 export const DOWNLOADS_FASTA_BY_DB_ARCHIVE = `${PUBLIC_DOWNLOADS_URL}/zip/StarPepFASTA-Databases.zip`;
 
 export const DOWNLOADS_FULL_METADATA_CSV = `${PUBLIC_DOWNLOADS_URL}/full/csv/StarPep-Metadata-Full.csv`;
+export const DOWNLOADS_FULL_ATTRIBUTES_CSV = `${PUBLIC_DOWNLOADS_URL}/full/csv/StarPep-Attributes-Full.csv`;
 
 export const DOWNLOADS_FULL_EMBEDDINGS = {
   ESM_mean: `${PUBLIC_DOWNLOADS_URL}/full/csv/StarPep-Embeddings-ESM_mean.csv`,
