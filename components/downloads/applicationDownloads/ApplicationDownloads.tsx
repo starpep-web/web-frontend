@@ -6,6 +6,7 @@ import {
   DOWNLOADS_DB_ARCHIVES,
   DOWNLOADS_STARPEP_FASTA,
   DOWNLOADS_FULL_METADATA_CSV,
+  DOWNLOADS_FULL_ATTRIBUTES_CSV,
   DOWNLOADS_FASTA_BY_DB,
   DOWNLOADS_FULL_EMBEDDINGS
 } from '@lib/constants/site';
@@ -34,6 +35,10 @@ const ApplicationDownloads = () => {
         <div className={styles.buttonsContainer}>
           <Button color="primary" renderAs="a" href={DOWNLOADS_FULL_METADATA_CSV} target="_blank">
             Full Metadata (.csv)
+          </Button>
+
+          <Button color="primary" renderAs="a" href={DOWNLOADS_FULL_ATTRIBUTES_CSV} target="_blank">
+            Full Attributes (.csv)
           </Button>
 
           {

@@ -7,11 +7,15 @@ export const DEFAULT_SITE_DESCRIPTION = `${SITE_TITLE} is a non-redundant databa
 /* Other Defaults */
 export const DEFAULT_AUTO_RELOAD_INTERVAL = 5000;
 
+export const PEPTIDE_ATTRIBUTE_MAX_DECIMALS = 4;
+export const PEPTIDE_SCORE_DECIMALS = 2;
+
 /* General Download Links */
 export const DOWNLOADS_PDB_ARCHIVE = `${PUBLIC_DOWNLOADS_URL}/zip/StarPepPDB.zip`;
 export const DOWNLOADS_FASTA_BY_DB_ARCHIVE = `${PUBLIC_DOWNLOADS_URL}/zip/StarPepFASTA-Databases.zip`;
 
 export const DOWNLOADS_FULL_METADATA_CSV = `${PUBLIC_DOWNLOADS_URL}/full/csv/StarPep-Metadata-Full.csv`;
+export const DOWNLOADS_FULL_ATTRIBUTES_CSV = `${PUBLIC_DOWNLOADS_URL}/full/csv/StarPep-Attributes-Full.csv`;
 
 export const DOWNLOADS_FULL_EMBEDDINGS = {
   ESM_mean: `${PUBLIC_DOWNLOADS_URL}/full/csv/StarPep-Embeddings-ESM_mean.csv`,
