@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 import { SearchResultPeptide } from '@lib/models/peptide';
 import { RowProps } from './types';
+import { formatNumberMaxDecimals } from '@lib/utils/number';
+import { PEPTIDE_ATTRIBUTE_MAX_DECIMALS } from '@lib/constants/site';
 
 const PeptideSearchResultItemRow: React.FC<RowProps<SearchResultPeptide>> = ({ index, id, sequence, length, attributes }) => {
   return (
@@ -22,31 +24,31 @@ const PeptideSearchResultItemRow: React.FC<RowProps<SearchResultPeptide>> = ({ i
         {length}
       </td>
       <td>
-        {attributes.hydropathicity}
+        {formatNumberMaxDecimals(attributes.hydropathicity, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
       </td>
       <td>
-        {attributes.charge}
+        {formatNumberMaxDecimals(attributes.charge, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
       </td>
       <td>
-        {attributes.isoelectricPoint}
+        {formatNumberMaxDecimals(attributes.isoelectricPoint, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
       </td>
       <td>
-        {attributes.bomanIndex}
+        {formatNumberMaxDecimals(attributes.bomanIndex, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
       </td>
       <td>
-        {attributes.gaacAlphatic}
+        {formatNumberMaxDecimals(attributes.gaacAlphatic, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
       </td>
       <td>
-        {attributes.gaacAromatic}
+        {formatNumberMaxDecimals(attributes.gaacAromatic, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
       </td>
       <td>
-        {attributes.gaacPostiveCharge}
+        {formatNumberMaxDecimals(attributes.gaacPostiveCharge, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
       </td>
       <td>
-        {attributes.gaacNegativeCharge}
+        {formatNumberMaxDecimals(attributes.gaacNegativeCharge, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
       </td>
       <td>
-        {attributes.gaacUncharge}
+        {formatNumberMaxDecimals(attributes.gaacUncharge, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
       </td>
     </tr>
   );

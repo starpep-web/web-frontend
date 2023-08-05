@@ -14,7 +14,25 @@ const MultiAlignedPeptideSearchResult: React.FC<Props> = ({ onPageChange, peptid
     <GenericPeptideSearchResult
       peptides={peptides}
       onPageChange={onPageChange}
-      headers={['#', 'ID', 'Score', 'Avg. Score', 'Max. Score', 'Min. Score', 'Sequence', 'Length']}
+      headers={[
+        '#',
+        'ID',
+        'Score',
+        'Avg. Score',
+        'Max. Score',
+        'Min. Score',
+        'Sequence',
+        'Length',
+        'Hydropathicity',
+        'Charge',
+        'Isoelectric Point',
+        'Boman Index',
+        'GAAC - Alphatic',
+        'GAAC - Aromatic',
+        'GAAC - Positive Charge',
+        'GAAC - Negative Charge',
+        'GAAC - Uncharge'
+      ]}
       rowComponent={MultiAlignedPeptideSearchResultItemRow}
       {...pagination}
     />
