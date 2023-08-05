@@ -4,6 +4,7 @@ import {
   getPublicPeptidePdbDownloadUrl,
   getPublicPeptideFastaDownloadUrl,
   getPublicPeptideMetadataCsvDownloadUrl,
+  getPublicPeptideAttributesCsvDownloadUrl,
   getPublicPeptideEmbeddingEsmMeanDownloadUrl,
   getPublicPeptideEmbeddingIFeatureAacDownloadUrl,
   getPublicPeptideEmbeddingIFeatureDpcDownloadUrl
@@ -33,6 +34,10 @@ const PeptideDownloads: React.FC<Props> = ({ id }) => {
 
           <Button color="primary" renderAs="a" href={getPublicPeptideMetadataCsvDownloadUrl(id)} target="_blank">
             Metadata (.csv)
+          </Button>
+
+          <Button color="primary" renderAs="a" href={getPublicPeptideAttributesCsvDownloadUrl(id)} target="_blank">
+            Attributes (.csv)
           </Button>
 
           <Button color="primary" renderAs="a" href={getPublicPeptideEmbeddingEsmMeanDownloadUrl(id)} target="_blank">
