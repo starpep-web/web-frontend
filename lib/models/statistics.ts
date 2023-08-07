@@ -22,23 +22,13 @@ export interface DatabaseMetadataStatistics {
   nTerminusDistribution: PartialRelationStatistics
 }
 
-export interface DatabaseFeaturesStatistics {
-  hydropathicityHistogram: Record<string, number>
-  chargeHistogram: Record<string, number>
-  isoelectricPointHistogram: Record<string, number>
-  bomanIndexHistogram: Record<string, number>
-  gaacAlphaticHistogram: Record<string, number>
-  gaacAromaticHistogram: Record<string, number>
-  gaacPositiveChargeHistogram: Record<string, number>
-  gaacNegativeChargeHistogram: Record<string, number>
-  gaacUnchargeHistogram: Record<string, number>
-  hydrophobicityHistogram: Record<string, number>
-  solvationHistogram: Record<string, number>
-  amphiphilicityHistogram: Record<string, number>
-  hydrophilicityHistogram: Record<string, number>
-}
+export const histogramWidthMethods = ['scott', 'freedman-diaconis'] as const;
+export type HistogramWidthMethod = typeof histogramWidthMethods[number];
 
-export type HistogramWidthMethod = 'scott' | 'freedman-diaconis';
+export const isHistogramMethodValid = (method?: string): method is HistogramWidthMethod => {
+  return histogramWidthMethods.includes(method as HistogramWidthMethod);
+};
+
 export interface HistogramData {
   min: number
   max: number
