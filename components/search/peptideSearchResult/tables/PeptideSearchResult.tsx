@@ -3,6 +3,7 @@ import GenericPeptideSearchResult from '../GenericPeptideSearchResult';
 import PeptideSearchResultItemRow from '../rows/PeptideSearchResultItemRow';
 import { SearchResultPeptide } from '@lib/models/peptide';
 import { Pagination } from '@lib/utils/pagination';
+import { ORDERED_ATTRIBUTE_HEADERS } from '../shared';
 
 interface Props extends Pagination {
   peptides: SearchResultPeptide[]
@@ -19,15 +20,7 @@ const PeptideSearchResult: React.FC<Props> = ({ onPageChange, peptides, ...pagin
         'ID',
         'Sequence',
         'Length',
-        'Hydropathicity',
-        'Charge',
-        'Isoelectric Point',
-        'Boman Index',
-        'GAAC - Alphatic',
-        'GAAC - Aromatic',
-        'GAAC - Positive Charge',
-        'GAAC - Negative Charge',
-        'GAAC - Uncharge'
+        ...ORDERED_ATTRIBUTE_HEADERS
       ]}
       rowComponent={PeptideSearchResultItemRow}
       {...pagination}
