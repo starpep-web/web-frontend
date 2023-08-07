@@ -49,63 +49,107 @@ export type PeptideMetadata = {
   [K in MetadataRelationshipLabel]?: string[]
 }
 
-export type Neo4jPeptideAttributesProperties = {
-  hydropathicity: number
-  charge: Integer
-  isoelectric_point: number
-  boman_index: number
-  gaac_alphatic: number
-  gaac_aromatic: number
-  gaac_postive_charge: number
-  gaac_negative_charge: number
-  gaac_uncharge: number
-  hydrophobicity: number
-  solvation: number
-  amphiphilicity: number
-  hydrophilicity: number
-  hemolytic_prob_score: number
-  steric_hindrance: number
-  net_hydrogen: Integer
-  mol_wt: number
-  aliphatic_index: number
-};
+export namespace PeptideAttributes {
+  const RAW_ATTRIBUTE_TO_REAL_ATTRIBUTE_MAP = {
+    hydropathicity: 'hydropathicity',
+    charge: 'charge',
+    isoelectric_point: 'isoelectricPoint',
+    boman_index: 'bomanIndex',
+    gaac_alphatic: 'gaacAlphatic',
+    gaac_aromatic: 'gaacAromatic',
+    gaac_positive_charge: 'gaacPositiveCharge',
+    gaac_negative_charge: 'gaacNegativeCharge',
+    gaac_uncharge: 'gaacUncharge',
+    hydrophobicity: 'hydrophobicity',
+    solvation: 'solvation',
+    amphiphilicity: 'amphiphilicity',
+    hydrophilicity: 'hydrophilicity',
+    hemolytic_prob_score: 'hemolyticProbScore',
+    steric_hindrance: 'stericHindrance',
+    net_hydrogen: 'netHydrogen',
+    mol_wt: 'molWt',
+    aliphatic_index: 'aliphaticIndex'
+  } as const;
+  export type RawPropertyName = keyof typeof RAW_ATTRIBUTE_TO_REAL_ATTRIBUTE_MAP;
 
-export type SearchPeptideAttributes = {
-  hydropathicity: number
-  charge: number
-  isoelectricPoint: number
-  bomanIndex: number
-  gaacAlphatic: number
-  gaacAromatic: number
-  gaacPostiveCharge: number
-  gaacNegativeCharge: number
-  gaacUncharge: number
-};
+  export type Neo4jProperties = {
+    [k in RawPropertyName]: number
+  } & {
+    charge: Integer
+    net_hydrogen: Integer
+  };
 
-export type StatisticalPeptideAttributes = SearchPeptideAttributes & {
-  hydrophobicity: number
-  solvation: number
-  amphiphilicity: number
-  hydrophilicity: number
-};
+  export type SearchAttributes = {
+    hydropathicity: number
+    charge: number
+    isoelectricPoint: number
+    bomanIndex: number
+    gaacAlphatic: number
+    gaacAromatic: number
+    gaacPositiveCharge: number
+    gaacNegativeCharge: number
+    gaacUncharge: number
+  };
 
-export type OtherPeptideAttributes = {
-  hemolyticProbScore: number
-  stericHindrance: number
-  netHydrogen: number
-  molWt: number
-  aliphaticIndex: number
+  export type StatisticalAttributes = SearchAttributes & {
+    hydrophobicity: number
+    solvation: number
+    amphiphilicity: number
+    hydrophilicity: number
+  };
+
+  export type OtherAttributes = {
+    hemolyticProbScore: number
+    stericHindrance: number
+    netHydrogen: number
+    molWt: number
+    aliphaticIndex: number
+  }
+
+  export type FullAttributes = StatisticalAttributes & OtherAttributes;
+  export type AttributeName = keyof FullAttributes
+
+  const REAL_ATTRIBUTE_TO_FRIENDLY_NAME_MAP: Record<AttributeName, string> = {
+    hydropathicity: 'Hydropathicity',
+    charge: 'Charge',
+    isoelectricPoint: 'Isoelectric Point',
+    bomanIndex: 'Boman Index',
+    gaacAlphatic: 'GAAC - Alphatic',
+    gaacAromatic: 'GAAC - Aromatic',
+    gaacPositiveCharge: 'GAAC - Positive Charge',
+    gaacNegativeCharge: 'GAAC - Negative Charge',
+    gaacUncharge: 'GAAC - Uncharge',
+    hydrophobicity: 'Hydrophobicity',
+    solvation: 'Solvation',
+    amphiphilicity: 'Amphiphilicity',
+    hydrophilicity: 'Hydrophilicity',
+    hemolyticProbScore: 'Hemolytic Prob Score',
+    stericHindrance: 'Steric Hindrance',
+    netHydrogen: 'Net Hydrogen',
+    molWt: 'Molar Weight',
+    aliphaticIndex: 'Aliphatic Index'
+  };
+
+  export const isRawPropertyValid = (property?: string): property is RawPropertyName => {
+    return Object.keys(RAW_ATTRIBUTE_TO_REAL_ATTRIBUTE_MAP).includes(property as RawPropertyName);
+  };
+
+  export const getFriendlyNameForRawAttribute = (attributeName: RawPropertyName): string => {
+    return REAL_ATTRIBUTE_TO_FRIENDLY_NAME_MAP[RAW_ATTRIBUTE_TO_REAL_ATTRIBUTE_MAP[attributeName]];
+  };
+
+  export const getFriendlyNameForAttribute = (attributeName: AttributeName): string => {
+    return REAL_ATTRIBUTE_TO_FRIENDLY_NAME_MAP[attributeName];
+  };
 }
 
-export type FullPeptideAttributes = StatisticalPeptideAttributes & OtherPeptideAttributes;
-
 export type SearchResultPeptide = Peptide & {
-  attributes: SearchPeptideAttributes
+  attributes: PeptideAttributes.SearchAttributes
 };
 
 export type FullPeptide = Peptide & {
   metadata: PeptideMetadata
-  attributes: FullPeptideAttributes
+  attributes: PeptideAttributes.FullAttributes
 };
 
 export const ID_PREFIX = 'starPep_';
