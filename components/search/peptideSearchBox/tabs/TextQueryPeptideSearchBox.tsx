@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/router';
 import TextSearchInput from '../helpers/TextSearchInput';
 import RegexHelpMessage from '../helpers/RegexHelpMessage';
-import MetadataFiltersHelpMessage from '../helpers/MetadataFiltersHelpMessage';
+import FiltersHelpMessage from '../helpers/FiltersHelpMessage';
 import MetadataFiltersForm from '../helpers/MetadataFiltersForm';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 import { TextQueryFilter, convertFilterToParam } from '@lib/models/search';
@@ -57,11 +57,11 @@ const TextQueryPeptideSearchBox = () => {
 
       <hr />
 
+      <FiltersHelpMessage />
+
       <Form.Label>
         Metadata Filters
       </Form.Label>
-
-      <MetadataFiltersHelpMessage />
       <MetadataFiltersForm onChange={handleFiltersChange} />
 
       <Button.Group align="center">
