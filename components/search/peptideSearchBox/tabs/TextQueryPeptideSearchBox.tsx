@@ -6,6 +6,7 @@ import TextSearchInput from '../helpers/TextSearchInput';
 import RegexHelpMessage from '../helpers/RegexHelpMessage';
 import FiltersHelpMessage from '../helpers/FiltersHelpMessage';
 import MetadataFiltersForm from '../helpers/MetadataFiltersForm';
+import AttributesFiltersForm from '../helpers/AttributesFiltersForm';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 import { TextQueryFilter, convertFilterToParam } from '@lib/models/search';
 
@@ -63,6 +64,11 @@ const TextQueryPeptideSearchBox = () => {
         Metadata Filters
       </Form.Label>
       <MetadataFiltersForm onChange={handleFiltersChange} />
+
+      <Form.Label>
+        Feature Filters
+      </Form.Label>
+      <AttributesFiltersForm />
 
       <Button.Group align="center">
         <Button color="primary" loading={loading} disabled={loading}>
