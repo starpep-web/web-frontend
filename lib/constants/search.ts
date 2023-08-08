@@ -5,7 +5,7 @@ export const DEFAULT_METADATA_FILTER: TextQueryMetadataFilter = ['AND', 'Databas
 export const DEFAULT_ATTRIBUTE_FILTER: TextQueryAttributeFilter = ['AND', 'hydrophilicity', '<', 0];
 export const FILTER_SEPARATOR = ';';
 
-export const MIN_SEQUENCE_LENGTH = 1;
+export const MIN_SEQUENCE_LENGTH = 2;
 export const MAX_SEQUENCE_LENGTH = 100;
 
 // Single and Multi Query
