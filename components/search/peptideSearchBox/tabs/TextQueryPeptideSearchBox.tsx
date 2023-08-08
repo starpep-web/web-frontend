@@ -25,8 +25,11 @@ const TextQueryPeptideSearchBox = () => {
   const handleOnSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
-    console.log(attributeFilters, attributeFilters.map(convertAttributeFilterToParam));
-    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, metadataFilters.map(convertMetadataFilterToParam)));
+
+    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, {
+      metadata: metadataFilters.map(convertMetadataFilterToParam),
+      attributes: attributeFilters.map(convertAttributeFilterToParam)
+    }));
   };
 
   const handleInputChange = (value: string) => {

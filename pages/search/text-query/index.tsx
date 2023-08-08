@@ -54,7 +54,7 @@ const TextQuerySearchPage: React.FC<Props> = ({ page, regexEnabled, query, pepti
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<ServerSideProps>> => {
-  const { query: queryParam, regex: regexParam, page: pageParam, f: filterParam } = context.query ?? {};
+  const { query: queryParam, regex: regexParam, page: pageParam, fm: filterParam } = context.query ?? {};
 
   const query = queryParam ? (Array.isArray(queryParam) ? queryParam[0] : queryParam) : '';
   const regexEnabled = regexParam === 'true';

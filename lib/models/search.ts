@@ -14,6 +14,15 @@ export type AttributeFilterComparator = typeof SUPPORTED_ATTRIBUTE_COMPARATORS[n
 export type TextQueryMetadataFilter = [FilterOperator, MetadataLabel, MetadataFilterComparator, string];
 export type TextQueryAttributeFilter = [FilterOperator, PeptideAttributes.RawPropertyName, AttributeFilterComparator, number];
 
+export type FiltersParams = {
+  metadata: string[]
+  attributes: string[]
+};
+export const DEFAULT_FILTERS_PARAMS: FiltersParams = {
+  metadata: [],
+  attributes: []
+};
+
 export const convertMetadataFilterToParam = (filter: TextQueryMetadataFilter): string => {
   return filter.join(FILTER_SEPARATOR);
 };
