@@ -14,6 +14,9 @@ import {
   TextQueryAttributeFilter,
   convertAttributeFilterToParam,
   parseParamToAttributeFilter,
+  SequenceLengthFilter,
+  convertSequenceLengthFilterToParam,
+  parseParamToSequenceLengthFilter,
   FiltersObject
 } from '@lib/models/search';
 import { Pagination } from '@lib/utils/pagination';
@@ -47,7 +50,8 @@ const TextQuerySearchPage: React.FC<Props> = ({ page, regexEnabled, query, pepti
   const handlePageChange = (newPage: number) => {
     return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, {
       metadata: filters.metadata?.map(convertMetadataFilterToParam) ?? [],
-      attributes: filters.attributes?.map(convertAttributeFilterToParam) ?? []
+      attributes: filters.attributes?.map(convertAttributeFilterToParam) ?? [],
+      length: filters.length ? convertSequenceLengthFilterToParam(filters.length) : ''
     }, newPage));
   };
 
@@ -70,7 +74,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
     regex: regexParam,
     page: pageParam,
     fm: metadataFiltersParam,
-    fa: attributeFiltersParam
+    fa: attributeFiltersParam,
+    l: sequenceLengthFilterParam
   } = context.query ?? {};
 
   const query = queryParam ? (Array.isArray(queryParam) ? queryParam[0] : queryParam) : '';
@@ -84,10 +89,14 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
   const attributeFilters: (TextQueryAttributeFilter | null)[] = attributeFiltersParam ?
     (Array.isArray(attributeFiltersParam) ? attributeFiltersParam.map(parseParamToAttributeFilter) : [parseParamToAttributeFilter(attributeFiltersParam)]) :
     [];
+  const sequenceLengthFilter: (SequenceLengthFilter | null) = sequenceLengthFilterParam ?
+    (Array.isArray(sequenceLengthFilterParam)) ? parseParamToSequenceLengthFilter(sequenceLengthFilterParam[0]) : parseParamToSequenceLengthFilter(sequenceLengthFilterParam) :
+    null;
 
   if (
     metadataFilters.some((filter) => !filter) ||
-    attributeFilters.some((filter) => !filter)
+    attributeFilters.some((filter) => !filter) ||
+    !sequenceLengthFilter
   ) {
     return {
       notFound: true
@@ -96,7 +105,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
 
   const filters: FiltersObject = {
     metadata: metadataFilters as TextQueryMetadataFilter[],
-    attributes: attributeFilters as TextQueryAttributeFilter[]
+    attributes: attributeFilters as TextQueryAttributeFilter[],
+    length: sequenceLengthFilter
   };
 
   try {
