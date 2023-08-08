@@ -23,6 +23,11 @@ export const DEFAULT_FILTERS_PARAMS: FiltersParams = {
   attributes: []
 };
 
+export type FiltersObject = {
+  metadata?: TextQueryMetadataFilter[]
+  attributes?: TextQueryAttributeFilter[]
+};
+
 export const convertMetadataFilterToParam = (filter: TextQueryMetadataFilter): string => {
   return filter.join(FILTER_SEPARATOR);
 };
