@@ -8,13 +8,13 @@ import FiltersHelpMessage from '../helpers/FiltersHelpMessage';
 import MetadataFiltersForm from '../helpers/MetadataFiltersForm';
 import AttributesFiltersForm from '../helpers/AttributesFiltersForm';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
-import { TextQueryFilter, convertFilterToParam } from '@lib/models/search';
+import { TextQueryMetadataFilter, convertMetadataFilterToParam } from '@lib/models/search';
 
 const TextQueryPeptideSearchBox = () => {
   const router = useRouter();
   const [query, setQuery] = useState<string>('');
   const [regexEnabled, setRegexEnabled] = useState<boolean>(false);
-  const [filters, setFilters] = useState<TextQueryFilter[]>([]);
+  const [filters, setFilters] = useState<TextQueryMetadataFilter[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const TextQueryPeptideSearchBox = () => {
   const handleOnSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
-    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, filters.map(convertFilterToParam)));
+    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, filters.map(convertMetadataFilterToParam)));
   };
 
   const handleInputChange = (value: string) => {
@@ -35,7 +35,7 @@ const TextQueryPeptideSearchBox = () => {
     setRegexEnabled(event.target.checked);
   };
 
-  const handleFiltersChange = (filters: TextQueryFilter[]) => {
+  const handleFiltersChange = (filters: TextQueryMetadataFilter[]) => {
     setFilters(filters);
   };
 

@@ -11,7 +11,7 @@ import {
   getPeptideId, extractIdentityFromId
 } from '@lib/models/peptide';
 import { WithPagination, createPagination } from '@lib/utils/pagination';
-import { TextQueryFilter } from '@lib/models/search';
+import { TextQueryMetadataFilter } from '@lib/models/search';
 
 const parseSearchPeptideAttributes = (properties: PeptideAttributes.Neo4jProperties): PeptideAttributes.SearchAttributes => {
   return {
@@ -99,7 +99,7 @@ export const getPeptideBySequence = async (sequence: string): Promise<FullPeptid
 };
 
 // TODO: Search filters should work with attributes too. Implementation for them maybe different than these.
-const parseSearchFilter = (filters?: TextQueryFilter[]): string => {
+const parseSearchMetadataFilters = (filters?: TextQueryMetadataFilter[]): string => {
   if (!filters || !filters.length) {
     return '';
   }
@@ -129,9 +129,14 @@ export const searchPeptidesTextQuery = async (sequence: string, limit: number, s
   });
 };
 
-export const searchPeptidesTextQueryPaginated = async (sequence: string, page: number, filters?: TextQueryFilter[], limit = 50): Promise<WithPagination<SearchResultPeptide[]>> => {
+export const searchPeptidesTextQueryPaginated = async (
+  sequence: string,
+  page: number,
+  metadataFilters?: TextQueryMetadataFilter[],
+  limit = 50
+): Promise<WithPagination<SearchResultPeptide[]>> => {
   const start = (page - 1) * limit;
-  const sanitizedFilter = parseSearchFilter(filters);
+  const sanitizedFilter = parseSearchMetadataFilters(metadataFilters);
 
   const countQuery = `MATCH (n:Peptide) WHERE n.seq CONTAINS $sequence ${sanitizedFilter} RETURN COUNT(DISTINCT(n)) AS c`;
   const result = await readTransaction(countQuery, { sequence: sequence.toUpperCase() });
@@ -162,9 +167,14 @@ export const searchPeptidesRegexQuery = async (regex: string, limit: number, ski
   });
 };
 
-export const searchPeptidesRegexQueryPaginated = async (regex: string, page: number, filters?: TextQueryFilter[], limit = 50): Promise<WithPagination<SearchResultPeptide[]>> => {
+export const searchPeptidesRegexQueryPaginated = async (
+  regex: string,
+  page: number,
+  metadataFilters?: TextQueryMetadataFilter[],
+  limit = 50
+): Promise<WithPagination<SearchResultPeptide[]>> => {
   const start = (page - 1) * limit;
-  const sanitizedFilter = parseSearchFilter(filters);
+  const sanitizedFilter = parseSearchMetadataFilters(metadataFilters);
 
   const countQuery = `MATCH (n:Peptide) WHERE n.seq =~ $regex ${sanitizedFilter} RETURN COUNT(DISTINCT(n)) AS c`;
   const result = await readTransaction(countQuery, { regex });

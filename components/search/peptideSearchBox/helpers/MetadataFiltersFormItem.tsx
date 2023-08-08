@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dropdown } from '@components/form/dropdown';
 import { DebouncedInfiniteSearchInput } from '@components/form/debouncedInfiniteSearchInput';
 import { MetadataLabel } from '@lib/models/peptide';
-import { TextQueryFilter, SUPPORTED_OPERATORS, FilterOperator, SUPPORTED_COMPARATORS, FilterComparator } from '@lib/models/search';
+import { TextQueryMetadataFilter, SUPPORTED_OPERATORS, FilterOperator, SUPPORTED_METADATA_COMPARATORS, MetadataFilterComparator } from '@lib/models/search';
 import {
   getDatabaseSuggestions,
   getFunctionSuggestions,
@@ -71,8 +71,8 @@ const filterValueProps: Record<MetadataLabel, Partial<DebouncedInfiniteSearchInp
 };
 
 interface Props {
-  value: TextQueryFilter
-  onChange?: (value: TextQueryFilter) => void
+  value: TextQueryMetadataFilter
+  onChange?: (value: TextQueryMetadataFilter) => void
   onDelete?: () => void
 }
 
@@ -89,7 +89,7 @@ const MetadataFiltersFormItem: React.FC<Props> = ({ value, onChange, onDelete })
   };
 
   const handleComparatorChange = (comparator: string) => {
-    onChange?.([operator, metadataLabel, comparator as FilterComparator, filterValue]);
+    onChange?.([operator, metadataLabel, comparator as MetadataFilterComparator, filterValue]);
   };
 
   const handleFilterValueChange = (value: string) => {
@@ -120,7 +120,7 @@ const MetadataFiltersFormItem: React.FC<Props> = ({ value, onChange, onDelete })
         <Columns.Column mobile={{ size: 12 }} tablet={{ size: 12 }} desktop={{ size: 3 }} widescreen={{ size: 3 }} fullhd={{ size: 3 }}>
           <Dropdown
             label="Comparator"
-            options={[...SUPPORTED_COMPARATORS]}
+            options={[...SUPPORTED_METADATA_COMPARATORS]}
             value={comparator}
             onChange={handleComparatorChange}
           />

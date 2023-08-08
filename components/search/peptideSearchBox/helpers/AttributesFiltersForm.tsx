@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from 'react';
 import { Block, Button, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AttributesFilterFormItem from './AttributesFilterFormItem';
-import { DEFAULT_FILTER } from '@lib/constants/search';
+import { DEFAULT_METADATA_FILTER } from '@lib/constants/search';
 
 type Test = string[]
 
@@ -18,7 +18,7 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
     case 'ADD_FILTER':
       return {
         ...state,
-        [action.payload]: [...DEFAULT_FILTER]
+        [action.payload]: [...DEFAULT_METADATA_FILTER]
       };
     case 'DELETE_FILTER':
       const { [action.payload]: _, ...restOfState } = state;

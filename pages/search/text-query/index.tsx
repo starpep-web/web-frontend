@@ -7,7 +7,7 @@ import { PageWrapper } from '@components/common/pageWrapper';
 import { PeptideSearchResult } from '@components/search/peptideSearchResult';
 import { searchPeptidesTextQueryPaginated, searchPeptidesRegexQueryPaginated } from '@lib/services/graphDb/peptideService';
 import { SearchResultPeptide } from '@lib/models/peptide';
-import { convertFilterToParam, parseParamToFilter, TextQueryFilter } from '@lib/models/search';
+import { convertMetadataFilterToParam, parseParamToMetadataFilter, TextQueryMetadataFilter } from '@lib/models/search';
 import { Pagination } from '@lib/utils/pagination';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 
@@ -18,7 +18,7 @@ interface ServerSideProps {
 
   peptides: SearchResultPeptide[]
   pagination: Pagination
-  filters: TextQueryFilter[]
+  filters: TextQueryMetadataFilter[]
 }
 
 interface Props extends ServerSideProps {
@@ -37,7 +37,7 @@ const TextQuerySearchPage: React.FC<Props> = ({ page, regexEnabled, query, pepti
     `Found ${pagination.total} results (Page: ${page})`;
 
   const handlePageChange = (newPage: number) => {
-    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, filters.map(convertFilterToParam), newPage));
+    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, filters.map(convertMetadataFilterToParam), newPage));
   };
 
   return (
@@ -61,15 +61,15 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
   const pageString = Array.isArray(pageParam) ? pageParam[0] : pageParam;
   const page = pageString ? parseInt(pageString, 10) : 1;
 
-  const filters: (TextQueryFilter | null)[] = filterParam ?
-    (Array.isArray(filterParam) ? filterParam.map(parseParamToFilter) : [parseParamToFilter(filterParam)]) :
+  const filters: (TextQueryMetadataFilter | null)[] = filterParam ?
+    (Array.isArray(filterParam) ? filterParam.map(parseParamToMetadataFilter) : [parseParamToMetadataFilter(filterParam)]) :
     [];
   if (filters.some((filter) => !filter)) {
     return {
       notFound: true
     };
   }
-  const castFilters = filters as TextQueryFilter[];
+  const castFilters = filters as TextQueryMetadataFilter[];
 
   try {
     const paginatedResult = regexEnabled ?
