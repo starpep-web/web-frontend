@@ -1,4 +1,4 @@
-import { SearchResultPeptide, MetadataLabel, NODE_LABELS } from '@lib/models/peptide';
+import { SearchResultPeptide, MetadataLabel, NODE_LABELS, PeptideAttributes } from '@lib/models/peptide';
 import { FILTER_SEPARATOR } from '@lib/constants/search';
 
 // Text Query (Filter)
@@ -8,7 +8,11 @@ export type FilterOperator = typeof SUPPORTED_OPERATORS[number];
 export const SUPPORTED_METADATA_COMPARATORS = ['EQUALS', 'NOT_EQUALS'] as const;
 export type MetadataFilterComparator = typeof SUPPORTED_METADATA_COMPARATORS[number];
 
+export const SUPPORTED_ATTRIBUTE_COMPARATORS = ['<', '<=', '>', '>='] as const;
+export type AttributeFilterComparator = typeof SUPPORTED_ATTRIBUTE_COMPARATORS[number];
+
 export type TextQueryMetadataFilter = [FilterOperator, MetadataLabel, MetadataFilterComparator, string];
+export type TextQueryAttributeFilter = [FilterOperator, PeptideAttributes.RawPropertyName, AttributeFilterComparator, number];
 
 export const convertMetadataFilterToParam = (filter: TextQueryMetadataFilter): string => {
   return filter.join(FILTER_SEPARATOR);
@@ -26,6 +30,31 @@ export const parseParamToMetadataFilter = (filterParam: string): TextQueryMetada
   }
 
   return arr as TextQueryMetadataFilter;
+};
+
+export const convertAttributeFilterToParam = (filter: TextQueryAttributeFilter): string => {
+  return filter.join(FILTER_SEPARATOR);
+};
+
+export const parseParamToAttributeFilter = (filterParam: string): TextQueryAttributeFilter | null => {
+  const arr = filterParam.split(FILTER_SEPARATOR);
+
+  if (arr.length !== 4) {
+    return null;
+  }
+
+  const filterValue = parseFloat(arr[3]);
+
+  if (
+    !SUPPORTED_OPERATORS.includes(arr[0] as FilterOperator) ||
+    !PeptideAttributes.isRawPropertyValid(arr[1]) ||
+    !SUPPORTED_ATTRIBUTE_COMPARATORS.includes(arr[2] as AttributeFilterComparator) ||
+    Number.isNaN(filterValue)
+  ) {
+    return null;
+  }
+
+  return [arr[0], arr[1], arr[2], filterValue] as TextQueryAttributeFilter;
 };
 
 // Single Query
