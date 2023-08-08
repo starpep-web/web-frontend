@@ -5,6 +5,7 @@ import { SingleAlignedPeptide } from '@lib/models/search';
 import { RowProps } from './types';
 import { formatNumberDecimals, formatNumberMaxDecimals } from '@lib/utils/number';
 import { PEPTIDE_ATTRIBUTE_MAX_DECIMALS, PEPTIDE_SCORE_DECIMALS } from '@lib/constants/site';
+import { ORDERED_ATTRIBUTE_NAMES } from '../shared';
 
 const SingleAlignedPeptideSearchResultItemRow: React.FC<RowProps<SingleAlignedPeptide>> = ({ index, id, sequence, length, score, attributes }) => {
   return (
@@ -26,33 +27,14 @@ const SingleAlignedPeptideSearchResultItemRow: React.FC<RowProps<SingleAlignedPe
       <td>
         {length}
       </td>
-      <td>
-        {formatNumberMaxDecimals(attributes.hydropathicity, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
-      </td>
-      <td>
-        {formatNumberMaxDecimals(attributes.charge, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
-      </td>
-      <td>
-        {formatNumberMaxDecimals(attributes.isoelectricPoint, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
-      </td>
-      <td>
-        {formatNumberMaxDecimals(attributes.bomanIndex, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
-      </td>
-      <td>
-        {formatNumberMaxDecimals(attributes.gaacAlphatic, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
-      </td>
-      <td>
-        {formatNumberMaxDecimals(attributes.gaacAromatic, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
-      </td>
-      <td>
-        {formatNumberMaxDecimals(attributes.gaacPostiveCharge, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
-      </td>
-      <td>
-        {formatNumberMaxDecimals(attributes.gaacNegativeCharge, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
-      </td>
-      <td>
-        {formatNumberMaxDecimals(attributes.gaacUncharge, PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
-      </td>
+
+      {
+        ORDERED_ATTRIBUTE_NAMES.map((attributeName) => (
+          <td key={attributeName}>
+            {formatNumberMaxDecimals(attributes[attributeName], PEPTIDE_ATTRIBUTE_MAX_DECIMALS)}
+          </td>
+        ))
+      }
     </tr>
   );
 };

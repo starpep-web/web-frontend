@@ -3,6 +3,7 @@ import GenericPeptideSearchResult from '../GenericPeptideSearchResult';
 import MultiAlignedPeptideSearchResultItemRow from '../rows/MultiAlignedPeptideSearchResultItemRow';
 import { MultiAlignedPeptide } from '@lib/models/search';
 import { Pagination } from '@lib/utils/pagination';
+import { ORDERED_ATTRIBUTE_HEADERS } from '../shared';
 
 interface Props extends Pagination {
   peptides: MultiAlignedPeptide[]
@@ -23,15 +24,7 @@ const MultiAlignedPeptideSearchResult: React.FC<Props> = ({ onPageChange, peptid
         'Min. Score',
         'Sequence',
         'Length',
-        'Hydropathicity',
-        'Charge',
-        'Isoelectric Point',
-        'Boman Index',
-        'GAAC - Alphatic',
-        'GAAC - Aromatic',
-        'GAAC - Positive Charge',
-        'GAAC - Negative Charge',
-        'GAAC - Uncharge'
+        ...ORDERED_ATTRIBUTE_HEADERS
       ]}
       rowComponent={MultiAlignedPeptideSearchResultItemRow}
       {...pagination}

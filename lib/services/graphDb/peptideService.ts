@@ -4,9 +4,7 @@ import {
   SearchResultPeptide,
   FullPeptide,
   PeptideMetadata,
-  Neo4jPeptideAttributesProperties,
-  SearchPeptideAttributes,
-  FullPeptideAttributes,
+  PeptideAttributes,
   RawRelationshipLabel,
   MetadataRelationshipLabel,
   getRelationshipLabelFromRaw,
@@ -15,7 +13,7 @@ import {
 import { WithPagination, createPagination } from '@lib/utils/pagination';
 import { TextQueryFilter } from '@lib/models/search';
 
-const parseSearchPeptideAttributes = (properties: Neo4jPeptideAttributesProperties): SearchPeptideAttributes => {
+const parseSearchPeptideAttributes = (properties: PeptideAttributes.Neo4jProperties): PeptideAttributes.SearchAttributes => {
   return {
     hydropathicity: properties.hydropathicity,
     charge: properties.charge.toInt(),
@@ -23,13 +21,13 @@ const parseSearchPeptideAttributes = (properties: Neo4jPeptideAttributesProperti
     bomanIndex: properties.boman_index,
     gaacAlphatic: properties.gaac_alphatic,
     gaacAromatic: properties.gaac_aromatic,
-    gaacPostiveCharge: properties.gaac_postive_charge,
+    gaacPositiveCharge: properties.gaac_positive_charge,
     gaacNegativeCharge: properties.gaac_negative_charge,
     gaacUncharge: properties.gaac_uncharge
   };
 };
 
-const parseFullPeptideAttributes = (properties: Neo4jPeptideAttributesProperties): FullPeptideAttributes => {
+const parseFullPeptideAttributes = (properties: PeptideAttributes.Neo4jProperties): PeptideAttributes.FullAttributes => {
   return {
     ...parseSearchPeptideAttributes(properties),
     hydrophobicity: properties.hydrophobicity,
@@ -52,7 +50,7 @@ const parseFullPeptideFromQueryResult = (result: QueryResult): FullPeptide | nul
   }
 
   const peptideNode = firstRecord.get('n');
-  const [metadata, attributes]: [PeptideMetadata, FullPeptideAttributes] = result.records.reduce((peptideData, record) => {
+  const [metadata, attributes]: [PeptideMetadata, PeptideAttributes.FullAttributes] = result.records.reduce((peptideData, record) => {
     const rawRelationship: RawRelationshipLabel = record.get('r').type;
 
     if (rawRelationship === 'characterized_by') {
@@ -70,7 +68,7 @@ const parseFullPeptideFromQueryResult = (result: QueryResult): FullPeptide | nul
     }
 
     return peptideData;
-  }, [{}, {}] as [PeptideMetadata, FullPeptideAttributes]);
+  }, [{}, {}] as [PeptideMetadata, PeptideAttributes.FullAttributes]);
 
   return {
     id: getPeptideId(peptideNode.identity.toInt()),

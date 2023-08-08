@@ -1,14 +1,14 @@
 import { Integer } from 'neo4j-driver';
 import { readTransaction } from './dbService';
 import {
-  DatabaseFeaturesStatistics,
   DatabaseGeneralInformationStatistics,
   DatabaseMetadataStatistics,
   HistogramData,
   HistogramWidthMethod,
+  isHistogramMethodValid,
   PartialRelationStatistics
 } from '@lib/models/statistics';
-import { Neo4jPeptideAttributesProperties } from '@lib/models/peptide';
+import { PeptideAttributes } from '@lib/models/peptide';
 import { createAlphabet } from '@lib/utils/array';
 import { formatNumberDecimals } from '@lib/utils/number';
 import { BadRequestError } from '@lib/errors/http';
@@ -205,8 +205,8 @@ LIMIT $limit
   };
 };
 
-// Interpolation in query should be fine since this function is only called statically.
-const generateHistogramQueryForAttribute = (attributeName: keyof Neo4jPeptideAttributesProperties, widthMethod: HistogramWidthMethod): string => {
+// Interpolation in query should be fine since this function is only called locally and already validated prior.
+const generateHistogramQueryForAttribute = (attributeName: PeptideAttributes.RawPropertyName, widthMethod: HistogramWidthMethod): string => {
   const dependencyQuery = widthMethod === 'scott' ?
     'stDev(a) AS s' :
     'percentileCont(a, 0.75) AS q3, percentileCont(a, 0.25) AS q1';
@@ -227,7 +227,7 @@ RETURN toFloat(min) as min, toFloat(max) as max, toFloat(w) AS width, k AS numOf
   `;
 };
 
-const computeHistogramDataForAttribute = async (attributeName: keyof Neo4jPeptideAttributesProperties, widthMethod: HistogramWidthMethod = 'scott'): Promise<HistogramData> => {
+const computeHistogramDataForAttribute = async (attributeName: PeptideAttributes.RawPropertyName, widthMethod: HistogramWidthMethod = 'scott'): Promise<HistogramData> => {
   const query = generateHistogramQueryForAttribute(attributeName, widthMethod);
   const result = await readTransaction(query);
   const [record] = result.records;
@@ -258,6 +258,18 @@ const parseHistogramData = (data: HistogramData, binMaxDigits: number): Record<s
   return histogram;
 };
 
+export const getHistogramForAttribute = async (attributeName: string, widthMethod?: string): Promise<Record<string, number>> => {
+  if (!PeptideAttributes.isRawPropertyValid(attributeName)) {
+    throw new TypeError(`Invalid attributeName ${attributeName} provided.`);
+  }
+
+  if (widthMethod !== undefined && !isHistogramMethodValid(widthMethod)) {
+    throw new TypeError(`Invalid widthMethod ${widthMethod} provided.`);
+  }
+
+  return parseHistogramData(await computeHistogramDataForAttribute(attributeName, widthMethod), 3);
+};
+
 /* Static Statistics Groups by Tab */
 
 export const getDatabaseGeneralInformationStatistics = async (): Promise<DatabaseGeneralInformationStatistics> => {
@@ -278,24 +290,6 @@ export const getDatabaseMetadataStatistics = async (partialsLimit = 25): Promise
     originDistribution: await getPartialPeptideOriginDistribution(partialsLimit),
     cTerminusDistribution: await getPartialPeptideCTerminusDistribution(partialsLimit),
     nTerminusDistribution: await getPartialPeptideNTerminusDistribution(partialsLimit)
-  };
-};
-
-export const getDatabaseFeaturesStatistics = async (): Promise<DatabaseFeaturesStatistics> => {
-  return {
-    hydropathicityHistogram: parseHistogramData(await computeHistogramDataForAttribute('hydropathicity'), 3),
-    chargeHistogram: parseHistogramData(await computeHistogramDataForAttribute('charge'), 3),
-    isoelectricPointHistogram: parseHistogramData(await computeHistogramDataForAttribute('isoelectric_point'), 3),
-    bomanIndexHistogram: parseHistogramData(await computeHistogramDataForAttribute('boman_index'), 3),
-    gaacAlphaticHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_alphatic'), 3),
-    gaacAromaticHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_aromatic'), 3),
-    gaacPositiveChargeHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_postive_charge'), 3),
-    gaacNegativeChargeHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_negative_charge'), 3),
-    gaacUnchargeHistogram: parseHistogramData(await computeHistogramDataForAttribute('gaac_uncharge'), 3),
-    hydrophobicityHistogram: parseHistogramData(await computeHistogramDataForAttribute('hydrophobicity'), 3),
-    solvationHistogram: parseHistogramData(await computeHistogramDataForAttribute('solvation'), 3),
-    amphiphilicityHistogram: parseHistogramData(await computeHistogramDataForAttribute('amphiphilicity'), 3),
-    hydrophilicityHistogram: parseHistogramData(await computeHistogramDataForAttribute('hydrophilicity'), 3)
   };
 };
 
