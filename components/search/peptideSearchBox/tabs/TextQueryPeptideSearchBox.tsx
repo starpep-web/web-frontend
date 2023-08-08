@@ -5,10 +5,17 @@ import { useRouter } from 'next/router';
 import TextSearchInput from '../helpers/TextSearchInput';
 import RegexHelpMessage from '../helpers/RegexHelpMessage';
 import FiltersHelpMessage from '../helpers/FiltersHelpMessage';
+import SequenceLengthFilterForm from '../helpers/SequenceLengthFilterForm';
 import MetadataFiltersForm from '../helpers/MetadataFiltersForm';
 import AttributesFiltersForm from '../helpers/AttributesFiltersForm';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
-import { TextQueryMetadataFilter, convertMetadataFilterToParam, TextQueryAttributeFilter, convertAttributeFilterToParam } from '@lib/models/search';
+import {
+  TextQueryMetadataFilter,
+  convertMetadataFilterToParam,
+  TextQueryAttributeFilter,
+  convertAttributeFilterToParam,
+  SequenceLengthFilter
+} from '@lib/models/search';
 
 const TextQueryPeptideSearchBox = () => {
   const router = useRouter();
@@ -40,6 +47,10 @@ const TextQueryPeptideSearchBox = () => {
     setRegexEnabled(event.target.checked);
   };
 
+  const handleSequenceLengthFilterChange = (filter: SequenceLengthFilter) => {
+    console.log(...filter);
+  };
+
   const handleMetadataFiltersChange = (filters: TextQueryMetadataFilter[]) => {
     setMetadataFilters(filters);
   };
@@ -66,6 +77,11 @@ const TextQueryPeptideSearchBox = () => {
       </Form.Field>
 
       <hr />
+
+      <Form.Label>
+        Sequence Length
+      </Form.Label>
+      <SequenceLengthFilterForm onChange={handleSequenceLengthFilterChange} />
 
       <Form.Label>
         Feature Filters

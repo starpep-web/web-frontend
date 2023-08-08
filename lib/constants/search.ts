@@ -5,6 +5,9 @@ export const DEFAULT_METADATA_FILTER: TextQueryMetadataFilter = ['AND', 'Databas
 export const DEFAULT_ATTRIBUTE_FILTER: TextQueryAttributeFilter = ['AND', 'hydrophilicity', '<', 0];
 export const FILTER_SEPARATOR = ';';
 
+export const MIN_SEQUENCE_LENGTH = 1;
+export const MAX_SEQUENCE_LENGTH = 100;
+
 // Single and Multi Query
 export const SUPPORTED_MATRIX_NAMES = ['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250'];
 export const SUPPORTED_ALGORITHMS = {
