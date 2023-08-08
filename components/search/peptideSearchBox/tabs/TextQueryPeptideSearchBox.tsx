@@ -8,13 +8,14 @@ import FiltersHelpMessage from '../helpers/FiltersHelpMessage';
 import MetadataFiltersForm from '../helpers/MetadataFiltersForm';
 import AttributesFiltersForm from '../helpers/AttributesFiltersForm';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
-import { TextQueryMetadataFilter, convertMetadataFilterToParam } from '@lib/models/search';
+import { TextQueryMetadataFilter, convertMetadataFilterToParam, TextQueryAttributeFilter, convertAttributeFilterToParam } from '@lib/models/search';
 
 const TextQueryPeptideSearchBox = () => {
   const router = useRouter();
   const [query, setQuery] = useState<string>('');
   const [regexEnabled, setRegexEnabled] = useState<boolean>(false);
-  const [filters, setFilters] = useState<TextQueryMetadataFilter[]>([]);
+  const [metadataFilters, setMetadataFilters] = useState<TextQueryMetadataFilter[]>([]);
+  const [attributeFilters, setAttributeFilters] = useState<TextQueryAttributeFilter[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -24,7 +25,8 @@ const TextQueryPeptideSearchBox = () => {
   const handleOnSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
-    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, filters.map(convertMetadataFilterToParam)));
+    console.log(attributeFilters, attributeFilters.map(convertAttributeFilterToParam));
+    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, metadataFilters.map(convertMetadataFilterToParam)));
   };
 
   const handleInputChange = (value: string) => {
@@ -35,8 +37,12 @@ const TextQueryPeptideSearchBox = () => {
     setRegexEnabled(event.target.checked);
   };
 
-  const handleFiltersChange = (filters: TextQueryMetadataFilter[]) => {
-    setFilters(filters);
+  const handleMetadataFiltersChange = (filters: TextQueryMetadataFilter[]) => {
+    setMetadataFilters(filters);
+  };
+
+  const handleAttributeFiltersChange = (filters: TextQueryAttributeFilter[]) => {
+    setAttributeFilters(filters);
   };
 
   return (
@@ -63,12 +69,12 @@ const TextQueryPeptideSearchBox = () => {
       <Form.Label>
         Metadata Filters
       </Form.Label>
-      <MetadataFiltersForm onChange={handleFiltersChange} />
+      <MetadataFiltersForm onChange={handleMetadataFiltersChange} />
 
       <Form.Label>
         Feature Filters
       </Form.Label>
-      <AttributesFiltersForm />
+      <AttributesFiltersForm onChange={handleAttributeFiltersChange} />
 
       <Button.Group align="center">
         <Button color="primary" loading={loading} disabled={loading}>

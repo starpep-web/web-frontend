@@ -2,23 +2,22 @@ import React, { useReducer, useEffect } from 'react';
 import { Block, Button, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AttributesFilterFormItem from './AttributesFilterFormItem';
-import { DEFAULT_METADATA_FILTER } from '@lib/constants/search';
+import { DEFAULT_ATTRIBUTE_FILTER } from '@lib/constants/search';
+import { TextQueryAttributeFilter } from '@lib/models/search';
 
-type Test = string[]
-
-type ReducerState = Record<string, Test>;
+type ReducerState = Record<string, TextQueryAttributeFilter>;
 
 type ReducerAction =
   | { type: 'ADD_FILTER', payload: string }
   | { type: 'DELETE_FILTER', payload: string }
-  | { type: 'SET_FILTER', payload: { id: string, filter: Test } };
+  | { type: 'SET_FILTER', payload: { id: string, filter: TextQueryAttributeFilter } };
 
 const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
   switch (action.type) {
     case 'ADD_FILTER':
       return {
         ...state,
-        [action.payload]: [...DEFAULT_METADATA_FILTER]
+        [action.payload]: [...DEFAULT_ATTRIBUTE_FILTER]
       };
     case 'DELETE_FILTER':
       const { [action.payload]: _, ...restOfState } = state;
@@ -34,7 +33,7 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
 };
 
 interface Props {
-  onChange?: (filters: Test[]) => void
+  onChange?: (filters: TextQueryAttributeFilter[]) => void
 }
 
 const AttributesFiltersForm: React.FC<Props> = ({ onChange }) => {
@@ -48,7 +47,7 @@ const AttributesFiltersForm: React.FC<Props> = ({ onChange }) => {
     dispatch({ type: 'ADD_FILTER', payload: Math.random().toString() });
   };
 
-  const handleFilterChange = (id: string) => (filter: Test) => {
+  const handleFilterChange = (id: string) => (filter: TextQueryAttributeFilter) => {
     dispatch({ type: 'SET_FILTER', payload: { id, filter } });
   };
 

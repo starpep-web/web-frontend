@@ -1,7 +1,8 @@
-import { SingleQueryAlignmentOptions, MultiQueryAlignmentOptions, TextQueryMetadataFilter } from '@lib/models/search';
+import { SingleQueryAlignmentOptions, MultiQueryAlignmentOptions, TextQueryMetadataFilter, TextQueryAttributeFilter } from '@lib/models/search';
 
 // Text Query (Filter)
 export const DEFAULT_METADATA_FILTER: TextQueryMetadataFilter = ['AND', 'Database', 'EQUALS', ''];
+export const DEFAULT_ATTRIBUTE_FILTER: TextQueryAttributeFilter = ['AND', 'hydrophilicity', '<', 0];
 export const FILTER_SEPARATOR = ';';
 
 // Single and Multi Query
