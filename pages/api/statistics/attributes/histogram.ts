@@ -6,8 +6,12 @@ import { createHandler } from '@lib/utils/api';
 import { getHistogramForAttribute } from '@lib/services/graphDb/statisticsService';
 
 const getHandler = async (req: NextApiRequest, res: NextApiResponse<ResponseBody>) => {
-  const attribute = Array.isArray(req.query.attribute) ? req.query.attribute[0] : req.query.attribute ?? '';
-  const method = Array.isArray(req.query.method) ? req.query.method[0] : req.query.method ?? '';
+  const attribute = Array.isArray(req.query.attribute) ? req.query.attribute[0] : req.query.attribute;
+  const method = Array.isArray(req.query.method) ? req.query.method[0] : req.query.method;
+
+  if (!attribute) {
+    throw new BadRequestError('attribute query parameter is required.');
+  }
 
   try {
     const histogram = await getHistogramForAttribute(attribute, method);

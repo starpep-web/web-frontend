@@ -263,7 +263,7 @@ export const getHistogramForAttribute = async (attributeName: string, widthMetho
     throw new TypeError(`Invalid attributeName ${attributeName} provided.`);
   }
 
-  if (!isHistogramMethodValid(widthMethod)) {
+  if (widthMethod !== undefined && !isHistogramMethodValid(widthMethod)) {
     throw new TypeError(`Invalid widthMethod ${widthMethod} provided.`);
   }
 
