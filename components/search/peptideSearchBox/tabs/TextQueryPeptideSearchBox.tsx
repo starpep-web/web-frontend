@@ -70,14 +70,14 @@ const TextQueryPeptideSearchBox = () => {
       <FiltersHelpMessage />
 
       <Form.Label>
-        Metadata Filters
-      </Form.Label>
-      <MetadataFiltersForm onChange={handleMetadataFiltersChange} />
-
-      <Form.Label>
         Feature Filters
       </Form.Label>
       <AttributesFiltersForm onChange={handleAttributeFiltersChange} />
+
+      <Form.Label>
+        Metadata Filters
+      </Form.Label>
+      <MetadataFiltersForm onChange={handleMetadataFiltersChange} />
 
       <Button.Group align="center">
         <Button color="primary" loading={loading} disabled={loading}>
