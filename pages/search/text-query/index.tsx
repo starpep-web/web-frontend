@@ -7,7 +7,18 @@ import { PageWrapper } from '@components/common/pageWrapper';
 import { PeptideSearchResult } from '@components/search/peptideSearchResult';
 import { searchPeptidesTextQueryPaginated, searchPeptidesRegexQueryPaginated } from '@lib/services/graphDb/peptideService';
 import { SearchResultPeptide } from '@lib/models/peptide';
-import { convertFilterToParam, parseParamToFilter, TextQueryFilter } from '@lib/models/search';
+import {
+  TextQueryMetadataFilter,
+  convertMetadataFilterToParam,
+  parseParamToMetadataFilter,
+  TextQueryAttributeFilter,
+  convertAttributeFilterToParam,
+  parseParamToAttributeFilter,
+  SequenceLengthFilter,
+  convertSequenceLengthFilterToParam,
+  parseParamToSequenceLengthFilter,
+  FiltersObject
+} from '@lib/models/search';
 import { Pagination } from '@lib/utils/pagination';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 
@@ -18,7 +29,7 @@ interface ServerSideProps {
 
   peptides: SearchResultPeptide[]
   pagination: Pagination
-  filters: TextQueryFilter[]
+  filters: FiltersObject
 }
 
 interface Props extends ServerSideProps {
@@ -37,7 +48,11 @@ const TextQuerySearchPage: React.FC<Props> = ({ page, regexEnabled, query, pepti
     `Found ${pagination.total} results (Page: ${page})`;
 
   const handlePageChange = (newPage: number) => {
-    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, filters.map(convertFilterToParam), newPage));
+    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, {
+      metadata: filters.metadata?.map(convertMetadataFilterToParam) ?? [],
+      attributes: filters.attributes?.map(convertAttributeFilterToParam) ?? [],
+      length: filters.length ? convertSequenceLengthFilterToParam(filters.length) : ''
+    }, newPage));
   };
 
   return (
@@ -54,27 +69,50 @@ const TextQuerySearchPage: React.FC<Props> = ({ page, regexEnabled, query, pepti
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<ServerSideProps>> => {
-  const { query: queryParam, regex: regexParam, page: pageParam, f: filterParam } = context.query ?? {};
+  const {
+    query: queryParam,
+    regex: regexParam,
+    page: pageParam,
+    fm: metadataFiltersParam,
+    fa: attributeFiltersParam,
+    l: sequenceLengthFilterParam
+  } = context.query ?? {};
 
   const query = queryParam ? (Array.isArray(queryParam) ? queryParam[0] : queryParam) : '';
   const regexEnabled = regexParam === 'true';
   const pageString = Array.isArray(pageParam) ? pageParam[0] : pageParam;
   const page = pageString ? parseInt(pageString, 10) : 1;
 
-  const filters: (TextQueryFilter | null)[] = filterParam ?
-    (Array.isArray(filterParam) ? filterParam.map(parseParamToFilter) : [parseParamToFilter(filterParam)]) :
+  const metadataFilters: (TextQueryMetadataFilter | null)[] = metadataFiltersParam ?
+    (Array.isArray(metadataFiltersParam) ? metadataFiltersParam.map(parseParamToMetadataFilter) : [parseParamToMetadataFilter(metadataFiltersParam)]) :
     [];
-  if (filters.some((filter) => !filter)) {
+  const attributeFilters: (TextQueryAttributeFilter | null)[] = attributeFiltersParam ?
+    (Array.isArray(attributeFiltersParam) ? attributeFiltersParam.map(parseParamToAttributeFilter) : [parseParamToAttributeFilter(attributeFiltersParam)]) :
+    [];
+  const sequenceLengthFilter: (SequenceLengthFilter | null) = sequenceLengthFilterParam ?
+    (Array.isArray(sequenceLengthFilterParam)) ? parseParamToSequenceLengthFilter(sequenceLengthFilterParam[0]) : parseParamToSequenceLengthFilter(sequenceLengthFilterParam) :
+    null;
+
+  if (
+    metadataFilters.some((filter) => !filter) ||
+    attributeFilters.some((filter) => !filter) ||
+    !sequenceLengthFilter
+  ) {
     return {
       notFound: true
     };
   }
-  const castFilters = filters as TextQueryFilter[];
+
+  const filters: FiltersObject = {
+    metadata: metadataFilters as TextQueryMetadataFilter[],
+    attributes: attributeFilters as TextQueryAttributeFilter[],
+    length: sequenceLengthFilter
+  };
 
   try {
     const paginatedResult = regexEnabled ?
-      await searchPeptidesRegexQueryPaginated(query, page, castFilters) :
-      await searchPeptidesTextQueryPaginated(query, page, castFilters);
+      await searchPeptidesRegexQueryPaginated(query, page, filters) :
+      await searchPeptidesTextQueryPaginated(query, page, filters);
 
     return {
       props: {
@@ -84,7 +122,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
 
         peptides: paginatedResult.data,
         pagination: paginatedResult.pagination,
-        filters: castFilters
+        filters
       }
     };
   } catch (error) {

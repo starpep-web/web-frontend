@@ -4,16 +4,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/router';
 import TextSearchInput from '../helpers/TextSearchInput';
 import RegexHelpMessage from '../helpers/RegexHelpMessage';
-import MetadataFiltersHelpMessage from '../helpers/MetadataFiltersHelpMessage';
+import FiltersHelpMessage from '../helpers/FiltersHelpMessage';
+import SequenceLengthFilterForm from '../helpers/SequenceLengthFilterForm';
 import MetadataFiltersForm from '../helpers/MetadataFiltersForm';
+import AttributesFiltersForm from '../helpers/AttributesFiltersForm';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
-import { TextQueryFilter, convertFilterToParam } from '@lib/models/search';
+import {
+  TextQueryMetadataFilter,
+  convertMetadataFilterToParam,
+  TextQueryAttributeFilter,
+  convertAttributeFilterToParam,
+  SequenceLengthFilter,
+  convertSequenceLengthFilterToParam
+} from '@lib/models/search';
 
 const TextQueryPeptideSearchBox = () => {
   const router = useRouter();
   const [query, setQuery] = useState<string>('');
   const [regexEnabled, setRegexEnabled] = useState<boolean>(false);
-  const [filters, setFilters] = useState<TextQueryFilter[]>([]);
+  const [sequenceLengthFilter, setSequenceLengthFilter] = useState<SequenceLengthFilter | null>(null);
+  const [metadataFilters, setMetadataFilters] = useState<TextQueryMetadataFilter[]>([]);
+  const [attributeFilters, setAttributeFilters] = useState<TextQueryAttributeFilter[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -23,7 +34,12 @@ const TextQueryPeptideSearchBox = () => {
   const handleOnSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
-    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, filters.map(convertFilterToParam)));
+
+    return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, {
+      metadata: metadataFilters.map(convertMetadataFilterToParam),
+      attributes: attributeFilters.map(convertAttributeFilterToParam),
+      length: sequenceLengthFilter ? convertSequenceLengthFilterToParam(sequenceLengthFilter) : ''
+    }));
   };
 
   const handleInputChange = (value: string) => {
@@ -34,8 +50,16 @@ const TextQueryPeptideSearchBox = () => {
     setRegexEnabled(event.target.checked);
   };
 
-  const handleFiltersChange = (filters: TextQueryFilter[]) => {
-    setFilters(filters);
+  const handleSequenceLengthFilterChange = (filter: SequenceLengthFilter) => {
+    setSequenceLengthFilter(filter);
+  };
+
+  const handleMetadataFiltersChange = (filters: TextQueryMetadataFilter[]) => {
+    setMetadataFilters(filters);
+  };
+
+  const handleAttributeFiltersChange = (filters: TextQueryAttributeFilter[]) => {
+    setAttributeFilters(filters);
   };
 
   return (
@@ -58,11 +82,21 @@ const TextQueryPeptideSearchBox = () => {
       <hr />
 
       <Form.Label>
+        Sequence Length
+      </Form.Label>
+      <SequenceLengthFilterForm onChange={handleSequenceLengthFilterChange} />
+
+      <Form.Label>
+        Feature Filters
+      </Form.Label>
+      <AttributesFiltersForm onChange={handleAttributeFiltersChange} />
+
+      <Form.Label>
         Metadata Filters
       </Form.Label>
+      <MetadataFiltersForm onChange={handleMetadataFiltersChange} />
 
-      <MetadataFiltersHelpMessage />
-      <MetadataFiltersForm onChange={handleFiltersChange} />
+      <FiltersHelpMessage />
 
       <Button.Group align="center">
         <Button color="primary" loading={loading} disabled={loading}>

@@ -1,8 +1,12 @@
-import { SingleQueryAlignmentOptions, MultiQueryAlignmentOptions, TextQueryFilter } from '@lib/models/search';
+import { SingleQueryAlignmentOptions, MultiQueryAlignmentOptions, TextQueryMetadataFilter, TextQueryAttributeFilter } from '@lib/models/search';
 
 // Text Query (Filter)
-export const DEFAULT_FILTER: TextQueryFilter = ['AND', 'Database', 'EQUALS', ''];
+export const DEFAULT_METADATA_FILTER: TextQueryMetadataFilter = ['AND', 'Database', 'EQUALS', ''];
+export const DEFAULT_ATTRIBUTE_FILTER: TextQueryAttributeFilter = ['AND', 'hydrophilicity', '<', 0];
 export const FILTER_SEPARATOR = ';';
+
+export const MIN_SEQUENCE_LENGTH = 2;
+export const MAX_SEQUENCE_LENGTH = 100;
 
 // Single and Multi Query
 export const SUPPORTED_MATRIX_NAMES = ['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250'];

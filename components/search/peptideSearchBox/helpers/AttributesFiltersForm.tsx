@@ -1,23 +1,23 @@
-import React, { useEffect, useReducer } from 'react';
-import { Button, Block, Icon } from 'react-bulma-components';
+import React, { useReducer, useEffect } from 'react';
+import { Block, Button, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import MetadataFiltersFormItem from './MetadataFiltersFormItem';
-import { TextQueryMetadataFilter } from '@lib/models/search';
-import { DEFAULT_METADATA_FILTER } from '@lib/constants/search';
+import AttributesFilterFormItem from './AttributesFilterFormItem';
+import { DEFAULT_ATTRIBUTE_FILTER } from '@lib/constants/search';
+import { TextQueryAttributeFilter } from '@lib/models/search';
 
-type ReducerState = Record<string, TextQueryMetadataFilter>
+type ReducerState = Record<string, TextQueryAttributeFilter>;
 
 type ReducerAction =
   | { type: 'ADD_FILTER', payload: string }
   | { type: 'DELETE_FILTER', payload: string }
-  | { type: 'SET_FILTER', payload: { id: string, filter: TextQueryMetadataFilter } };
+  | { type: 'SET_FILTER', payload: { id: string, filter: TextQueryAttributeFilter } };
 
 const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
   switch (action.type) {
     case 'ADD_FILTER':
       return {
         ...state,
-        [action.payload]: [...DEFAULT_METADATA_FILTER]
+        [action.payload]: [...DEFAULT_ATTRIBUTE_FILTER]
       };
     case 'DELETE_FILTER':
       const { [action.payload]: _, ...restOfState } = state;
@@ -33,10 +33,10 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
 };
 
 interface Props {
-  onChange?: (filters: TextQueryMetadataFilter[]) => void
+  onChange?: (filters: TextQueryAttributeFilter[]) => void
 }
 
-const MetadataFiltersForm: React.FC<Props> = ({ onChange }) => {
+const AttributesFiltersForm: React.FC<Props> = ({ onChange }) => {
   const [state, dispatch] = useReducer(reducer, {});
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const MetadataFiltersForm: React.FC<Props> = ({ onChange }) => {
     dispatch({ type: 'ADD_FILTER', payload: Math.random().toString() });
   };
 
-  const handleFilterChange = (id: string) => (filter: TextQueryMetadataFilter) => {
+  const handleFilterChange = (id: string) => (filter: TextQueryAttributeFilter) => {
     dispatch({ type: 'SET_FILTER', payload: { id, filter } });
   };
 
@@ -60,7 +60,7 @@ const MetadataFiltersForm: React.FC<Props> = ({ onChange }) => {
       <Block>
         {
           Object.entries(state).map(([id, filter]) => (
-            <MetadataFiltersFormItem
+            <AttributesFilterFormItem
               key={id}
               value={filter}
               onChange={handleFilterChange(id)}
@@ -83,4 +83,4 @@ const MetadataFiltersForm: React.FC<Props> = ({ onChange }) => {
   );
 };
 
-export default MetadataFiltersForm;
+export default AttributesFiltersForm;
