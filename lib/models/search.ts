@@ -13,6 +13,7 @@ export type AttributeFilterComparator = typeof SUPPORTED_ATTRIBUTE_COMPARATORS[n
 
 export type TextQueryMetadataFilter = [FilterOperator, MetadataLabel, MetadataFilterComparator, string];
 export type TextQueryAttributeFilter = [FilterOperator, PeptideAttributes.RawPropertyName, AttributeFilterComparator, number];
+export type SequenceLengthFilter = [number, number];
 
 export type FiltersParams = {
   metadata: string[]
@@ -69,6 +70,27 @@ export const parseParamToAttributeFilter = (filterParam: string): TextQueryAttri
   }
 
   return [arr[0], arr[1], arr[2], filterValue] as TextQueryAttributeFilter;
+};
+
+export const convertSequenceLengthFilterToParam = (filter: SequenceLengthFilter): string => {
+  return filter.join(FILTER_SEPARATOR);
+};
+
+export const parseParamToSequenceLengthFilter = (filterParam: string): SequenceLengthFilter | null => {
+  const arr = filterParam.split(FILTER_SEPARATOR);
+
+  if (arr.length !== 2) {
+    return null;
+  }
+
+  const min = parseInt(arr[0], 10);
+  const max = parseInt(arr[1], 10);
+
+  if (Number.isNaN(min) || Number.isNaN(max)) {
+    return null;
+  }
+
+  return [min, max];
 };
 
 // Single Query
