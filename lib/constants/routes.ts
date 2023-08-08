@@ -27,6 +27,11 @@ export const DYNAMIC_ROUTES = {
     filtersParam.attributes.forEach((filter) => {
       params.append('fa', filter);
     });
+
+    if (filtersParam.length) {
+      params.append('l', filtersParam.length);
+    }
+
     return `/search/text-query?${params.toString()}`;
   },
   singleQuery: (queryId: string, page: number = 1) => {

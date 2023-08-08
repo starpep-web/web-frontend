@@ -14,13 +14,15 @@ import {
   convertMetadataFilterToParam,
   TextQueryAttributeFilter,
   convertAttributeFilterToParam,
-  SequenceLengthFilter
+  SequenceLengthFilter,
+  convertSequenceLengthFilterToParam
 } from '@lib/models/search';
 
 const TextQueryPeptideSearchBox = () => {
   const router = useRouter();
   const [query, setQuery] = useState<string>('');
   const [regexEnabled, setRegexEnabled] = useState<boolean>(false);
+  const [sequenceLengthFilter, setSequenceLengthFilter] = useState<SequenceLengthFilter | null>(null);
   const [metadataFilters, setMetadataFilters] = useState<TextQueryMetadataFilter[]>([]);
   const [attributeFilters, setAttributeFilters] = useState<TextQueryAttributeFilter[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -35,7 +37,8 @@ const TextQueryPeptideSearchBox = () => {
 
     return router.push(DYNAMIC_ROUTES.textQuery(query, regexEnabled, {
       metadata: metadataFilters.map(convertMetadataFilterToParam),
-      attributes: attributeFilters.map(convertAttributeFilterToParam)
+      attributes: attributeFilters.map(convertAttributeFilterToParam),
+      length: sequenceLengthFilter ? convertSequenceLengthFilterToParam(sequenceLengthFilter) : ''
     }));
   };
 
@@ -48,7 +51,7 @@ const TextQueryPeptideSearchBox = () => {
   };
 
   const handleSequenceLengthFilterChange = (filter: SequenceLengthFilter) => {
-    console.log(...filter);
+    setSequenceLengthFilter(filter);
   };
 
   const handleMetadataFiltersChange = (filters: TextQueryMetadataFilter[]) => {

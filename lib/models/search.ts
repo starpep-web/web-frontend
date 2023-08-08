@@ -18,15 +18,18 @@ export type SequenceLengthFilter = [number, number];
 export type FiltersParams = {
   metadata: string[]
   attributes: string[]
+  length: string
 };
 export const DEFAULT_FILTERS_PARAMS: FiltersParams = {
   metadata: [],
-  attributes: []
+  attributes: [],
+  length: ''
 };
 
 export type FiltersObject = {
   metadata?: TextQueryMetadataFilter[]
   attributes?: TextQueryAttributeFilter[]
+  length?: SequenceLengthFilter
 };
 
 export const convertMetadataFilterToParam = (filter: TextQueryMetadataFilter): string => {
