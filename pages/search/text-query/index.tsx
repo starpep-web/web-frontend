@@ -89,14 +89,14 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
   const attributeFilters: (TextQueryAttributeFilter | null)[] = attributeFiltersParam ?
     (Array.isArray(attributeFiltersParam) ? attributeFiltersParam.map(parseParamToAttributeFilter) : [parseParamToAttributeFilter(attributeFiltersParam)]) :
     [];
-  const sequenceLengthFilter: (SequenceLengthFilter | null) = sequenceLengthFilterParam ?
+  const sequenceLengthFilter: (SequenceLengthFilter | null | false) = sequenceLengthFilterParam ?
     (Array.isArray(sequenceLengthFilterParam)) ? parseParamToSequenceLengthFilter(sequenceLengthFilterParam[0]) : parseParamToSequenceLengthFilter(sequenceLengthFilterParam) :
-    null;
+    false;
 
   if (
     metadataFilters.some((filter) => !filter) ||
     attributeFilters.some((filter) => !filter) ||
-    !sequenceLengthFilter
+    sequenceLengthFilter === null
   ) {
     return {
       notFound: true
@@ -105,9 +105,11 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
 
   const filters: FiltersObject = {
     metadata: metadataFilters as TextQueryMetadataFilter[],
-    attributes: attributeFilters as TextQueryAttributeFilter[],
-    length: sequenceLengthFilter
+    attributes: attributeFilters as TextQueryAttributeFilter[]
   };
+  if (sequenceLengthFilter) {
+    filters.length = sequenceLengthFilter;
+  }
 
   try {
     const paginatedResult = regexEnabled ?
