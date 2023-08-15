@@ -3,7 +3,7 @@ import { readTransaction } from './dbService';
 import {
   DatabaseGeneralInformationStatistics,
   DatabaseMetadataStatistics,
-  DataRecord2D,
+  DataVector2D,
   HistogramData,
   HistogramWidthMethod,
   isHistogramMethodValid,
@@ -271,7 +271,7 @@ export const getHistogramForAttribute = async (attributeName: string, widthMetho
   return parseHistogramData(await computeHistogramDataForAttribute(attributeName, widthMethod), 3);
 };
 
-export const getScatterForAttributes = async (xAttributeName: string, yAttributeName: string): Promise<DataRecord2D> => {
+export const getScatterForAttributes = async (xAttributeName: string, yAttributeName: string): Promise<DataVector2D> => {
   if (!PeptideAttributes.isRawPropertyValid(xAttributeName)) {
     throw new TypeError(`Invalid xAttributeName ${xAttributeName} provided.`);
   }
@@ -283,15 +283,12 @@ export const getScatterForAttributes = async (xAttributeName: string, yAttribute
   const query = `
 MATCH (m:Attributes)
 WITH toFloat(m.${xAttributeName}) AS x, toFloat(m.${yAttributeName}) AS y
-RETURN COLLECT(x) AS x, COLLECT(y) AS y
+RETURN COLLECT([x, y]) AS data
 `;
   const result = await readTransaction(query);
   const [record] = result.records;
 
-  return {
-    x: record.get('x'),
-    y: record.get('y')
-  };
+  return record.get('data');
 };
 
 /* Static Statistics Groups by Tab */
