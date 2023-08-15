@@ -36,3 +36,17 @@ export const getHistogramForAttribute = async (attribute: PeptideAttributes.RawP
   }
 };
 
+export const getScatterForAttributes = async (xAttribute: PeptideAttributes.RawPropertyName, yAttribute: PeptideAttributes.RawPropertyName): Promise<Record<string, number>> => {
+  const params: Record<string, string> = {
+    x: xAttribute,
+    y: yAttribute
+  };
+
+  try {
+    const response = await http.get('/api/statistics/attributes/scatter', { params });
+    return response.data.data;
+  } catch (error) {
+    console.error(error);
+    return {};
+  }
+};
