@@ -1,6 +1,6 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, registerables } from 'chart.js';
+import { Chart as ChartJS, registerables, ChartOptions, ChartData } from 'chart.js';
 import uniqolor from 'uniqolor';
 import { NumericDataProp } from './types';
 
@@ -10,7 +10,7 @@ interface ParseDataOptions {
   color?: string
 }
 
-const parseData = (data: NumericDataProp, options: ParseDataOptions = {}) => {
+const parseData = (data: NumericDataProp, options: ParseDataOptions = {}): ChartData<'bar', number[], string> => {
   const keys = Object.keys(data);
   const values = Object.values(data);
   const [firstValue] = values;
@@ -52,7 +52,7 @@ interface Props {
 }
 
 const BarChart: React.FC<Props> = ({ id, data, yTitle, xTitle, showLegend, color }) => {
-  const options = {
+  const options: ChartOptions<'bar'> = {
     maintainAspectRatio: false,
     responsive: true,
     plugins: {
