@@ -270,6 +270,17 @@ export const getHistogramForAttribute = async (attributeName: string, widthMetho
   return parseHistogramData(await computeHistogramDataForAttribute(attributeName, widthMethod), 3);
 };
 
+export const getScatterForAttributes = async (xAttributeName: string, yAttributeName: string): Promise<any> => {
+  if (!PeptideAttributes.isRawPropertyValid(xAttributeName)) {
+    throw new TypeError(`Invalid xAttributeName ${xAttributeName} provided.`);
+  }
+  if (!PeptideAttributes.isRawPropertyValid(yAttributeName)) {
+    throw new TypeError(`Invalid yAttributeName ${yAttributeName} provided.`);
+  }
+
+  return null;
+};
+
 /* Static Statistics Groups by Tab */
 
 export const getDatabaseGeneralInformationStatistics = async (): Promise<DatabaseGeneralInformationStatistics> => {
