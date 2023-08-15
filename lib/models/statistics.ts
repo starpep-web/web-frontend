@@ -39,3 +39,8 @@ export interface HistogramData {
     frequency: number
   }[]
 }
+
+export type Axis2D = 'x' | 'y';
+export type DataRecord2D = {
+  [k in Axis2D]: number[]
+};

@@ -3,6 +3,7 @@ import { readTransaction } from './dbService';
 import {
   DatabaseGeneralInformationStatistics,
   DatabaseMetadataStatistics,
+  DataRecord2D,
   HistogramData,
   HistogramWidthMethod,
   isHistogramMethodValid,
@@ -270,7 +271,7 @@ export const getHistogramForAttribute = async (attributeName: string, widthMetho
   return parseHistogramData(await computeHistogramDataForAttribute(attributeName, widthMethod), 3);
 };
 
-export const getScatterForAttributes = async (xAttributeName: string, yAttributeName: string): Promise<any> => {
+export const getScatterForAttributes = async (xAttributeName: string, yAttributeName: string): Promise<DataRecord2D> => {
   if (!PeptideAttributes.isRawPropertyValid(xAttributeName)) {
     throw new TypeError(`Invalid xAttributeName ${xAttributeName} provided.`);
   }
@@ -278,7 +279,19 @@ export const getScatterForAttributes = async (xAttributeName: string, yAttribute
     throw new TypeError(`Invalid yAttributeName ${yAttributeName} provided.`);
   }
 
-  return null;
+  // It is okay to interpolate the attributes here because they're already validated previously.
+  const query = `
+MATCH (m:Attributes)
+WITH toFloat(m.${xAttributeName}) AS x, toFloat(m.${yAttributeName}) AS y
+RETURN COLLECT(x) AS x, COLLECT(y) AS y
+`;
+  const result = await readTransaction(query);
+  const [record] = result.records;
+
+  return {
+    x: record.get('x'),
+    y: record.get('y')
+  };
 };
 
 /* Static Statistics Groups by Tab */
