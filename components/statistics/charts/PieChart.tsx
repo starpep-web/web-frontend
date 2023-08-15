@@ -1,12 +1,12 @@
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, registerables } from 'chart.js';
+import { Chart as ChartJS, registerables, ChartOptions, ChartData } from 'chart.js';
 import uniqolor from 'uniqolor';
 import { LegendPosition } from './types';
 
 ChartJS.register(...registerables);
 
-const parseData = (data: Record<string | number, number>) => {
+const parseData = (data: Record<string | number, number>): ChartData<'pie', number[], string> => {
   return {
     labels: Object.keys(data),
     datasets: [{
@@ -25,7 +25,7 @@ interface Props {
 }
 
 const PieChart: React.FC<Props> = ({ id, data, legendPosition }) => {
-  const options = {
+  const options: ChartOptions<'pie'> = {
     maintainAspectRatio: false,
     responsive: true,
     plugins: {

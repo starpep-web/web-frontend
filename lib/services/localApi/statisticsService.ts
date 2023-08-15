@@ -1,7 +1,7 @@
 import { http } from './apiService';
 import { FrequencyFilterType } from '@lib/services/graphDb/statisticsService';
 import { PeptideAttributes } from '@lib/models/peptide';
-import { HistogramWidthMethod } from '@lib/models/statistics';
+import { DataVector2D, HistogramWidthMethod } from '@lib/models/statistics';
 
 export const getFilteredAAFrequency = async (type?: FrequencyFilterType, value?: string): Promise<Record<string, number>> => {
   const params: Record<string, string> = {};
@@ -36,3 +36,17 @@ export const getHistogramForAttribute = async (attribute: PeptideAttributes.RawP
   }
 };
 
+export const getScatterForAttributes = async (xAttribute: PeptideAttributes.RawPropertyName, yAttribute: PeptideAttributes.RawPropertyName): Promise<DataVector2D> => {
+  const params: Record<string, string> = {
+    x: xAttribute,
+    y: yAttribute
+  };
+
+  try {
+    const response = await http.get('/api/statistics/attributes/scatter', { params });
+    return response.data.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
