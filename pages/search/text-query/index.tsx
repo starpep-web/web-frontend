@@ -1,9 +1,9 @@
 import React from 'react';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import { Heading } from 'react-bulma-components';
 import { useRouter } from 'next/router';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
+import { PeptideSearchResultHeading } from '@components/search/peptideSearchResultHeading';
 import { PeptideSearchResult } from '@components/search/peptideSearchResult';
 import { searchPeptidesTextQueryPaginated, searchPeptidesRegexQueryPaginated } from '@lib/services/graphDb/peptideService';
 import { SearchResultPeptide } from '@lib/models/peptide';
@@ -59,9 +59,7 @@ const TextQuerySearchPage: React.FC<Props> = ({ page, regexEnabled, query, pepti
     <PageWrapper>
       <PageMetadata title={pageTitle} />
 
-      <Heading>
-        {title}
-      </Heading>
+      <PeptideSearchResultHeading title={title} />
 
       <PeptideSearchResult peptides={peptides} {...pagination} onPageChange={handlePageChange} />
     </PageWrapper>

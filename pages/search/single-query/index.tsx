@@ -1,11 +1,11 @@
 import React from 'react';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
-import { Heading } from 'react-bulma-components';
 import { useRouter } from 'next/router';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { SearchLoader } from '@components/search/searchLoader';
 import { ErrorMessage } from '@components/common/errorMessage';
+import { PeptideSearchResultHeading } from '@components/search/peptideSearchResultHeading';
 import { SingleAlignedPeptideSearchResult } from '@components/search/peptideSearchResult';
 import { getSingleQuerySearch } from '@lib/services/pythonRestApi/searchService';
 import { AsyncTaskResponse } from '@lib/services/pythonRestApi/apiService';
@@ -73,9 +73,9 @@ const SingleQuerySearchPage: React.FC<Props> = ({ queryId, page, result }) => {
         title={`Single Query Alignment Search - ${queryId}`}
       />
 
-      <Heading>
-        {`Found ${pagination.total} results (Page: ${page})`}
-      </Heading>
+      <PeptideSearchResultHeading
+        title={`Found ${pagination.total} results (Page: ${page})`}
+      />
 
       <SingleAlignedPeptideSearchResult peptides={peptides} {...pagination} onPageChange={handlePageChange} />
     </PageWrapper>
