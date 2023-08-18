@@ -59,7 +59,7 @@ const TextQuerySearchPage: React.FC<Props> = ({ page, regexEnabled, query, pepti
     <PageWrapper>
       <PageMetadata title={pageTitle} />
 
-      <PeptideSearchResultHeading title={title} />
+      <PeptideSearchResultHeading title={title} peptideTotalCount={pagination.total} />
 
       <PeptideSearchResult peptides={peptides} {...pagination} onPageChange={handlePageChange} />
     </PageWrapper>

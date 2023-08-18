@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Modal, Button, Message, Content } from 'react-bulma-components';
 import SearchExportForm from './SearchExportForm';
+import ApproximateArchiveInformation from './ApproximateArchiveInformation';
 import { SearchExportFormData, isSearchExportFormDataValid, defaultExportFormData } from '@lib/models/export';
 import { ROUTES } from '@lib/constants/routes';
 
 interface Props {
+  peptideTotalCount: number
+
   show?: boolean
   onClose?: () => void
   onExport?: (data: SearchExportFormData) => void
 }
 
-const SearchExportModal: React.FC<Props> = ({ show, onClose, onExport }) => {
+const SearchExportModal: React.FC<Props> = ({ peptideTotalCount, show, onClose, onExport }) => {
   const [formData, setFormData] = useState<SearchExportFormData>(defaultExportFormData);
   const [error, setError] = useState<string | null>(null);
 
@@ -77,6 +80,8 @@ const SearchExportModal: React.FC<Props> = ({ show, onClose, onExport }) => {
             initialData={formData}
             onChange={handleFormChange}
           />
+
+          <ApproximateArchiveInformation peptideTotalCount={peptideTotalCount} exportedItems={formData} />
         </Modal.Card.Body>
 
         <Modal.Card.Footer>

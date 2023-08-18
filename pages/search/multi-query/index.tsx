@@ -75,6 +75,7 @@ const MultiQuerySearchPage: React.FC<Props> = ({ queryId, page, result }) => {
 
       <PeptideSearchResultHeading
         title={`Found ${pagination.total} results (Page: ${page})`}
+        peptideTotalCount={pagination.total}
       />
 
       <MultiAlignedPeptideSearchResult peptides={peptides} {...pagination} onPageChange={handlePageChange} />

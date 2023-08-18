@@ -17,3 +17,15 @@ export const defaultExportFormData: SearchExportFormData = {
   iFeatureDpc: false,
   pdb: false
 };
+
+// Computed by running the `du` command on the file/folder that contains all the data for a given item for the
+// entire database and then multiplied by 512 / 45120.
+export const approximateBytesForItemPerPeptide: Record<SearchExportType, number> = {
+  fasta: 44,
+  metadata: 167,
+  attributes: 172,
+  esmMean: 26464,
+  iFeatureAac: 145,
+  iFeatureDpc: 1019,
+  pdb: 23400
+};

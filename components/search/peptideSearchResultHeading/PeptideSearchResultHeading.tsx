@@ -5,16 +5,17 @@ import styles from './PeptideSearchResultHeading.module.scss';
 
 interface Props {
   title: string
+  peptideTotalCount: number
 }
 
-const PeptideSearchResultHeading: React.FC<Props> = ({ title }) => {
+const PeptideSearchResultHeading: React.FC<Props> = ({ title, peptideTotalCount }) => {
   return (
     <Block className={styles['heading-block']}>
       <Heading className="is-flex-grow-1">
         {title}
       </Heading>
 
-      <SearchExportButton />
+      <SearchExportButton peptideTotalCount={peptideTotalCount} />
     </Block>
   );
 };

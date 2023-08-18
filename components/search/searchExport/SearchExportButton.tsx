@@ -5,10 +5,10 @@ import SearchExportModal from './SearchExportModal';
 import { SearchExportFormData } from '@lib/models/export';
 
 interface Props {
-
+  peptideTotalCount: number
 }
 
-const SearchExportButton: React.FC<Props> = () => {
+const SearchExportButton: React.FC<Props> = ({ peptideTotalCount }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -40,6 +40,7 @@ const SearchExportButton: React.FC<Props> = () => {
         show={showModal}
         onClose={handleModalClose}
         onExport={handleExport}
+        peptideTotalCount={peptideTotalCount}
       />
     </Fragment>
   );
