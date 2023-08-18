@@ -5,7 +5,10 @@ import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { PeptideSearchResultHeading } from '@components/search/peptideSearchResultHeading';
 import { PeptideSearchResult } from '@components/search/peptideSearchResult';
-import { searchPeptidesTextQueryPaginated, searchPeptidesRegexQueryPaginated } from '@lib/services/graphDb/peptideService';
+import {
+  searchExportablePeptidesTextQueryPaginated,
+  searchExportablePeptidesRegexQueryPaginated
+} from '@lib/services/graphDb/peptideService';
 import { SearchResultPeptide } from '@lib/models/peptide';
 import {
   TextQueryMetadataFilter,
@@ -20,6 +23,7 @@ import {
   FiltersObject
 } from '@lib/models/search';
 import { Pagination } from '@lib/utils/pagination';
+import { ExportPayloadData } from '@lib/models/export';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 
 interface ServerSideProps {
@@ -30,13 +34,14 @@ interface ServerSideProps {
   peptides: SearchResultPeptide[]
   pagination: Pagination
   filters: FiltersObject
+  exportPayloadData: ExportPayloadData
 }
 
 interface Props extends ServerSideProps {
 
 }
 
-const TextQuerySearchPage: React.FC<Props> = ({ page, regexEnabled, query, peptides, pagination, filters }) => {
+const TextQuerySearchPage: React.FC<Props> = ({ page, regexEnabled, query, peptides, pagination, filters, exportPayloadData }) => {
   const router = useRouter();
 
   const pageTitle = query ?
@@ -63,7 +68,7 @@ const TextQuerySearchPage: React.FC<Props> = ({ page, regexEnabled, query, pepti
         title={title}
         peptideTotalCount={pagination.total}
         searchType="text"
-        exportPayloadData=""
+        exportPayloadData={exportPayloadData}
       />
 
       <PeptideSearchResult peptides={peptides} {...pagination} onPageChange={handlePageChange} />
@@ -116,8 +121,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
 
   try {
     const paginatedResult = regexEnabled ?
-      await searchPeptidesRegexQueryPaginated(query, page, filters) :
-      await searchPeptidesTextQueryPaginated(query, page, filters);
+      await searchExportablePeptidesRegexQueryPaginated(query, page, filters) :
+      await searchExportablePeptidesTextQueryPaginated(query, page, filters);
 
     return {
       props: {
@@ -127,6 +132,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext): Pr
 
         peptides: paginatedResult.data,
         pagination: paginatedResult.pagination,
+        exportPayloadData: paginatedResult.exportPayloadData,
         filters
       }
     };

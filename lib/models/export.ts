@@ -31,9 +31,14 @@ export const approximateBytesForItemPerPeptide: Record<SearchExportType, number>
 };
 
 export type SearchType = 'text' | 'single' | 'multi';
+export type ExportPayloadData = string;
 
 export interface ExportPayload {
   type: SearchType
   form: SearchExportFormData
-  data: string
+  data: ExportPayloadData
 }
+
+export type WithExportPayloadData<T> = T & {
+  exportPayloadData: ExportPayloadData
+};
