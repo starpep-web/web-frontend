@@ -1,6 +1,6 @@
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Form } from 'react-bulma-components';
-import { SearchExportFormData } from '@lib/models/export';
+import { SearchExportType, SearchExportFormData } from '@lib/models/export';
 
 const initialState: SearchExportFormData = {
   fasta: true,
@@ -10,6 +10,29 @@ const initialState: SearchExportFormData = {
   iFeatureAac: false,
   iFeatureDpc: false,
   pdb: false
+};
+
+type FormFields = {
+  [k: string]: {
+    type: SearchExportType
+    text: string
+  }[]
+};
+
+const formFields: FormFields = {
+  'Peptide Information': [
+    { type: 'fasta', text: 'Include FASTA sequences' },
+    { type: 'metadata', text: 'Include metadata' },
+    { type: 'attributes', text: 'Include attributes' }
+  ],
+  Embeddings: [
+    { type: 'esmMean', text: 'Include ESM-mean embeddings' },
+    { type: 'iFeatureAac', text: 'Include iFeature-AAC-20 embeddings' },
+    { type: 'iFeatureDpc', text: 'Include iFeature-DPC-400 embeddings' }
+  ],
+  Assets: [
+    { type: 'pdb', text: 'Include 3D structure files (.pdb)' }
+  ]
 };
 
 interface Props {
@@ -29,53 +52,29 @@ const SearchExportForm: React.FC<Props> = ({ onChange }) => {
     onChange?.(newState);
   };
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
-    <form>
-      <Form.Field>
-        <Form.Label>
-          Peptide Information
-        </Form.Label>
+    <form onSubmit={handleSubmit}>
+      {
+        Object.entries(formFields).map(([label, fields]) => (
+          <Form.Field key={label}>
+            <Form.Label>
+              {label}
+            </Form.Label>
 
-        <Form.Checkbox className="w-100" onChange={handleChange('fasta')} checked={formState.fasta}>
-          Include FASTA sequences
-        </Form.Checkbox>
-
-        <Form.Checkbox className="w-100" onChange={handleChange('metadata')} checked={formState.metadata}>
-          Include metadata
-        </Form.Checkbox>
-
-        <Form.Checkbox className="w-100" onChange={handleChange('attributes')} checked={formState.attributes}>
-          Include features
-        </Form.Checkbox>
-      </Form.Field>
-
-      <Form.Field>
-        <Form.Label>
-          Embeddings
-        </Form.Label>
-
-        <Form.Checkbox className="w-100" onChange={handleChange('esmMean')} checked={formState.esmMean}>
-          Include ESM-mean embeddings
-        </Form.Checkbox>
-
-        <Form.Checkbox className="w-100" onChange={handleChange('iFeatureAac')} checked={formState.iFeatureAac}>
-          Include iFeature-AAC-20 embeddings
-        </Form.Checkbox>
-
-        <Form.Checkbox className="w-100" onChange={handleChange('iFeatureDpc')} checked={formState.iFeatureDpc}>
-          Include iFeature-DPC-400 embeddings
-        </Form.Checkbox>
-      </Form.Field>
-
-      <Form.Field>
-        <Form.Label>
-          Assets
-        </Form.Label>
-
-        <Form.Checkbox className="w-100" onChange={handleChange('pdb')} checked={formState.pdb}>
-          Include 3D structure files (.pdb)
-        </Form.Checkbox>
-      </Form.Field>
+            {
+              fields.map(({ type, text }) => (
+                <Form.Checkbox key={type} className="w-100" onChange={handleChange(type)} checked={formState[type]}>
+                  {text}
+                </Form.Checkbox>
+              ))
+            }
+          </Form.Field>
+        ))
+      }
     </form>
   );
 };
