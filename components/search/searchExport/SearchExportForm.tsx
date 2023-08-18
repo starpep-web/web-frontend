@@ -1,5 +1,5 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { Form } from 'react-bulma-components';
+import React, { useState, ChangeEvent } from 'react';
+import { Form, Box } from 'react-bulma-components';
 import { SearchExportType, SearchExportFormData, defaultExportFormData } from '@lib/models/export';
 
 
@@ -44,12 +44,8 @@ const SearchExportForm: React.FC<Props> = ({ initialData, onChange }) => {
     onChange?.(newState);
   };
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
+    <Box>
       {
         Object.entries(formFields).map(([label, fields]) => (
           <Form.Field key={label}>
@@ -67,7 +63,7 @@ const SearchExportForm: React.FC<Props> = ({ initialData, onChange }) => {
           </Form.Field>
         ))
       }
-    </form>
+    </Box>
   );
 };
 
