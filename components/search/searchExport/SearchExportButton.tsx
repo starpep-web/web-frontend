@@ -36,7 +36,7 @@ const SearchExportButton: React.FC<Props> = ({ peptideTotalCount, searchType, ex
 
   return (
     <Fragment>
-      <Button color="primary" onClick={handleClick}>
+      <Button color="primary" onClick={handleClick} disabled={peptideTotalCount < 1}>
         <Icon>
           <FontAwesomeIcon icon="up-right-from-square" />
         </Icon>
