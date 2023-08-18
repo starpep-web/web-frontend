@@ -13,7 +13,7 @@ export interface Pagination {
 }
 
 export type WithPagination<T> = {
-  data: T,
+  data: T[],
   pagination: Pagination
 }
 

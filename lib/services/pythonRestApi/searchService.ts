@@ -17,7 +17,7 @@ export const postSingleQuerySearch = async (fastaQuery: string, options?: Single
   }
 };
 
-export const getSingleQuerySearch = async (taskId: string, page: number = 1): Promise<AsyncTaskResponse<WithPagination<SingleAlignedPeptide[]>>> => {
+export const getSingleQuerySearch = async (taskId: string, page: number = 1): Promise<AsyncTaskResponse<WithPagination<SingleAlignedPeptide>>> => {
   try {
     const response = await http.get(`/peptides/search/single-query/${taskId}`, {
       params: {
@@ -46,7 +46,7 @@ export const postMultiQuerySearch = async (fastaQuery: string, options?: MultiQu
   }
 };
 
-export const getMultiQuerySearch = async (taskId: string, page: number = 1): Promise<AsyncTaskResponse<WithPagination<MultiAlignedPeptide[]>>> => {
+export const getMultiQuerySearch = async (taskId: string, page: number = 1): Promise<AsyncTaskResponse<WithPagination<MultiAlignedPeptide>>> => {
   try {
     const response = await http.get(`/peptides/search/multi-query/${taskId}`, {
       params: {
