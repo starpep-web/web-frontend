@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Modal, Button, Message, Content } from 'react-bulma-components';
 import SearchExportForm from './SearchExportForm';
 import ApproximateArchiveInformation from './ApproximateArchiveInformation';
+import { ComingSoonPlaceholder } from '@components/common/comingSoon';
 import { SearchExportFormData, isSearchExportFormDataValid, defaultExportFormData } from '@lib/models/export';
 import { ROUTES } from '@lib/constants/routes';
 
@@ -42,6 +43,8 @@ const SearchExportModal: React.FC<Props> = ({ peptideTotalCount, show, onClose, 
         </Modal.Card.Header>
 
         <Modal.Card.Body>
+          <ComingSoonPlaceholder />
+
           <Content>
             <p>
               Export this search by choosing what items you would like to include in the export archive.
