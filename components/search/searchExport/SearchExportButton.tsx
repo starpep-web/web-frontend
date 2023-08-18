@@ -2,13 +2,15 @@ import React, { useState, Fragment, MouseEvent } from 'react';
 import { Button, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SearchExportModal from './SearchExportModal';
-import { SearchExportFormData } from '@lib/models/export';
+import { SearchExportFormData, SearchType, ExportPayload } from '@lib/models/export';
 
 interface Props {
   peptideTotalCount: number
+  searchType: SearchType
+  exportPayloadData: string
 }
 
-const SearchExportButton: React.FC<Props> = ({ peptideTotalCount }) => {
+const SearchExportButton: React.FC<Props> = ({ peptideTotalCount, searchType, exportPayloadData }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -20,9 +22,16 @@ const SearchExportButton: React.FC<Props> = ({ peptideTotalCount }) => {
     setShowModal(false);
   };
 
-  const handleExport = (data: SearchExportFormData) => {
+  const handleExport = (formData: SearchExportFormData) => {
     setShowModal(false);
-    console.log(data);
+
+    const payload: ExportPayload = {
+      type: searchType,
+      form: formData,
+      data: exportPayloadData
+    };
+    console.log('Will send the following payload:');
+    console.log(payload);
   };
 
   return (

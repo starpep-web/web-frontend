@@ -29,3 +29,11 @@ export const approximateBytesForItemPerPeptide: Record<SearchExportType, number>
   iFeatureDpc: 1019,
   pdb: 23400
 };
+
+export type SearchType = 'text' | 'single' | 'multi';
+
+export interface ExportPayload {
+  type: SearchType
+  form: SearchExportFormData
+  data: string
+}

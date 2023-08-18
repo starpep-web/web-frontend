@@ -76,6 +76,8 @@ const SingleQuerySearchPage: React.FC<Props> = ({ queryId, page, result }) => {
       <PeptideSearchResultHeading
         title={`Found ${pagination.total} results (Page: ${page})`}
         peptideTotalCount={pagination.total}
+        searchType="single"
+        exportPayloadData={queryId}
       />
 
       <SingleAlignedPeptideSearchResult peptides={peptides} {...pagination} onPageChange={handlePageChange} />
