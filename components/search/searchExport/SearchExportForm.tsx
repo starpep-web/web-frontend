@@ -1,16 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Form } from 'react-bulma-components';
-import { SearchExportType, SearchExportFormData } from '@lib/models/export';
+import { SearchExportType, SearchExportFormData, defaultExportFormData } from '@lib/models/export';
 
-const initialState: SearchExportFormData = {
-  fasta: true,
-  metadata: false,
-  attributes: false,
-  esmMean: false,
-  iFeatureAac: false,
-  iFeatureDpc: false,
-  pdb: false
-};
 
 type FormFields = {
   [k: string]: {
@@ -36,11 +27,12 @@ const formFields: FormFields = {
 };
 
 interface Props {
+  initialData?: SearchExportFormData
   onChange?: (state: SearchExportFormData) => void
 }
 
-const SearchExportForm: React.FC<Props> = ({ onChange }) => {
-  const [formState, setFormState] = useState<SearchExportFormData>(initialState);
+const SearchExportForm: React.FC<Props> = ({ initialData, onChange }) => {
+  const [formState, setFormState] = useState<SearchExportFormData>(initialData ?? defaultExportFormData);
 
   const handleChange = (key: keyof SearchExportFormData) => (e: ChangeEvent<HTMLInputElement>) => {
     const newState: SearchExportFormData = {

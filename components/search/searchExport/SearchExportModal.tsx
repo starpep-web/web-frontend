@@ -1,16 +1,30 @@
-import React from 'react';
-import { Modal, Button } from 'react-bulma-components';
+import React, { useState } from 'react';
+import { Modal, Button, Message } from 'react-bulma-components';
 import SearchExportForm from './SearchExportForm';
-import { SearchExportFormData } from '@lib/models/export';
+import { SearchExportFormData, isSearchExportFormDataValid, defaultExportFormData } from '@lib/models/export';
 
 interface Props {
   show?: boolean
   onClose?: () => void
+  onExport?: (data: SearchExportFormData) => void
 }
 
-const SearchExportModal: React.FC<Props> = ({ show, onClose }) => {
+const SearchExportModal: React.FC<Props> = ({ show, onClose, onExport }) => {
+  const [formData, setFormData] = useState<SearchExportFormData>(defaultExportFormData);
+  const [error, setError] = useState<string | null>(null);
+
   const handleFormChange = (data: SearchExportFormData) => {
-    console.log(data);
+    setError(null);
+    setFormData(data);
+  };
+
+  const handleExportClick = () => {
+    if (!isSearchExportFormDataValid(formData)) {
+      setError('Please choose at least one item to include in your search export.');
+      return;
+    }
+
+    onExport?.(formData);
   };
 
   return (
@@ -23,12 +37,27 @@ const SearchExportModal: React.FC<Props> = ({ show, onClose }) => {
         </Modal.Card.Header>
 
         <Modal.Card.Body>
-          <SearchExportForm onChange={handleFormChange} />
+          {
+            error && (
+              <Message color="danger">
+                <Message.Body>
+                  <p>
+                    {error}
+                  </p>
+                </Message.Body>
+              </Message>
+            )
+          }
+
+          <SearchExportForm
+            initialData={formData}
+            onChange={handleFormChange}
+          />
         </Modal.Card.Body>
 
         <Modal.Card.Footer>
           <Button.Group align="right" className="is-flex-grow-1">
-            <Button color="primary">
+            <Button color="primary" onClick={handleExportClick}>
               Export
             </Button>
 

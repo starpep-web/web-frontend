@@ -2,6 +2,7 @@ import React, { useState, Fragment, MouseEvent } from 'react';
 import { Button, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SearchExportModal from './SearchExportModal';
+import { SearchExportFormData } from '@lib/models/export';
 
 interface Props {
 
@@ -19,6 +20,11 @@ const SearchExportButton: React.FC<Props> = () => {
     setShowModal(false);
   };
 
+  const handleExport = (data: SearchExportFormData) => {
+    setShowModal(false);
+    console.log(data);
+  };
+
   return (
     <Fragment>
       <Button color="primary" onClick={handleClick}>
@@ -30,7 +36,11 @@ const SearchExportButton: React.FC<Props> = () => {
         </span>
       </Button>
 
-      <SearchExportModal show={showModal} onClose={handleModalClose} />
+      <SearchExportModal
+        show={showModal}
+        onClose={handleModalClose}
+        onExport={handleExport}
+      />
     </Fragment>
   );
 };
