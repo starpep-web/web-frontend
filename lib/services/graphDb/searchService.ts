@@ -11,7 +11,7 @@ export const getMetadataSuggestions = async (nodeLabel: Omit<NodeLabel, 'Peptide
   });
 };
 
-export const getMetadataSuggestionsPaginated = async (nodeLabel: Omit<NodeLabel, 'Peptide'>, name: string, page: number, limit = 100): Promise<WithPagination<string[]>> => {
+export const getMetadataSuggestionsPaginated = async (nodeLabel: Omit<NodeLabel, 'Peptide'>, name: string, page: number, limit = 100): Promise<WithPagination<string>> => {
   const start = (page - 1) * limit;
 
   const countQuery = `MATCH (n:${nodeLabel}) WHERE toLower(n.name) STARTS WITH toLower($name) RETURN COUNT(DISTINCT(n)) AS c`;

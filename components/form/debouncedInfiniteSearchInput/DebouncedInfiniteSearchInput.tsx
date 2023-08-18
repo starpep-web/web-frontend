@@ -6,7 +6,7 @@ import { usePrevious } from '@components/hooks/previous';
 import { WithPagination } from '@lib/utils/pagination';
 
 interface Props {
-  dataFetch: (value: string, page: number) => Promise<WithPagination<string[]>>
+  dataFetch: (value: string, page: number) => Promise<WithPagination<string>>
   onChange?: (value: string) => void
 
   label?: string

@@ -4,7 +4,7 @@ import { SingleQueryAlignmentOptions, MultiQueryAlignmentOptions } from '@lib/mo
 import { FASTA_CONTENT_TYPE, InitialAsyncTaskResponse } from '@lib/services/pythonRestApi/apiService';
 import { AxiosError } from 'axios';
 
-export const getMetadataSuggestions = async (metadataName: string, name: string, page: number): Promise<WithPagination<string[]>> => {
+export const getMetadataSuggestions = async (metadataName: string, name: string, page: number): Promise<WithPagination<string>> => {
   try {
     const response = await http.get(`/api/search/metadata/suggestions/${metadataName}`, {
       params: {
@@ -23,7 +23,7 @@ export const getMetadataSuggestions = async (metadataName: string, name: string,
   }
 };
 
-export type MetadataSuggestionFunction = (name: string, page?: number) => Promise<WithPagination<string[]>>;
+export type MetadataSuggestionFunction = (name: string, page?: number) => Promise<WithPagination<string>>;
 
 export const getDatabaseSuggestions: MetadataSuggestionFunction = (name: string, page = 1) => {
   return getMetadataSuggestions('database', name, page);

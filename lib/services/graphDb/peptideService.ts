@@ -160,7 +160,7 @@ export const searchPeptidesTextQueryPaginated = async (
   page: number,
   filters?: FiltersObject,
   limit = 50
-): Promise<WithPagination<SearchResultPeptide[]>> => {
+): Promise<WithPagination<SearchResultPeptide>> => {
   const start = (page - 1) * limit;
 
   const sanitizedLengthFilter = parseSearchSequenceLengthFilter(filters?.length);
@@ -202,7 +202,7 @@ export const searchPeptidesRegexQueryPaginated = async (
   page: number,
   filters?: FiltersObject,
   limit = 50
-): Promise<WithPagination<SearchResultPeptide[]>> => {
+): Promise<WithPagination<SearchResultPeptide>> => {
   const start = (page - 1) * limit;
 
   const sanitizedLengthFilter = parseSearchSequenceLengthFilter(filters?.length);

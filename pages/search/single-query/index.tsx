@@ -18,7 +18,7 @@ interface ServerSideProps {
   queryId: string
   page: number
 
-  result: AsyncTaskResponse<WithPagination<SingleAlignedPeptide[]>>
+  result: AsyncTaskResponse<WithPagination<SingleAlignedPeptide>>
 }
 
 interface Props extends ServerSideProps {
