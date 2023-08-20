@@ -8,15 +8,40 @@ describe('Utils: Export', () => {
       }).toThrow();
     });
 
-    it('should return a base64 string corresponding to the base64 representation of the bit array.', () => {
-      const arr: BitArray = [0, 0, 1, 1, 1, 1, 0, 0];
-      const expected = 'PA==';
+    it('should return a base64 string corresponding to the base64 representation of the bit array where resulting string should not have padding characters.', () => {
+      const arr: BitArray = [
+        0, 1, 1, 0, 1, 0, 0, 0,
+        0, 0, 0, 0, 0, 1, 1, 0,
+        1, 0, 0, 0, 0, 0, 0, 0
+      ];
+      const expected = 'aAaA';
 
       expect(bitArrayToBase64(arr)).toBe(expected);
     });
 
-    it('should return a base64 string corresponding to the base64 representation of the bit array even if arr contains incomplete bytes.', () => {
-      const arr: BitArray = [0, 1, 1, 0, 1];
+    it('should return a base64 string corresponding to the base64 representation of the bit array where resulting string should have 1 padding character.', () => {
+      const arr: BitArray = [
+        1, 1, 0, 0, 1, 1, 0, 0,
+        1, 1, 0, 0, 0, 0, 0, 0
+      ];
+      const expected = 'zMA=';
+
+      expect(bitArrayToBase64(arr)).toBe(expected);
+    });
+
+    it('should return a base64 string corresponding to the base64 representation of the bit array where resulting string should have 2 padding characters.', () => {
+      const arr: BitArray = [
+        0, 1, 1, 0, 1, 0, 0, 0
+      ];
+      const expected = 'aA==';
+
+      expect(bitArrayToBase64(arr)).toBe(expected);
+    });
+
+    it('should return a base64 string corresponding to the base64 representation of the bit array even if arr represents an incomplete byte.', () => {
+      const arr: BitArray = [
+        0, 1, 1, 0, 1
+      ];
       const expected = 'aA==';
 
       expect(bitArrayToBase64(arr)).toBe(expected);
