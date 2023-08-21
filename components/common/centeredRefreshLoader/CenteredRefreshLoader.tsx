@@ -3,7 +3,7 @@ import { BounceLoader } from 'react-spinners';
 import clsx from 'clsx';
 import { useAutoRefresh } from '@components/hooks/autoRefresh';
 import { LOADER_COLOR } from '@lib/constants/styling';
-import styles from './SearchLoader.module.scss';
+import styles from './CenteredRefreshLoader.module.scss';
 
 interface Props {
   title?: string
@@ -11,7 +11,7 @@ interface Props {
   refreshInterval?: number
 }
 
-const SearchLoader: React.FC<Props> = ({ title, subtitle, refreshInterval }) => {
+const CenteredRefreshLoader: React.FC<Props> = ({ title, subtitle, refreshInterval }) => {
   useAutoRefresh(refreshInterval);
 
   return (
@@ -35,4 +35,4 @@ const SearchLoader: React.FC<Props> = ({ title, subtitle, refreshInterval }) => 
   );
 };
 
-export default SearchLoader;
+export default CenteredRefreshLoader;

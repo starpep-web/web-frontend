@@ -3,7 +3,7 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { useRouter } from 'next/router';
 import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
-import { SearchLoader } from '@components/search/searchLoader';
+import { CenteredRefreshLoader } from 'components/common/centeredRefreshLoader';
 import { ErrorMessage } from '@components/common/errorMessage';
 import { PeptideSearchResultHeading } from '@components/search/peptideSearchResultHeading';
 import { MultiAlignedPeptideSearchResult } from '@components/search/peptideSearchResult';
@@ -39,7 +39,7 @@ const MultiQuerySearchPage: React.FC<Props> = ({ queryId, page, result }) => {
           title="Loading... - Multi Query Alignment Search"
         />
 
-        <SearchLoader
+        <CenteredRefreshLoader
           title="Aligning your query..."
           subtitle="The page will automatically refresh until the alignment is done."
           refreshInterval={DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS}
