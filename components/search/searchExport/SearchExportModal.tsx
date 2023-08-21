@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Modal, Button, Message, Content } from 'react-bulma-components';
 import SearchExportForm from './SearchExportForm';
 import ApproximateArchiveInformation from './ApproximateArchiveInformation';
-import { ComingSoonPlaceholder } from '@components/common/comingSoon';
+import { useClientNavigation } from '@components/hooks/clientNavigation';
 import {
   SearchExportFormData,
   isSearchExportFormDataValid,
@@ -11,7 +11,8 @@ import {
   SearchType,
   ExportRequestPayload
 } from '@lib/models/export';
-import { ROUTES } from '@lib/constants/routes';
+import { postSearchExport } from '@lib/services/localApi/exportService';
+import { ROUTES, DYNAMIC_ROUTES } from '@lib/constants/routes';
 
 interface Props {
   peptideTotalCount: number
@@ -26,13 +27,14 @@ interface Props {
 const SearchExportModal: React.FC<Props> = ({ peptideTotalCount, searchType, exportPayloadData, show, onClose, onSuccess }) => {
   const [formData, setFormData] = useState<SearchExportFormData>(DEFAULT_EXPORT_FORM_DATA);
   const [error, setError] = useState<string | null>(null);
+  const { navigateToNewTab } = useClientNavigation();
 
   const handleFormChange = (data: SearchExportFormData) => {
     setError(null);
     setFormData(data);
   };
 
-  const handleExportClick = () => {
+  const handleExportClick = async () => {
     if (!isSearchExportFormDataValid(formData)) {
       setError('Please choose at least one item to include in your search export.');
       return;
@@ -43,10 +45,15 @@ const SearchExportModal: React.FC<Props> = ({ peptideTotalCount, searchType, exp
       form: formData,
       data: exportPayloadData
     };
-    console.log('Will send the following payload:');
-    console.log(payload);
 
-    onSuccess?.();
+    try {
+      const exportTask = await postSearchExport(payload);
+
+      navigateToNewTab(DYNAMIC_ROUTES.searchExport(searchType, exportTask.id));
+      onSuccess?.();
+    } catch (error) {
+      setError((error as Error).message);
+    }
   };
 
   return (
@@ -59,8 +66,6 @@ const SearchExportModal: React.FC<Props> = ({ peptideTotalCount, searchType, exp
         </Modal.Card.Header>
 
         <Modal.Card.Body>
-          <ComingSoonPlaceholder />
-
           <Content>
             <p>
               Export this search by choosing what items you would like to include in the export archive.
