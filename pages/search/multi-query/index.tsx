@@ -12,7 +12,7 @@ import { AsyncTaskResponse } from '@lib/services/pythonRestApi/apiService';
 import { MultiAlignedPeptide } from '@lib/models/search';
 import { WithPagination } from '@lib/utils/pagination';
 import { DYNAMIC_ROUTES } from '@lib/constants/routes';
-import { DEFAULT_AUTO_RELOAD_INTERVAL } from '@lib/constants/site';
+import { DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS } from '@lib/constants/site';
 
 interface ServerSideProps {
   queryId: string
@@ -42,7 +42,7 @@ const MultiQuerySearchPage: React.FC<Props> = ({ queryId, page, result }) => {
         <SearchLoader
           title="Aligning your query..."
           subtitle="The page will automatically refresh until the alignment is done."
-          refreshInterval={DEFAULT_AUTO_RELOAD_INTERVAL}
+          refreshInterval={DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS}
         />
       </PageWrapper>
     );

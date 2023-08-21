@@ -5,7 +5,7 @@ export const SITE_TITLE = 'StarPep Web';
 export const DEFAULT_SITE_DESCRIPTION = `${SITE_TITLE} is a non-redundant database of over 45000 antimicrobial peptides (AMPs).`;
 
 /* Other Defaults */
-export const DEFAULT_AUTO_RELOAD_INTERVAL = 5000;
+export const DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS = 5;
 
 export const PEPTIDE_ATTRIBUTE_MAX_DECIMALS = 4;
 export const PEPTIDE_SCORE_DECIMALS = 2;

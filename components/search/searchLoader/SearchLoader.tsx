@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BounceLoader } from 'react-spinners';
 import clsx from 'clsx';
+import { useAutoRefresh } from '@components/hooks/autoRefresh';
 import { LOADER_COLOR } from '@lib/constants/styling';
 import styles from './SearchLoader.module.scss';
 
@@ -11,19 +12,7 @@ interface Props {
 }
 
 const SearchLoader: React.FC<Props> = ({ title, subtitle, refreshInterval }) => {
-  useEffect(() => {
-    if (!refreshInterval || !Number.isInteger(refreshInterval) || refreshInterval < 1000) {
-      return;
-    }
-
-    const handler = setTimeout(() => {
-      window.location.reload();
-    }, refreshInterval);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [refreshInterval]);
+  useAutoRefresh(refreshInterval);
 
   return (
     <div className={clsx('absolute-center', styles['search-loader'])}>
