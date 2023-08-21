@@ -1,7 +1,7 @@
 import React from 'react';
 import { Block } from 'react-bulma-components';
 import prettyBytes from 'pretty-bytes';
-import { SearchExportType, SearchExportFormData, approximateBytesForItemPerPeptide } from '@lib/models/export';
+import { SearchExportResource, SearchExportFormData, approximateBytesForItemPerPeptide } from '@lib/models/export';
 
 interface Props {
   peptideTotalCount: number
@@ -11,7 +11,7 @@ interface Props {
 const ApproximateArchiveInformation: React.FC<Props> = ({ peptideTotalCount, exportedItems }) => {
   const bytesPerPeptide = Object.entries(exportedItems)
     .filter(([_, v]) => v)
-    .map(([k]) => approximateBytesForItemPerPeptide[k as SearchExportType])
+    .map(([k]) => approximateBytesForItemPerPeptide[k as SearchExportResource])
     .reduce((acc, cur) => acc + cur, 0);
 
   const totalBytes = bytesPerPeptide * peptideTotalCount;

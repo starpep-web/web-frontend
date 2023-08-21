@@ -1,7 +1,7 @@
-export type SearchExportType = 'fasta' | 'metadata' | 'attributes' | 'esmMean' | 'iFeatureAac' | 'iFeatureDpc' | 'pdb';
+export type SearchExportResource = 'fasta' | 'metadata' | 'attributes' | 'esmMean' | 'iFeatureAac' | 'iFeatureDpc' | 'pdb';
 
 export type SearchExportFormData = {
-  [k in SearchExportType]: boolean
+  [k in SearchExportResource]: boolean
 };
 
 export const isSearchExportFormDataValid = (data: SearchExportFormData | null): data is SearchExportFormData => {
@@ -20,7 +20,7 @@ export const DEFAULT_EXPORT_FORM_DATA: SearchExportFormData = {
 
 // Computed by running the `du` command on the file/folder that contains all the data for a given item for the
 // entire database and then multiplied by 512 / 45120.
-export const approximateBytesForItemPerPeptide: Record<SearchExportType, number> = {
+export const approximateBytesForItemPerPeptide: Record<SearchExportResource, number> = {
   fasta: 44,
   metadata: 167,
   attributes: 172,
@@ -53,5 +53,5 @@ export interface ExportResult {
   total: number
   peptideIds: string[]
   form: SearchExportFormData
-  done: keyof SearchExportFormData[]
+  done: SearchExportResource[]
 }

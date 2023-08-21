@@ -12,7 +12,7 @@ export const postSearchExport = async (payload: ExportRequestPayload): Promise<I
   }
 };
 
-export const getSearchExportResult = async (type: SearchType, taskId: string): Promise<AsyncTaskResponse<ExportResult>> => {
+export const getSearchExportResult = async (type: SearchType, taskId: string): Promise<AsyncTaskResponse<ExportResult | string>> => {
   try {
     const response = await http.get(`/peptides/export/${type}-query/${taskId}`);
 

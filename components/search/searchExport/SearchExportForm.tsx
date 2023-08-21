@@ -1,11 +1,11 @@
 import React, { useState, ChangeEvent } from 'react';
 import { Form, Box } from 'react-bulma-components';
-import { SearchExportType, SearchExportFormData, DEFAULT_EXPORT_FORM_DATA } from '@lib/models/export';
+import { SearchExportResource, SearchExportFormData, DEFAULT_EXPORT_FORM_DATA } from '@lib/models/export';
 
 
 type FormFields = {
   [k: string]: {
-    type: SearchExportType
+    type: SearchExportResource
     text: string
   }[]
 };
