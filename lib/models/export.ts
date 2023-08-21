@@ -8,7 +8,7 @@ export const isSearchExportFormDataValid = (data: SearchExportFormData | null): 
   return data ? Object.values(data).some(Boolean) : false;
 };
 
-export const defaultExportFormData: SearchExportFormData = {
+export const DEFAULT_EXPORT_FORM_DATA: SearchExportFormData = {
   fasta: true,
   metadata: false,
   attributes: false,

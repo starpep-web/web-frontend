@@ -7,7 +7,7 @@ import { ComingSoonPlaceholder } from '@components/common/comingSoon';
 import {
   SearchExportFormData,
   isSearchExportFormDataValid,
-  defaultExportFormData,
+  DEFAULT_EXPORT_FORM_DATA,
   SearchType,
   ExportRequestPayload
 } from '@lib/models/export';
@@ -24,7 +24,7 @@ interface Props {
 }
 
 const SearchExportModal: React.FC<Props> = ({ peptideTotalCount, searchType, exportPayloadData, show, onClose, onSuccess }) => {
-  const [formData, setFormData] = useState<SearchExportFormData>(defaultExportFormData);
+  const [formData, setFormData] = useState<SearchExportFormData>(DEFAULT_EXPORT_FORM_DATA);
   const [error, setError] = useState<string | null>(null);
 
   const handleFormChange = (data: SearchExportFormData) => {
