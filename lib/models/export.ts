@@ -42,3 +42,10 @@ export interface ExportRequestPayload {
 export type WithExportPayloadData<T> = T & {
   exportPayloadData: ExportPayloadData
 };
+
+export interface ExportResult {
+  total: number
+  peptideIds: string[]
+  form: SearchExportFormData
+  done: keyof SearchExportFormData[]
+}
