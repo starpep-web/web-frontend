@@ -4,18 +4,26 @@ import { Modal, Button, Message, Content } from 'react-bulma-components';
 import SearchExportForm from './SearchExportForm';
 import ApproximateArchiveInformation from './ApproximateArchiveInformation';
 import { ComingSoonPlaceholder } from '@components/common/comingSoon';
-import { SearchExportFormData, isSearchExportFormDataValid, defaultExportFormData } from '@lib/models/export';
+import {
+  SearchExportFormData,
+  isSearchExportFormDataValid,
+  defaultExportFormData,
+  SearchType,
+  ExportRequestPayload
+} from '@lib/models/export';
 import { ROUTES } from '@lib/constants/routes';
 
 interface Props {
   peptideTotalCount: number
+  searchType: SearchType
+  exportPayloadData: string
 
   show?: boolean
   onClose?: () => void
-  onExport?: (data: SearchExportFormData) => void
+  onSuccess?: () => void
 }
 
-const SearchExportModal: React.FC<Props> = ({ peptideTotalCount, show, onClose, onExport }) => {
+const SearchExportModal: React.FC<Props> = ({ peptideTotalCount, searchType, exportPayloadData, show, onClose, onSuccess }) => {
   const [formData, setFormData] = useState<SearchExportFormData>(defaultExportFormData);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,7 +38,15 @@ const SearchExportModal: React.FC<Props> = ({ peptideTotalCount, show, onClose, 
       return;
     }
 
-    onExport?.(formData);
+    const payload: ExportRequestPayload = {
+      type: searchType,
+      form: formData,
+      data: exportPayloadData
+    };
+    console.log('Will send the following payload:');
+    console.log(payload);
+
+    onSuccess?.();
   };
 
   return (
