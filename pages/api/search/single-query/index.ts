@@ -30,4 +30,3 @@ const postHandler = async (req: NextApiRequest, res: NextApiResponse<ResponseBod
 export default createHandler({
   POST: postHandler
 });
-

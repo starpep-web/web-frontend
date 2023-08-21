@@ -20,4 +20,3 @@ const getHandler = async (req: NextApiRequest, res: NextApiResponse<ResponseBody
 export default createHandler({
   GET: getHandler
 });
-
