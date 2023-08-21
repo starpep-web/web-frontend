@@ -30,7 +30,13 @@ export const approximateBytesForItemPerPeptide: Record<SearchExportType, number>
   pdb: 23400
 };
 
-export type SearchType = 'text' | 'single' | 'multi';
+const SEARCH_TYPES = ['text', 'single', 'multi'] as const;
+export type SearchType = typeof SEARCH_TYPES[number];
+
+export const isSearchTypeValid = (type?: string): type is SearchType => {
+  return SEARCH_TYPES.includes(type as SearchType);
+};
+
 export type ExportPayloadData = string;
 
 export interface ExportRequestPayload {
