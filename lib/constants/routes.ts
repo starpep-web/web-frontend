@@ -1,4 +1,5 @@
 import { DEFAULT_FILTERS_PARAMS, FiltersParams } from '@lib/models/search';
+import { SearchType } from '@lib/models/export';
 
 export const ROUTES = {
   home: '/',
@@ -47,5 +48,8 @@ export const DYNAMIC_ROUTES = {
       page: page.toString()
     });
     return `/search/multi-query?${params.toString()}`;
+  },
+  searchExport: (type: SearchType, taskId: string) => {
+    return `/search/export/${type}/${taskId}`;
   }
 };
