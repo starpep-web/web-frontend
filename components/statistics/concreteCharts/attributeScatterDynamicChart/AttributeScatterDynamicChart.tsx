@@ -21,7 +21,7 @@ const AttributeScatterDynamicChart: React.FC<Props> = ({ height }) => {
   }, [xAttribute, yAttribute]);
 
   const { data } = useFetch(dataRequest);
-  const isExportDisabled = !data || !Object.keys(data).length; // TODO: Revise return type
+  const isExportDisabled = !data || !data.length;
 
   const handleAttributesChange = (axis: Axis2D, attribute: PeptideAttributes.RawPropertyName) => {
     if (axis === 'x') {
