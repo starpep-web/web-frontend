@@ -26,7 +26,7 @@ const CenteredRefreshLoader: React.FC<Props> = ({ title, subtitle, refreshInterv
       }
       {
         !!subtitle && (
-          <p className="subtitle">
+          <p className="subtitle has-text-centered">
             {subtitle}
           </p>
         )
