@@ -6,15 +6,15 @@ export const http = axios.create({
   baseURL: PYTHON_REST_API_URL
 });
 
-export type InitialAsyncTaskResponse = {
+export type InitialAsyncTaskResponse<T = null> = {
   id: string
   name: string
   loading: true
   success: boolean
-  data: null
+  data: T
 }
 
-export type AsyncTaskResponse<T> = InitialAsyncTaskResponse
+export type AsyncTaskResponse<T> = InitialAsyncTaskResponse<T | null>
   | {
     id: string
     name: string

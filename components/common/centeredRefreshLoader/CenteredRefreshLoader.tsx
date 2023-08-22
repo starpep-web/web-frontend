@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BounceLoader } from 'react-spinners';
 import clsx from 'clsx';
+import { useAutoRefresh } from '@components/hooks/autoRefresh';
 import { LOADER_COLOR } from '@lib/constants/styling';
-import styles from './SearchLoader.module.scss';
+import styles from './CenteredRefreshLoader.module.scss';
 
 interface Props {
   title?: string
@@ -10,20 +11,8 @@ interface Props {
   refreshInterval?: number
 }
 
-const SearchLoader: React.FC<Props> = ({ title, subtitle, refreshInterval }) => {
-  useEffect(() => {
-    if (!refreshInterval || !Number.isInteger(refreshInterval) || refreshInterval < 1000) {
-      return;
-    }
-
-    const handler = setTimeout(() => {
-      window.location.reload();
-    }, refreshInterval);
-
-    return () => {
-      clearTimeout(handler);
-    };
-  }, [refreshInterval]);
+const CenteredRefreshLoader: React.FC<Props> = ({ title, subtitle, refreshInterval }) => {
+  useAutoRefresh(refreshInterval);
 
   return (
     <div className={clsx('absolute-center', styles['search-loader'])}>
@@ -37,7 +26,7 @@ const SearchLoader: React.FC<Props> = ({ title, subtitle, refreshInterval }) => 
       }
       {
         !!subtitle && (
-          <p className="subtitle">
+          <p className="subtitle has-text-centered">
             {subtitle}
           </p>
         )
@@ -46,4 +35,4 @@ const SearchLoader: React.FC<Props> = ({ title, subtitle, refreshInterval }) => 
   );
 };
 
-export default SearchLoader;
+export default CenteredRefreshLoader;

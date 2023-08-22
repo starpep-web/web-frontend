@@ -2,7 +2,7 @@ import React, { useState, Fragment, MouseEvent } from 'react';
 import { Button, Icon } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SearchExportModal from './SearchExportModal';
-import { SearchExportFormData, SearchType, ExportPayload } from '@lib/models/export';
+import { SearchType } from '@lib/models/export';
 
 interface Props {
   peptideTotalCount: number
@@ -22,18 +22,6 @@ const SearchExportButton: React.FC<Props> = ({ peptideTotalCount, searchType, ex
     setShowModal(false);
   };
 
-  const handleExport = (formData: SearchExportFormData) => {
-    setShowModal(false);
-
-    const payload: ExportPayload = {
-      type: searchType,
-      form: formData,
-      data: exportPayloadData
-    };
-    console.log('Will send the following payload:');
-    console.log(payload);
-  };
-
   return (
     <Fragment>
       <Button color="primary" onClick={handleClick} disabled={peptideTotalCount < 1}>
@@ -48,8 +36,10 @@ const SearchExportButton: React.FC<Props> = ({ peptideTotalCount, searchType, ex
       <SearchExportModal
         show={showModal}
         onClose={handleModalClose}
-        onExport={handleExport}
+        onSuccess={handleModalClose}
         peptideTotalCount={peptideTotalCount}
+        searchType={searchType}
+        exportPayloadData={exportPayloadData}
       />
     </Fragment>
   );
