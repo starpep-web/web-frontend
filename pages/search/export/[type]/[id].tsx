@@ -30,7 +30,6 @@ const SearchExportPage: React.FC<Props> = ({ result }) => {
             <SearchExportLoadingWithProgress
               done={result.data.done}
               form={result.data.form}
-              total={result.data.total}
             />
           ) : (
             <SearchExportLoadingNoProgress />

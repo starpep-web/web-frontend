@@ -9,7 +9,7 @@ import { DYNAMIC_ROUTES } from '@lib/constants/routes';
 const resourceFriendlyNames: Record<SearchExportResource, string> = {
   fasta: 'sequences FASTA file',
   metadata: 'metadata CSV',
-  attributes: 'attributes CSV',
+  attributes: 'features CSV',
   esmMean: 'ESM-mean embeddings CSV',
   iFeatureAac: 'iFeature-AAC-20 embeddings CSV',
   iFeatureDpc: 'iFeature-DPC-400 embeddings CSV',
