@@ -14,7 +14,7 @@ export const useClientNavigation = () => {
     }
 
     const url = `${WEBSITE_URL}${path}`;
-    windowRef.current.open(url, '_target');
+    windowRef.current.open(url, '_blank');
   }, [windowRef.current]);
 
   return {
