@@ -2,7 +2,9 @@ import React from 'react';
 import { Content, Heading, Block } from 'react-bulma-components';
 import SearchExportProgressBar from './SearchExportProgressBar';
 import SearchExportSteps from './SearchExportSteps';
+import { useAutoRefresh } from '@components/hooks/autoRefresh';
 import { SearchExportFormData, SearchExportResource } from '@lib/models/export';
+import { DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS } from '@lib/constants/site';
 
 interface Props {
   done: SearchExportResource[]
@@ -10,6 +12,8 @@ interface Props {
 }
 
 const SearchExportLoadingWithProgress: React.FC<Props> = ({ done, form }) => {
+  useAutoRefresh(DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS);
+
   const exportedResources = Object.entries(form)
     .filter(([_, v]) => v)
     .map(([k]) => k as SearchExportResource);
