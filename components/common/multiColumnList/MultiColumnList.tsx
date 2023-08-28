@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styles from './MultiColumnList.module.scss';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 
 const MultiColumnList: React.FC<Props> = ({ ordered, items, itemComponent }) => {
   const ListComponent = ordered ? 'ol' : 'ul';
-  const ItemComponent = itemComponent ?? Fragment;
+  const ItemComponent = itemComponent ?? (({ item }) => <span>{item}</span>);
 
   return (
     <ListComponent className={styles.multiColumnList}>
