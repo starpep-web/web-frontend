@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/interactive-supports-focus  */
 import React from 'react';
 import { Heading } from 'react-bulma-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,7 +19,8 @@ const InteractivityOverlay: React.FC<Props> = ({ enabled, onToggle }) => {
 
   return (
     <div className={styles.interactivityToggle}>
-      <button
+      <div
+        role="button"
         className={styles.controlIcon}
         onClick={handleClick}
         title="Toggle Graph Interactivity"
@@ -30,7 +33,7 @@ const InteractivityOverlay: React.FC<Props> = ({ enabled, onToggle }) => {
         <Heading size={6}>
           Interactive: {text}
         </Heading>
-      </button>
+      </div>
     </div>
   );
 };
