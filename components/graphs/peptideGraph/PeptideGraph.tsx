@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Network, Node, Edge, Options, Color } from 'vis-network/esnext/umd/vis-network.min';
 import { Graph } from '../graph';
 import { ZoomOverlay } from '../zoomOverlay';
+import { InteractivityOverlay } from '../interactivityOverlay';
 import { FullScreenOverlay } from '@components/genericOverlays/fullScreenOverlay';
 import { ExportOverlay } from '@components/genericOverlays/exportOverlay';
 import { useExport } from '@components/hooks/export';
@@ -71,9 +72,19 @@ interface Props {
 const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
   const [network, setNetwork] = useState<Network | null>(null);
   const [fullScreen, setFullScreen] = useState<boolean>(false);
+  const [enableInteraction, setEnableInteraction] = useState<boolean>(false);
   const [ref, exportRef] = useExport<HTMLDivElement>(`Graph-${peptide.id}`);
   const minZoom = 0.25;
   const maxZoom = 2;
+
+  if (network) {
+    network.setOptions({
+      interaction: {
+        dragView: enableInteraction,
+        zoomView: enableInteraction
+      }
+    });
+  }
 
   const [nodes, edges] = useMemo(() => {
     const nodes: Node[] = [];
@@ -134,6 +145,10 @@ const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
     setFullScreen(!fullScreen);
   };
 
+  const handleInteractionToggle = () => {
+    setEnableInteraction(!enableInteraction);
+  };
+
   return (
     <Graph
       className={clsx({ 'full-screen': fullScreen })}
@@ -144,12 +159,13 @@ const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
       height={height}
       minZoom={minZoom}
       maxZoom={maxZoom}
-      centerZoom
+      centerZoom={false}
       onReady={handleReady}
       ref={ref}
     >
       <ZoomOverlay step={0.1} onChange={handleZoomChange} />
       <FullScreenOverlay fullScreen={fullScreen} onToggle={handleFullScreenToggle} />
+      <InteractivityOverlay enabled={enableInteraction} onToggle={handleInteractionToggle} />
       <ExportOverlay onClick={exportRef} />
     </Graph>
   );

@@ -1,0 +1,28 @@
+@import "../../../styles/variables.scss";
+
+.interactivityToggle {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 10;
+
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.controlIcon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+
+  padding: 0.5rem;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #e5e5e5;
+  }
+}
