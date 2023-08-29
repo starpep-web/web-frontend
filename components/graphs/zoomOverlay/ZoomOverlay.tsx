@@ -6,11 +6,16 @@ interface Props {
   step: number
 
   onChange?: (zoom: number) => void
+  onReset?: () => void
 }
 
-const ZoomOverlay: React.FC<Props> = ({ step, onChange }) => {
+const ZoomOverlay: React.FC<Props> = ({ step, onChange, onReset }) => {
   const handleClick = (sign: number) => () => {
     onChange?.(sign * step);
+  };
+
+  const handleResetClick = () => {
+    onReset?.();
   };
 
   return (
@@ -28,6 +33,13 @@ const ZoomOverlay: React.FC<Props> = ({ step, onChange }) => {
         icon="magnifying-glass-minus"
         size="2x"
         onClick={handleClick(-1)}
+      />
+      <FontAwesomeIcon
+        title="Reset Position"
+        className={styles.controlIcon}
+        icon="arrows-rotate"
+        size="2x"
+        onClick={handleResetClick}
       />
     </div>
   );

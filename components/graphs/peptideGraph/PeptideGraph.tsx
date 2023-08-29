@@ -71,11 +71,10 @@ interface Props {
 
 const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
   const [network, setNetwork] = useState<Network | null>(null);
+  const [initialScale, setInitialScale] = useState<number>(0);
   const [fullScreen, setFullScreen] = useState<boolean>(false);
   const [enableInteraction, setEnableInteraction] = useState<boolean>(false);
   const [ref, exportRef] = useExport<HTMLDivElement>(`Graph-${peptide.id}`);
-  const minZoom = 0.25;
-  const maxZoom = 2;
 
   if (network) {
     network.setOptions({
@@ -133,12 +132,16 @@ const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
 
   const handleReady = (network: Network) => {
     setNetwork(network);
+    setInitialScale(network.getScale());
   };
 
   const handleZoomChange = (step: number) => {
-    const scale = network?.getScale() ?? 0;
-    const newScale = Math.max(minZoom, Math.min(scale + step, maxZoom));
-    network?.moveTo({ scale: newScale });
+    const scale = (network?.getScale() ?? 0) + step;
+    network?.moveTo({ scale });
+  };
+
+  const handleResetPosition = () => {
+    network?.moveTo({ scale: initialScale, position: { x: 0, y: 0 } });
   };
 
   const handleFullScreenToggle = () => {
@@ -157,13 +160,11 @@ const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
       options={options}
       width={width}
       height={height}
-      minZoom={minZoom}
-      maxZoom={maxZoom}
       centerZoom={false}
       onReady={handleReady}
       ref={ref}
     >
-      <ZoomOverlay step={0.1} onChange={handleZoomChange} />
+      <ZoomOverlay step={0.1} onChange={handleZoomChange} onReset={handleResetPosition} />
       <FullScreenOverlay fullScreen={fullScreen} onToggle={handleFullScreenToggle} />
       <InteractivityOverlay enabled={enableInteraction} onToggle={handleInteractionToggle} />
       <ExportOverlay onClick={exportRef} />
