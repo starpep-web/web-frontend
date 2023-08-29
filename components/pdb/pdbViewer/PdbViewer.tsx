@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState, forwardRef } from 'react';
+/* eslint-disable no-underscore-dangle */
+import React, { useRef, useEffect, useState, forwardRef, useCallback } from 'react';
 import { BounceLoader } from 'react-spinners';
 import { GLViewer } from '3dmol/build/types/GLViewer';
 import clsx from 'clsx';
@@ -9,6 +10,7 @@ const DEFAULT_WIDTH = 600;
 const DEFAULT_HEIGHT = 400;
 const DEFAULT_STYLE: AtomStyle = 'cartoon';
 const DEFAULT_COLOR: ColorScheme = 'ssJmol';
+const DEFAULT_DISABLE_MOUSE = false;
 
 interface Props {
   children?: React.ReactNode
@@ -22,6 +24,7 @@ interface Props {
   style?: AtomStyle
   color?: ColorScheme
   spin?: boolean
+  disableMouse?: boolean
 
   onReady?: (viewer: GLViewer) => void
 }
@@ -39,11 +42,22 @@ const PdbViewer = forwardRef<HTMLDivElement, Props>(({
   style = DEFAULT_STYLE,
   color = DEFAULT_COLOR,
   spin,
+  disableMouse = DEFAULT_DISABLE_MOUSE,
   onReady
 }, forwardedRef) => {
   const viewerRef = useRef<GLViewer | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
+
+  const initializeCanvasEvents = useCallback((viewer: GLViewer, disableMouse: boolean) => {
+    const canvas = viewer.getCanvas();
+
+    canvas.onmousedown = disableMouse ? null : (e) => viewer._handleMouseDown(e);
+    canvas.ontouchstart = disableMouse ? null : (e) => viewer._handleMouseDown(e);
+    canvas.onwheel = disableMouse ? null : (e) => viewer._handleMouseScroll(e);
+    canvas.onmousemove = disableMouse ? null : (e) => viewer._handleMouseMove(e);
+    canvas.ontouchmove = disableMouse ? null : (e) => viewer._handleMouseMove(e);
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -56,10 +70,12 @@ const PdbViewer = forwardRef<HTMLDivElement, Props>(({
         return;
       }
 
-      viewerRef.current = createViewer(containerRef.current!);
+      viewerRef.current = createViewer(containerRef.current!, { nomouse: true });
       viewerRef.current.addModel(pdb, 'pdb');
       viewerRef.current.setStyle({}, createStyle(style, color));
       viewerRef.current.render();
+
+      initializeCanvasEvents(viewerRef.current, disableMouse);
 
       onReady?.(viewerRef.current);
       setLoading(false);
@@ -86,6 +102,12 @@ const PdbViewer = forwardRef<HTMLDivElement, Props>(({
       viewerRef.current?.spin(false);
     }
   }, [spin]);
+
+  useEffect(() => {
+    if (viewerRef.current) {
+      initializeCanvasEvents(viewerRef.current, disableMouse);
+    }
+  }, [disableMouse]);
 
   return (
     <div className={clsx('pos-relative', className)} style={{ width, height }}>

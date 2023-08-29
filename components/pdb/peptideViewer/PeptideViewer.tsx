@@ -7,6 +7,7 @@ import { ExportOverlay } from '@components/genericOverlays/exportOverlay';
 import { useExport } from '@components/hooks/export';
 import clsx from 'clsx';
 import { FullPeptide } from '@lib/models/peptide';
+import { InteractivityOverlay } from '@components/genericOverlays/interactivityOverlay';
 
 interface Props {
   peptide: FullPeptide
@@ -21,6 +22,7 @@ const PeptideViewer: React.FC<Props> = ({ pdb, peptide, width, height }) => {
   const [color, setColor] = useState<ColorScheme>('ssJmol');
   const [spin, setSpin] = useState<boolean>(false);
   const [fullScreen, setFullScreen] = useState<boolean>(false);
+  const [enableInteraction, setEnableInteraction] = useState<boolean>(false);
   const [ref, exportRef] = useExport<HTMLDivElement>(`Structure-${peptide.id}`);
 
   const handleToggleSpin = () => {
@@ -29,6 +31,10 @@ const PeptideViewer: React.FC<Props> = ({ pdb, peptide, width, height }) => {
 
   const handleFullScreenToggle = () => {
     setFullScreen(!fullScreen);
+  };
+
+  const handleInteractionToggle = () => {
+    setEnableInteraction(!enableInteraction);
   };
 
   return (
@@ -41,6 +47,7 @@ const PeptideViewer: React.FC<Props> = ({ pdb, peptide, width, height }) => {
       color={color}
       spin={spin}
       ref={ref}
+      disableMouse={!enableInteraction}
     >
       <ControlsOverlay
         defaultStyle={style}
@@ -50,6 +57,7 @@ const PeptideViewer: React.FC<Props> = ({ pdb, peptide, width, height }) => {
         onSpinToggle={handleToggleSpin}
       />
       <FullScreenOverlay fullScreen={fullScreen} onToggle={handleFullScreenToggle} />
+      <InteractivityOverlay enabled={enableInteraction} onToggle={handleInteractionToggle} />
       <ExportOverlay onClick={exportRef} />
     </PdbViewer>
   );
