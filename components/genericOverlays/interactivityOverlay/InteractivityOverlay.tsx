@@ -28,7 +28,7 @@ const InteractivityOverlay: React.FC<Props> = ({ enabled, onToggle }) => {
         />
 
         <Heading size={6}>
-          Interactivity: {text}
+          Interactive: {text}
         </Heading>
       </button>
     </div>
