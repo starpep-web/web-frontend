@@ -5,10 +5,10 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  z-index: 10;
+  z-index: 100;
 
-  width: 40%;
-  max-width: 350px;
+  width: 250px;
+  max-width: calc(100% - 2 * 10px); // 2 * Top
   background-color: #e5e5e5;
   padding: 1rem;
   border-radius: 10px;
