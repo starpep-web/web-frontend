@@ -1,0 +1,23 @@
+@use "sass:map";
+@import "../../../styles/variables";
+
+.multiColumnList {
+  list-style-type: initial;
+  padding-left: 2em;
+  overflow: scroll;
+
+  column-gap: 3rem;
+  column-count: 1;
+
+  @media (min-width: map.get($breakpoints, 'tablet-min')) {
+    column-count: 2;
+  }
+
+  @media (min-width: map.get($breakpoints, 'desktop-min')) {
+    column-count: 4;
+  }
+
+  li {
+    word-break: break-all;
+  }
+}

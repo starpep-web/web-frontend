@@ -1,0 +1,67 @@
+@use "sass:map";
+@import "../../../styles/variables";
+
+.footer {
+  text-align: center;
+  padding: 64px 24px;
+
+  .footer-content {
+    padding-bottom: 2em;
+  }
+
+  .brand {
+    flex-direction: column;
+
+    img {
+      width: 360px;
+      margin-bottom: 1em;
+    }
+  }
+
+  .links {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 124px;
+  }
+
+  .socials {
+    display: flex;
+    justify-content: flex-end;
+    gap: 3rem;
+
+    span {
+      cursor: pointer;
+    }
+
+    svg {
+      font-size: 28px;
+    }
+  }
+
+  a {
+    color: $text;
+
+    &:hover {
+      color: $link;
+    }
+  }
+
+  @media (max-width: map.get($breakpoints, 'phone-max')) {
+    .links {
+      column-gap: 12px;
+    }
+  }
+
+  @media (max-width: map.get($breakpoints, 'desktop-min')) {
+    .links {
+      column-gap: 64px;
+    }
+  }
+
+  @media (max-width: map.get($breakpoints, 'tablet-min')) {
+    .brand {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+@use "sass:map";
+@import "../../../styles/variables";
+
+.heading-block {
+  display: flex;
+  flex-direction: row;
+
+  @media (max-width: map.get($breakpoints, 'phone-max')) {
+    flex-direction: column;
+  }
+}

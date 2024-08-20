@@ -1,0 +1,46 @@
+@use "sass:map";
+@import "../variables";
+@import '../../node_modules/nouislider/dist/nouislider.min';
+
+$slider-height: 10px;
+$handle-size: 16px;
+
+.custom-noUi-slider {
+  height: $slider-height;
+
+  .noUi-handle {
+    box-shadow: none;
+    height: $handle-size;
+    width: $handle-size;
+    border-radius: 50%;
+
+    top: calc(($handle-size * -0.5) + ($slider-height * 0.25));
+    right: calc($handle-size * -0.5);
+
+    &::after, &::before {
+      display: none;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .noUi-connect {
+    background-color: $primary;
+  }
+}
+
+.noUi-active-tooltip {
+
+  .noUi-tooltip {
+    display: none;
+  }
+
+  .noUi-active {
+
+    .noUi-tooltip {
+      display: block;
+    }
+  }
+}

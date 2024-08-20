@@ -1,0 +1,19 @@
+@use "sass:map";
+@import "../../../styles/variables";
+
+.hero {
+  @media (min-width: map.get($breakpoints, 'tablet-min')) {
+    .hero-body {
+      padding: 2rem 3rem;
+    }
+  }
+
+  .hero-text {
+    background-color: rgba(0, 0, 0, 0.75);
+
+    h1 {
+      color: white;
+    }
+  }
+}
+
