@@ -1,6 +1,7 @@
 import React from 'react';
-import GenericShareButton from './GenericShareButton';
 import clsx from 'clsx';
+import { GenericShareButton } from './GenericShareButton';
+import FacebookIcon from '@assets/svg/icons/square-facebook-brands-solid.svg';
 import style from './ShareButton.module.scss';
 
 const createShareUrl = (url: string): string => {
@@ -13,7 +14,7 @@ interface Props {
   url: string
 }
 
-const FacebookShareButton: React.FC<Props> = ({ withText, withStyle, url }) => {
+export const FacebookShareButton: React.FC<Props> = ({ withText, withStyle, url }) => {
   const buttonText = withText ? 'Share on Facebook' : null;
   const titleText = !buttonText ? 'Share on Facebook' : null;
 
@@ -22,10 +23,8 @@ const FacebookShareButton: React.FC<Props> = ({ withText, withStyle, url }) => {
       text={buttonText}
       title={titleText}
       url={createShareUrl(url)}
-      icon={['fab', 'facebook']}
-      className={clsx({ [style['share-button-facebook']]: withStyle })}
+      icon={<FacebookIcon width={28} height={28} />}
+      className={clsx(withStyle && style.shareButtonFacebook)}
     />
   );
 };
-
-export default FacebookShareButton;

@@ -1,8 +1,7 @@
+'use client';
 import React from 'react';
-import { Icon } from 'react-bulma-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import clsx from 'clsx';
+import ClipboardIcon from '@assets/svg/icons/clipboard-solid.svg';
 
 interface Props {
   withText?: boolean
@@ -10,16 +9,14 @@ interface Props {
   className?: string
 }
 
-const CopyToClipboardShareButton: React.FC<Props> = ({ withText, url, className }) => {
+export const CopyToClipboardShareButton: React.FC<Props> = ({ withText, url, className }) => {
   const buttonText = withText ? 'Copy to Clipboard' : null;
   const titleText = !buttonText ? 'Copy to Clipboard' : null;
 
   return (
     <CopyToClipboard text={url}>
-      <div role="button" className={clsx(className)} title={titleText ?? ''}>
-        <Icon>
-          <FontAwesomeIcon icon="clipboard" />
-        </Icon>
+      <div role="button" className={className} title={titleText ?? ''}>
+        <ClipboardIcon width={28} height={28} />
 
         {
           buttonText && (
@@ -32,5 +29,3 @@ const CopyToClipboardShareButton: React.FC<Props> = ({ withText, url, className 
     </CopyToClipboard>
   );
 };
-
-export default CopyToClipboardShareButton;

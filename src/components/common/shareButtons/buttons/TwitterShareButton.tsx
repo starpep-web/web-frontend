@@ -1,6 +1,7 @@
 import React from 'react';
-import GenericShareButton from './GenericShareButton';
 import clsx from 'clsx';
+import { GenericShareButton } from './GenericShareButton';
+import TwitterIcon from '@assets/svg/icons/square-x-twitter-brands-solid.svg';
 import style from './ShareButton.module.scss';
 
 const createShareUrl = (url: string): string => {
@@ -13,7 +14,7 @@ interface Props {
   url: string
 }
 
-const TwitterShareButton: React.FC<Props> = ({ withText, withStyle, url }) => {
+export const TwitterShareButton: React.FC<Props> = ({ withText, withStyle, url }) => {
   const buttonText = withText ? 'Share on Twitter' : null;
   const titleText = !buttonText ? 'Share on Twitter' : null;
 
@@ -22,10 +23,8 @@ const TwitterShareButton: React.FC<Props> = ({ withText, withStyle, url }) => {
       text={buttonText}
       title={titleText}
       url={createShareUrl(url)}
-      icon={['fab', 'twitter']}
-      className={clsx({ [style['share-button-twitter']]: withStyle })}
+      icon={<TwitterIcon width={28} height={28} />}
+      className={clsx(withStyle && style.shareButtonTwitter)}
     />
   );
 };
-
-export default TwitterShareButton;

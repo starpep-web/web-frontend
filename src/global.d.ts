@@ -3,6 +3,9 @@ declare global {
     interface ProcessEnv {
       API_URL?: string
 
+      PUBLIC_URL?: string
+      PUBLIC_DOWNLOADS_URL?: string
+
       NEXT_REVALIDATE_TIME?: string
     }
   }

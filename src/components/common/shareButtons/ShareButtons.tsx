@@ -1,9 +1,10 @@
+'use client';
 import React, { useEffect, useState } from 'react';
-import FacebookShareButton from './buttons/FacebookShareButton';
-import TwitterShareButton from './buttons/TwitterShareButton';
-import LinkedInButton from './buttons/LinkedInButton';
-import CopyToClipboardShareButton from './buttons/CopyToClipboardShareButton';
 import clsx from 'clsx';
+import { FacebookShareButton } from './buttons/FacebookShareButton';
+import { TwitterShareButton } from './buttons/TwitterShareButton';
+import { LinkedInShareButton } from './buttons/LinkedInShareButton';
+import { CopyToClipboardShareButton } from './buttons/CopyToClipboardShareButton';
 
 interface Props {
   url?: string | null
@@ -13,18 +14,18 @@ interface Props {
   className?: string
 }
 
-const ShareButtons: React.FC<Props> = ({ url, withText, withStyle, withCopyToClipboard, className }) => {
-  const [shareUrl, setShareUrl] = useState<string>(url ?? '#');
+export const ShareButtons: React.FC<Props> = ({ url, withText, withStyle, withCopyToClipboard, className }) => {
+  const [shareUrl, setShareUrl] = useState<string>(() => url ?? '#');
 
   useEffect(() => {
     setShareUrl(url ?? window?.location?.href ?? '#');
   }, [url]);
 
   return (
-    <div className={clsx(className)}>
+    <div className={clsx('d-flex gap-5', className)}>
       <FacebookShareButton url={shareUrl} withText={withText} withStyle={withStyle} />
       <TwitterShareButton url={shareUrl} withText={withText} withStyle={withStyle} />
-      <LinkedInButton url={shareUrl} withText={withText} withStyle={withStyle} />
+      <LinkedInShareButton url={shareUrl} withText={withText} withStyle={withStyle} />
 
       {
         withCopyToClipboard && (
@@ -34,5 +35,3 @@ const ShareButtons: React.FC<Props> = ({ url, withText, withStyle, withCopyToCli
     </div>
   );
 };
-
-export default ShareButtons;
