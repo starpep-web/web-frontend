@@ -1,21 +1,7 @@
 import { DEFAULT_FILTERS_PARAMS, FiltersParams } from '@lib/models/search';
 import { SearchType } from '@lib/models/export';
 
-export const ROUTES = {
-  home: '/',
-  about: '/#about',
-  contact: '/#contact',
-  faq: '/faq',
-  search: '/search',
-  statistics: '/statistics',
-  statisticsGeneralInformation: '/statistics/general-information',
-  statisticsMetadata: '/statistics/metadata',
-  statisticsFeatures: '/statistics/features',
-  downloads: '/downloads'
-};
-
 export const DYNAMIC_ROUTES = {
-  peptide: (id: string) => `/peptide/${id}`,
   textQuery: (query: string, regexEnabled: boolean, filtersParam: FiltersParams = DEFAULT_FILTERS_PARAMS, page: number = 1) => {
     const params = new URLSearchParams({
       query,
