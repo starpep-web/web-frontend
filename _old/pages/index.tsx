@@ -6,8 +6,6 @@ import { HomeContainer } from '@components/home/homeContainer';
 const HomePage = () => {
   return (
     <PageWrapper>
-      <PageMetadata title="Home" />
-
       <HomeContainer />
     </PageWrapper>
   );

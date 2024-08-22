@@ -6,8 +6,6 @@ import { ComingSoonPlaceholder } from '@components/common/comingSoon';
 const FaqPage = () => {
   return (
     <PageWrapper>
-      <PageMetadata title="FAQ" />
-
       <ComingSoonPlaceholder absoluteCenter />
     </PageWrapper>
   );

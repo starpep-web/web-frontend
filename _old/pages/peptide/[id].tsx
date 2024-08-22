@@ -25,9 +25,7 @@ const PeptidePage: React.FC<Props> = ({ peptide, pdbString }) => {
   return (
     <PageWrapper>
       <PageMetadata
-        title={peptide.sequence}
         image={getPublicPeptidePdbPreviewImageUrl(peptide.id)}
-        imageAlt="Visualization of Peptide 3D Structure"
       />
 
       <PeptideTitle sequence={peptide.sequence} />
@@ -42,15 +40,6 @@ const PeptidePage: React.FC<Props> = ({ peptide, pdbString }) => {
 };
 
 export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<ServerSideProps>> => {
-  const id = context.params!.id as string;
-  const peptide = await getPeptideById(id);
-
-  if (!peptide) {
-    return {
-      notFound: true
-    };
-  }
-
   const pdbString = await getPeptidePdbContentFromServer(peptide.id);
 
   return {

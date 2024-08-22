@@ -6,8 +6,6 @@ import { AppErrorMessage } from '@components/common/appErrorMessage';
 const NotFoundPage = () => {
   return (
     <PageWrapper isErrorPage>
-      <PageMetadata title="Not Found" />
-
       <AppErrorMessage
         icon="question-circle"
         iconColor="primary"

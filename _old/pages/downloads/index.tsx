@@ -6,8 +6,6 @@ import { ApplicationDownloads } from '@components/downloads/applicationDownloads
 const DownloadsPage = () => {
   return (
     <PageWrapper>
-      <PageMetadata title="Downloads" />
-
       <ApplicationDownloads />
     </PageWrapper>
   );

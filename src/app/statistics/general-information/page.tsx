@@ -1,5 +1,13 @@
 import React from 'react';
+import { createPageMetadata } from '@lib/next/metadata';
+import { RouteDefs } from '@lib/constants/routes';
 import { getDatabaseDistribution, getDatabaseHeatmap, getFunctionDistribution, getPeptideCount, getUnusualPeptideCount } from '@lib/services/api/endpoints/statistics';
+
+export const generateMetadata = () => {
+  return createPageMetadata(RouteDefs.statisticsGeneralInformation, {
+    pageTitle: 'Statistics - General Information'
+  });
+};
 
 const GeneralInformationStatisticsPage = async () => {
   const count = await getPeptideCount();

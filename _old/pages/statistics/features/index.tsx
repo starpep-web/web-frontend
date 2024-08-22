@@ -10,8 +10,6 @@ const FeaturesStatisticsPage = () => {
 
   return (
     <PageWrapper>
-      <PageMetadata title="Statistics - Features" />
-
       <StatisticsTabs />
 
       <AttributeHistogramDynamicChart height={graphHeight} />

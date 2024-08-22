@@ -6,8 +6,6 @@ import { PeptideSearchBox } from '@components/search/peptideSearchBox';
 const SearchPage = () => {
   return (
     <PageWrapper>
-      <PageMetadata title="Search" />
-
       <PeptideSearchBox />
     </PageWrapper>
   );
