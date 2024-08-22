@@ -1,40 +1,9 @@
-import { API_URL, NEXT_REVALIDATE_TIME } from '@lib/config/app';
-
-type RequestOptions = {
-  query?: Record<string, string | string[]>
-};
-
-const request = async <T>(endpoint: string, method: string, options?: RequestOptions): Promise<T> => {
-  let url = `${API_URL}${endpoint}`;
-
-  if (options?.query) {
-    const params = new URLSearchParams();
-
-    Object.entries(options.query).forEach(([name, value]) => {
-      if (Array.isArray(value)) {
-        value.forEach((innerValue) => {
-          params.append(name, innerValue);
-        });
-      } else {
-        params.append(name, value);
-      }
-    });
-
-    url += `?${params.toString()}`;
-  }
-
-  const response = await fetch(url, {
-    method,
-    next: {
-      revalidate: NEXT_REVALIDATE_TIME
-    }
-  });
-
-  return response.json();
-};
+import 'server-only';
+import { API_URL } from '@lib/config/app';
+import { requestJson, RequestOptions } from '@lib/services/http/request';
 
 export const client = {
   get: <T>(endpoint: string, options?: RequestOptions) => {
-    return request<T>(endpoint, 'GET', options);
+    return requestJson<T>(API_URL, endpoint, 'GET', options);
   }
 };

@@ -24,9 +24,6 @@ interface Props extends ServerSideProps {
 const PeptidePage: React.FC<Props> = ({ peptide, pdbString }) => {
   return (
     <PageWrapper>
-      <PageMetadata
-        image={getPublicPeptidePdbPreviewImageUrl(peptide.id)}
-      />
 
       <PeptideTitle sequence={peptide.sequence} />
       <PeptideVisualization peptide={peptide} pdbString={pdbString} />
@@ -37,17 +34,6 @@ const PeptidePage: React.FC<Props> = ({ peptide, pdbString }) => {
       <PeptideDownloads id={peptide.id} />
     </PageWrapper>
   );
-};
-
-export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<ServerSideProps>> => {
-  const pdbString = await getPeptidePdbContentFromServer(peptide.id);
-
-  return {
-    props: {
-      peptide,
-      pdbString
-    }
-  };
 };
 
 export default PeptidePage;

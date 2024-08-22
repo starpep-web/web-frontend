@@ -5,6 +5,7 @@ declare global {
 
       PUBLIC_URL?: string
       PUBLIC_DOWNLOADS_URL?: string
+      LOCAL_DOWNLOADS_URL?: string
 
       NEXT_REVALIDATE_TIME?: string
     }

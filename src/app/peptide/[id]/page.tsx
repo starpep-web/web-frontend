@@ -3,6 +3,8 @@ import { getPeptideById } from '@lib/services/api/endpoints/peptides';
 import { notFound } from 'next/navigation';
 import { createPageMetadata } from '@lib/next/metadata';
 import { RouteDefs } from '@lib/constants/routes';
+import { makePeptidePdbPreviewImageUrl } from '@lib/services/downloadServer/urls/peptides';
+import { getPeptidePdbContent } from '@lib/services/downloadServer/endpoints/peptides';
 
 interface Params {
   params: {
@@ -19,7 +21,8 @@ export const generateMetadata = async ({ params } : Params) => {
   }
 
   return createPageMetadata(RouteDefs.peptide(params.id), {
-    pageTitle: peptide.sequence
+    pageTitle: peptide.sequence,
+    images: [makePeptidePdbPreviewImageUrl(peptide.id)]
   });
 };
 
@@ -33,10 +36,15 @@ const PeptidePage = async ({ params }: Props) => {
     return notFound();
   }
 
+  const pdbString = await getPeptidePdbContent(peptide.id);
+
   return (
     <div>
       <pre>
         {JSON.stringify(peptide, null, 2)}
+      </pre>
+      <pre>
+        {pdbString}
       </pre>
     </div>
   );
