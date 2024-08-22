@@ -1,5 +1,8 @@
 {
   "extends": [
     "@moonstar-x/eslint-config/rules/react/typescript"
-  ]
+  ],
+  "rules": {
+    "camelcase": "off"
+  }
 }
