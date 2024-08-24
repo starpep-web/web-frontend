@@ -7,6 +7,7 @@ import { makePeptidePdbPreviewImageUrl } from '@lib/services/downloadServer/urls
 import { getPeptidePdbContent } from '@lib/services/downloadServer/endpoints/peptides';
 import { PeptideTitle } from '@components/peptide/peptideTitle';
 import { PeptideVisualization } from '@components/peptide/peptideVisualization';
+import { PeptideInfo } from '@components/peptide/peptideInfo';
 
 interface Params {
   params: {
@@ -44,6 +45,7 @@ const PeptidePage = async ({ params }: Props) => {
     <Fragment>
       <PeptideTitle sequence={peptide.sequence} />
       <PeptideVisualization peptide={peptide} pdbString={pdbString} />
+      <PeptideInfo {...peptide} />
     </Fragment>
   );
 };

@@ -24,10 +24,6 @@ interface Props extends ServerSideProps {
 const PeptidePage: React.FC<Props> = ({ peptide, pdbString }) => {
   return (
     <PageWrapper>
-
-      <PeptideVisualization peptide={peptide} pdbString={pdbString} />
-
-      <PeptideInfo {...peptide} />
       <PeptideAttributes attributes={peptide.attributes} />
       <PeptideMetadata metadata={peptide.metadata} />
       <PeptideDownloads id={peptide.id} />
