@@ -1,12 +1,13 @@
+'use client';
 import React, { useMemo, useState } from 'react';
-import { Network, Node, Edge, Options, Color } from 'vis-network/esnext/umd/vis-network.min';
-import { Graph } from '../graph';
-import { InteractivityOverlay } from '../../genericOverlays/interactivityOverlay';
-import { FullScreenOverlay } from '@components/genericOverlays/fullScreenOverlay';
-import { ExportOverlay } from '@components/genericOverlays/exportOverlay';
-import { useExport } from '@components/hooks/export';
 import clsx from 'clsx';
-import { FullPeptide, MetadataRelationshipLabel } from '@lib/models/peptide';
+import { Network, Node, Edge, Options, Color } from 'vis-network/esnext/umd/vis-network.min';
+import { Graph } from '@components/visualization/graph';
+import { InteractivityOverlay } from '@components/visualization/overlays/interactivityOverlay';
+import { FullScreenOverlay } from '@components/visualization/overlays/fullScreenOverlay';
+import { ExportOverlay } from '@components/visualization/overlays/exportOverlay';
+import { useExport } from '@components/hooks/useExport';
+import { Peptide, PeptideMetadata } from '@lib/services/api/models/peptide';
 
 const createNodeColor = (background: string, highlight: string, border: string): Color => {
   return {
@@ -19,7 +20,7 @@ const createNodeColor = (background: string, highlight: string, border: string):
 
 const peptideNodeColor = createNodeColor('#FF595E', '#FF7075', '#FF474E');
 
-const nodeColorsByRelationship: Record<MetadataRelationshipLabel, Color> = {
+const nodeColorsByRelationship: Record<keyof PeptideMetadata, Color> = {
   assessedAgainst: createNodeColor('#FF9A5C', '#FFA770', '#FF8E47'),
   compiledIn: createNodeColor('#FFCA3A', '#FFD35C', '#FFC933'),
   constitutedBy: createNodeColor('#C5CA30', '#D0D449', '#C1C62F'),
@@ -58,17 +59,20 @@ const options: Options = {
   interaction: {
     dragView: false,
     zoomView: false
+  },
+  layout: {
+    improvedLayout: false
   }
 };
 
 interface Props {
-  peptide: FullPeptide
+  peptide: Peptide
 
   width?: number | string
   height?: number | string
 }
 
-const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
+export const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
   const [network, setNetwork] = useState<Network | null>(null);
   const [fullScreen, setFullScreen] = useState<boolean>(false);
   const [enableInteraction, setEnableInteraction] = useState<boolean>(false);
@@ -108,7 +112,7 @@ const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
             id: metadataValue,
             label: metadataValue,
             title: metadataValue,
-            color: nodeColorsByRelationship[relationship as MetadataRelationshipLabel],
+            color: nodeColorsByRelationship[relationship as keyof PeptideMetadata],
             group: relationship
           });
         }
@@ -142,7 +146,7 @@ const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
 
   return (
     <Graph
-      className={clsx({ 'full-screen': fullScreen })}
+      className={clsx(fullScreen && 'full-screen')}
       nodes={nodes}
       edges={edges}
       options={options}
@@ -158,5 +162,3 @@ const PeptideGraph: React.FC<Props> = ({ peptide, width, height }) => {
     </Graph>
   );
 };
-
-export default PeptideGraph;

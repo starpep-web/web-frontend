@@ -1,27 +1,23 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import UpRightFromSquareIcon from '@assets/svg/icons/up-right-from-square-solid.svg';
 import styles from './ExportOverlay.module.scss';
 
 interface Props {
   onClick?: () => void
 }
 
-const ExportOverlay: React.FC<Props> = ({ onClick }) => {
+export const ExportOverlay: React.FC<Props> = ({ onClick }) => {
   const handleClick = () => {
     onClick?.();
   };
 
   return (
     <div className={styles.exportOverlay}>
-      <FontAwesomeIcon
+      <UpRightFromSquareIcon
         title="Export as Image"
         className={styles.controlIcon}
-        icon="up-right-from-square"
-        size="2x"
         onClick={handleClick}
       />
     </div>
   );
 };
-
-export default ExportOverlay;

@@ -15,7 +15,7 @@ interface Props {
 }
 
 export const ShareButtons: React.FC<Props> = ({ url, withText, withStyle, withCopyToClipboard, className }) => {
-  const [shareUrl, setShareUrl] = useState<string>(() => url ?? '#');
+  const [shareUrl, setShareUrl] = useState<string>(url ?? '#');
 
   useEffect(() => {
     setShareUrl(url ?? window?.location?.href ?? '#');

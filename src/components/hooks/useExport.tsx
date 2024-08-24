@@ -4,7 +4,7 @@ import html2canvas from 'html2canvas';
 type ReturnType<T> = [RefObject<T>, () => Promise<void>];
 
 export const useExport = <T extends HTMLElement>(exportedFilename: string): ReturnType<T> => {
-  const ref = useRef<T>(null);
+  const ref = useRef<T | null>(null);
 
   const exportRef = useCallback(async () => {
     const canvas = await html2canvas(ref.current!, {

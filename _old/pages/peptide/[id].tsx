@@ -25,7 +25,6 @@ const PeptidePage: React.FC<Props> = ({ peptide, pdbString }) => {
   return (
     <PageWrapper>
 
-      <PeptideTitle sequence={peptide.sequence} />
       <PeptideVisualization peptide={peptide} pdbString={pdbString} />
 
       <PeptideInfo {...peptide} />

@@ -1,9 +1,8 @@
+'use client';
 import React, { useEffect, useRef, useState, forwardRef } from 'react';
-import { BounceLoader } from 'react-spinners';
-import { Network, Data, Options, Node, Edge } from 'vis-network/esnext/umd/vis-network.min';
-import { DataSet } from 'vis-data/esnext/umd/vis-data.min';
 import clsx from 'clsx';
-import { LOADER_COLOR } from '@lib/constants/styling';
+import { Network, Data, Options, Node, Edge } from 'vis-network';
+import { Loader } from '@components/common/loader';
 
 const DEFAULT_WIDTH = 600;
 const DEFAULT_HEIGHT = 400;
@@ -26,7 +25,7 @@ interface Props {
   onReady?: (network: Network) => void
 }
 
-const Graph = forwardRef<HTMLDivElement, Props>(({
+export const Graph = forwardRef<HTMLDivElement, Props>(({
   children,
   className,
   nodes,
@@ -39,15 +38,12 @@ const Graph = forwardRef<HTMLDivElement, Props>(({
   maxZoom,
   onReady
 }, forwardedRef) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setLoading(true);
-    const data: Data = {
-      nodes: new DataSet(nodes),
-      edges: new DataSet(edges)
-    };
+    const data: Data = { nodes, edges };
 
     const network = new Network(containerRef.current!, data, options ?? {});
     if (!options?.physics?.enabled) {
@@ -85,16 +81,15 @@ const Graph = forwardRef<HTMLDivElement, Props>(({
   }, [nodes, edges, options]);
 
   return (
-    <div className={clsx('pos-relative', className)} style={{ width, height }}>
+    <div className={clsx('relative', className)} style={{ width, height }}>
       <div ref={forwardedRef} className="w-100 h-100">
         <div ref={containerRef} className="w-100 h-100" />
       </div>
-      <BounceLoader className="absolute-center" loading={loading} color={LOADER_COLOR} />
+
+      <Loader absoluteCenter loading={loading} />
       {
         !loading && children
       }
     </div>
   );
 });
-
-export default Graph;
