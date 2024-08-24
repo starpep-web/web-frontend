@@ -2,7 +2,7 @@
 'use client';
 import React, { useRef, useEffect, useState, forwardRef, useCallback } from 'react';
 import clsx from 'clsx';
-import { GLViewer } from '3dmol';
+import type { GLViewer } from '3dmol';
 import { Loader } from '@components/common/loader';
 import { AtomStyle, ColorScheme } from './types';
 
@@ -91,9 +91,9 @@ export const PdbViewer = forwardRef<HTMLDivElement, Props>(({
   }, [pdb]);
 
   useEffect(() => {
-    if (viewerRef.current instanceof GLViewer) {
-      viewerRef.current.setStyle({}, createStyle(style, color));
-      viewerRef.current.render();
+    if (viewerRef.current) {
+      viewerRef.current!.setStyle({}, createStyle(style, color));
+      viewerRef.current!.render();
     }
   }, [style, color]);
 
