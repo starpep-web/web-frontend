@@ -13,8 +13,12 @@ const manifest = (): MetadataRoute.Manifest => {
     theme_color: '#fff',
     icons: [{
       src: '/favicon.ico',
-      sizes: 'any',
+      sizes: '64x64 32x32 16x16',
       type: 'image/x-icon'
+    }, {
+      src: '/assets/site-logo.png',
+      sizes: '512x512',
+      type: 'image/png'
     }]
   };
 };

@@ -69,7 +69,6 @@ export const Footer = () => {
 
         <ShareButtons
           className="justify-content-center justify-content-md-end"
-          url={PUBLIC_URL}
           withText={false}
           withCopyToClipboard={false}
           withStyle={false}
