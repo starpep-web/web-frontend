@@ -10,6 +10,7 @@ import { PeptideVisualization } from '@components/peptide/peptideVisualization';
 import { PeptideInfo } from '@components/peptide/peptideInfo';
 import { PeptideAttributes } from '@components/peptide/peptideAttributes';
 import { PeptideMetadata } from '@components/peptide/peptideMetadata';
+import { PeptideDownloads } from '@components/peptide/peptideDownloads';
 
 interface Params {
   params: {
@@ -50,6 +51,7 @@ const PeptidePage = async ({ params }: Props) => {
       <PeptideInfo {...peptide} />
       <PeptideAttributes attributes={peptide.attributes} />
       <PeptideMetadata metadata={peptide.metadata} />
+      <PeptideDownloads id={peptide.id} />
     </Fragment>
   );
 };
