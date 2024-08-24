@@ -23,7 +23,7 @@ export const ORDERED_ATTRIBUTES: AttributeName[] = [
   'gaacUncharge'
 ];
 
-const REAL_ATTRIBUTE_TO_FRIENDLY_NAME_MAP: Record<AttributeName, string> = {
+const ATTRIBUTE_FRIENDLY_NAME_MAP: Record<AttributeName, string> = {
   hydropathicity: 'Hydropathicity',
   charge: 'Charge',
   isoelectricPoint: 'Isoelectric Point',
@@ -45,5 +45,5 @@ const REAL_ATTRIBUTE_TO_FRIENDLY_NAME_MAP: Record<AttributeName, string> = {
 };
 
 export const getFriendlyNameForAttribute = (attributeName: AttributeName): string => {
-  return REAL_ATTRIBUTE_TO_FRIENDLY_NAME_MAP[attributeName];
+  return ATTRIBUTE_FRIENDLY_NAME_MAP[attributeName];
 };

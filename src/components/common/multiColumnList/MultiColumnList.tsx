@@ -3,25 +3,25 @@ import styles from './MultiColumnList.module.scss';
 
 interface Props {
   ordered: boolean
-  items: any[]
-  itemComponent?: React.JSXElementConstructor<{ item: any }>
+  items: unknown[]
+  itemComponent?: React.JSXElementConstructor<{ children: unknown }>
 }
 
-const MultiColumnList: React.FC<Props> = ({ ordered, items, itemComponent }) => {
+export const MultiColumnList: React.FC<Props> = ({ ordered, items, itemComponent }) => {
   const ListComponent = ordered ? 'ol' : 'ul';
-  const ItemComponent = itemComponent ?? (({ item }) => <span>{item}</span>);
+  const ItemComponent = itemComponent ?? (({ children }) => <span>{children}</span>);
 
   return (
     <ListComponent className={styles.multiColumnList}>
       {
         items.map((item, idx) => (
           <li key={idx}>
-            <ItemComponent item={item} />
+            <ItemComponent>
+              {item}
+            </ItemComponent>
           </li>
         ))
       }
     </ListComponent>
   );
 };
-
-export default MultiColumnList;

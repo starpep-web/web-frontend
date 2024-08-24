@@ -1,5 +1,4 @@
-@use "sass:map";
-@import "../../../styles/variables";
+@import '@styles/mixins';
 
 .multiColumnList {
   list-style-type: initial;
@@ -9,11 +8,11 @@
   column-gap: 3rem;
   column-count: 1;
 
-  @media (min-width: map.get($breakpoints, 'tablet-min')) {
+  @include media-breakpoint-up(md) {
     column-count: 2;
   }
 
-  @media (min-width: map.get($breakpoints, 'desktop-min')) {
+  @include media-breakpoint-up(xl) {
     column-count: 4;
   }
 
