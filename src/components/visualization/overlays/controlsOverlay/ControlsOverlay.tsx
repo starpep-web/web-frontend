@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import Controls from './Controls';
-import Toggle from './Toggle';
-import { AtomStyle, ColorScheme } from '@components/pdb/pdbViewer/types';
+import { AtomStyle, ColorScheme } from '@components/visualization/pdbViewer';
+import { Controls } from './Controls';
+import { Toggle } from './Toggle';
 
 interface Props {
-  defaultStyle?: AtomStyle
-  defaultColor?: ColorScheme
+  style: AtomStyle
+  color: ColorScheme
 
   onStyleChange?: (style: AtomStyle) => void
   onColorChange?: (color: ColorScheme) => void
   onSpinToggle?: () => void
 }
 
-const ControlsOverlay: React.FC<Props> = ({
-  defaultStyle,
-  defaultColor,
+export const ControlsOverlay: React.FC<Props> = ({
+  style,
+  color,
   onStyleChange,
   onColorChange,
   onSpinToggle
@@ -31,8 +31,8 @@ const ControlsOverlay: React.FC<Props> = ({
 
   return show ? (
     <Controls
-      defaultStyle={defaultStyle}
-      defaultColor={defaultColor}
+      style={style}
+      color={color}
       onStyleChange={onStyleChange}
       onColorChange={onColorChange}
       onSpinToggle={onSpinToggle}
@@ -42,5 +42,3 @@ const ControlsOverlay: React.FC<Props> = ({
     <Toggle onToggle={handleShowControls} />
   );
 };
-
-export default ControlsOverlay;

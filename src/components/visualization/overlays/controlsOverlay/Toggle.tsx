@@ -1,27 +1,23 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import GearIcon from '@assets/svg/icons/gear-solid.svg';
 import styles from './ControlsOverlay.module.scss';
 
 interface Props {
   onToggle?: () => void
 }
 
-const Toggle: React.FC<Props> = ({ onToggle }) => {
+export const Toggle: React.FC<Props> = ({ onToggle }) => {
   const handleClick = () => {
     onToggle?.();
   };
 
   return (
     <div className={styles.controlsToggle}>
-      <FontAwesomeIcon
+      <GearIcon
         title="Toggle Controls"
         className={styles.controlsToggleIcon}
-        icon="gear"
-        size="2x"
         onClick={handleClick}
       />
     </div>
   );
 };
-
-export default Toggle;

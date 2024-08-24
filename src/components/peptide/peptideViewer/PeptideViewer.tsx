@@ -1,23 +1,23 @@
+'use client';
 import React, { useState } from 'react';
-import { PdbViewer } from '@components/pdb/pdbViewer';
-import { ControlsOverlay } from '@components/pdb/controlsOverlay';
-import { AtomStyle, ColorScheme } from '@components/pdb/pdbViewer/types';
-import { FullScreenOverlay } from '@components/genericOverlays/fullScreenOverlay';
-import { ExportOverlay } from '@components/genericOverlays/exportOverlay';
-import { useExport } from '@components/hooks/export';
 import clsx from 'clsx';
-import { FullPeptide } from '@lib/models/peptide';
-import { InteractivityOverlay } from '@components/genericOverlays/interactivityOverlay';
+import { PdbViewer, AtomStyle, ColorScheme } from '@components/visualization/pdbViewer';
+import { ControlsOverlay } from '@components/visualization/overlays/controlsOverlay';
+import { FullScreenOverlay } from '@components/visualization/overlays/fullScreenOverlay';
+import { ExportOverlay } from '@components/visualization/overlays/exportOverlay';
+import { InteractivityOverlay } from '@components/visualization/overlays/interactivityOverlay';
+import { useExport } from '@components/hooks/useExport';
+import { Peptide } from '@lib/services/api/models/peptide';
 
 interface Props {
-  peptide: FullPeptide
+  peptide: Peptide
   pdb: string
 
   width?: string | number
   height?: string | number
 }
 
-const PeptideViewer: React.FC<Props> = ({ pdb, peptide, width, height }) => {
+export const PeptideViewer: React.FC<Props> = ({ pdb, peptide, width, height }) => {
   const [style, setStyle] = useState<AtomStyle>('cartoon');
   const [color, setColor] = useState<ColorScheme>('ssJmol');
   const [spin, setSpin] = useState<boolean>(false);
@@ -39,7 +39,7 @@ const PeptideViewer: React.FC<Props> = ({ pdb, peptide, width, height }) => {
 
   return (
     <PdbViewer
-      className={clsx({ 'full-screen': fullScreen })}
+      className={clsx(fullScreen && 'full-screen')}
       pdb={pdb}
       width={width}
       height={height}
@@ -50,9 +50,9 @@ const PeptideViewer: React.FC<Props> = ({ pdb, peptide, width, height }) => {
       disableMouse={!enableInteraction}
     >
       <ControlsOverlay
-        defaultStyle={style}
+        style={style}
         onStyleChange={setStyle}
-        defaultColor={color}
+        color={color}
         onColorChange={setColor}
         onSpinToggle={handleToggleSpin}
       />
@@ -62,5 +62,3 @@ const PeptideViewer: React.FC<Props> = ({ pdb, peptide, width, height }) => {
     </PdbViewer>
   );
 };
-
-export default PeptideViewer;

@@ -1,10 +1,10 @@
 /* eslint-disable no-underscore-dangle */
+'use client';
 import React, { useRef, useEffect, useState, forwardRef, useCallback } from 'react';
-import { BounceLoader } from 'react-spinners';
-import { GLViewer } from '3dmol/build/types/GLViewer';
 import clsx from 'clsx';
-import { AtomStyle, ColorScheme } from '@components/pdb/pdbViewer/types';
-import { LOADER_COLOR } from '@lib/constants/styling';
+import { GLViewer } from '3dmol';
+import { Loader } from '@components/common/loader';
+import { AtomStyle, ColorScheme } from './types';
 
 const DEFAULT_WIDTH = 600;
 const DEFAULT_HEIGHT = 400;
@@ -33,7 +33,7 @@ const createStyle = (style: AtomStyle, color: ColorScheme) => {
   return { [style]: { colorscheme: color } };
 };
 
-const PdbViewer = forwardRef<HTMLDivElement, Props>(({
+export const PdbViewer = forwardRef<HTMLDivElement, Props>(({
   children,
   className,
   pdb,
@@ -46,7 +46,7 @@ const PdbViewer = forwardRef<HTMLDivElement, Props>(({
   onReady
 }, forwardedRef) => {
   const viewerRef = useRef<GLViewer | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const initializeCanvasEvents = useCallback((viewer: GLViewer, disableMouse: boolean) => {
@@ -71,13 +71,13 @@ const PdbViewer = forwardRef<HTMLDivElement, Props>(({
       }
 
       viewerRef.current = createViewer(containerRef.current!, { nomouse: true });
-      viewerRef.current.addModel(pdb, 'pdb');
-      viewerRef.current.setStyle({}, createStyle(style, color));
-      viewerRef.current.render();
+      viewerRef.current!.addModel(pdb, 'pdb');
+      viewerRef.current!.setStyle({}, createStyle(style, color));
+      viewerRef.current!.render();
 
-      initializeCanvasEvents(viewerRef.current, disableMouse);
+      initializeCanvasEvents(viewerRef.current!, disableMouse);
 
-      onReady?.(viewerRef.current);
+      onReady?.(viewerRef.current!);
       setLoading(false);
     };
 
@@ -91,8 +91,10 @@ const PdbViewer = forwardRef<HTMLDivElement, Props>(({
   }, [pdb]);
 
   useEffect(() => {
-    viewerRef.current?.setStyle({}, createStyle(style, color));
-    viewerRef.current?.render();
+    if (viewerRef.current instanceof GLViewer) {
+      viewerRef.current.setStyle({}, createStyle(style, color));
+      viewerRef.current.render();
+    }
   }, [style, color]);
 
   useEffect(() => {
@@ -105,22 +107,20 @@ const PdbViewer = forwardRef<HTMLDivElement, Props>(({
 
   useEffect(() => {
     if (viewerRef.current) {
-      initializeCanvasEvents(viewerRef.current, disableMouse);
+      initializeCanvasEvents(viewerRef.current!, disableMouse);
     }
   }, [disableMouse]);
 
   return (
-    <div className={clsx('pos-relative', className)} style={{ width, height }}>
+    <div className={clsx('relative', className)} style={{ width, height }}>
       <div ref={forwardedRef} className="w-100 h-100">
         <div ref={containerRef} className="w-100 h-100" />
       </div>
-      <BounceLoader className="absolute-center" loading={loading} color={LOADER_COLOR} />
 
+      <Loader absoluteCenter loading={loading} />
       {
         !loading && children
       }
     </div>
   );
 });
-
-export default PdbViewer;
