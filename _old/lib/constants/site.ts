@@ -3,7 +3,6 @@ import { PUBLIC_DOWNLOADS_URL } from '@lib/config';
 /* Other Defaults */
 export const DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS = 5;
 
-export const PEPTIDE_ATTRIBUTE_MAX_DECIMALS = 4;
 export const PEPTIDE_SCORE_DECIMALS = 2;
 
 /* General Download Links */
