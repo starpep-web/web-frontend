@@ -1,34 +1,10 @@
 import { Integer } from 'neo4j-driver';
 import { readTransaction } from './dbService';
 import {
-  DatabaseMetadataStatistics,
-  DataVector2D
+  DatabaseMetadataStatistics
 } from '@lib/models/statistics';
-import { PeptideAttributes } from '@lib/models/peptide';
 import { createAlphabet } from '@lib/utils/array';
 import { BadRequestError } from '@lib/errors/http';
-
-/* Static Statistics Functions */
-
-export const getScatterForAttributes = async (xAttributeName: string, yAttributeName: string): Promise<DataVector2D> => {
-  if (!PeptideAttributes.isRawPropertyValid(xAttributeName)) {
-    throw new TypeError(`Invalid xAttributeName ${xAttributeName} provided.`);
-  }
-  if (!PeptideAttributes.isRawPropertyValid(yAttributeName)) {
-    throw new TypeError(`Invalid yAttributeName ${yAttributeName} provided.`);
-  }
-
-  // It is okay to interpolate the attributes here because they're already validated previously.
-  const query = `
-MATCH (m:Attributes)
-WITH toFloat(m.${xAttributeName}) AS x, toFloat(m.${yAttributeName}) AS y
-RETURN COLLECT([x, y]) AS data
-`;
-  const result = await readTransaction(query);
-  const [record] = result.records;
-
-  return record.get('data');
-};
 
 /* Static Statistics Groups by Tab */
 

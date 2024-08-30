@@ -1,6 +1,6 @@
 import { client } from '@lib/services/api/client';
 import { ApiResponse } from '@lib/services/api/models/api';
-import { StatisticsCount, StatisticsDistribution, StatisticsHeatmap } from '@lib/services/api/models/statistics';
+import { StatisticsCount, StatisticsDistribution, StatisticsHeatmap, Vector2 } from '@lib/services/api/models/statistics';
 
 export const getPeptideCount = async (): Promise<number> => {
   const response = await client.get<ApiResponse<StatisticsCount>>('/statistics/count/peptides');
@@ -35,6 +35,13 @@ export const getDatabaseHeatmap = async (): Promise<StatisticsHeatmap> => {
 export const getAttributeHistogram = async (attribute: string, method: string): Promise<Record<string, number>> => {
   const response = await client.get<ApiResponse<Record<string, number>>>('/statistics/histogram/attribute', {
     query: { attribute, method }
+  });
+  return response.data;
+};
+
+export const getAttributeScatter = async (xAttribute: string, yAttribute): Promise<Vector2[]> => {
+  const response = await client.get<ApiResponse<Vector2[]>>('/statistics/scatter/attribute', {
+    query: { x: xAttribute, y: yAttribute }
   });
   return response.data;
 };

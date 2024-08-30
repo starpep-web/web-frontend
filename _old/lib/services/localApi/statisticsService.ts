@@ -20,33 +20,3 @@ export const getFilteredAAFrequency = async (type?: FrequencyFilterType, value?:
     return {};
   }
 };
-
-export const getHistogramForAttribute = async (attribute: PeptideAttributes.RawPropertyName, method?: HistogramWidthMethod): Promise<Record<string, number>> => {
-  const params: Record<string, string> = { attribute };
-  if (method) {
-    params.method = method;
-  }
-
-  try {
-    const response = await http.get('/api/statistics/attributes/histogram', { params });
-    return response.data.data;
-  } catch (error) {
-    console.error(error);
-    return {};
-  }
-};
-
-export const getScatterForAttributes = async (xAttribute: PeptideAttributes.RawPropertyName, yAttribute: PeptideAttributes.RawPropertyName): Promise<DataVector2D> => {
-  const params: Record<string, string> = {
-    x: xAttribute,
-    y: yAttribute
-  };
-
-  try {
-    const response = await http.get('/api/statistics/attributes/scatter', { params });
-    return response.data.data;
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};

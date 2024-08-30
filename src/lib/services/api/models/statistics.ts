@@ -16,3 +16,5 @@ export type StatisticsHeatmap = {
     relative: number[][]
   }
 };
+
+export type Vector2<T = number> = [T, T];
