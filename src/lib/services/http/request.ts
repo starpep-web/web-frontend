@@ -1,7 +1,7 @@
 import { NEXT_REVALIDATE_TIME } from '@lib/config/app';
 
 export type RequestOptions = {
-  query?: Record<string, string | string[]>
+  query?: Record<string, string | string[] | number>
 };
 
 const request = async (baseUrl: string, endpoint: string, method: string, options?: RequestOptions): Promise<Response> => {
