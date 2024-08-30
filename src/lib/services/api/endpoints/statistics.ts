@@ -31,3 +31,10 @@ export const getDatabaseHeatmap = async (): Promise<StatisticsHeatmap> => {
   const response = await client.get<ApiResponse<StatisticsHeatmap>>('/statistics/heatmap/database');
   return response.data;
 };
+
+export const getAttributeHistogram = async (attribute: string, method: string): Promise<Record<string, number>> => {
+  const response = await client.get<ApiResponse<Record<string, number>>>('/statistics/histogram/attribute', {
+    query: { attribute, method }
+  });
+  return response.data;
+};
