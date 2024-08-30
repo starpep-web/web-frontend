@@ -1,6 +1,6 @@
 import { client } from '@lib/services/api/client';
 import { ApiResponse } from '@lib/services/api/models/api';
-import { StatisticsCount, StatisticsDistribution, StatisticsHeatmap, Vector2 } from '@lib/services/api/models/statistics';
+import { PartialRelationStatistics, StatisticsCount, StatisticsDistribution, StatisticsHeatmap, Vector2 } from '@lib/services/api/models/statistics';
 
 export const getPeptideCount = async (): Promise<number> => {
   const response = await client.get<ApiResponse<StatisticsCount>>('/statistics/count/peptides');
@@ -25,6 +25,34 @@ export const getFunctionDistribution = async (): Promise<Record<string, number>>
 export const getLengthDistribution = async (): Promise<Record<string, number>> => {
   const response = await client.get<ApiResponse<StatisticsDistribution>>('/statistics/distribution/length');
   return response.data.distribution;
+};
+
+export const getPartialCTerminusDistribution = async (limit?: number): Promise<PartialRelationStatistics> => {
+  const response = await client.get<ApiResponse<PartialRelationStatistics>>('/statistics/distribution/partial/c-terminus', {
+    query: { limit }
+  });
+  return response.data;
+};
+
+export const getPartialNTerminusDistribution = async (limit?: number): Promise<PartialRelationStatistics> => {
+  const response = await client.get<ApiResponse<PartialRelationStatistics>>('/statistics/distribution/partial/n-terminus', {
+    query: { limit }
+  });
+  return response.data;
+};
+
+export const getPartialOriginDistribution = async (limit?: number): Promise<PartialRelationStatistics> => {
+  const response = await client.get<ApiResponse<PartialRelationStatistics>>('/statistics/distribution/partial/origin', {
+    query: { limit }
+  });
+  return response.data;
+};
+
+export const getPartialTargetDistribution = async (limit?: number): Promise<PartialRelationStatistics> => {
+  const response = await client.get<ApiResponse<PartialRelationStatistics>>('/statistics/distribution/partial/target', {
+    query: { limit }
+  });
+  return response.data;
 };
 
 export const getAminoAcidFrequency = async (type?: string, filter?: string): Promise<Record<string, number>> => {

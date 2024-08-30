@@ -6,6 +6,13 @@ export type StatisticsDistribution = {
   distribution: Record<string, number>
 };
 
+export type PartialRelationStatistics = {
+  distribution: Record<string, number>
+  percentage: Record<string, number>
+  total: number
+  partialSize: number
+};
+
 export type StatisticsHeatmap = {
   labels: {
     x: string[]
