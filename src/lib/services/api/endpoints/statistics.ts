@@ -27,6 +27,13 @@ export const getLengthDistribution = async (): Promise<Record<string, number>> =
   return response.data.distribution;
 };
 
+export const getAminoAcidFrequency = async (type?: string, filter?: string): Promise<Record<string, number>> => {
+  const response = await client.get<ApiResponse<Record<string, number>>>('/statistics/frequency/amino-acids', {
+    query: { type, filter }
+  });
+  return response.data;
+};
+
 export const getDatabaseHeatmap = async (): Promise<StatisticsHeatmap> => {
   const response = await client.get<ApiResponse<StatisticsHeatmap>>('/statistics/heatmap/database');
   return response.data;

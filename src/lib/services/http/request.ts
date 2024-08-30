@@ -1,7 +1,7 @@
 import { NEXT_REVALIDATE_TIME } from '@lib/config/app';
 
 export type RequestOptions = {
-  query?: Record<string, string | string[] | number>
+  query?: Record<string, string | string[] | number | undefined>
 };
 
 const request = async (baseUrl: string, endpoint: string, method: string, options?: RequestOptions): Promise<Response> => {
@@ -16,7 +16,9 @@ const request = async (baseUrl: string, endpoint: string, method: string, option
           params.append(name, innerValue);
         });
       } else {
-        params.append(name, value);
+        if (typeof value !== 'undefined') {
+          params.append(name, value.toString());
+        }
       }
     });
 
