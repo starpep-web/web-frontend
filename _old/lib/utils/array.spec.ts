@@ -1,20 +1,6 @@
-import { partitionArray, joinWithDifferentLastSeparator } from './array';
+import { joinWithDifferentLastSeparator } from './array';
 
 describe('Utils: Array', () => {
-  describe('partitionArray()', () => {
-    it('should return an array with partitioned arrays inside.', () => {
-      const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-      const expected = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9],
-        [10]
-      ];
-
-      expect(partitionArray(arr, 3)).toStrictEqual(expected);
-    });
-  });
-
   describe('joinWithDifferentLastSeparator()', () => {
     const separator = ', ';
     const lastSeparator = ', and ';
