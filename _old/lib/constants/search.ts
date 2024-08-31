@@ -3,7 +3,6 @@ import { SingleQueryAlignmentOptions, MultiQueryAlignmentOptions, TextQueryMetad
 // Text Query (Filter)
 export const DEFAULT_METADATA_FILTER: TextQueryMetadataFilter = ['AND', 'Database', 'EQUALS', ''];
 export const DEFAULT_ATTRIBUTE_FILTER: TextQueryAttributeFilter = ['AND', 'hydrophilicity', '<', 0];
-export const FILTER_SEPARATOR = ';';
 
 export const MIN_SEQUENCE_LENGTH = 2;
 export const MAX_SEQUENCE_LENGTH = 100;

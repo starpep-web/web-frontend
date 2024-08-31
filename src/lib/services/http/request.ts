@@ -1,7 +1,14 @@
 import { NEXT_REVALIDATE_TIME } from '@lib/config/app';
 
+type RequestConfig = RequestInit & {
+  next?: {
+    revalidate?: number
+  }
+};
+
 export type RequestOptions = {
   query?: Record<string, string | string[] | number | undefined>
+  data?: object | null
 };
 
 const request = async (baseUrl: string, endpoint: string, method: string, options?: RequestOptions): Promise<Response> => {
@@ -25,12 +32,17 @@ const request = async (baseUrl: string, endpoint: string, method: string, option
     url += `?${params.toString()}`;
   }
 
-  return await fetch(url, {
+  const config: RequestConfig = {
     method,
     next: {
       revalidate: NEXT_REVALIDATE_TIME
     }
-  });
+  };
+  if (options?.data) {
+    config.body = JSON.stringify(options.data);
+  }
+
+  return await fetch(url, config);
 };
 
 export const requestJson = async <T>(baseUrl: string, endpoint: string, method: string, options?: RequestOptions): Promise<T> => {

@@ -38,6 +38,10 @@ export type PeptideOtherAttributes = {
 
 export type PeptideFullAttributes = PeptideStatisticalAttributes & PeptideOtherAttributes;
 
+export type RawAttributeName = 'hydropathicity' | 'charge' | 'isoelectric_point' | 'boman_index' | 'gaac_alphatic' | 'gaac_aromatic' | 'gaac_positive_charge' |
+  'gaac_negative_charge' | 'gaac_uncharge' | 'hydrophobicity' | 'solvation' | 'amphiphilicity' | 'hydrophilicity' | 'hemolytic_prob_score' | 'steric_hindrance' |
+  'net_hydrogen' | 'mol_wt' | 'aliphatic_index';
+
 export type BasePeptide = {
   id: string
   sequence: string
