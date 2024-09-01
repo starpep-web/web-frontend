@@ -12,6 +12,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@actions/*": ["src/actions/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
       "@lib/*": ["src/lib/*"],

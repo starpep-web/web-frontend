@@ -1,20 +1,6 @@
 import { SearchResultPeptide, MetadataLabel, NODE_LABELS, PeptideAttributes } from '@lib/models/peptide';
 import { FILTER_SEPARATOR } from '@lib/constants/search';
 
-// Text Query (Filter)
-export type FiltersParams = {
-  metadata: string[]
-  attributes: string[]
-  length: string
-};
-
-export const DEFAULT_FILTERS_PARAMS: FiltersParams = {
-  metadata: [],
-  attributes: [],
-  length: ''
-};
-
-
 // Single Query
 export interface SingleQueryAlignmentOptions {
   matrix: string

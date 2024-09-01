@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { DropdownInput } from '@components/form/dropdownInput';
-import { useDebounce } from '@components/hooks/debounce';
+import { useDebounce } from '@components/hooks/useDebounce';
 
 interface Props {
   dataFetch: (value: string) => Promise<string[]>

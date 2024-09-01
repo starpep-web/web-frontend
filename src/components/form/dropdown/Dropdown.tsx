@@ -23,7 +23,7 @@ export const Dropdown = ({ label, icon, placeholder, className, options, value, 
     <Form.Group className={className}>
       {
         label && (
-          <Form.Label>
+          <Form.Label className="fw-semibold" column={false}>
             {label}
           </Form.Label>
         )
@@ -41,7 +41,7 @@ export const Dropdown = ({ label, icon, placeholder, className, options, value, 
           )
         }
 
-        <Form.Select value={value} onChange={handleChange} placeholder={placeholder} className="w-100" style={{ paddingLeft: '30px' }}>
+        <Form.Select value={value} onChange={handleChange} placeholder={placeholder} className="w-100" style={{ paddingLeft: IconComponent && '30px' }}>
           {
             options.map((option, idx) => (
               <option value={option} key={idx}>

@@ -9,6 +9,8 @@ export type PeptideMetadata = {
   relatedTo?: string[]
 };
 
+export type RawMetadataLabel = 'Origin' | 'Target' | 'CrossRef' | 'Database' | 'Function' | 'Cterminus' | 'Nterminus' | 'UnusualAA';
+
 export type PeptideSearchAttributes = {
   hydropathicity: number
   charge: number

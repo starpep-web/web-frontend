@@ -1,4 +1,6 @@
-import { PeptideMetadata, RawAttributeName } from '@lib/services/api/models/peptide';
+import { RawAttributeName, RawMetadataLabel } from '@lib/services/api/models/peptide';
+
+const FILTER_SEPARATOR = ';';
 
 const SUPPORTED_OPERATORS = ['AND', 'OR', 'XOR'] as const;
 export type FilterOperator = typeof SUPPORTED_OPERATORS[number];
@@ -9,7 +11,7 @@ export type MetadataFilterComparator = typeof SUPPORTED_METADATA_COMPARATORS[num
 const SUPPORTED_ATTRIBUTE_COMPARATORS = ['<', '<=', '>', '>='] as const;
 export type AttributeFilterComparator = typeof SUPPORTED_ATTRIBUTE_COMPARATORS[number];
 
-export type TextQueryMetadataFilter = [FilterOperator, keyof PeptideMetadata, MetadataFilterComparator, string];
+export type TextQueryMetadataFilter = [FilterOperator, RawMetadataLabel, MetadataFilterComparator, string];
 export type TextQueryAttributeFilter = [FilterOperator, RawAttributeName, AttributeFilterComparator, number];
 export type SequenceLengthFilter = [number, number];
 
@@ -25,4 +27,28 @@ export type TextQueryRequestPayload = {
   metadata?: string[]
   attributes?: string[]
   length?: string
+};
+
+export type FiltersParams = {
+  metadata: string[]
+  attributes: string[]
+  length: string
+};
+
+export const DEFAULT_FILTERS_PARAMS: FiltersParams = {
+  metadata: [],
+  attributes: [],
+  length: ''
+};
+
+export const convertMetadataFilterToParam = (filter: TextQueryMetadataFilter): string => {
+  return filter.join(FILTER_SEPARATOR);
+};
+
+export const convertAttributeFilterToParam = (filter: TextQueryAttributeFilter): string => {
+  return filter.join(FILTER_SEPARATOR);
+};
+
+export const convertSequenceLengthFilterToParam = (filter: SequenceLengthFilter): string => {
+  return filter.join(FILTER_SEPARATOR);
 };
