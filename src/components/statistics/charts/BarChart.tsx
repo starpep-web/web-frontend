@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables, ChartOptions, ChartData } from 'chart.js';
@@ -51,7 +52,7 @@ interface Props {
   color?: string
 }
 
-const BarChart: React.FC<Props> = ({ id, data, yTitle, xTitle, showLegend, color }) => {
+export const BarChart: React.FC<Props> = ({ id, data, yTitle, xTitle, showLegend, color }) => {
   const options: ChartOptions<'bar'> = {
     maintainAspectRatio: false,
     responsive: true,
@@ -89,5 +90,3 @@ const BarChart: React.FC<Props> = ({ id, data, yTitle, xTitle, showLegend, color
     />
   );
 };
-
-export default BarChart;

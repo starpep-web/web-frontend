@@ -1,0 +1,1 @@
+export { StatisticsTabs } from './StatisticsTabs';

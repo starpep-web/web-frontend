@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react';
-import { Box, Heading, Block } from 'react-bulma-components';
 import clsx from 'clsx';
-import styles from './WithTitledBox.module.scss';
+import Card from 'react-bootstrap/Card';
+import CardBody from 'react-bootstrap/CardBody';
 
 interface Props {
   title: string
@@ -11,9 +11,10 @@ interface Props {
   minWidth?: string | number
   minHeight?: string | number
   noTitleMargin?: boolean
+  className?: string
 }
 
-const WithTitledBox: React.FC<Props> = ({ title, children, width, height, minWidth, minHeight, noTitleMargin }) => {
+export const WithTitledBox: React.FC<Props> = ({ title, children, width, height, minWidth, minHeight, noTitleMargin, className }) => {
   const outerStyle: CSSProperties = {
     width: width ?? '100%',
     height: height ?? '100%',
@@ -27,17 +28,18 @@ const WithTitledBox: React.FC<Props> = ({ title, children, width, height, minWid
   };
 
   return (
-    <Box>
-      <Heading className={clsx({ [styles['no-title-margin']]: noTitleMargin })}>
-        {title}
-      </Heading>
-      <Block style={outerStyle}>
-        <Block style={innerStyle}>
-          {children}
-        </Block>
-      </Block>
-    </Box>
+    <Card className={className}>
+      <CardBody>
+        <h2 className={clsx(noTitleMargin ? 'mb-0' : 'mb-3')}>
+          {title}
+        </h2>
+
+        <div style={outerStyle}>
+          <div style={innerStyle}>
+            {children}
+          </div>
+        </div>
+      </CardBody>
+    </Card>
   );
 };
-
-export default WithTitledBox;

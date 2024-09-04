@@ -24,7 +24,7 @@ interface Props {
   legendPosition?: LegendPosition
 }
 
-const PieChart: React.FC<Props> = ({ id, data, legendPosition }) => {
+export const PieChart: React.FC<Props> = ({ id, data, legendPosition }) => {
   const options: ChartOptions<'pie'> = {
     maintainAspectRatio: false,
     responsive: true,
@@ -47,5 +47,3 @@ const PieChart: React.FC<Props> = ({ id, data, legendPosition }) => {
     />
   );
 };
-
-export default PieChart;

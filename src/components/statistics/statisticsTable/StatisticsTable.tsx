@@ -7,13 +7,13 @@ interface Props {
   headers: [string, string]
 }
 
-const StatisticsTable: React.FC<Props> = ({ data, headers }) => {
+export const StatisticsTable: React.FC<Props> = ({ data, headers }) => {
   return (
     <Table headers={headers}>
       {
         Object.entries(data).map(([key, value], idx) => (
           <tr key={idx}>
-            <th>{key}</th>
+            <th className="fw-semibold">{key}</th>
             <td>{value}</td>
           </tr>
         ))
@@ -21,5 +21,3 @@ const StatisticsTable: React.FC<Props> = ({ data, headers }) => {
     </Table>
   );
 };
-
-export default StatisticsTable;

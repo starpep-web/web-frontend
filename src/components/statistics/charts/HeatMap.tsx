@@ -1,6 +1,9 @@
+'use client';
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { ApexOptions } from 'apexcharts';
+
+const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const DEFAULT_SHOW_VALUES = true;
 const DEFAULT_SHOW_TOOLBAR = false;
@@ -44,7 +47,7 @@ interface Props {
   realData: number[][]
 }
 
-const HeatMap: React.FC<Props> = ({
+export const HeatMap: React.FC<Props> = ({
   id,
   title,
   xLabels,
@@ -55,8 +58,6 @@ const HeatMap: React.FC<Props> = ({
   normalizedData,
   realData
 }) => {
-  const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false });
-
   const series = parseData(normalizedData, realData, xLabels, yLabels);
 
   const options: ApexOptions = {
@@ -96,5 +97,3 @@ const HeatMap: React.FC<Props> = ({
     />
   );
 };
-
-export default HeatMap;

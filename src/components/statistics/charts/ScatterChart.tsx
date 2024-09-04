@@ -1,8 +1,9 @@
+'use client';
 import React, { useMemo } from 'react';
 import { Scatter } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables, ChartOptions, ChartData } from 'chart.js';
 import uniqolor from 'uniqolor';
-import { DataVector2D } from '@lib/models/statistics';
+import { Vector2 } from '@lib/services/api/models/statistics';
 
 ChartJS.register(...registerables);
 
@@ -10,7 +11,7 @@ interface ParseDataOptions {
   color?: string
 }
 
-const parseData = (data: DataVector2D, options: ParseDataOptions = {}): ChartData<'scatter', DataVector2D, string> => {
+const parseData = (data: Vector2, options: ParseDataOptions = {}): ChartData<'scatter', Vector2, string> => {
   return {
     labels: ['Dataset'],
     datasets: [{
@@ -24,7 +25,7 @@ const parseData = (data: DataVector2D, options: ParseDataOptions = {}): ChartDat
 
 interface Props {
   id: string
-  data: DataVector2D
+  data: Vector2
   yTitle?: string
   xTitle?: string
   showLegend?: boolean
@@ -32,7 +33,7 @@ interface Props {
   beginAtZero?: boolean
 }
 
-const ScatterChart: React.FC<Props> = ({ id, data, yTitle, xTitle, showLegend, color, beginAtZero }) => {
+export const ScatterChart: React.FC<Props> = ({ id, data, yTitle, xTitle, showLegend, color, beginAtZero }) => {
   const options: ChartOptions<'scatter'> = {
     maintainAspectRatio: false,
     responsive: true,
@@ -75,5 +76,3 @@ const ScatterChart: React.FC<Props> = ({ id, data, yTitle, xTitle, showLegend, c
     />
   );
 };
-
-export default ScatterChart;
