@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { createPageMetadata } from '@lib/next/metadata';
 import { RouteDefs } from '@lib/constants/routes';
 import { StatisticsTabs } from '@components/statistics/statisticsTabs';
+import { AttributeHistogramDynamicChart } from '@components/statistics/dynamicCharts/attributeHistogramDynamicChart';
 
 export const generateMetadata = () => {
   return createPageMetadata(RouteDefs.statisticsFeatures, {
@@ -10,8 +11,14 @@ export const generateMetadata = () => {
 };
 
 const FeaturesStatisticsPage = () => {
+  const graphHeight = 400;
+
   return (
-    <StatisticsTabs currentHref={RouteDefs.statisticsFeatures} />
+    <Fragment>
+      <StatisticsTabs currentHref={RouteDefs.statisticsFeatures} />
+
+      <AttributeHistogramDynamicChart className="mb-4" height={graphHeight} />
+    </Fragment>
   );
 };
 

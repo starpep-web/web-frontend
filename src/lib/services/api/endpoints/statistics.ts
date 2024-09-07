@@ -1,6 +1,15 @@
 import { client } from '@lib/services/api/client';
 import { ApiResponse } from '@lib/services/api/models/api';
-import { FrequencyFilterType, PartialRelationStatistics, StatisticsCount, StatisticsDistribution, StatisticsHeatmap, Vector2 } from '@lib/services/api/models/statistics';
+import {
+  FrequencyFilterType,
+  HistogramMethod,
+  PartialRelationStatistics,
+  StatisticsCount,
+  StatisticsDistribution,
+  StatisticsHeatmap,
+  Vector2
+} from '@lib/services/api/models/statistics';
+import { RawAttributeName } from '@lib/services/api/models/peptide';
 
 export const getPeptideCount = async (): Promise<number> => {
   const response = await client.get<ApiResponse<StatisticsCount>>('/statistics/count/peptides');
@@ -67,7 +76,7 @@ export const getDatabaseHeatmap = async (): Promise<StatisticsHeatmap> => {
   return response.data;
 };
 
-export const getAttributeHistogram = async (attribute: string, method: string): Promise<Record<string, number>> => {
+export const getAttributeHistogram = async (attribute: RawAttributeName, method?: HistogramMethod): Promise<Record<string, number>> => {
   const response = await client.get<ApiResponse<Record<string, number>>>('/statistics/histogram/attribute', {
     query: { attribute, method }
   });
