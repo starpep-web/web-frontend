@@ -1,4 +1,4 @@
-import { FrequencyFilterType } from '@lib/services/graphDb/statisticsService';
+import { FrequencyFilterType } from '@lib/services/api/models/statistics';
 
 export type FrequencyData = Record<string, number>;
 export type CompositeFrequencyData = Record<string, FrequencyData>;

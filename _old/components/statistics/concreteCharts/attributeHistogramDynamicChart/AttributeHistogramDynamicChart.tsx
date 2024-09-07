@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Box } from 'react-bulma-components';
 import { WithExportableTitledBox } from '@components/common/withTitledBox';
 import { BarChart } from '@components/statistics/charts';
-import { useFetch } from '@components/hooks/fetch';
+import { useFetch } from '@components/hooks/useFetch';
 import AttributePicker from './AttributePicker';
 import { getHistogramForAttribute } from '@lib/services/localApi/statisticsService';
 import { PeptideAttributes } from '@lib/models/peptide';

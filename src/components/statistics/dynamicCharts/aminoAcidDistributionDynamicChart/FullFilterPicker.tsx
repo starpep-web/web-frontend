@@ -1,17 +1,17 @@
-import React, { useRef } from 'react';
-import { Block, Heading, Button } from 'react-bulma-components';
-import SingleFilterPicker from './SingleFilterPicker';
+'use client';
+import React, { Fragment, useRef } from 'react';
+import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import { SingleFilterPicker } from './SingleFilterPicker';
 import { FilterPickerValue, FullFilterPickerValues } from './types';
-import { FrequencyFilterType } from '@lib/services/graphDb/statisticsService';
-import clsx from 'clsx';
-import styles from './FilterPicker.module.scss';
+import { FrequencyFilterType } from '@lib/services/api/models/statistics';
 
 interface Props {
   loading?: boolean
   onSubmit?: (filters: FullFilterPickerValues) => void
 }
 
-const FullFilterPicker: React.FC<Props> = ({ loading, onSubmit }) => {
+export const FullFilterPicker: React.FC<Props> = ({ loading, onSubmit }) => {
   const initialType: FrequencyFilterType = 'Database';
 
   const leftRef = useRef<FilterPickerValue>({
@@ -41,27 +41,35 @@ const FullFilterPicker: React.FC<Props> = ({ loading, onSubmit }) => {
   };
 
   return (
-    <Block mt={6}>
-      <Heading className="align-center" size={5}>
+    <div className="mt-4">
+      <h4 className="text-center mb-3">
         Pick a Filter for this Graph
-      </Heading>
+      </h4>
 
-      <Block className={clsx(styles.responsiveFlex, styles.fullFilterBlock)}>
+      <div className="d-flex gap-3 flex-column flex-md-row">
         <SingleFilterPicker title="Left Filter" initialType={initialType} position="left" onChange={handleFilterChange} />
         <SingleFilterPicker title="Right Filter" initialType={initialType} position="right" onChange={handleFilterChange} />
-      </Block>
+      </div>
 
-      <Block className="align-center">
-        <Button color="primary" className="w-100" onClick={handleSubmit} loading={loading} disabled={loading}>
-          Apply Filter
+      <div className="text-center">
+        <Button variant="primary" className="w-100 d-inline-flex align-items-center justify-content-center" onClick={handleSubmit} disabled={loading}>
+          {
+            loading ? (
+              <div className="d-flex align-items-center justify-content-center" style={{ height: 20, width: 50 }}>
+                <Spinner size="sm" animation="border" role="status" />
+              </div>
+            ) : (
+              <Fragment>
+                Apply Filter
+              </Fragment>
+            )
+          }
         </Button>
-      </Block>
+      </div>
 
-      <p>
+      <p className="mt-3 mb-0">
         * Leave any filter empty to compare the frequencies from the whole database.
       </p>
-    </Block>
+    </div>
   );
 };
-
-export default FullFilterPicker;

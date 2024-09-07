@@ -5,7 +5,7 @@ import { TextQueryFiltersObject, TextQueryRequestPayload } from '@lib/services/a
 
 const getMetadataSuggestions = async (label: string, query: string, page: number): Promise<WithPagination<string>> => {
   const response = await client.get<ApiResponse<WithPagination<string>>>('/search/suggestions/metadata', {
-    query: { label, query, page }
+    query: { label: label, query, page }
   });
   return response.data;
 };

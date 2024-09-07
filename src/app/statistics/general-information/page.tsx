@@ -7,6 +7,7 @@ import { NumberStatistic } from '@components/statistics/numberStatistic';
 import { StatisticsTable } from '@components/statistics/statisticsTable';
 import { WithExportableTitledBox } from '@components/common/withTitledBox';
 import { HeatMap } from '@components/statistics/charts';
+import { AminoAcidDistributionDynamicChart } from '@components/statistics/dynamicCharts/aminoAcidDistributionDynamicChart';
 
 export const generateMetadata = () => {
   return createPageMetadata(RouteDefs.statisticsGeneralInformation, {
@@ -73,6 +74,8 @@ const GeneralInformationStatisticsPage = async () => {
       </WithExportableTitledBox>
 
       <hr />
+
+      <AminoAcidDistributionDynamicChart className="mb-4" height={graphHeight} />
     </Fragment>
   );
 };

@@ -1,6 +1,6 @@
 import { client } from '@lib/services/api/client';
 import { ApiResponse } from '@lib/services/api/models/api';
-import { PartialRelationStatistics, StatisticsCount, StatisticsDistribution, StatisticsHeatmap, Vector2 } from '@lib/services/api/models/statistics';
+import { FrequencyFilterType, PartialRelationStatistics, StatisticsCount, StatisticsDistribution, StatisticsHeatmap, Vector2 } from '@lib/services/api/models/statistics';
 
 export const getPeptideCount = async (): Promise<number> => {
   const response = await client.get<ApiResponse<StatisticsCount>>('/statistics/count/peptides');
@@ -55,7 +55,7 @@ export const getPartialTargetDistribution = async (limit?: number): Promise<Part
   return response.data;
 };
 
-export const getAminoAcidFrequency = async (type?: string, filter?: string): Promise<Record<string, number>> => {
+export const getAminoAcidFrequency = async (type?: FrequencyFilterType, filter?: string): Promise<Record<string, number>> => {
   const response = await client.get<ApiResponse<Record<string, number>>>('/statistics/frequency/amino-acids', {
     query: { type, filter }
   });
@@ -74,7 +74,7 @@ export const getAttributeHistogram = async (attribute: string, method: string): 
   return response.data;
 };
 
-export const getAttributeScatter = async (xAttribute: string, yAttribute): Promise<Vector2[]> => {
+export const getAttributeScatter = async (xAttribute: string, yAttribute: string): Promise<Vector2[]> => {
   const response = await client.get<ApiResponse<Vector2[]>>('/statistics/scatter/attribute', {
     query: { x: xAttribute, y: yAttribute }
   });

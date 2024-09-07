@@ -8,10 +8,11 @@ import { Dropdown } from '@components/form/dropdown';
 import { DebouncedInfiniteSearchInput } from '@components/form/debouncedInfiniteSearchInput';
 import { RawMetadataLabel } from '@lib/services/api/models/peptide';
 import { TextQueryMetadataFilter, FilterOperator, MetadataFilterComparator } from '@lib/services/api/models/search';
+import { WithPagination } from '@lib/services/api/models/api';
 import XIcon from '@assets/svg/icons/x-solid.svg';
 import DatabaseIcon from '@assets/svg/icons/database-solid.svg';
-import StarOfLifeIcon from '@assets/svg/icons/star-of-life-solid.svg';
 import AtomIcon from '@assets/svg/icons/atom-solid.svg';
+import StarOfLifeIcon from '@assets/svg/icons/star-of-life-solid.svg';
 import BullseyeIcon from '@assets/svg/icons/bullseye-solid.svg';
 import CIcon from '@assets/svg/icons/c-solid.svg';
 import NIcon from '@assets/svg/icons/n-solid.svg';
@@ -29,7 +30,12 @@ import { getCrossRefSuggestionsAction } from '@actions/search/suggestions/cross-
 const SUPPORTED_OPERATORS = ['AND', 'OR', 'XOR'];
 const SUPPORTED_METADATA_COMPARATORS = ['EQUALS', 'NOT_EQUALS'];
 
-type DebouncedInfiniteSearchInputProps = any
+type DebouncedInfiniteSearchInputProps = {
+  label: string
+  placeholder: string
+  dataFetch: (query: string, page?: number) => Promise<WithPagination<string>>
+  icon: React.JSXElementConstructor<React.SVGProps<SVGElement>>
+}
 
 const filterValueProps: Record<RawMetadataLabel, Partial<DebouncedInfiniteSearchInputProps>> = {
   Database: {
@@ -42,13 +48,13 @@ const filterValueProps: Record<RawMetadataLabel, Partial<DebouncedInfiniteSearch
     label: 'Related To',
     placeholder: 'Search by Function',
     dataFetch: getFunctionSuggestionsAction,
-    icon: StarOfLifeIcon
+    icon: AtomIcon
   },
   Origin: {
     label: 'Produced By',
     placeholder: 'Search by Origin',
     dataFetch: getOriginSuggestionsAction,
-    icon: AtomIcon
+    icon: StarOfLifeIcon
   },
   Target: {
     label: 'Assessed Against',

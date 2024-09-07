@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Box } from 'react-bulma-components';
 import { WithExportableTitledBox } from '@components/common/withTitledBox';
 import { ScatterChart } from '@components/statistics/charts';
-import { useFetch } from '@components/hooks/fetch';
+import { useFetch } from '@components/hooks/useFetch';
 import AttributesPicker from './AttributesPicker';
 import { getScatterForAttributes } from '@lib/services/localApi/statisticsService';
 import { PeptideAttributes } from '@lib/models/peptide';
