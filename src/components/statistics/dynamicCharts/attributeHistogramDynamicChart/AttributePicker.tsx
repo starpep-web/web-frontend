@@ -39,7 +39,7 @@ export const AttributePicker: React.FC<Props> = ({ onChange, value }) => {
   };
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 mb-2">
       <h4 className="text-center mb-3">
         Pick a Feature for this Graph
       </h4>

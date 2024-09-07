@@ -1,11 +1,10 @@
 import React from 'react';
-import { Block, Heading } from 'react-bulma-components';
 import { Dropdown } from '@components/form/dropdown';
-import { PeptideAttributes } from '@lib/models/peptide';
-import { Axis2D } from '@lib/models/statistics';
-import styles from './AttributesPicker.module.scss';
+import { getFriendlyNameForRawAttribute } from '@lib/services/api/helpers/peptide';
+import { RawAttributeName } from '@lib/services/api/models/peptide';
+import { Axis2D } from '@lib/services/api/models/statistics';
 
-const rawAttributeOptions: PeptideAttributes.RawPropertyName[] = [
+const rawAttributeOptions: RawAttributeName[] = [
   'hydropathicity',
   'charge',
   'isoelectric_point',
@@ -22,18 +21,18 @@ const rawAttributeOptions: PeptideAttributes.RawPropertyName[] = [
 ];
 
 const attributeToFriendlyNameMap = rawAttributeOptions.sort().reduce((obj, attribute) => {
-  obj[attribute] = PeptideAttributes.getFriendlyNameForRawAttribute(attribute);
+  obj[attribute] = getFriendlyNameForRawAttribute(attribute);
   return obj;
-}, {} as Record<PeptideAttributes.RawPropertyName, string>);
+}, {} as Record<RawAttributeName, string>);
 const friendlyNameToAttributeMap = Object.entries(attributeToFriendlyNameMap).reduce((obj, [k, v]) => {
-  obj[v] = k as PeptideAttributes.RawPropertyName;
+  obj[v] = k as RawAttributeName;
   return obj;
-}, {} as Record<string, PeptideAttributes.RawPropertyName>);
+}, {} as Record<string, RawAttributeName>);
 
 interface Props {
-  onChange?: (axis: Axis2D, attribute: PeptideAttributes.RawPropertyName) => void
-  xValue: PeptideAttributes.RawPropertyName
-  yValue: PeptideAttributes.RawPropertyName
+  onChange?: (axis: Axis2D, attribute: RawAttributeName) => void
+  xValue: RawAttributeName
+  yValue: RawAttributeName
 }
 
 const AttributePicker: React.FC<Props> = ({ onChange, xValue, yValue }) => {
@@ -42,14 +41,15 @@ const AttributePicker: React.FC<Props> = ({ onChange, xValue, yValue }) => {
   };
 
   return (
-    <Block mt={6}>
-      <Heading className="align-center" size={5}>
+    <div className="mt-4 mb-2">
+      <h4 className="text-center mb-3">
         Pick Some Features for this Scatter
-      </Heading>
+      </h4>
 
-      <Block className={styles.responsiveFlex}>
+      <div className="d-flex gap-3 flex-column flex-md-row">
         <Dropdown
-          className={styles.flexExpand}
+          className="w-100"
+          style={{ flexBasis: '1/2' }}
           label="Feature for X axis"
           options={Object.keys(friendlyNameToAttributeMap)}
           value={attributeToFriendlyNameMap[xValue]}
@@ -57,14 +57,15 @@ const AttributePicker: React.FC<Props> = ({ onChange, xValue, yValue }) => {
         />
 
         <Dropdown
-          className={styles.flexExpand}
+          className="w-100"
+          style={{ flexBasis: '1/2' }}
           label="Feature for Y axis"
           options={Object.keys(friendlyNameToAttributeMap)}
           value={attributeToFriendlyNameMap[yValue]}
           onChange={handleDropdownChange('y')}
         />
-      </Block>
-    </Block>
+      </div>
+    </div>
   );
 };
 

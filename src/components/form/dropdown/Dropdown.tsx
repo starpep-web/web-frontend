@@ -6,13 +6,14 @@ interface Props {
   icon?: React.JSXElementConstructor<React.SVGProps<SVGElement>>
   placeholder?: string
   className?: string
+  style?: React.CSSProperties
 
   options: string[]
   value: string
   onChange: (value: string) => void
 }
 
-export const Dropdown = ({ label, icon, placeholder, className, options, value, onChange }: Props) => {
+export const Dropdown = ({ label, icon, placeholder, className, style, options, value, onChange }: Props) => {
   const IconComponent = icon;
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -20,7 +21,7 @@ export const Dropdown = ({ label, icon, placeholder, className, options, value, 
   };
 
   return (
-    <Form.Group className={className}>
+    <Form.Group className={className} style={style}>
       {
         label && (
           <Form.Label className="fw-semibold" column={false}>

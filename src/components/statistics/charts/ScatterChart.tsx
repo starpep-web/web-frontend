@@ -11,7 +11,7 @@ interface ParseDataOptions {
   color?: string
 }
 
-const parseData = (data: Vector2, options: ParseDataOptions = {}): ChartData<'scatter', Vector2, string> => {
+const parseData = (data: Vector2[], options: ParseDataOptions = {}): ChartData<'scatter', Vector2[], string> => {
   return {
     labels: ['Dataset'],
     datasets: [{
@@ -25,7 +25,7 @@ const parseData = (data: Vector2, options: ParseDataOptions = {}): ChartData<'sc
 
 interface Props {
   id: string
-  data: Vector2
+  data: Vector2[]
   yTitle?: string
   xTitle?: string
   showLegend?: boolean
