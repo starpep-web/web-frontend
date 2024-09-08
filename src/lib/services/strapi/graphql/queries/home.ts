@@ -17,6 +17,69 @@ const GET_HOME_PAGE = graphql(`
               }
             }
           }
+          projectLeaders {
+            title
+            type
+            members {
+              avatar {
+                data {
+                  attributes {
+                    url
+                    alternativeText
+                  }
+                }
+              }
+              name
+              email
+              occupation
+              affiliations
+              website
+              location
+              shortCv
+            }
+          }
+          collaborators {
+            title
+            type
+            members {
+              avatar {
+                data {
+                  attributes {
+                    url
+                    alternativeText
+                  }
+                }
+              }
+              name
+              email
+              occupation
+              affiliations
+              website
+              location
+              shortCv
+            }
+          }
+          developers {
+            title
+            type
+            members {
+              avatar {
+                data {
+                  attributes {
+                    url
+                    alternativeText
+                  }
+                }
+              }
+              name
+              email
+              occupation
+              affiliations
+              website
+              location
+              shortCv
+            }
+          }
         }
       }
     }
