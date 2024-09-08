@@ -1,20 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
-import { DYNAMIC_ROUTES } from '@lib/constants/routes';
-import { SearchResultPeptide } from '@lib/models/peptide';
-import { RowProps } from './types';
+import { RouteDefs } from '@lib/constants/routes';
+import { SearchPeptide } from '@lib/services/api/models/peptide';
 import { formatNumberMaxDecimals } from '@lib/utils/number';
-import { PEPTIDE_ATTRIBUTE_MAX_DECIMALS } from '@lib/constants/site';
-import { ORDERED_ATTRIBUTE_NAMES } from '../shared';
+import { PEPTIDE_ATTRIBUTE_MAX_DECIMALS } from '@lib/constants/app';
+import { RowProps } from '../shared/types';
+import { ORDERED_ATTRIBUTE_NAMES } from '../shared/helpers';
 
-const PeptideSearchResultItemRow: React.FC<RowProps<SearchResultPeptide>> = ({ index, id, sequence, length, attributes }) => {
+export const TextQueryPeptideResultRow: React.FC<RowProps<SearchPeptide>> = ({ index, id, sequence, length, attributes }) => {
   return (
     <tr>
       <th>
         {index}
       </th>
       <td>
-        <Link href={DYNAMIC_ROUTES.peptide(id)}>
+        <Link href={RouteDefs.peptide(id)}>
           {id}
         </Link>
       </td>
@@ -35,5 +35,3 @@ const PeptideSearchResultItemRow: React.FC<RowProps<SearchResultPeptide>> = ({ i
     </tr>
   );
 };
-
-export default PeptideSearchResultItemRow;

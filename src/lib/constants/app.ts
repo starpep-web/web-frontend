@@ -6,3 +6,4 @@ export const SITE_CATEGORY = 'biotechnology';
 export const DEFAULT_SEO_IMAGE = '/assets/site-logo.png';
 
 export const PEPTIDE_ATTRIBUTE_MAX_DECIMALS = 4;
+export const PEPTIDE_SCORE_DECIMALS = 2;

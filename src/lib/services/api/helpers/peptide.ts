@@ -1,4 +1,4 @@
-import { RawAttributeName } from '@lib/services/api/models/peptide';
+import { RawAttributeName, AttributeName } from '@lib/services/api/models/peptide';
 
 const RAW_ATTRIBUTE_TO_FRIENDLY_NAME_MAP: Record<RawAttributeName, string> = {
   hydropathicity: 'Hydropathicity',
@@ -23,4 +23,29 @@ const RAW_ATTRIBUTE_TO_FRIENDLY_NAME_MAP: Record<RawAttributeName, string> = {
 
 export const getFriendlyNameForRawAttribute = (attribute: RawAttributeName): string => {
   return RAW_ATTRIBUTE_TO_FRIENDLY_NAME_MAP[attribute];
+};
+
+const ATTRIBUTE_FRIENDLY_NAME_MAP: Record<AttributeName, string> = {
+  hydropathicity: 'Hydropathicity',
+  charge: 'Charge',
+  isoelectricPoint: 'Isoelectric Point',
+  bomanIndex: 'Boman Index',
+  gaacAlphatic: 'GAAC - Alphatic',
+  gaacAromatic: 'GAAC - Aromatic',
+  gaacPositiveCharge: 'GAAC - Positive Charge',
+  gaacNegativeCharge: 'GAAC - Negative Charge',
+  gaacUncharge: 'GAAC - Uncharge',
+  hydrophobicity: 'Hydrophobicity',
+  solvation: 'Solvation',
+  amphiphilicity: 'Amphiphilicity',
+  hydrophilicity: 'Hydrophilicity',
+  hemolyticProbScore: 'Hemolytic Prob Score',
+  stericHindrance: 'Steric Hindrance',
+  netHydrogen: 'Net Hydrogen',
+  molWt: 'Molar Weight',
+  aliphaticIndex: 'Aliphatic Index'
+};
+
+export const getFriendlyNameForAttribute = (attributeName: AttributeName): string => {
+  return ATTRIBUTE_FRIENDLY_NAME_MAP[attributeName];
 };

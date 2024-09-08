@@ -5,7 +5,7 @@ import { PageMetadata } from '@components/common/pageMetadata';
 import { PageWrapper } from '@components/common/pageWrapper';
 import { CenteredRefreshLoader } from '@components/common/centeredRefreshLoader';
 import { ErrorMessage } from '@components/common/errorMessage';
-import { PeptideSearchResultHeading } from '@components/search/peptideSearchResultHeading';
+import { PeptideSearchHeading } from 'src/components/search/peptideSearchHeading';
 import { MultiAlignedPeptideSearchResult } from '@components/search/peptideSearchResult';
 import { getMultiQuerySearch } from '@lib/services/pythonRestApi/searchService';
 import { AsyncTaskResponse } from '@lib/services/pythonRestApi/apiService';
@@ -73,7 +73,7 @@ const MultiQuerySearchPage: React.FC<Props> = ({ queryId, page, result }) => {
         title={`Multi Query Alignment Search - ${queryId}`}
       />
 
-      <PeptideSearchResultHeading
+      <PeptideSearchHeading
         title={`Found ${pagination.total} results (Page: ${page})`}
         peptideTotalCount={pagination.total}
         searchType="multi"
@@ -88,7 +88,7 @@ const MultiQuerySearchPage: React.FC<Props> = ({ queryId, page, result }) => {
 export const getServerSideProps = async (context: GetServerSidePropsContext): Promise<GetServerSidePropsResult<ServerSideProps>> => {
   const { query: queryParam, page: pageParam } = context.query ?? {};
 
-  const queryId = queryParam ? (Array.isArray(queryParam) ? queryParam[0] : queryParam) : '';
+  const queryId = queryParam ? Array.isArray(queryParam) ? queryParam[0] : queryParam : '';
   const pageString = Array.isArray(pageParam) ? pageParam[0] : pageParam;
   const page = pageString ? parseInt(pageString, 10) : 1;
 

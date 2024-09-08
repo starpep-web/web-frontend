@@ -15,27 +15,18 @@ export type TextQueryMetadataFilter = [FilterOperator, RawMetadataLabel, Metadat
 export type TextQueryAttributeFilter = [FilterOperator, RawAttributeName, AttributeFilterComparator, number];
 export type SequenceLengthFilter = [number, number];
 
-export type TextQueryFiltersObject = {
-  metadata?: TextQueryMetadataFilter[]
-  attributes?: TextQueryAttributeFilter[]
-  length?: SequenceLengthFilter
-};
-
-export type TextQueryRequestPayload = {
-  sequence?: string
-  regex?: string
+export type TextQueryFilterParams = {
   metadata?: string[]
   attributes?: string[]
   length?: string
 };
 
-export type FiltersParams = {
-  metadata: string[]
-  attributes: string[]
-  length: string
+export type TextQueryRequestPayload = TextQueryFilterParams & {
+  sequence?: string
+  regex?: string
 };
 
-export const DEFAULT_FILTERS_PARAMS: FiltersParams = {
+export const DEFAULT_FILTERS_PARAMS: TextQueryFilterParams = {
   metadata: [],
   attributes: [],
   length: ''

@@ -9,17 +9,9 @@ export interface SingleQueryAlignmentOptions {
   max_quantity: number | null
 }
 
-export type SingleAlignedPeptide = SearchResultPeptide & {
-  score: number
-}
 
 // Multi Query
 export interface MultiQueryAlignmentOptions extends SingleQueryAlignmentOptions {
   criterion: string
 }
 
-export type MultiAlignedPeptide = SingleAlignedPeptide & {
-  avg_score: number
-  max_score: number
-  min_score: number
-}

@@ -1,7 +1,7 @@
 import { client } from '@lib/services/api/client';
 import { ApiResponse, WithPagination } from '@lib/services/api/models/api';
 import { SearchPeptide } from '@lib/services/api/models/peptide';
-import { TextQueryFiltersObject, TextQueryRequestPayload } from '@lib/services/api/models/search';
+import { TextQueryFilterParams } from '@lib/services/api/models/search';
 
 const getMetadataSuggestions = async (label: string, query: string, page: number): Promise<WithPagination<string>> => {
   const response = await client.get<ApiResponse<WithPagination<string>>>('/search/suggestions/metadata', {
@@ -42,51 +42,32 @@ export const getCrossRefSuggestions = (query: string, page: number = 1): Promise
   return getMetadataSuggestions('CrossRef', query, page);
 };
 
-const createTextQueryPayload = (type: 'sequence' | 'regex', query: string, filters?: TextQueryFiltersObject): TextQueryRequestPayload => {
-  const separator = ';';
-  const data: TextQueryRequestPayload = {
-    [type]: query
-  };
-
-  if (filters?.metadata) {
-    data.metadata = filters.metadata.map((filter) => filter.join(separator));
-  }
-  if (filters?.attributes) {
-    data.attributes = filters.attributes.map((filter) => filter.join(separator));
-  }
-  if (filters?.length) {
-    data.length = filters.length.join(separator);
-  }
-
-  return data;
-};
-
-export const postTextQuery = async (sequence: string, filters?: TextQueryFiltersObject, page: number = 1): Promise<WithPagination<SearchPeptide>> => {
+export const postTextQuery = async (sequence: string, filters?: TextQueryFilterParams, page: number = 1): Promise<WithPagination<SearchPeptide>> => {
   const response = await client.post<ApiResponse<WithPagination<SearchPeptide>>>('/search/text-query', {
-    data: createTextQueryPayload('sequence', sequence, filters),
+    data: { sequence, ...filters },
     query: { page }
   });
   return response.data;
 };
 
-export const postRegexQuery = async (regex: string, filters?: TextQueryFiltersObject, page: number = 1): Promise<WithPagination<SearchPeptide>> => {
+export const postRegexQuery = async (regex: string, filters?: TextQueryFilterParams, page: number = 1): Promise<WithPagination<SearchPeptide>> => {
   const response = await client.post<ApiResponse<WithPagination<SearchPeptide>>>('/search/text-query', {
-    data: createTextQueryPayload('regex', regex, filters),
+    data: { regex, ...filters },
     query: { page }
   });
   return response.data;
 };
 
-export const postTextQueryExportPayload = async (sequence: string, filters?: TextQueryFiltersObject): Promise<string> => {
+export const postTextQueryExportPayload = async (sequence: string, filters?: TextQueryFilterParams): Promise<string> => {
   const response = await client.post<ApiResponse<string>>('/search/text-query/export', {
-    data: createTextQueryPayload('sequence', sequence, filters)
+    data: { sequence, ...filters }
   });
   return response.data;
 };
 
-export const postRegexQueryExportPayload = async (regex: string, filters?: TextQueryFiltersObject): Promise<string> => {
+export const postRegexQueryExportPayload = async (regex: string, filters?: TextQueryFilterParams): Promise<string> => {
   const response = await client.post<ApiResponse<string>>('/search/text-query/export', {
-    data: createTextQueryPayload('regex', regex, filters)
+    data: { regex, ...filters }
   });
   return response.data;
 };

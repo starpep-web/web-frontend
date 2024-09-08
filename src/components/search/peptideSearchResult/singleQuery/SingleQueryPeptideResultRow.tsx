@@ -1,20 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
-import { DYNAMIC_ROUTES } from '@lib/constants/routes';
-import { SingleAlignedPeptide } from '@lib/models/search';
-import { RowProps } from './types';
+import { RouteDefs } from '@lib/constants/routes';
+import { SingleAlignedPeptide } from '@lib/services/bioApi/models/peptide';
 import { formatNumberDecimals, formatNumberMaxDecimals } from '@lib/utils/number';
-import { PEPTIDE_ATTRIBUTE_MAX_DECIMALS, PEPTIDE_SCORE_DECIMALS } from '@lib/constants/site';
-import { ORDERED_ATTRIBUTE_NAMES } from '../shared';
+import { PEPTIDE_ATTRIBUTE_MAX_DECIMALS, PEPTIDE_SCORE_DECIMALS } from '@lib/constants/app';
+import { RowProps } from '../shared/types';
+import { ORDERED_ATTRIBUTE_NAMES } from '../shared/helpers';
 
-const SingleAlignedPeptideSearchResultItemRow: React.FC<RowProps<SingleAlignedPeptide>> = ({ index, id, sequence, length, score, attributes }) => {
+export const SingleQueryPeptideResultRow: React.FC<RowProps<SingleAlignedPeptide>> = ({ index, id, sequence, length, score, attributes }) => {
   return (
     <tr>
       <th>
         {index}
       </th>
       <td>
-        <Link href={DYNAMIC_ROUTES.peptide(id)}>
+        <Link href={RouteDefs.peptide(id)}>
           {id}
         </Link>
       </td>
@@ -38,5 +38,3 @@ const SingleAlignedPeptideSearchResultItemRow: React.FC<RowProps<SingleAlignedPe
     </tr>
   );
 };
-
-export default SingleAlignedPeptideSearchResultItemRow;

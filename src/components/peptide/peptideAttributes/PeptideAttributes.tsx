@@ -1,9 +1,30 @@
 import React from 'react';
 import Alert from 'react-bootstrap/Alert';
-import { PeptideFullAttributes } from '@lib/services/api/models/peptide';
+import { AttributeName, PeptideFullAttributes } from '@lib/services/api/models/peptide';
 import { formatNumberMaxDecimals } from '@lib/utils/number';
 import { PEPTIDE_ATTRIBUTE_MAX_DECIMALS } from '@lib/constants/app';
-import { ORDERED_ATTRIBUTES, getFriendlyNameForAttribute } from './shared';
+import { getFriendlyNameForAttribute } from '@lib/services/api/helpers/peptide';
+
+export const ORDERED_ATTRIBUTES: AttributeName[] = [
+  'hemolyticProbScore',
+  'hydrophobicity',
+  'stericHindrance',
+  'solvation',
+  'hydropathicity',
+  'amphiphilicity',
+  'hydrophilicity',
+  'netHydrogen',
+  'charge',
+  'isoelectricPoint',
+  'molWt',
+  'aliphaticIndex',
+  'bomanIndex',
+  'gaacAlphatic',
+  'gaacAromatic',
+  'gaacPositiveCharge',
+  'gaacNegativeCharge',
+  'gaacUncharge'
+];
 
 interface Props {
   attributes: PeptideFullAttributes

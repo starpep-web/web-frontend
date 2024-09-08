@@ -1,0 +1,1 @@
+export { PeptideSearchHeading } from './PeptideSearchHeading';

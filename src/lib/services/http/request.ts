@@ -1,4 +1,5 @@
 import { NEXT_REVALIDATE_TIME } from '@lib/config/app';
+import { RequestError } from '@lib/services/http/error';
 
 type RequestConfig = RequestInit & {
   next?: {
@@ -40,6 +41,7 @@ const request = async (baseUrl: string, endpoint: string, method: string, option
   };
   if (options?.data) {
     config.body = JSON.stringify(options.data);
+    config.headers = { ...config.headers, 'Content-Type': 'application/json' };
   }
 
   return await fetch(url, config);
@@ -47,10 +49,16 @@ const request = async (baseUrl: string, endpoint: string, method: string, option
 
 export const requestJson = async <T>(baseUrl: string, endpoint: string, method: string, options?: RequestOptions): Promise<T> => {
   const response = await request(baseUrl, endpoint, method, options);
+  if (!response.ok) {
+    throw new RequestError(response.statusText, response, await response.json());
+  }
   return response.json();
 };
 
 export const requestText = async (baseUrl: string, endpoint: string, method: string, options?: RequestOptions): Promise<string> => {
   const response = await request(baseUrl, endpoint, method, options);
+  if (!response.ok) {
+    throw new RequestError(response.statusText, response, await response.text());
+  }
   return response.text();
 };
