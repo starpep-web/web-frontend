@@ -34,5 +34,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 
+# secrets
 *.env
-_old
+
+# graphql
+remote-schema.graphql
+src/lib/services/strapi/graphql/__generated__/*

@@ -1,4 +1,3 @@
-import { DEFAULT_FILTERS_PARAMS, FiltersParams } from '@lib/models/search';
 import { SearchType } from '@lib/models/export';
 
 export const DYNAMIC_ROUTES = {

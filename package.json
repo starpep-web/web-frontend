@@ -10,9 +10,11 @@
     "lint": "eslint . --ext .tsx,.ts,.js",
     "lint:fix": "eslint . --ext .tsx,.ts,.js --fix",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "cms:codegen": "graphql-codegen --config graphql-codegen.ts"
   },
   "dependencies": {
+    "@apollo/client": "^3.11.8",
     "3dmol": "^2.3.0",
     "apexcharts": "^3.53.0",
     "bootstrap": "^5.3.3",
@@ -33,10 +35,15 @@
     "server-only": "^0.0.1",
     "typescript": "^5.5.4",
     "uniqolor": "^1.1.1",
+    "utility-types": "^3.11.0",
     "vis-data": "^7.1.9",
     "vis-network": "^9.1.9"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/typescript": "^4.0.9",
+    "@graphql-codegen/typescript-operations": "^4.2.3",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.1",
     "@moonstar-x/eslint-config": "^1.0.0",
     "@svgr/webpack": "^8.1.0",
     "@types/jest": "^29.5.12",
