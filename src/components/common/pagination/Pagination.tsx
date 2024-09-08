@@ -31,7 +31,7 @@ export const Pagination: React.FC<Props> = ({ className, paginatedUrlBuilder, cu
 
   return (
     <nav className={className} aria-label="Page navigation">
-      <ul className="pagination justify-content-center">
+      <ul className="pagination justify-content-center flex-wrap row-gap-2">
         {
           !isFirstPage && (
             <PaginationItem href={paginatedUrlBuilder(currentPage - 1)}>

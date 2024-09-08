@@ -11,7 +11,7 @@ interface Props {
 export const PeptideSearchHeading: React.FC<Props> = ({ title }) => {
   return (
     <div className="d-flex flex-column flex-md-row mb-4">
-      <h1 className="flex-fill mb-4">
+      <h1 className="flex-fill mb-4 text-break">
         {title}
       </h1>
 
