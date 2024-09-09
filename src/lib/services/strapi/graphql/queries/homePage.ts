@@ -17,6 +17,22 @@ const GET_HOME_PAGE = graphql(`
               }
             }
           }
+          heroText {
+            color
+            text
+          }
+          about {
+            text
+            image {
+              data {
+                attributes {
+                  url
+                  alternativeText
+                }
+              }
+            }
+            flip
+          }
           projectLeaders {
             title
             type
