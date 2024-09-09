@@ -1,6 +1,7 @@
 import React from 'react';
 import { createPageMetadata } from '@lib/next/metadata';
 import { RouteDefs } from '@lib/constants/routes';
+import { getFaqPage } from '@lib/services/strapi/graphql/queries/faqPage';
 
 export const generateMetadata = () => {
   return createPageMetadata(RouteDefs.faq, {
@@ -8,11 +9,13 @@ export const generateMetadata = () => {
   });
 };
 
-const FaqPage = () => {
+const FaqPage = async () => {
+  const { faqPage } = await getFaqPage();
+
   return (
-    <div>
-      FAQ!
-    </div>
+    <pre>
+      {JSON.stringify(faqPage, null, 2)}
+    </pre>
   );
 };
 
