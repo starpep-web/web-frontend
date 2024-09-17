@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import clsx from 'clsx';
 import rehypeRaw from 'rehype-raw';
+import styles from './Markdown.module.scss';
 
 interface Props {
   children: string
@@ -9,7 +11,7 @@ interface Props {
 
 export const Markdown: React.FC<Props> = ({ children, className }) => {
   return (
-    <ReactMarkdown className={className} rehypePlugins={[rehypeRaw]}>
+    <ReactMarkdown className={clsx(styles.markdown, className)} rehypePlugins={[rehypeRaw]}>
       {children}
     </ReactMarkdown>
   );

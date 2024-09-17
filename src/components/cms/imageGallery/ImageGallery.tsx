@@ -28,6 +28,7 @@ export const ImageGallery: React.FC<Props> = ({ className, images }) => {
   return (
     <section className={className}>
       <Slider
+        className="mb-5"
         draggable
         autoplay
         autoplaySpeed={5000}
