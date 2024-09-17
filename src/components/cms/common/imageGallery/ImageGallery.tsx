@@ -34,6 +34,7 @@ export const ImageGallery: React.FC<Props> = ({ className, images }) => {
         autoplaySpeed={5000}
         pauseOnHover
         dots
+        arrows={false}
         lazyLoad="progressive"
         centerMode={false}
         infinite

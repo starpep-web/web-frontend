@@ -22,8 +22,8 @@ interface Props {
 
 export const TextImageColumn: React.FC<Props> = ({ className, text, image, flip }) => {
   return (
-    <section className={clsx('w-full d-flex gap-5', flip ? 'flex-row-reverse' : 'flex-row', className)}>
-      <div className="flex-fill d-flex align-items-center justify-content-center">
+    <section className={clsx('w-full d-flex gap-5', flip ? 'flex-column flex-md-row-reverse' : 'flex-column-reverse flex-md-row', className)}>
+      <div className="w-100 d-flex align-items-center justify-content-center">
         {
           text && (
             <Markdown className="h-fit">
@@ -33,10 +33,10 @@ export const TextImageColumn: React.FC<Props> = ({ className, text, image, flip 
         }
       </div>
 
-      <div className="flex-fill d-flex align-items-center justify-content-center">
+      <div className="w-100 d-flex align-items-center justify-content-center">
         {
           image && (
-            <StrapiImage {...image.data?.attributes} />
+            <StrapiImage className="w-100 object-fit-cover" {...image.data?.attributes} />
           )
         }
       </div>

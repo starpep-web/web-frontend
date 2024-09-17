@@ -24,6 +24,12 @@
   }
 }
 
+.w-100-md {
+  @include media-breakpoint-down(md) {
+    width: 100%;
+  }
+}
+
 .w-100-lg {
   @include media-breakpoint-down(lg) {
     width: 100%;
