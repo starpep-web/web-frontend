@@ -13,6 +13,8 @@ const GET_HOME_PAGE = graphql(`
                 attributes {
                   url
                   alternativeText
+                  width
+                  height
                 }
               }
             }
@@ -28,6 +30,8 @@ const GET_HOME_PAGE = graphql(`
                 attributes {
                   url
                   alternativeText
+                  width
+                  height
                 }
               }
             }
@@ -42,6 +46,8 @@ const GET_HOME_PAGE = graphql(`
                   attributes {
                     url
                     alternativeText
+                    width
+                    height
                   }
                 }
               }
@@ -63,6 +69,8 @@ const GET_HOME_PAGE = graphql(`
                   attributes {
                     url
                     alternativeText
+                    width
+                    height
                   }
                 }
               }
@@ -84,6 +92,8 @@ const GET_HOME_PAGE = graphql(`
                   attributes {
                     url
                     alternativeText
+                    width
+                    height
                   }
                 }
               }

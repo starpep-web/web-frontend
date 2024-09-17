@@ -14,7 +14,7 @@ const FaqPage = async () => {
   const { faqPage } = await getFaqPage();
 
   return (
-    <FaqAccordion items={faqPage?.data?.attributes?.faqs || []} />
+    <FaqAccordion items={faqPage?.data?.attributes?.faqs} />
   );
 };
 

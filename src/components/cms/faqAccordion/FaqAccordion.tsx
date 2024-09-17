@@ -7,19 +7,20 @@ import { Maybe } from '@lib/utils/types';
 import { Markdown } from '@components/cms/markdown';
 
 interface Props {
-  items: Maybe<{
+  className?: string
+  items?: Maybe<{
     question: string
     answer: string
   }>[]
 }
 
-export const FaqAccordion: React.FC<Props> = ({ items }) => {
-  if (!items.length) {
+export const FaqAccordion: React.FC<Props> = ({ className, items }) => {
+  if (!items?.length) {
     return null;
   }
 
   return (
-    <Accordion as="section">
+    <Accordion as="section" className={className}>
       {
         items.map((item, idx) => item && (
           <AccordionItem key={idx} eventKey={idx.toString()}>
