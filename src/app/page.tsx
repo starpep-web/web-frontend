@@ -5,6 +5,7 @@ import { getHomePage } from '@lib/services/strapi/graphql/queries/homePage';
 import { ImageGallery } from 'src/components/cms/common/imageGallery';
 import { TextCard } from 'src/components/cms/common/textCard';
 import { TextImageColumn } from 'src/components/cms/common/textImageColumn';
+import { TeamMemberCardGroup } from '@components/cms/team/teamMemberCardGroup';
 
 export const generateMetadata = () => {
   return createPageMetadata(RouteDefs.home, {
@@ -32,9 +33,24 @@ const HomePage = async () => {
         image={homePage?.data?.attributes?.about.image}
         flip={homePage?.data?.attributes?.about.flip}
       />
-      <pre>
-        {JSON.stringify(homePage, null, 2)}
-      </pre>
+      <TeamMemberCardGroup
+        className="mb-4"
+        title={homePage?.data?.attributes?.projectLeaders.title}
+        type={homePage?.data?.attributes?.projectLeaders.type}
+        members={homePage?.data?.attributes?.projectLeaders.members}
+      />
+      <TeamMemberCardGroup
+        className="mb-4"
+        title={homePage?.data?.attributes?.collaborators.title}
+        type={homePage?.data?.attributes?.collaborators.type}
+        members={homePage?.data?.attributes?.collaborators.members}
+      />
+      <TeamMemberCardGroup
+        className="mb-4"
+        title={homePage?.data?.attributes?.developers.title}
+        type={homePage?.data?.attributes?.developers.type}
+        members={homePage?.data?.attributes?.developers.members}
+      />
     </Fragment>
   );
 };
