@@ -4,7 +4,7 @@ import AccordionItem from 'react-bootstrap/AccordionItem';
 import AccordionHeader from 'react-bootstrap/AccordionHeader';
 import AccordionBody from 'react-bootstrap/AccordionBody';
 import { Maybe } from '@lib/utils/types';
-import { Markdown } from '@components/cms/markdown';
+import { Markdown } from '@components/cms/utils/markdown';
 
 interface Props {
   className?: string

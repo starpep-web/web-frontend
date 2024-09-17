@@ -2,7 +2,7 @@ import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import { Enum_Componentcommontextcard_Color } from '@lib/services/strapi/graphql/__generated__/graphql';
 import { getFromEnum } from '@lib/utils/object';
-import { Markdown } from '@components/cms/markdown';
+import { Markdown } from '@components/cms/utils/markdown';
 
 const colorVariants: Record<Enum_Componentcommontextcard_Color, string> = {
   Secondary: 'secondary',

@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Maybe } from '@lib/utils/types';
-import { StrapiImage } from '@components/cms/strapiImage';
+import { StrapiImage } from '@components/cms/utils/strapiImage';
 
 interface Props {
   className?: string

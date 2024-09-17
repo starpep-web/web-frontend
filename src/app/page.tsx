@@ -2,9 +2,9 @@ import React, { Fragment } from 'react';
 import { createPageMetadata } from '@lib/next/metadata';
 import { RouteDefs } from '@lib/constants/routes';
 import { getHomePage } from '@lib/services/strapi/graphql/queries/homePage';
-import { ImageGallery } from '@components/cms/imageGallery';
-import { TextCard } from '@components/cms/textCard';
-import { TextImageColumn } from '@components/cms/textImageColumn';
+import { ImageGallery } from 'src/components/cms/common/imageGallery';
+import { TextCard } from 'src/components/cms/common/textCard';
+import { TextImageColumn } from 'src/components/cms/common/textImageColumn';
 
 export const generateMetadata = () => {
   return createPageMetadata(RouteDefs.home, {
@@ -22,12 +22,12 @@ const HomePage = async () => {
         images={homePage?.data?.attributes?.imageGallery.images}
       />
       <TextCard
-        className="mb-4"
+        className="mb-5"
         color={homePage?.data?.attributes?.heroText.color}
         text={homePage?.data?.attributes?.heroText.text}
       />
       <TextImageColumn
-        className="mb-4"
+        className="mb-5"
         text={homePage?.data?.attributes?.about.text}
         image={homePage?.data?.attributes?.about.image}
         flip={homePage?.data?.attributes?.about.flip}

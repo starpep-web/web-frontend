@@ -2,7 +2,7 @@ import React from 'react';
 import { createPageMetadata } from '@lib/next/metadata';
 import { RouteDefs } from '@lib/constants/routes';
 import { getFaqPage } from '@lib/services/strapi/graphql/queries/faqPage';
-import { FaqAccordion } from '@components/cms/faqAccordion';
+import { FaqAccordion } from 'src/components/cms/common/faqAccordion';
 
 export const generateMetadata = () => {
   return createPageMetadata(RouteDefs.faq, {

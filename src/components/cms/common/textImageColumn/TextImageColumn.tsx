@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
-import { Markdown } from '@components/cms/markdown';
-import { StrapiImage } from '@components/cms/strapiImage';
+import { Markdown } from '@components/cms/utils/markdown';
+import { StrapiImage } from '@components/cms/utils/strapiImage';
 import { Maybe } from '@lib/utils/types';
 
 interface Props {
