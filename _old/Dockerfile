@@ -21,7 +21,7 @@ ENV NODE_ENV production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY ../README.md Dockerfile ./
+COPY README.md Dockerfile ./
 COPY --from=build /tmp/app/public ./public
 COPY --from=build --chown=nextjs:nodejs /tmp/app/.next/standalone ./
 COPY --from=build --chown=nextjs:nodejs /tmp/app/.next/static ./.next/static

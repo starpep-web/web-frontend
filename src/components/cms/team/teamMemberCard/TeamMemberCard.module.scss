@@ -1,0 +1,21 @@
+@import '@styles/mixins';
+
+.flexInitial {
+  flex: initial;
+}
+
+.featuredCard {
+  width: 95%;
+
+  @include media-breakpoint-up(md) {
+    width: 450px;
+  }
+}
+
+.simpleCard {
+  width: 95%;
+
+  @include media-breakpoint-up(md) {
+    width: 350px;
+  }
+}
