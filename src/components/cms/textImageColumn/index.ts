@@ -1,0 +1,1 @@
+export { TextImageColumn } from './TextImageColumn';
