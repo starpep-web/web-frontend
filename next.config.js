@@ -3,6 +3,16 @@ const nextConfig = {
   reactStrictMode: true,
   trailingSlash: true,
   output: 'standalone',
+  images: {
+    remotePatterns: [
+      {
+        protocol: process.env.NEXT_PUBLIC_STRAPI_PROTO,
+        hostname: process.env.NEXT_PUBLIC_STRAPI_HOST,
+        port: process.env.NEXT_PUBLIC_STRAPI_PORT,
+        pathname: '/**'
+      }
+    ]
+  },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find((rule) =>
       rule.test?.test?.('.svg'),

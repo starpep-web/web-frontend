@@ -1,7 +1,8 @@
 import 'dotenv/config';
-import { CodegenConfig} from '@graphql-codegen/cli';
+import { CodegenConfig } from '@graphql-codegen/cli';
 
-const GRAPHQL_URL = `${process.env.NEXT_PUBLIC_STRAPI_URL}/graphql`;
+const NEXT_PUBLIC_STRAPI_URL = `${process.env.NEXT_PUBLIC_STRAPI_PROTO}://${process.env.NEXT_PUBLIC_STRAPI_HOST}${process.env.NEXT_PUBLIC_STRAPI_PORT ? `:${process.env.NEXT_PUBLIC_STRAPI_PORT}` : ''}`;
+const GRAPHQL_URL = `${NEXT_PUBLIC_STRAPI_URL}/graphql`;
 
 const config: CodegenConfig = {
   schema: GRAPHQL_URL,
