@@ -8,8 +8,9 @@ type RequestConfig = RequestInit & {
 };
 
 export type RequestOptions = {
-  query?: Record<string, string | string[] | number | undefined>
-  data?: object | null
+  query?: Record<string, string | string[] | number | undefined | null>
+  data?: object | string | null
+  headers?: Record<string, string>
 };
 
 const request = async (baseUrl: string, endpoint: string, method: string, options?: RequestOptions): Promise<Response> => {
@@ -24,7 +25,7 @@ const request = async (baseUrl: string, endpoint: string, method: string, option
           params.append(name, innerValue);
         });
       } else {
-        if (typeof value !== 'undefined') {
+        if (typeof value !== 'undefined' && value !== null) {
           params.append(name, value.toString());
         }
       }
@@ -39,9 +40,22 @@ const request = async (baseUrl: string, endpoint: string, method: string, option
       revalidate: NEXT_REVALIDATE_TIME
     }
   };
+
+  if (options?.headers) {
+    config.headers = { ...config.headers, ...options.headers };
+  }
+
   if (options?.data) {
-    config.body = JSON.stringify(options.data);
-    config.headers = { ...config.headers, 'Content-Type': 'application/json' };
+    if (options?.headers) {
+      if (options.headers['Content-Type'] === 'application/json') {
+        config.body = JSON.stringify(options.data);
+      } else {
+        config.body = options.data.toString();
+      }
+    } else {
+      config.body = JSON.stringify(options.data);
+      config.headers = { ...config.headers, 'Content-Type': 'application/json' };
+    }
   }
 
   return await fetch(url, config);

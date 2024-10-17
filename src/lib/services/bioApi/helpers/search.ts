@@ -1,6 +1,5 @@
-import { SingleQueryAlignmentOptions, MultiQueryAlignmentOptions, TextQueryMetadataFilter, TextQueryAttributeFilter } from '@lib/models/search';
+import { MultiQueryAlignmentOptions, SingleQueryAlignmentOptions } from '@lib/services/bioApi/models/search';
 
-// Single and Multi Query
 export const SUPPORTED_MATRIX_NAMES = ['BLOSUM45', 'BLOSUM50', 'BLOSUM62', 'BLOSUM80', 'BLOSUM90', 'PAM30', 'PAM70', 'PAM250'];
 export const SUPPORTED_ALGORITHMS = {
   local: 'Local (Smith-Waterman)',
