@@ -1,4 +1,5 @@
 import { DEFAULT_FILTERS_PARAMS, TextQueryFilterParams } from '@lib/services/api/models/search';
+import { ExportPayloadType } from '@lib/services/bioApi/models/export';
 
 export const RouteDefs = {
   home: '/',
@@ -34,5 +35,22 @@ export const RouteDefs = {
     }
 
     return `/search/text-query?${params.toString()}`;
+  },
+  singleQuery: (queryId: string, page: number = 1) => {
+    const params = new URLSearchParams({
+      query: queryId,
+      page: page.toString()
+    });
+    return `/search/single-query?${params.toString()}`;
+  },
+  multiQuery: (queryId: string, page: number = 1) => {
+    const params = new URLSearchParams({
+      query: queryId,
+      page: page.toString()
+    });
+    return `/search/multi-query?${params.toString()}`;
+  },
+  searchExport: (type: ExportPayloadType, taskId: string) => {
+    return `/search/export/${type}/${taskId}`;
   }
 };
