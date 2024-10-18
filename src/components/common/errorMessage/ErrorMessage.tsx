@@ -1,5 +1,6 @@
 import React from 'react';
 import Alert from 'react-bootstrap/Alert';
+import AlertHeading from 'react-bootstrap/AlertHeading';
 
 interface Props {
   warning?: boolean
@@ -18,9 +19,9 @@ export const ErrorMessage: React.FC<Props> = ({ header, description, warning = f
 
   return (
     <Alert variant={color}>
-      <Alert.Heading className="mb-3">
+      <AlertHeading className="mb-3">
         {header ?? 'Something happened'}
-      </Alert.Heading>
+      </AlertHeading>
 
       <div>
         <p className="mb-0">

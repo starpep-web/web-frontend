@@ -2,7 +2,7 @@ import React from 'react';
 import { Content, Heading, Block } from 'react-bulma-components';
 import SearchExportProgressBar from './SearchExportProgressBar';
 import SearchExportSteps from './SearchExportSteps';
-import { useAutoRefresh } from '@components/hooks/autoRefresh';
+import { useAutoRefresh } from '@components/hooks/useAutoRefresh';
 import { SearchExportFormData, SearchExportResource } from '@lib/models/export';
 import { DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS } from '@lib/constants/site';
 
