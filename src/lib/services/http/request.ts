@@ -11,6 +11,7 @@ export type RequestOptions = {
   query?: Record<string, string | string[] | number | undefined | null>
   data?: object | string | null
   headers?: Record<string, string>
+  noCache?: boolean
 };
 
 const request = async (baseUrl: string, endpoint: string, method: string, options?: RequestOptions): Promise<Response> => {
@@ -37,7 +38,7 @@ const request = async (baseUrl: string, endpoint: string, method: string, option
   const config: RequestConfig = {
     method,
     next: {
-      revalidate: NEXT_REVALIDATE_TIME
+      revalidate: options?.noCache ? 0 : NEXT_REVALIDATE_TIME
     }
   };
 

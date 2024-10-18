@@ -17,7 +17,8 @@ export const postSingleQuerySearch = async (fasta: string, options?: SingleQuery
 
 export const getSingleQuerySearch = async (taskId: string, page: number = 1): Promise<AsyncTaskResponse<WithPagination<SingleAlignedPeptide>>> => {
   const response = await client.get<BioApiResponse<AsyncTaskResponse<WithPagination<SingleAlignedPeptide>>>>(`/search/single-query/${taskId}`, {
-    query: { page }
+    query: { page },
+    noCache: true
   });
   return response.data;
 };
@@ -33,7 +34,8 @@ export const postMultiQuerySearch = async (fasta: string, options?: MultiQueryAl
 
 export const getMultiQuerySearch = async (taskId: string, page: number = 1): Promise<AsyncTaskResponse<WithPagination<MultiAlignedPeptide>>> => {
   const response = await client.get<BioApiResponse<AsyncTaskResponse<WithPagination<MultiAlignedPeptide>>>>(`/search/multi-query/${taskId}`, {
-    query: { page }
+    query: { page },
+    noCache: true
   });
   return response.data;
 };

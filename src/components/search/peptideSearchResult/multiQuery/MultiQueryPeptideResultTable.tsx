@@ -9,7 +9,7 @@ interface Props {
   firstIndex: number
 }
 
-const MultiQueryPeptideResultTable: React.FC<Props> = ({ peptides, firstIndex }) => {
+export const MultiQueryPeptideResultTable: React.FC<Props> = ({ peptides, firstIndex }) => {
   return (
     <GenericPeptideSearchResult
       peptides={peptides}
@@ -29,5 +29,3 @@ const MultiQueryPeptideResultTable: React.FC<Props> = ({ peptides, firstIndex })
     />
   );
 };
-
-export default MultiQueryPeptideResultTable;
