@@ -5,7 +5,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import { TextQueryPeptideSearchBox } from './tabs/TextQueryPeptideSearchBox';
 import SingleQueryPeptideSearchBox from './tabs/SingleQueryPeptideSearchBox';
-// import MultiQueryPeptideSearchBox from './tabs/MultiQueryPeptideSearchBox';
+import MultiQueryPeptideSearchBox from './tabs/MultiQueryPeptideSearchBox';
 
 export const PeptideSearchBox = () => {
   return (
@@ -26,7 +26,7 @@ export const PeptideSearchBox = () => {
 
           <Tab eventKey="multi" title="Multi Query">
             <Card.Body>
-              MULTI QUERY
+              <MultiQueryPeptideSearchBox />
             </Card.Body>
           </Tab>
         </Tabs>

@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { Form, Button, Icon } from 'react-bulma-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRouter } from 'next/router';
+import React, { Fragment, useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import { useRouter } from 'next/navigation';
 import { ErrorMessage } from '@components/common/errorMessage';
 import MultiQueryAlignmentOptionsForm from '../helpers/MultiQueryAlignmentOptionsForm';
-import { postMultiQuerySearch } from '@lib/services/localApi/searchService';
-import { DYNAMIC_ROUTES } from '@lib/constants/routes';
-import { DEFAULT_MULTI_ALIGNMENT_OPTIONS } from '@lib/constants/search';
-import { MultiQueryAlignmentOptions } from '@lib/models/search';
+import { postMultiQuerySearchAction } from '@actions/search/alignment/multi-query';
+import { RouteDefs } from '@lib/constants/routes';
+import { DEFAULT_MULTI_ALIGNMENT_OPTIONS } from '@lib/services/bioApi/helpers/search';
+import { MultiQueryAlignmentOptions } from '@lib/services/bioApi/models/search';
+import MagnifyingGlassIcon from '@assets/svg/icons/magnifying-glass-solid.svg';
 
 const queryPlaceholder = '>Query1\nGIGAVLKVLTTGLPALISWIKRKRQQ\n>Query2\nGIGKFLHSAKKFGKAFVGEIMNS';
 
@@ -24,8 +26,8 @@ const MultiQueryPeptideSearchBox = () => {
     setLoading(true);
     setError('');
     try {
-      const { id } = await postMultiQuerySearch(query, options);
-      return router.push(DYNAMIC_ROUTES.multiQuery(id));
+      const { id } = await postMultiQuerySearchAction(query, options);
+      return router.push(RouteDefs.multiQuery(id));
     } catch (error) {
       setError((error as Error).message);
     } finally {
@@ -44,7 +46,7 @@ const MultiQueryPeptideSearchBox = () => {
   };
 
   return (
-    <form onSubmit={handleOnSubmit}>
+    <Form onSubmit={handleOnSubmit}>
       <ErrorMessage
         error={`Server responded with: ${error}`}
         show={!!error}
@@ -52,40 +54,52 @@ const MultiQueryPeptideSearchBox = () => {
         description="Please make sure you have specified more than one sequence to align and that the options are correct."
       />
 
-      <Form.Field>
-        <Form.Label>
+      <Form.Group className="mb-3">
+        <Form.Label className="fw-semibold" column={false}>
           Multi Query in FASTA format
         </Form.Label>
 
-        <Form.Control>
-          <Form.Textarea
-            onChange={handleQueryChange}
-            value={query}
-            placeholder={queryPlaceholder}
-          />
-        </Form.Control>
-      </Form.Field>
+        <Form.Control
+          as="textarea"
+          style={{ minHeight: '300px' }}
+          onChange={handleQueryChange}
+          value={query}
+          placeholder={queryPlaceholder}
+        />
+      </Form.Group>
 
       <hr />
 
-      <Form.Label>
-        Alignment Options
-      </Form.Label>
+      <Form.Group className="mb-3">
+        <Form.Label className="fw-semibold" column={false}>
+          Alignment Options
+        </Form.Label>
 
-      <MultiQueryAlignmentOptionsForm onChange={handleOptionsChange} />
+        <MultiQueryAlignmentOptionsForm onChange={handleOptionsChange} />
+      </Form.Group>
 
-      <Button.Group align="center">
-        <Button color="primary" loading={loading} disabled={loading}>
-          <Icon align="left">
-            <FontAwesomeIcon icon="search" />
-          </Icon>
+      <div className="pt-2 w-100 d-flex flex-row align-items-center justify-content-center">
+        <Button variant="primary" className="w-100-sm d-inline-flex align-items-center justify-content-center" disabled={loading || query.length < 1} type="submit">
+          {
+            loading ? (
+              <div className="d-flex align-items-center justify-content-center" style={{ height: 20, width: 50 }}>
+                <Spinner size="sm" animation="border" role="status" />
+              </div>
+            ) : (
+              <Fragment>
+                <MagnifyingGlassIcon
+                  className="d-inline me-3"
+                  height={20}
+                  style={{ fill: '#fff' }}
+                />
 
-          <span>
-            Search
-          </span>
+                Search
+              </Fragment>
+            )
+          }
         </Button>
-      </Button.Group>
-    </form>
+      </div>
+    </Form>
   );
 };
 

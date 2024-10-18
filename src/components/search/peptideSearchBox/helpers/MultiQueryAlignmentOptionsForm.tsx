@@ -1,8 +1,9 @@
 import React, { Fragment, useReducer, useEffect } from 'react';
+import Form from 'react-bootstrap/Form';
 import { Dropdown } from '@components/form/dropdown';
 import SingleQueryAlignmentOptionsForm from './SingleQueryAlignmentOptionsForm';
-import { MultiQueryAlignmentOptions, SingleQueryAlignmentOptions } from '@lib/models/search';
-import { SUPPORTED_CRITERIA, DEFAULT_MULTI_ALIGNMENT_OPTIONS } from '@lib/constants/search';
+import { SUPPORTED_CRITERIA, DEFAULT_MULTI_ALIGNMENT_OPTIONS } from '@lib/services/bioApi/helpers/search';
+import { MultiQueryAlignmentOptions, SingleQueryAlignmentOptions } from '@lib/services/bioApi/models/search';
 
 type ReducerAction =
   | { type: 'SET_SINGLE_ALIGNMENT_OPTIONS', payload: SingleQueryAlignmentOptions }
@@ -42,12 +43,14 @@ const MultiQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
     <Fragment>
       <SingleQueryAlignmentOptionsForm onChange={handleSingleAlignmentOptionsChange} />
 
-      <Dropdown
-        label="Score Criterion"
-        options={SUPPORTED_CRITERIA}
-        value={state.criterion}
-        onChange={handleCriterionChange}
-      />
+      <Form.Group className="mb-3">
+        <Dropdown
+          label="Score Criterion"
+          options={SUPPORTED_CRITERIA}
+          value={state.criterion}
+          onChange={handleCriterionChange}
+        />
+      </Form.Group>
     </Fragment>
   );
 };
