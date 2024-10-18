@@ -4,10 +4,11 @@ import { BioApiResponse, WithPagination } from '@lib/services/bioApi/models/api'
 import { SingleQueryAlignmentOptions, MultiQueryAlignmentOptions } from '@lib/services/bioApi/models/search';
 import { SingleAlignedPeptide, MultiAlignedPeptide } from '@lib/services/bioApi/models/peptide';
 import { CONTENT_TYPE_FASTA } from '@lib/services/http/headers';
+import { DEFAULT_MULTI_ALIGNMENT_OPTIONS, DEFAULT_SINGLE_ALIGNMENT_OPTIONS } from '@lib/services/bioApi/helpers/search';
 
 export const postSingleQuerySearch = async (fasta: string, options?: SingleQueryAlignmentOptions): Promise<InitialAsyncTaskResponse> => {
   const response = await client.post<BioApiResponse<InitialAsyncTaskResponse>>('/search/single-query', {
-    query: options,
+    query: { ...DEFAULT_SINGLE_ALIGNMENT_OPTIONS, ...options || {} },
     data: fasta,
     headers: { 'Content-Type': CONTENT_TYPE_FASTA }
   });
@@ -23,7 +24,7 @@ export const getSingleQuerySearch = async (taskId: string, page: number = 1): Pr
 
 export const postMultiQuerySearch = async (fasta: string, options?: MultiQueryAlignmentOptions): Promise<InitialAsyncTaskResponse> => {
   const response = await client.post<BioApiResponse<InitialAsyncTaskResponse>>('/search/multi-query', {
-    query: options,
+    query: { ...DEFAULT_MULTI_ALIGNMENT_OPTIONS, ...options || {} },
     data: fasta,
     headers: { 'Content-Type': CONTENT_TYPE_FASTA }
   });

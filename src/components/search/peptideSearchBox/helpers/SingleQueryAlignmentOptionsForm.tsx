@@ -1,10 +1,10 @@
 import React, { useReducer, useEffect } from 'react';
-import { Form, Columns } from 'react-bulma-components';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { Dropdown } from '@components/form/dropdown';
-import { Radio } from '@components/bulmaExtensions/form/radio';
-import { Slider } from '@components/bulmaExtensions/form/slider';
-import { SUPPORTED_ALGORITHMS, SUPPORTED_MATRIX_NAMES, DEFAULT_SINGLE_ALIGNMENT_OPTIONS } from '@lib/constants/search';
-import { SingleQueryAlignmentOptions } from '@lib/models/search';
+import { SUPPORTED_ALGORITHMS, SUPPORTED_MATRIX_NAMES, DEFAULT_SINGLE_ALIGNMENT_OPTIONS } from '@lib/services/bioApi/helpers/search';
+import { SingleQueryAlignmentOptions } from '@lib/services/bioApi/models/search';
 
 type ReducerAction =
   | { type: 'SET_MATRIX', payload: SingleQueryAlignmentOptions['matrix'] }
@@ -56,24 +56,26 @@ const SingleQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
   };
 
   return (
-    <Columns>
-      <Columns.Column mobile={{ size: 12 }} tablet={{ size: 12 }} desktop={{ size: 6 }} widescreen={{ size: 6 }} fullhd={{ size: 6 }}>
-        <Dropdown
-          label="Substitution Matrix"
-          options={SUPPORTED_MATRIX_NAMES}
-          value={state.matrix}
-          onChange={handleMatrixChange}
-        />
+    <Row>
+      <Col xs={{ span: 12 }} lg={{ span: 6 }}>
+        <Form.Group className="mb-4">
+          <Dropdown
+            label="Substitution Matrix"
+            options={SUPPORTED_MATRIX_NAMES}
+            value={state.matrix}
+            onChange={handleMatrixChange}
+          />
+        </Form.Group>
 
-        <Form.Field>
-          <Form.Label>
+        <Form.Group className="mb-4">
+          <Form.Label className="fw-semibold" column={false}>
             Alignment Algorithm
           </Form.Label>
 
-          <Form.Control>
+          <div>
             {
               Object.entries(SUPPORTED_ALGORITHMS).map(([key, value]) => (
-                <Radio
+                <Form.Check
                   key={key}
                   id={key}
                   value={key}
@@ -82,51 +84,52 @@ const SingleQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
                   onChange={handleAlgorithmChange}
                   color="primary"
                   name="alignment-alg"
+                  type="radio"
                 />
               ))
             }
-          </Form.Control>
-        </Form.Field>
-      </Columns.Column>
+          </div>
+        </Form.Group>
+      </Col>
 
-      <Columns.Column mobile={{ size: 12 }} tablet={{ size: 12 }} desktop={{ size: 6 }} widescreen={{ size: 6 }} fullhd={{ size: 6 }}>
-        <Form.Field>
-          <Form.Label>
+      <Col xs={{ span: 12 }} lg={{ span: 6 }}>
+        <Form.Group className="mb-4">
+          <Form.Label className="fw-semibold" column={false}>
             Threshold
           </Form.Label>
 
-          <Form.Control>
-            <Slider
+          <div className="d-flex flex-row gap-3">
+            <Form.Range
+              className="flex-grow-1"
               min={0.01}
               max={1}
               step={0.01}
               value={state.threshold}
               onChange={handleThresholdChange}
               color="primary"
-              circle
-              showValue
             />
-          </Form.Control>
-        </Form.Field>
+            <output className="text-end" style={{ minWidth: '35px' }}>
+              {state.threshold.toFixed(2)}
+            </output>
+          </div>
+        </Form.Group>
 
-        <Form.Field>
-          <Form.Label>
+        <Form.Group className="mb-4">
+          <Form.Label className="fw-semibold" column={false}>
             Max Results
           </Form.Label>
 
-          <Form.Control>
-            <Form.Input
-              type="number"
-              min={0}
-              step={1}
-              value={state.max_quantity ?? ''}
-              onChange={handleMaxQuantityChange}
-              placeholder="Leave this blank to get all the results"
-            />
-          </Form.Control>
-        </Form.Field>
-      </Columns.Column>
-    </Columns>
+          <Form.Control
+            type="number"
+            min={0}
+            step={1}
+            value={state.max_quantity ?? ''}
+            onChange={handleMaxQuantityChange}
+            placeholder="Leave this blank to get all the results"
+          />
+        </Form.Group>
+      </Col>
+    </Row>
   );
 };
 

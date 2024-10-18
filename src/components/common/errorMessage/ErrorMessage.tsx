@@ -1,5 +1,5 @@
 import React from 'react';
-import { Message } from 'react-bulma-components';
+import Alert from 'react-bootstrap/Alert';
 
 interface Props {
   warning?: boolean
@@ -9,7 +9,7 @@ interface Props {
   show?: boolean
 }
 
-const ErrorMessage: React.FC<Props> = ({ header, description, warning = false, error, show }) => {
+export const ErrorMessage: React.FC<Props> = ({ header, description, warning = false, error, show }) => {
   const color = warning ? 'warning' : 'danger';
 
   if (!show) {
@@ -17,26 +17,24 @@ const ErrorMessage: React.FC<Props> = ({ header, description, warning = false, e
   }
 
   return (
-    <Message color={color}>
-      <Message.Header>
+    <Alert variant={color}>
+      <Alert.Heading className="mb-3">
         {header ?? 'Something happened'}
-      </Message.Header>
+      </Alert.Heading>
 
-      <Message.Body>
-        <p>
+      <div>
+        <p className="mb-0">
           {error}
         </p>
 
         {
           !!description && (
-            <p>
+            <p className="mt-2 mb-0">
               {description}
             </p>
           )
         }
-      </Message.Body>
-    </Message>
+      </div>
+    </Alert>
   );
 };
-
-export default ErrorMessage;

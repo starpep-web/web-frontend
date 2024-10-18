@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
-import { Form, Button, Icon } from 'react-bulma-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRouter } from 'next/router';
+'use client';
+import React, { Fragment, useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import Spinner from 'react-bootstrap/Spinner';
+import { useRouter } from 'next/navigation';
 import { ErrorMessage } from '@components/common/errorMessage';
 import SingleQueryAlignmentOptionsForm from '../helpers/SingleQueryAlignmentOptionsForm';
-import TextSearchInput from '../helpers/TextSearchInput';
-import { postSingleQuerySearch } from '@lib/services/localApi/searchService';
-import { DYNAMIC_ROUTES } from '@lib/constants/routes';
-import { DEFAULT_SINGLE_ALIGNMENT_OPTIONS } from '@lib/constants/search';
-import { SingleQueryAlignmentOptions } from '@lib/models/search';
+import { TextSearchInput } from '../helpers/TextSearchInput';
+import { postSingleQuerySearchAction } from '@actions/search/alignment/single-query';
+import MagnifyingGlassIcon from '@assets/svg/icons/magnifying-glass-solid.svg';
+import { RouteDefs } from '@lib/constants/routes';
+import { DEFAULT_SINGLE_ALIGNMENT_OPTIONS } from '@lib/services/bioApi/helpers/search';
+import { SingleQueryAlignmentOptions } from '@lib/services/bioApi/models/search';
 
 const SingleQueryPeptideSearchBox = () => {
   const router = useRouter();
@@ -23,8 +26,8 @@ const SingleQueryPeptideSearchBox = () => {
     setLoading(true);
     setError('');
     try {
-      const { id } = await postSingleQuerySearch(`>Query\n${query}`, options);
-      return router.push(DYNAMIC_ROUTES.singleQuery(id));
+      const { id } = await postSingleQuerySearchAction(`>Query\n${query}`, options);
+      return router.push(RouteDefs.singleQuery(id));
     } catch (error) {
       setError((error as Error).message);
     } finally {
@@ -43,7 +46,7 @@ const SingleQueryPeptideSearchBox = () => {
   };
 
   return (
-    <form onSubmit={handleOnSubmit}>
+    <Form onSubmit={handleOnSubmit}>
       <ErrorMessage
         error={`Server responded with: ${error}`}
         show={!!error}
@@ -51,40 +54,48 @@ const SingleQueryPeptideSearchBox = () => {
         description="Please make sure you have specified only one sequence to align and that the options are correct."
       />
 
-      <Form.Field>
-        <Form.Label>
-          Single Query
-        </Form.Label>
+      <Form.Group className="mb-3">
+        <Form.Group className="mb-2">
+          <Form.Label className="fw-semibold" column={false}>
+            Single Query
+          </Form.Label>
 
-        <Form.Control>
-          <TextSearchInput
-            onChange={handleQueryChange}
-            value={query}
-            regexEnabled={false}
-          />
-        </Form.Control>
-      </Form.Field>
+          <TextSearchInput onChange={handleQueryChange} value={query} regexEnabled={false} />
+        </Form.Group>
+      </Form.Group>
 
       <hr />
 
-      <Form.Label>
-        Alignment Options
-      </Form.Label>
+      <Form.Group className="mb-3">
+        <Form.Label className="fw-semibold mb-3" column={false}>
+          Alignment Options
+        </Form.Label>
 
-      <SingleQueryAlignmentOptionsForm onChange={handleOptionsChange} />
+        <SingleQueryAlignmentOptionsForm onChange={handleOptionsChange} />
+      </Form.Group>
 
-      <Button.Group align="center">
-        <Button color="primary" loading={loading} disabled={loading}>
-          <Icon align="left">
-            <FontAwesomeIcon icon="search" />
-          </Icon>
+      <div className="pt-2 w-100 d-flex flex-row align-items-center justify-content-center">
+        <Button variant="primary" className="w-100-sm d-inline-flex align-items-center justify-content-center" disabled={loading || query.length < 1} type="submit">
+          {
+            loading ? (
+              <div className="d-flex align-items-center justify-content-center" style={{ height: 20, width: 50 }}>
+                <Spinner size="sm" animation="border" role="status" />
+              </div>
+            ) : (
+              <Fragment>
+                <MagnifyingGlassIcon
+                  className="d-inline me-3"
+                  height={20}
+                  style={{ fill: '#fff' }}
+                />
 
-          <span>
-            Search
-          </span>
+                Search
+              </Fragment>
+            )
+          }
         </Button>
-      </Button.Group>
-    </form>
+      </div>
+    </Form>
   );
 };
 
