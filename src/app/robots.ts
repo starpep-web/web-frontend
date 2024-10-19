@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { PUBLIC_URL } from '@lib/config/app';
+import { NEXT_PUBLIC_URL } from '@lib/config/app';
 
 const robots = (): MetadataRoute.Robots => {
   return {
@@ -7,7 +7,7 @@ const robots = (): MetadataRoute.Robots => {
       userAgent: '*',
       disallow: ['/assets/']
     },
-    sitemap: `${PUBLIC_URL}/sitemap.xml`
+    sitemap: `${NEXT_PUBLIC_URL}/sitemap.xml`
   };
 };
 

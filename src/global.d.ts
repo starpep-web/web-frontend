@@ -4,8 +4,8 @@ declare global {
       API_URL?: string
       BIO_API_URL?: string
 
-      PUBLIC_URL?: string
-      PUBLIC_DOWNLOADS_URL?: string
+      NEXT_PUBLIC_URL?: string
+      NEXT_PUBLIC_DOWNLOADS_URL?: string
       LOCAL_DOWNLOADS_URL?: string
 
       NEXT_REVALIDATE_TIME?: string

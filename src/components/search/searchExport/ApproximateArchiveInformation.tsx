@@ -1,32 +1,31 @@
 import React from 'react';
-import { Block } from 'react-bulma-components';
 import prettyBytes from 'pretty-bytes';
-import { SearchExportResource, SearchExportFormData, approximateBytesForItemPerPeptide } from '@lib/models/export';
+import { SearchExportResource, SearchExportFormData, approximateBytesForItemPerPeptide } from '@lib/services/bioApi/models/export';
 
 interface Props {
-  peptideTotalCount: number
+  total: number
   exportedItems: SearchExportFormData
 }
 
-const ApproximateArchiveInformation: React.FC<Props> = ({ peptideTotalCount, exportedItems }) => {
+const ApproximateArchiveInformation: React.FC<Props> = ({ total, exportedItems }) => {
   const bytesPerPeptide = Object.entries(exportedItems)
     .filter(([_, v]) => v)
     .map(([k]) => approximateBytesForItemPerPeptide[k as SearchExportResource])
     .reduce((acc, cur) => acc + cur, 0);
 
-  const totalBytes = bytesPerPeptide * peptideTotalCount;
+  const totalBytes = bytesPerPeptide * total;
   const humanReadableSize = prettyBytes(totalBytes);
 
   return (
-    <Block className="has-text-grey">
-      <p>
-        Exported archive will include the selected items for {peptideTotalCount} peptides.
+    <div className="text-muted">
+      <p className="mb-0">
+        Exported archive will include the selected items for {total} peptides.
       </p>
 
-      <p>
+      <p className="mb-0">
         Approximate archive size: {humanReadableSize}.
       </p>
-    </Block>
+    </div>
   );
 };
 

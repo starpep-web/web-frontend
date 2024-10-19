@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { PUBLIC_URL } from '@lib/config/app';
+import { NEXT_PUBLIC_URL } from '@lib/config/app';
 import { DEFAULT_SITE_DESCRIPTION, SITE_TITLE, SITE_CATEGORY, CONTENT_LANG, DEFAULT_SEO_IMAGE } from '@lib/constants/app';
 
 export interface CreatePageMetadataOptions {
@@ -12,12 +12,12 @@ export interface CreatePageMetadataOptions {
 
 export const createPageMetadata = (path: string, options: CreatePageMetadataOptions): Metadata => {
   const pageTitle = `${options.pageTitle} | ${SITE_TITLE}`;
-  const images = options.images ? options.images.slice(0, 4) : [`${PUBLIC_URL}${DEFAULT_SEO_IMAGE}`];
+  const images = options.images ? options.images.slice(0, 4) : [`${NEXT_PUBLIC_URL}${DEFAULT_SEO_IMAGE}`];
 
   return {
     title: pageTitle,
     description: options.description ?? DEFAULT_SITE_DESCRIPTION,
-    metadataBase: new URL(PUBLIC_URL),
+    metadataBase: new URL(NEXT_PUBLIC_URL),
     alternates: {
       canonical: path
     },

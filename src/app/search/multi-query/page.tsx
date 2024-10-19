@@ -88,6 +88,9 @@ const MultiQuerySearchPage = async ({ searchParams }: Props) => {
     <Fragment>
       <PeptideSearchHeading
         title={`Found ${pagination.total} results (Page: ${page})`}
+        totalCount={pagination.total}
+        type="multi"
+        data={queryId}
       />
 
       <MultiQueryPeptideResultTable peptides={peptides} firstIndex={pagination.currentIndex} />

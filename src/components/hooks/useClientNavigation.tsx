@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
-import { WEBSITE_URL } from '@lib/config';
+import { NEXT_PUBLIC_URL } from '@lib/config/app';
 
 export const useClientNavigation = () => {
   const windowRef = useRef<Window>();
@@ -13,7 +13,7 @@ export const useClientNavigation = () => {
       return;
     }
 
-    const url = `${WEBSITE_URL}${path}`;
+    const url = `${NEXT_PUBLIC_URL}${path}`;
     windowRef.current.open(url, '_blank');
   }, [windowRef.current]);
 

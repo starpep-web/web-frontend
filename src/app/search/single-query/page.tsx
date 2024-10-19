@@ -87,6 +87,9 @@ const SingleQuerySearchPage = async ({ searchParams }: Props) => {
     <Fragment>
       <PeptideSearchHeading
         title={`Found ${pagination.total} results (Page: ${page})`}
+        totalCount={pagination.total}
+        type="single"
+        data={queryId}
       />
 
       <SingleQueryPeptideResultTable peptides={peptides} firstIndex={pagination.currentIndex} />

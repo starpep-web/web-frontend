@@ -1,7 +1,8 @@
 import React, { useState, ChangeEvent } from 'react';
-import { Form, Box } from 'react-bulma-components';
-import { SearchExportResource, SearchExportFormData, DEFAULT_EXPORT_FORM_DATA } from '@lib/models/export';
-
+import Form from 'react-bootstrap/Form';
+import Card from 'react-bootstrap/Card';
+import CardBody from 'react-bootstrap/CardBody';
+import { SearchExportResource, SearchExportFormData, DEFAULT_EXPORT_FORM_DATA } from '@lib/services/bioApi/models/export';
 
 type FormFields = {
   [k: string]: {
@@ -45,25 +46,25 @@ const SearchExportForm: React.FC<Props> = ({ initialData, onChange }) => {
   };
 
   return (
-    <Box>
-      {
-        Object.entries(formFields).map(([label, fields]) => (
-          <Form.Field key={label}>
-            <Form.Label>
-              {label}
-            </Form.Label>
+    <Card className="mb-3">
+      <CardBody>
+        {
+          Object.entries(formFields).map(([label, fields]) => (
+            <Form.Group key={label} className="mb-3">
+              <Form.Label className="fw-semibold" column={false}>
+                {label}
+              </Form.Label>
 
-            {
-              fields.map(({ type, text }) => (
-                <Form.Checkbox key={type} className="w-100" onChange={handleChange(type)} checked={formState[type]}>
-                  {text}
-                </Form.Checkbox>
-              ))
-            }
-          </Form.Field>
-        ))
-      }
-    </Box>
+              {
+                fields.map(({ type, text }) => (
+                  <Form.Check key={type} type="checkbox" className="w-100" onChange={handleChange(type)} value={type} checked={formState[type]} label={text} />
+                ))
+              }
+            </Form.Group>
+          ))
+        }
+      </CardBody>
+    </Card>
   );
 };
 

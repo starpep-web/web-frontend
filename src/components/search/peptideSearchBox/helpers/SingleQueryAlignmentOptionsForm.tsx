@@ -82,7 +82,6 @@ const SingleQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
                   label={value}
                   checked={state.alg === key}
                   onChange={handleAlgorithmChange}
-                  color="primary"
                   name="alignment-alg"
                   type="radio"
                 />
@@ -106,7 +105,6 @@ const SingleQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
               step={0.01}
               value={state.threshold}
               onChange={handleThresholdChange}
-              color="primary"
             />
             <output className="text-end" style={{ minWidth: '35px' }}>
               {state.threshold.toFixed(2)}

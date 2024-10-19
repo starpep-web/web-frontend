@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 import { ShareButtons } from '@components/common/shareButtons';
 import FullLogo from '@assets/svg/logo/full-logo.svg';
 import { RouteDefs } from '@lib/constants/routes';
-import { PUBLIC_URL } from '@lib/config/app';
+import { NEXT_PUBLIC_URL } from '@lib/config/app';
 
 const footerLinks = [
   { text: 'Home', href: RouteDefs.home },
