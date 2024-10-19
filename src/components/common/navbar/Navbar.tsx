@@ -51,7 +51,7 @@ export const Navbar = () => {
                     <NavDropdown title={text} id="navbar-dropdown" active={isItemActive(href)}>
                       {
                         innerItems.map(({ text, href }) => (
-                          <NavDropdown.Item key={href} as={Link as 'a'} href={href} active={isItemActive(href)}>
+                          <NavDropdown.Item key={href} as={Link as unknown as 'a'} href={href} active={isItemActive(href)}>
                             {text}
                           </NavDropdown.Item>
                         ))
@@ -62,7 +62,7 @@ export const Navbar = () => {
               }
 
               return (
-                <Nav.Link key={href} as={Link as 'a'} href={href} active={isItemActive(href)}>
+                <Nav.Link key={href} as={Link as unknown as 'a'} href={href} active={isItemActive(href)}>
                   {text}
                 </Nav.Link>
               );

@@ -76,7 +76,6 @@ export const SingleFilterPicker: React.FC<Props> = ({ title, initialType, positi
         value={type}
         onChange={handleTypeChange}
         options={Object.keys(typeOptions)}
-        placeholder="Pick a filter"
         icon={FilterIcon}
       />
 
