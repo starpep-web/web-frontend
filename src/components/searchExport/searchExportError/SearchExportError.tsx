@@ -5,7 +5,7 @@ interface Props {
   error: string
 }
 
-const SearchExportError: React.FC<Props> = ({ error }) => {
+export const SearchExportError: React.FC<Props> = ({ error }) => {
   return (
     <ErrorMessage
       header="An error occurred when exporting your search"
@@ -15,5 +15,3 @@ const SearchExportError: React.FC<Props> = ({ error }) => {
     />
   );
 };
-
-export default SearchExportError;

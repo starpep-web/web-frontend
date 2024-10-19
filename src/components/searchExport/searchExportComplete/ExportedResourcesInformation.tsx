@@ -1,10 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
-import { Block } from 'react-bulma-components';
 import { MultiColumnList } from '@components/common/multiColumnList';
-import { SearchExportFormData, SearchExportResource } from '@lib/models/export';
+import { SearchExportFormData, SearchExportResource } from '@lib/services/bioApi/models/export';
 import { joinWithDifferentLastSeparator } from '@lib/utils/array';
-import { DYNAMIC_ROUTES } from '@lib/constants/routes';
+import { RouteDefs } from '@lib/constants/routes';
 
 const resourceFriendlyNames: Record<SearchExportResource, string> = {
   fasta: 'sequences FASTA file',
@@ -30,23 +29,24 @@ const ExportedResourcesInformation: React.FC<Props> = ({ form, peptideIds, total
   const exportedResourcesText = joinWithDifferentLastSeparator(exportedResourceFriendlyTexts, ', ', ', and ');
 
   return (
-    <Block>
-      <p>
-        Your exported package contains the {exportedResourcesText} for the following {total} peptides:
+    <div>
+      <p className="mb-0">
+        Your exported package contains the <strong>{exportedResourcesText}</strong> for the following <strong>{total}</strong> peptides:
       </p>
 
-      <Block mt={5} backgroundColor="gray">
+      <div className="mt-4 bg-light p-4 rounded-2">
         <MultiColumnList
+          className="mb-0"
           ordered={false}
           items={peptideIds}
-          itemComponent={({ item }) => (
-            <Link href={DYNAMIC_ROUTES.peptide(item)}>
-              {item}
+          itemComponent={({ children }) => (
+            <Link href={RouteDefs.peptide(children)}>
+              {children}
             </Link>
           )}
         />
-      </Block>
-    </Block>
+      </div>
+    </div>
   );
 };
 

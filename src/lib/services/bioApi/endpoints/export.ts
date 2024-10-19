@@ -11,7 +11,9 @@ export const postTextQueryExport = async (payload: ExportRequestPayload): Promis
 };
 
 export const getTextQueryExport = async (taskId: string): Promise<AsyncTaskResponse<ExportResult>> => {
-  const response = await client.get<BioApiResponse<AsyncTaskResponse<ExportResult>>>(`/export/text-query/${taskId}`);
+  const response = await client.get<BioApiResponse<AsyncTaskResponse<ExportResult>>>(`/export/text-query/${taskId}`, {
+    noCache: true
+  });
   return response.data;
 };
 
@@ -23,7 +25,9 @@ export const postSingleQueryExport = async (payload: ExportRequestPayload): Prom
 };
 
 export const getSingleQueryExport = async (taskId: string): Promise<AsyncTaskResponse<ExportResult>> => {
-  const response = await client.get<BioApiResponse<AsyncTaskResponse<ExportResult>>>(`/export/single-query/${taskId}`);
+  const response = await client.get<BioApiResponse<AsyncTaskResponse<ExportResult>>>(`/export/single-query/${taskId}`, {
+    noCache: true
+  });
   return response.data;
 };
 
@@ -35,6 +39,8 @@ export const postMultiQueryExport = async (payload: ExportRequestPayload): Promi
 };
 
 export const getMultiQueryExport = async (taskId: string): Promise<AsyncTaskResponse<ExportResult>> => {
-  const response = await client.get<BioApiResponse<AsyncTaskResponse<ExportResult>>>(`/export/multi-query/${taskId}`);
+  const response = await client.get<BioApiResponse<AsyncTaskResponse<ExportResult>>>(`/export/multi-query/${taskId}`, {
+    noCache: true
+  });
   return response.data;
 };

@@ -1,18 +1,20 @@
 import React from 'react';
+import clsx from 'clsx';
 import styles from './MultiColumnList.module.scss';
 
-interface Props {
+interface Props<T> {
+  className?: string;
   ordered: boolean
-  items: unknown[]
-  itemComponent?: React.JSXElementConstructor<{ children: unknown }>
+  items: T[]
+  itemComponent?: React.JSXElementConstructor<{ children: T }>
 }
 
-export const MultiColumnList: React.FC<Props> = ({ ordered, items, itemComponent }) => {
+export const MultiColumnList = <T extends any>({ className, ordered, items, itemComponent }: Props<T>) => {
   const ListComponent = ordered ? 'ol' : 'ul';
-  const ItemComponent = itemComponent ?? (({ children }) => <span>{children}</span>);
+  const ItemComponent = itemComponent ?? (({ children }) => <span>{children as React.ReactNode}</span>);
 
   return (
-    <ListComponent className={styles.multiColumnList}>
+    <ListComponent className={clsx(styles.multiColumnList, className)}>
       {
         items.map((item, idx) => (
           <li key={idx}>

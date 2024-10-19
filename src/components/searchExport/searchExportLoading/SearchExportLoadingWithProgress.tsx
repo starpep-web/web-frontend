@@ -1,17 +1,17 @@
+'use client';
 import React from 'react';
-import { Content, Heading, Block } from 'react-bulma-components';
 import SearchExportProgressBar from './SearchExportProgressBar';
 import SearchExportSteps from './SearchExportSteps';
 import { useAutoRefresh } from '@components/hooks/useAutoRefresh';
-import { SearchExportFormData, SearchExportResource } from '@lib/models/export';
-import { DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS } from '@lib/constants/site';
+import { SearchExportFormData, SearchExportResource } from '@lib/services/bioApi/models/export';
+import { DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS } from '@lib/constants/app';
 
 interface Props {
   done: SearchExportResource[]
   form: SearchExportFormData
 }
 
-const SearchExportLoadingWithProgress: React.FC<Props> = ({ done, form }) => {
+export const SearchExportLoadingWithProgress: React.FC<Props> = ({ done, form }) => {
   useAutoRefresh(DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS);
 
   const exportedResources = Object.entries(form)
@@ -19,21 +19,19 @@ const SearchExportLoadingWithProgress: React.FC<Props> = ({ done, form }) => {
     .map(([k]) => k as SearchExportResource);
 
   return (
-    <Content>
-      <Heading size={2} textAlign="center" mt={4} mb={6}>
+    <div>
+      <h2 className="text-center mt-4 mb-5">
         The Server is Processing your Export Request
-      </Heading>
+      </h2>
 
       <SearchExportProgressBar done={done} exported={exportedResources} />
       <SearchExportSteps done={done} exported={exportedResources} />
 
-      <Block textAlign="center" my={4}>
-        <p>
+      <div className="text-center my-4">
+        <p className="mb-0">
           The page will automatically refresh until the exporting is done, please leave this tab open.
         </p>
-      </Block>
-    </Content>
+      </div>
+    </div>
   );
 };
-
-export default SearchExportLoadingWithProgress;

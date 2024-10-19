@@ -1,6 +1,6 @@
 import React from 'react';
-import { SearchExportResource } from '@lib/models/export';
-import { Block, Progress } from 'react-bulma-components';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import { SearchExportResource } from '@lib/services/bioApi/models/export';
 import { formatNumberMaxDecimals } from '@lib/utils/number';
 
 interface Props {
@@ -14,19 +14,16 @@ const SearchExportProgressBar: React.FC<Props> = ({ done, exported }) => {
   const progressPercentage = formatNumberMaxDecimals(currentProgress / maxProgress * 100, 0);
 
   return (
-    <Block textAlign="center" mb={4}>
-      <Progress
-        color="primary"
-        size="large"
-        mb={2}
-        value={currentProgress}
+    <div className="text-center mb-4">
+      <ProgressBar
+        className="mb-2"
+        variant="primary"
+        now={currentProgress}
         max={maxProgress}
+        label={`${progressPercentage}%`}
+        animated
       />
-
-      <span className="has-text-grey">
-        Current Progress: {progressPercentage}%
-      </span>
-    </Block>
+    </div>
   );
 };
 

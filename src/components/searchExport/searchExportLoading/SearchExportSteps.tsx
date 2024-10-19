@@ -1,7 +1,6 @@
 import React from 'react';
-import { Block } from 'react-bulma-components';
 import { StepStatus } from '@components/common/stepStatus';
-import { SearchExportResource } from '@lib/models/export';
+import { SearchExportResource } from '@lib/services/bioApi/models/export';
 
 const resourceInProgressTexts: Record<SearchExportResource, string> = {
   fasta: 'Merging sequences...',
@@ -30,7 +29,7 @@ interface Props {
 
 const SearchExportSteps: React.FC<Props> = ({ done, exported }) => {
   return (
-    <Block>
+    <div className="d-flex flex-column align-items-start gap-3">
       {
         exported.map((resource) => {
           const isDone = done.includes(resource);
@@ -50,7 +49,7 @@ const SearchExportSteps: React.FC<Props> = ({ done, exported }) => {
         status="in-progress"
         text="Creating ZIP archive..."
       />
-    </Block>
+    </div>
   );
 };
 
