@@ -7,7 +7,7 @@ interface Props {
   exportedItems: SearchExportFormData
 }
 
-const ApproximateArchiveInformation: React.FC<Props> = ({ total, exportedItems }) => {
+export const ApproximateArchiveInformation: React.FC<Props> = ({ total, exportedItems }) => {
   const bytesPerPeptide = Object.entries(exportedItems)
     .filter(([_, v]) => v)
     .map(([k]) => approximateBytesForItemPerPeptide[k as SearchExportResource])
@@ -28,5 +28,3 @@ const ApproximateArchiveInformation: React.FC<Props> = ({ total, exportedItems }
     </div>
   );
 };
-
-export default ApproximateArchiveInformation;

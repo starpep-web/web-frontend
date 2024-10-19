@@ -21,7 +21,7 @@ interface Props {
   total: number
 }
 
-const ExportedResourcesInformation: React.FC<Props> = ({ form, peptideIds, total }) => {
+export const ExportedResourcesInformation: React.FC<Props> = ({ form, peptideIds, total }) => {
   const exportedResourceFriendlyTexts = Object.entries(form)
     .filter(([_, v]) => v)
     .map(([k]) => resourceFriendlyNames[k as SearchExportResource]);
@@ -49,5 +49,3 @@ const ExportedResourcesInformation: React.FC<Props> = ({ form, peptideIds, total
     </div>
   );
 };
-
-export default ExportedResourcesInformation;

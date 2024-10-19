@@ -52,5 +52,3 @@ export const PeptideAttributes: React.FC<Props> = ({ attributes }) => {
     </div>
   );
 };
-
-export default PeptideAttributes;

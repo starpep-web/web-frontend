@@ -1,7 +1,7 @@
 import React, { Fragment, useReducer, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Dropdown } from '@components/form/dropdown';
-import SingleQueryAlignmentOptionsForm from './SingleQueryAlignmentOptionsForm';
+import { SingleQueryAlignmentOptionsForm } from './SingleQueryAlignmentOptionsForm';
 import { SUPPORTED_CRITERIA, DEFAULT_MULTI_ALIGNMENT_OPTIONS } from '@lib/services/bioApi/helpers/search';
 import { MultiQueryAlignmentOptions, SingleQueryAlignmentOptions } from '@lib/services/bioApi/models/search';
 
@@ -24,7 +24,7 @@ interface Props {
   onChange?: (options: MultiQueryAlignmentOptions) => void
 }
 
-const MultiQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
+export const MultiQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
   const [state, dispatch] = useReducer(reducer, DEFAULT_MULTI_ALIGNMENT_OPTIONS);
 
   useEffect(() => {
@@ -54,5 +54,3 @@ const MultiQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
     </Fragment>
   );
 };
-
-export default MultiQueryAlignmentOptionsForm;

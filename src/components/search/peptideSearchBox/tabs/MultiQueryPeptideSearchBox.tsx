@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import { useRouter } from 'next/navigation';
 import { ErrorMessage } from '@components/common/errorMessage';
-import MultiQueryAlignmentOptionsForm from '../helpers/MultiQueryAlignmentOptionsForm';
+import { MultiQueryAlignmentOptionsForm } from '../helpers/MultiQueryAlignmentOptionsForm';
 import { postMultiQuerySearchAction } from '@actions/search/alignment/multi-query';
 import { RouteDefs } from '@lib/constants/routes';
 import { DEFAULT_MULTI_ALIGNMENT_OPTIONS } from '@lib/services/bioApi/helpers/search';
@@ -13,7 +13,7 @@ import MagnifyingGlassIcon from '@assets/svg/icons/magnifying-glass-solid.svg';
 
 const queryPlaceholder = '>Query1\nGIGAVLKVLTTGLPALISWIKRKRQQ\n>Query2\nGIGKFLHSAKKFGKAFVGEIMNS';
 
-const MultiQueryPeptideSearchBox = () => {
+export const MultiQueryPeptideSearchBox = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [query, setQuery] = useState<string>('');
@@ -102,5 +102,3 @@ const MultiQueryPeptideSearchBox = () => {
     </Form>
   );
 };
-
-export default MultiQueryPeptideSearchBox;

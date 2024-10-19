@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
-import SearchExportProgressBar from './SearchExportProgressBar';
-import SearchExportSteps from './SearchExportSteps';
+import { SearchExportProgressBar } from './SearchExportProgressBar';
+import { SearchExportSteps } from './SearchExportSteps';
 import { useAutoRefresh } from '@components/hooks/useAutoRefresh';
 import { SearchExportFormData, SearchExportResource } from '@lib/services/bioApi/models/export';
 import { DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS } from '@lib/constants/app';

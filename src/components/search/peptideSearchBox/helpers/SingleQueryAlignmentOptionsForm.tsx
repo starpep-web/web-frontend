@@ -31,7 +31,7 @@ interface Props {
   onChange?: (options: SingleQueryAlignmentOptions) => void
 }
 
-const SingleQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
+export const SingleQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
   const [state, dispatch] = useReducer(reducer, DEFAULT_SINGLE_ALIGNMENT_OPTIONS);
 
   useEffect(() => {
@@ -130,5 +130,3 @@ const SingleQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
     </Row>
   );
 };
-
-export default SingleQueryAlignmentOptionsForm;

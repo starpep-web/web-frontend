@@ -8,8 +8,8 @@ import ModalBody from 'react-bootstrap/ModalBody';
 import ModalFooter from 'react-bootstrap/ModalFooter';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
-import SearchExportForm from './SearchExportForm';
-import ApproximateArchiveInformation from './ApproximateArchiveInformation';
+import { SearchExportForm } from './SearchExportForm';
+import { ApproximateArchiveInformation } from './ApproximateArchiveInformation';
 import { useClientNavigation } from '@components/hooks/useClientNavigation';
 import {
   SearchExportFormData,
@@ -46,7 +46,7 @@ interface Props {
   onSuccess?: () => void
 }
 
-const SearchExportModal: React.FC<Props> = ({ totalCount, type, data, show, onClose, onSuccess }) => {
+export const SearchExportModal: React.FC<Props> = ({ totalCount, type, data, show, onClose, onSuccess }) => {
   const [formData, setFormData] = useState<SearchExportFormData>(DEFAULT_EXPORT_FORM_DATA);
   const [error, setError] = useState<string | null>(null);
   const { navigateToNewTab } = useClientNavigation();
@@ -139,5 +139,3 @@ const SearchExportModal: React.FC<Props> = ({ totalCount, type, data, show, onCl
     </Modal>
   );
 };
-
-export default SearchExportModal;

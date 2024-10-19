@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import { useRouter } from 'next/navigation';
 import { ErrorMessage } from '@components/common/errorMessage';
-import SingleQueryAlignmentOptionsForm from '../helpers/SingleQueryAlignmentOptionsForm';
+import { SingleQueryAlignmentOptionsForm } from '../helpers/SingleQueryAlignmentOptionsForm';
 import { TextSearchInput } from '../helpers/TextSearchInput';
 import { postSingleQuerySearchAction } from '@actions/search/alignment/single-query';
 import MagnifyingGlassIcon from '@assets/svg/icons/magnifying-glass-solid.svg';
@@ -13,7 +13,7 @@ import { RouteDefs } from '@lib/constants/routes';
 import { DEFAULT_SINGLE_ALIGNMENT_OPTIONS } from '@lib/services/bioApi/helpers/search';
 import { SingleQueryAlignmentOptions } from '@lib/services/bioApi/models/search';
 
-const SingleQueryPeptideSearchBox = () => {
+export const SingleQueryPeptideSearchBox = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [query, setQuery] = useState<string>('');
@@ -98,5 +98,3 @@ const SingleQueryPeptideSearchBox = () => {
     </Form>
   );
 };
-
-export default SingleQueryPeptideSearchBox;

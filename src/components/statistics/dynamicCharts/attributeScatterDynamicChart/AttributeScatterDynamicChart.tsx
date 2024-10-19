@@ -6,7 +6,7 @@ import uniqolor from 'uniqolor';
 import { WithExportableTitledBox } from '@components/common/withTitledBox';
 import { ScatterChart } from '@components/statistics/charts';
 import { useFetch } from '@components/hooks/useFetch';
-import AttributesPicker from './AttributesPicker';
+import { AttributesPicker } from './AttributesPicker';
 import { getAttributeScatterAction } from '@actions/statistics/dynamic/attribute-scatter';
 import { getFriendlyNameForRawAttribute } from '@lib/services/api/helpers/peptide';
 import { RawAttributeName } from '@lib/services/api/models/peptide';

@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import SearchExportModal from './SearchExportModal';
+import { SearchExportModal } from './SearchExportModal';
 import UpRightFromSquareIcon from '@assets/svg/icons/up-right-from-square-solid.svg';
 import { ExportPayloadType } from '@lib/services/bioApi/models/export';
 

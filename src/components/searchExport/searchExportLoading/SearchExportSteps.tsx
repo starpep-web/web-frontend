@@ -27,7 +27,7 @@ interface Props {
   exported: SearchExportResource[]
 }
 
-const SearchExportSteps: React.FC<Props> = ({ done, exported }) => {
+export const SearchExportSteps: React.FC<Props> = ({ done, exported }) => {
   return (
     <div className="d-flex flex-column align-items-start gap-3">
       {
@@ -52,5 +52,3 @@ const SearchExportSteps: React.FC<Props> = ({ done, exported }) => {
     </div>
   );
 };
-
-export default SearchExportSteps;

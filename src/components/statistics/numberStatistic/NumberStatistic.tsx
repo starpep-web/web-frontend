@@ -23,5 +23,3 @@ export const NumberStatistic: React.FC<Props> = ({ title, value, className }) =>
     </Card>
   );
 };
-
-export default NumberStatistic;

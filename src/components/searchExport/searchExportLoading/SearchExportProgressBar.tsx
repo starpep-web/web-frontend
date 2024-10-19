@@ -8,7 +8,7 @@ interface Props {
   exported: SearchExportResource[]
 }
 
-const SearchExportProgressBar: React.FC<Props> = ({ done, exported }) => {
+export const SearchExportProgressBar: React.FC<Props> = ({ done, exported }) => {
   const maxProgress = exported.length + 1; // We count the "archiving" process as an extra step.
   const currentProgress = done.length; // We don't add the "archiving" process so the progress bar never reaches 100%.
   const progressPercentage = formatNumberMaxDecimals(currentProgress / maxProgress * 100, 0);
@@ -26,5 +26,3 @@ const SearchExportProgressBar: React.FC<Props> = ({ done, exported }) => {
     </div>
   );
 };
-
-export default SearchExportProgressBar;

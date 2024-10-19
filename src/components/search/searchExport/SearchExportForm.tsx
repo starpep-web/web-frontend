@@ -32,7 +32,7 @@ interface Props {
   onChange?: (state: SearchExportFormData) => void
 }
 
-const SearchExportForm: React.FC<Props> = ({ initialData, onChange }) => {
+export const SearchExportForm: React.FC<Props> = ({ initialData, onChange }) => {
   const [formState, setFormState] = useState<SearchExportFormData>(initialData ?? DEFAULT_EXPORT_FORM_DATA);
 
   const handleChange = (key: keyof SearchExportFormData) => (e: ChangeEvent<HTMLInputElement>) => {
@@ -67,5 +67,3 @@ const SearchExportForm: React.FC<Props> = ({ initialData, onChange }) => {
     </Card>
   );
 };
-
-export default SearchExportForm;

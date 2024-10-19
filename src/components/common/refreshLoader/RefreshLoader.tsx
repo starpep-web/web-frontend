@@ -37,5 +37,3 @@ export const RefreshLoader: React.FC<Props> = ({ className, style, title, subtit
     </div>
   );
 };
-
-export default RefreshLoader;

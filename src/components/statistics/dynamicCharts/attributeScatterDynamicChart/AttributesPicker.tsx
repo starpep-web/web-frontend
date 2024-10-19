@@ -35,7 +35,7 @@ interface Props {
   yValue: RawAttributeName
 }
 
-const AttributePicker: React.FC<Props> = ({ onChange, xValue, yValue }) => {
+export const AttributesPicker: React.FC<Props> = ({ onChange, xValue, yValue }) => {
   const handleDropdownChange = (axis: Axis2D) => (value: string) => {
     onChange?.(axis, friendlyNameToAttributeMap[value]);
   };
@@ -68,5 +68,3 @@ const AttributePicker: React.FC<Props> = ({ onChange, xValue, yValue }) => {
     </div>
   );
 };
-
-export default AttributePicker;

@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import CardBody from 'react-bootstrap/CardBody';
 import Button from 'react-bootstrap/Button';
-import ExportedResourcesInformation from './ExportedResourcesInformation';
+import { ExportedResourcesInformation } from './ExportedResourcesInformation';
 import { SearchExportFormData } from '@lib/services/bioApi/models/export';
 import { NEXT_PUBLIC_DOWNLOADS_URL } from '@lib/config/app';
 
