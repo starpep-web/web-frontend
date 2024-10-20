@@ -7,7 +7,7 @@ import { SearchExportFormData } from '@lib/services/bioApi/models/export';
 import { NEXT_PUBLIC_DOWNLOADS_URL } from '@lib/config/app';
 
 const getArchiveDownloadUrl = (taskId: string): string => {
-  return `${NEXT_PUBLIC_DOWNLOADS_URL}/tmp/${taskId}.zip`;
+  return `${NEXT_PUBLIC_DOWNLOADS_URL}/tmp/export-${taskId}.zip`;
 };
 
 interface Props {
