@@ -4,14 +4,7 @@ const nextConfig = {
   trailingSlash: true,
   output: 'standalone',
   images: {
-    remotePatterns: [
-      {
-        protocol: process.env.NEXT_PUBLIC_STRAPI_PROTO,
-        hostname: process.env.NEXT_PUBLIC_STRAPI_HOST,
-        port: process.env.NEXT_PUBLIC_STRAPI_PORT,
-        pathname: '/**'
-      }
-    ]
+    unoptimized: true
   },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find((rule) =>
