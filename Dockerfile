@@ -1,34 +1,46 @@
-# Build Stage
-FROM node:16-alpine AS build
+FROM node:20.18.0-alpine AS base
+
+FROM base AS deps
 
 WORKDIR /tmp/app
-
-RUN apk add --no-cache libc6-compat
 
 COPY package*.json ./
 RUN npm ci
 
-ENV BUILDING_STAGE true
+FROM base AS build
+
+ENV NODE_ENV=production
+WORKDIR /tmp/app
+
+COPY --from=deps /tmp/app/node_modules ./node_modules
 COPY . .
+
+# Any NEXT_PUBLIC env variables must be added here for them to work.
+ENV NEXT_PUBLIC_URL=NEXT_PUBLIC_URL
+ENV NEXT_PUBLIC_DOWNLOADS_URL=NEXT_PUBLIC_DOWNLOADS_URL
+ENV NEXT_PUBLIC_STRAPI_PROTO=NEXT_PUBLIC_STRAPI_PROTO
+ENV NEXT_PUBLIC_STRAPI_HOST=NEXT_PUBLIC_STRAPI_HOST
+ENV NEXT_PUBLIC_STRAPI_PORT=NEXT_PUBLIC_STRAPI_PORT
+
 RUN npm run build
 
-# Image
-FROM node:16-alpine
+FROM base AS runner
+
+RUN adduser -D starpep-web-frontend
+USER starpep-web-frontend
 
 WORKDIR /opt/app
-ENV NODE_ENV production
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+COPY --from=build --chown=starpep-web-frontend /tmp/app/public ./public
+COPY --from=build --chown=starpep-web-frontend /tmp/app/.next/standalone ./
+COPY --from=build --chown=starpep-web-frontend /tmp/app/.next/static ./.next/static
 
-COPY README.md Dockerfile ./
-COPY --from=build /tmp/app/public ./public
-COPY --from=build --chown=nextjs:nodejs /tmp/app/.next/standalone ./
-COPY --from=build --chown=nextjs:nodejs /tmp/app/.next/static ./.next/static
-
-USER nextjs
-
-ENV PORT 3000
+ENV NODE_ENV=production
+ENV PORT=3000
 EXPOSE 3000
 
+COPY --chown=starpep-web-frontend entrypoint.sh ./
+RUN chmod +x /opt/app/entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]
 CMD ["node", "server.js"]

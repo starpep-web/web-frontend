@@ -1,0 +1,1 @@
+export { AttributeHistogramDynamicChart } from './AttributeHistogramDynamicChart';

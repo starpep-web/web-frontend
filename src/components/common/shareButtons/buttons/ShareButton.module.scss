@@ -1,0 +1,17 @@
+.shareButtonFacebook {
+  &:hover, &:focus, &:active {
+    fill: #1877f2;
+  }
+}
+
+.shareButtonTwitter {
+  &:hover, &:focus, &:active {
+    fill: #111;
+  }
+}
+
+.shareButtonLinkedIn {
+  &:hover, &:focus, &:active {
+    fill: #0a66c2;
+  }
+}

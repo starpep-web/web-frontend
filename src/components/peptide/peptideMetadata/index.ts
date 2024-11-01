@@ -1,0 +1,1 @@
+export { PeptideMetadata } from './PeptideMetadata';

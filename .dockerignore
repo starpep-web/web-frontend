@@ -1,16 +1,15 @@
-# Ignore everything by default
+# Ignore everything by default.
 *
 
-# Allow the public project files.
-!Dockerfile
-!README.md
-!package.json
-!package-lock.json
-!next-env.d.ts
-!next.config.js
-!tsconfig.json
-!components
-!lib
-!pages
+# Manually add what to use.
 !public
-!styles
+!src
+!Dockerfile
+!entrypoint.sh
+!graphql-codegen.ts
+!LICENSE
+!next.config.js
+!next-env.d.ts
+!package*.json
+!remote-schema.graphql
+!tsconfig.json

@@ -1,9 +1,11 @@
 {
   "extends": [
-    "greencoast/react-ts"
+    "@moonstar-x/eslint-config/rules/react/typescript"
   ],
   "rules": {
-    "no-extra-parens": "off",
     "camelcase": "off"
+  },
+  "globals": {
+    "RequestInit": true
   }
 }

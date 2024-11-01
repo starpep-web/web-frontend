@@ -1,86 +1,103 @@
-[![Build Status](https://ci.moonstar-x.dev/job/github-webpeptide/job/web-frontend/job/master/badge/icon?subject=CI%20%28Jenkins%29%0A)](https://ci.moonstar-x.dev/job/github-webpeptide/job/web-frontend/job/master/)
+# Web Frontend
 
-# web-frontend
+This repository contains the code for the web frontend.
 
-Web Frontend made with Next.js (TypeScript)
+## Requirements
+
+In order to develop for this repository you need:
+
+* [Node.js v20.18.0](https://nodejs.org/en) (but any `v20` should work fine)
+* [Docker](https://www.docker.com/products/docker-desktop/)
+* Have [env-development](https://github.com/starpep-web/env-development) running locally.
+* Have [api-service](https://github.com/starpep-web/api-service) running locally.
+* Have [api-bio](https://github.com/starpep-web/api-bio) running locally.
+* Have [web-cms](https://github.com/starpep-web/web-cms) running locally.
 
 ## Development
 
-To start development, make sure you're using Node version `16.15.1` which is the [LTS version at the time of writing](https://nodejs.org/en/about/releases/).
-You can use [nvm](https://github.com/nvm-sh/nvm) to allow for multiple node versions in your machine.
+First, clone this repository:
 
-You will also need [Docker](https://www.docker.com/) to create a development environment in your machine to have access
-to the required services for development.
-
-### First Steps
-
-First, clone this repo:
-
-```text
-git clone https://github.com/WebPeptide/web-frontend
+```bash
+git clone https://github.com/starpep-web/web-frontend
 ```
 
-Then, install the project's dependencies:
+Install the dependencies:
 
-```text
+```bash
 npm install
 ```
 
-### Working
-
-Start a development environment by running inside the `dev` folder:
+Create an `.env` file with the following contents:
 
 ```text
-docker-compose up
+API_URL=http://localhost:4000
+BIO_API_URL=http://localhost:8000
+
+NEXT_PUBLIC_URL=http://localhost:3000
+NEXT_PUBLIC_DOWNLOADS_URL=http://localhost:10000
+LOCAL_DOWNLOADS_URL=http://localhost:10000
+
+NEXT_REVALIDATE_TIME=600
+
+STRAPI_API_TOKEN=YOUR_TOKEN_HERE
+NEXT_PUBLIC_STRAPI_PROTO=http
+NEXT_PUBLIC_STRAPI_HOST=localhost
+NEXT_PUBLIC_STRAPI_PORT=1337
 ```
 
-This will start a neo4j database on port 7687 with a web dashboard on port 7474 and the datamining api on port 8080.
-You can update these services by running:
+> Replace `YOUR_TOKEN_HERE` with a token generated on your Strapi instance created by following [web-cms](https://github.com/starpep-web/web-cms)'s README.
 
-```text
-docker-compose pull
-```
+Run the `dev` script:
 
-To start the development server, run:
-
-```text
+```bash
 npm run dev
 ```
 
-This will start a development server on port 3000 accessible at http://localhost:3000
+And done, the service should be reachable at `http://localhost:3000`.
 
-You can also run the linter to make sure you have no linting errors with:
+If you make changes to the [web-cms](https://github.com/starpep-web/web-cms) or if you create/edit Strapi GraphQL queries, you should run the `npm run cms:codegen` command to update typing and schemas.
 
-```text
-npm run lint
-```
+## Testing
 
-Or run the auto-fixer for linting issues:
+Some testing commands are available to you:
 
-```text
-npm run lint:fix
-```
+### `npm run type-check`
 
-Also, you can run the test suites with:
+This command will run the TypeScript type checker for any compile errors.
 
-```text
-npm test
-```
+### `npm run lint`
 
-Or, run the test runner in watch mode with:
+This command will run the linter to check for any styling errors.
 
-```text
-npm run test:watch
-```
+### `npm run lint:fix`
+
+This command will run the linter and fix any fixable styling errors.
+
+### `npm run test`
+
+This command will run unit tests once.
+
+### `npm run test:watch`
+
+This command will run the unit test runner in watch-mode.
 
 ## Building
 
-You can build this application to generate a Docker image.
+If you're developing this on your local machine, consider building the Docker image with the following command:
 
-To do so, run the following command:
-
-```text
-docker build -t webpep/web-frontend .
+```bash
+docker build -t local-starpep/web-frontend:latest .
 ```
 
-This will create a `webpep/web-frontend` Docker image in your local machine.
+You can create a new container to try it out with the following command:
+
+```bash
+docker run -it --rm -p 3000:3000 -e API_URL=http://localhost:4000 -e BIO_API_URL=http://localhost:8000 -e NEXT_PUBLIC_URL=http://localhost:3000 -e NEXT_PUBLIC_DOWNLOADS_URL=http://localhost:10000 -e LOCAL_DOWNLOADS_URL=http://localhost:10000 -e NEXT_REVALIDATE_TIME=600 -e STRAPI_API_TOKEN=YOUR_TOKEN_HERE -e NEXT_PUBLIC_STRAPI_PROTO=http -e NEXT_PUBLIC_STRAPI_HOST=localhost -e NEXT_PUBLIC_STRAPI_PORT=1337 local-starpep/web-frontend:latest
+docker run -it --rm -p 3000:3000 local-starpep/web-frontend:latest
+```
+
+And done, the service should be reachable at `http://localhost:3000`.
+
+## Production
+
+Consider checking this [docker-compose.yml](https://github.com/starpep-web/env-production/blob/main/docker-compose.yml) for an example on how to run this image in production.

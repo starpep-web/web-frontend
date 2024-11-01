@@ -2,3 +2,4 @@ node_modules
 .next
 build
 next-env.d.ts
+src/lib/services/strapi/graphql/__generated__/*
