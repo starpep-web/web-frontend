@@ -1,0 +1,15 @@
+# Ignore everything by default.
+*
+
+# Manually add what to use.
+!public
+!src
+!Dockerfile
+!entrypoint.sh
+!graphql-codegen.ts
+!LICENSE
+!next.config.js
+!next-env.d.ts
+!package*.json
+!remote-schema.graphql
+!tsconfig.json
