@@ -1,0 +1,47 @@
+/* eslint-disable */
+import * as types from './graphql';
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+
+/**
+ * Map of all GraphQL operations in the project.
+ *
+ * This map has several performance disadvantages:
+ * 1. It is not tree-shakeable, so it will include all operations in the project.
+ * 2. It is not minifiable, so the string of a GraphQL query will be multiple times inside the bundle.
+ * 3. It does not support dead code elimination, so it will add unused operations.
+ *
+ * Therefore it is highly recommended to use the babel or swc plugin for production.
+ */
+const documents = {
+    "\n  query GetFaqPage {\n    faqPage {\n      data {\n        attributes {\n          faqs {\n            question\n            answer\n          }\n        }\n      }\n    }\n  }\n": types.GetFaqPageDocument,
+    "\n  query GetHomePage {\n    homePage {\n      data {\n        attributes {\n          imageGallery {\n            images {\n              data {\n                attributes {\n                  url\n                  alternativeText\n                  width\n                  height\n                }\n              }\n            }\n          }\n          heroText {\n            color\n            text\n          }\n          about {\n            text\n            image {\n              data {\n                attributes {\n                  url\n                  alternativeText\n                  width\n                  height\n                }\n              }\n            }\n            flip\n          }\n          projectLeaders {\n            title\n            type\n            members {\n              avatar {\n                data {\n                  attributes {\n                    url\n                    alternativeText\n                    width\n                    height\n                  }\n                }\n              }\n              name\n              email\n              occupation\n              affiliations\n              website\n              location\n              shortCv\n            }\n          }\n          collaborators {\n            title\n            type\n            members {\n              avatar {\n                data {\n                  attributes {\n                    url\n                    alternativeText\n                    width\n                    height\n                  }\n                }\n              }\n              name\n              email\n              occupation\n              affiliations\n              website\n              location\n              shortCv\n            }\n          }\n          developers {\n            title\n            type\n            members {\n              avatar {\n                data {\n                  attributes {\n                    url\n                    alternativeText\n                    width\n                    height\n                  }\n                }\n              }\n              name\n              email\n              occupation\n              affiliations\n              website\n              location\n              shortCv\n            }\n          }\n        }\n      }\n    }\n  }\n": types.GetHomePageDocument,
+};
+
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ *
+ *
+ * @example
+ * ```ts
+ * const query = graphql(`query GetUser($id: ID!) { user(id: $id) { name } }`);
+ * ```
+ *
+ * The query argument is unknown!
+ * Please regenerate the types.
+ */
+export function graphql(source: string): unknown;
+
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetFaqPage {\n    faqPage {\n      data {\n        attributes {\n          faqs {\n            question\n            answer\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetFaqPage {\n    faqPage {\n      data {\n        attributes {\n          faqs {\n            question\n            answer\n          }\n        }\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetHomePage {\n    homePage {\n      data {\n        attributes {\n          imageGallery {\n            images {\n              data {\n                attributes {\n                  url\n                  alternativeText\n                  width\n                  height\n                }\n              }\n            }\n          }\n          heroText {\n            color\n            text\n          }\n          about {\n            text\n            image {\n              data {\n                attributes {\n                  url\n                  alternativeText\n                  width\n                  height\n                }\n              }\n            }\n            flip\n          }\n          projectLeaders {\n            title\n            type\n            members {\n              avatar {\n                data {\n                  attributes {\n                    url\n                    alternativeText\n                    width\n                    height\n                  }\n                }\n              }\n              name\n              email\n              occupation\n              affiliations\n              website\n              location\n              shortCv\n            }\n          }\n          collaborators {\n            title\n            type\n            members {\n              avatar {\n                data {\n                  attributes {\n                    url\n                    alternativeText\n                    width\n                    height\n                  }\n                }\n              }\n              name\n              email\n              occupation\n              affiliations\n              website\n              location\n              shortCv\n            }\n          }\n          developers {\n            title\n            type\n            members {\n              avatar {\n                data {\n                  attributes {\n                    url\n                    alternativeText\n                    width\n                    height\n                  }\n                }\n              }\n              name\n              email\n              occupation\n              affiliations\n              website\n              location\n              shortCv\n            }\n          }\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetHomePage {\n    homePage {\n      data {\n        attributes {\n          imageGallery {\n            images {\n              data {\n                attributes {\n                  url\n                  alternativeText\n                  width\n                  height\n                }\n              }\n            }\n          }\n          heroText {\n            color\n            text\n          }\n          about {\n            text\n            image {\n              data {\n                attributes {\n                  url\n                  alternativeText\n                  width\n                  height\n                }\n              }\n            }\n            flip\n          }\n          projectLeaders {\n            title\n            type\n            members {\n              avatar {\n                data {\n                  attributes {\n                    url\n                    alternativeText\n                    width\n                    height\n                  }\n                }\n              }\n              name\n              email\n              occupation\n              affiliations\n              website\n              location\n              shortCv\n            }\n          }\n          collaborators {\n            title\n            type\n            members {\n              avatar {\n                data {\n                  attributes {\n                    url\n                    alternativeText\n                    width\n                    height\n                  }\n                }\n              }\n              name\n              email\n              occupation\n              affiliations\n              website\n              location\n              shortCv\n            }\n          }\n          developers {\n            title\n            type\n            members {\n              avatar {\n                data {\n                  attributes {\n                    url\n                    alternativeText\n                    width\n                    height\n                  }\n                }\n              }\n              name\n              email\n              occupation\n              affiliations\n              website\n              location\n              shortCv\n            }\n          }\n        }\n      }\n    }\n  }\n"];
+
+export function graphql(source: string) {
+  return (documents as any)[source] ?? {};
+}
+
+export type DocumentType<TDocumentNode extends DocumentNode<any, any>> = TDocumentNode extends DocumentNode<  infer TType,  any>  ? TType  : never;

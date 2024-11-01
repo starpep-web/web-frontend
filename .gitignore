@@ -36,7 +36,3 @@ yarn-error.log*
 
 # secrets
 *.env
-
-# graphql
-remote-schema.graphql
-src/lib/services/strapi/graphql/__generated__/*
