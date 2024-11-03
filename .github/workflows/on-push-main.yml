@@ -29,5 +29,6 @@ jobs:
       - build
     with:
       repo: ${{ vars.DEPLOYMENT_REPO }}
+      message: Deployed from ${{ github.repository }} by ${{ github.actor }}
     secrets:
       token: ${{ secrets.REPO_DISPATCH_TOKEN }}
