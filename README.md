@@ -40,9 +40,7 @@ LOCAL_DOWNLOADS_URL=http://localhost:10000
 NEXT_REVALIDATE_TIME=600
 
 STRAPI_API_TOKEN=YOUR_TOKEN_HERE
-NEXT_PUBLIC_STRAPI_PROTO=http
-NEXT_PUBLIC_STRAPI_HOST=localhost
-NEXT_PUBLIC_STRAPI_PORT=1337
+NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
 ```
 
 > Replace `YOUR_TOKEN_HERE` with a token generated on your Strapi instance created by following [web-cms](https://github.com/starpep-web/web-cms)'s README.
@@ -92,7 +90,7 @@ docker build -t local-starpep/web-frontend:latest .
 You can create a new container to try it out with the following command:
 
 ```bash
-docker run -it --rm -p 3000:3000 -e API_URL=http://localhost:4000 -e BIO_API_URL=http://localhost:8000 -e NEXT_PUBLIC_URL=http://localhost:3000 -e NEXT_PUBLIC_DOWNLOADS_URL=http://localhost:10000 -e LOCAL_DOWNLOADS_URL=http://localhost:10000 -e NEXT_REVALIDATE_TIME=600 -e STRAPI_API_TOKEN=YOUR_TOKEN_HERE -e NEXT_PUBLIC_STRAPI_PROTO=http -e NEXT_PUBLIC_STRAPI_HOST=localhost -e NEXT_PUBLIC_STRAPI_PORT=1337 local-starpep/web-frontend:latest
+docker run -it --rm -p 3000:3000 -e API_URL=http://localhost:4000 -e BIO_API_URL=http://localhost:8000 -e NEXT_PUBLIC_URL=http://localhost:3000 -e NEXT_PUBLIC_DOWNLOADS_URL=http://localhost:10000 -e LOCAL_DOWNLOADS_URL=http://localhost:10000 -e NEXT_REVALIDATE_TIME=600 -e STRAPI_API_TOKEN=YOUR_TOKEN_HERE -e NEXT_PUBLIC_STRAPI_URL=http://localhost:1337 local-starpep/web-frontend:latest
 docker run -it --rm -p 3000:3000 local-starpep/web-frontend:latest
 ```
 

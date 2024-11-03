@@ -11,9 +11,7 @@ declare global {
       NEXT_REVALIDATE_TIME?: string
 
       STRAPI_API_TOKEN?: string
-      NEXT_PUBLIC_STRAPI_PROTO?: string
-      NEXT_PUBLIC_STRAPI_HOST?: string
-      NEXT_PUBLIC_STRAPI_PORT?: string
+      NEXT_PUBLIC_STRAPI_URL?: string
     }
   }
 }
