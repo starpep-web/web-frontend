@@ -17,6 +17,7 @@ const backgroundMap: Record<Enum_Componentteamteammembercardgroup_Type, string> 
 
 interface Props {
   className?: string
+  id?: string
   title?: string
   type?: Enum_Componentteamteammembercardgroup_Type
   members?: Maybe<{
@@ -40,12 +41,12 @@ interface Props {
   }>[]
 }
 
-export const TeamMemberCardGroup: React.FC<Props> = ({ className, title, type, members }) => {
+export const TeamMemberCardGroup: React.FC<Props> = ({ className, id, title, type, members }) => {
   const textColorClassName = getFromEnum(textColorMap, type, Enum_Componentteamteammembercardgroup_Type.Simple);
   const backgroundClassName = getFromEnum(backgroundMap, type, Enum_Componentteamteammembercardgroup_Type.Simple);
 
   return (
-    <section className={clsx('relative', className)}>
+    <section id={id} className={clsx('relative', className)}>
       <h3 className={clsx('text-center py-3 mb-3', textColorClassName)}>
         {title}
       </h3>

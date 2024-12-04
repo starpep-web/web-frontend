@@ -6,6 +6,7 @@ import { Maybe } from '@lib/utils/types';
 
 interface Props {
   className?: string
+  id?: string
   text?: string
   image?: {
     data: Maybe<{
@@ -20,9 +21,9 @@ interface Props {
   flip?: boolean
 }
 
-export const TextImageColumn: React.FC<Props> = ({ className, text, image, flip }) => {
+export const TextImageColumn: React.FC<Props> = ({ className, id, text, image, flip }) => {
   return (
-    <section className={clsx('w-full d-flex gap-5', flip ? 'flex-column flex-md-row-reverse' : 'flex-column-reverse flex-md-row', className)}>
+    <section id={id} className={clsx('w-full d-flex gap-5', flip ? 'flex-column flex-md-row-reverse' : 'flex-column-reverse flex-md-row', className)}>
       <div className="w-100 d-flex align-items-center justify-content-center">
         {
           text && (

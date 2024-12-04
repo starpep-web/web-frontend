@@ -28,12 +28,14 @@ const HomePage = async () => {
         text={homePage?.data?.attributes?.heroText.text}
       />
       <TextImageColumn
+        id="about"
         className="mb-5"
         text={homePage?.data?.attributes?.about.text}
         image={homePage?.data?.attributes?.about.image}
         flip={homePage?.data?.attributes?.about.flip}
       />
       <TeamMemberCardGroup
+        id="contact"
         className="mb-4"
         title={homePage?.data?.attributes?.projectLeaders.title}
         type={homePage?.data?.attributes?.projectLeaders.type}
