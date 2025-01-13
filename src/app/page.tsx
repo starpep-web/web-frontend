@@ -20,6 +20,7 @@ const HomePage = async () => {
     <Fragment>
       <ImageGallery
         className="mb-4"
+        maxHeight="400px"
         images={homePage?.data?.attributes?.imageGallery.images}
       />
       <TextCard

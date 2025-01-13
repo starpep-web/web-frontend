@@ -8,6 +8,7 @@ import { StrapiImage } from '@components/cms/utils/strapiImage';
 
 interface Props {
   className?: string
+  maxHeight?: string
   images?: Maybe<{
     data: {
       attributes: Maybe<{
@@ -20,7 +21,7 @@ interface Props {
   }>
 }
 
-export const ImageGallery: React.FC<Props> = ({ className, images }) => {
+export const ImageGallery: React.FC<Props> = ({ className, maxHeight, images }) => {
   if (!images || !images.data.length) {
     return null;
   }
@@ -48,8 +49,9 @@ export const ImageGallery: React.FC<Props> = ({ className, images }) => {
           images.data.map((image, idx) => image && (
             <div key={idx} className="w-100">
               <StrapiImage
-                className="w-100 h-100 object-fit-cover"
+                className="w-100 h-100 object-fit-contain"
                 loading={idx === 0 ? 'eager' : 'lazy'}
+                style={{ maxHeight }}
                 {...image.attributes}
               />
             </div>

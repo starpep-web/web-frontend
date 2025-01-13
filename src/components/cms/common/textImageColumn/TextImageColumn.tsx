@@ -37,7 +37,7 @@ export const TextImageColumn: React.FC<Props> = ({ className, id, text, image, f
       <div className="w-100 d-flex align-items-center justify-content-center">
         {
           image && (
-            <StrapiImage className="w-100 object-fit-cover" {...image.data?.attributes} />
+            <StrapiImage className="w-100 h-auto object-fit-contain" {...image.data?.attributes} />
           )
         }
       </div>

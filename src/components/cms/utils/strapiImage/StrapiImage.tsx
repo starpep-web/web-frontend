@@ -5,6 +5,7 @@ import { getStrapiMedia } from '@lib/services/strapi/utils/media';
 
 interface Props {
   className?: string
+  style?: React.CSSProperties
   loading?: 'eager' | 'lazy'
 
   url?: string
@@ -13,7 +14,7 @@ interface Props {
   height?: Maybe<number>
 }
 
-export const StrapiImage: React.FC<Props> = ({ className, loading, url, alternativeText, width, height }) => {
+export const StrapiImage: React.FC<Props> = ({ className, style, loading, url, alternativeText, width, height }) => {
   const imageUrl = getStrapiMedia(url);
   const altText = alternativeText || 'image';
 
@@ -27,6 +28,7 @@ export const StrapiImage: React.FC<Props> = ({ className, loading, url, alternat
   return (
     <Image
       className={className}
+      style={style}
       loading={loading}
       src={imageUrl}
       alt={altText}
