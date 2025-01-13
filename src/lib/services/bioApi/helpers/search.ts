@@ -5,11 +5,11 @@ export const SUPPORTED_ALGORITHMS = {
   local: 'Local (Smith-Waterman)',
   global: 'Global (Needleman-Wunsch)'
 };
-export const SUPPORTED_CRITERIA = ['avg', 'max', 'min'];
+export const SUPPORTED_CRITERIA = ['max', 'min', 'avg'];
 
 export const DEFAULT_MATRIX_NAME = 'BLOSUM62';
 export const DEFAULT_ALGORITHM = 'local';
-export const DEFAULT_CRITERION = 'avg';
+export const DEFAULT_CRITERION = 'max';
 
 export const DEFAULT_SINGLE_ALIGNMENT_OPTIONS: SingleQueryAlignmentOptions = {
   matrix: DEFAULT_MATRIX_NAME,

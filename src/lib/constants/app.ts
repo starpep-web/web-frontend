@@ -9,3 +9,5 @@ export const PEPTIDE_ATTRIBUTE_MAX_DECIMALS = 4;
 export const PEPTIDE_SCORE_DECIMALS = 2;
 
 export const DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS = 5;
+
+export const NEXT_CACHE_TAG_STRAPI = 'strapi-cms';
