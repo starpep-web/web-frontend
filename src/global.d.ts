@@ -9,6 +9,7 @@ declare global {
       LOCAL_DOWNLOADS_URL?: string
 
       NEXT_REVALIDATE_TIME?: string
+      NEXT_INTERNAL_AUTH_SECRET?: string
 
       STRAPI_API_TOKEN?: string
       NEXT_PUBLIC_STRAPI_URL?: string

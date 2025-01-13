@@ -1,7 +1,8 @@
 import 'server-only';
 import { ApolloClient, ApolloLink, HttpLink, InMemoryCache, NormalizedCacheObject, OperationVariables, QueryOptions } from '@apollo/client';
 import { DeepPartial } from 'utility-types';
-import { NEXT_REVALIDATE_TIME, NEXT_PUBLIC_STRAPI_URL, STRAPI_API_TOKEN } from '@lib/config/app';
+import { NEXT_PUBLIC_STRAPI_URL, STRAPI_API_TOKEN } from '@lib/config/app';
+import { NEXT_CACHE_TAG_STRAPI } from '@lib/constants/app';
 
 const httpLink = new HttpLink({
   uri: `${NEXT_PUBLIC_STRAPI_URL}/graphql`,
@@ -13,7 +14,7 @@ const httpLink = new HttpLink({
         Authorization: `Bearer ${STRAPI_API_TOKEN}`
       },
       next: {
-        revalidate: NEXT_REVALIDATE_TIME
+        tags: [NEXT_CACHE_TAG_STRAPI]
       }
     });
   }
