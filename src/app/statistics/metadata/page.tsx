@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { createPageMetadata } from '@lib/next/metadata';
@@ -13,6 +13,7 @@ import {
 import { StatisticsTabs } from '@components/statistics/statisticsTabs';
 import { WithExportableTitledBox } from '@components/common/withTitledBox';
 import { BarChart } from '@components/statistics/charts';
+import { PageContainer } from '@components/common/pageContainer';
 
 export const generateMetadata = () => {
   return createPageMetadata(RouteDefs.statisticsMetadata, {
@@ -32,7 +33,7 @@ const MetadataStatisticsPage = async () => {
   const graphHeight = 400;
 
   return (
-    <Fragment>
+    <PageContainer main>
       <StatisticsTabs currentHref={RouteDefs.statisticsMetadata} />
 
       <WithExportableTitledBox
@@ -121,7 +122,7 @@ const MetadataStatisticsPage = async () => {
           </Col>
         </Row>
       </WithExportableTitledBox>
-    </Fragment>
+    </PageContainer>
   );
 };
 

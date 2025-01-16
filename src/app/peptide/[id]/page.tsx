@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { getPeptideById } from '@lib/services/api/endpoints/peptides';
 import { notFound } from 'next/navigation';
 import { createPageMetadata } from '@lib/next/metadata';
@@ -11,6 +11,7 @@ import { PeptideInfo } from '@components/peptide/peptideInfo';
 import { PeptideAttributes } from '@components/peptide/peptideAttributes';
 import { PeptideMetadata } from '@components/peptide/peptideMetadata';
 import { PeptideDownloads } from '@components/peptide/peptideDownloads';
+import { PageContainer } from '@components/common/pageContainer';
 
 interface Params {
   params: {
@@ -45,14 +46,14 @@ const PeptidePage = async ({ params }: Props) => {
   const pdbString = await getPeptidePdbContent(peptide.id);
 
   return (
-    <Fragment>
+    <PageContainer main>
       <PeptideTitle sequence={peptide.sequence} />
       <PeptideVisualization peptide={peptide} pdbString={pdbString} />
       <PeptideInfo {...peptide} />
       <PeptideAttributes attributes={peptide.attributes} />
       <PeptideMetadata metadata={peptide.metadata} />
       <PeptideDownloads id={peptide.id} />
-    </Fragment>
+    </PageContainer>
   );
 };
 

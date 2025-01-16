@@ -1,8 +1,9 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { createPageMetadata } from '@lib/next/metadata';
 import { RouteDefs } from '@lib/constants/routes';
 import { DownloadsCard } from '@components/downloads/downloadsCard';
+import { PageContainer } from '@components/common/pageContainer';
 import {
   DOWNLOADS_DB_ARCHIVES,
   DOWNLOADS_FASTA_BY_DB,
@@ -22,7 +23,7 @@ export const generateMetadata = () => {
 
 const DownloadsPage = () => {
   return (
-    <Fragment>
+    <PageContainer main>
       <DownloadsCard className="mb-4" title="Peptide Archives">
         <Button variant="primary" as="a" href={DOWNLOADS_PDB_ARCHIVE} target="_blank">
           Complete PDB Archive (.zip)
@@ -92,7 +93,7 @@ const DownloadsPage = () => {
           ))
         }
       </DownloadsCard>
-    </Fragment>
+    </PageContainer>
   );
 };
 

@@ -3,6 +3,7 @@ import { createPageMetadata } from '@lib/next/metadata';
 import { RouteDefs } from '@lib/constants/routes';
 import { getFaqPage } from '@lib/services/strapi/graphql/queries/faqPage';
 import { FaqAccordion } from 'src/components/cms/common/faqAccordion';
+import { PageContainer } from '@components/common/pageContainer';
 
 export const generateMetadata = () => {
   return createPageMetadata(RouteDefs.faq, {
@@ -14,10 +15,12 @@ const FaqPage = async () => {
   const { faqPage } = await getFaqPage();
 
   return (
-    <FaqAccordion
-      className="mb-4"
-      items={faqPage?.data?.attributes?.faqs}
-    />
+    <PageContainer main>
+      <FaqAccordion
+        className="mb-4"
+        items={faqPage?.data?.attributes?.faqs}
+      />
+    </PageContainer>
   );
 };
 

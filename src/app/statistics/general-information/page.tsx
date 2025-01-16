@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { createPageMetadata } from '@lib/next/metadata';
 import { RouteDefs } from '@lib/constants/routes';
 import { getDatabaseDistribution, getDatabaseHeatmap, getFunctionDistribution, getPeptideCount, getUnusualPeptideCount } from '@lib/services/api/endpoints/statistics';
@@ -8,6 +8,7 @@ import { StatisticsTable } from '@components/statistics/statisticsTable';
 import { WithExportableTitledBox } from '@components/common/withTitledBox';
 import { HeatMap } from '@components/statistics/charts';
 import { AminoAcidDistributionDynamicChart } from '@components/statistics/dynamicCharts/aminoAcidDistributionDynamicChart';
+import { PageContainer } from '@components/common/pageContainer';
 
 export const generateMetadata = () => {
   return createPageMetadata(RouteDefs.statisticsGeneralInformation, {
@@ -25,7 +26,7 @@ const GeneralInformationStatisticsPage = async () => {
   const graphHeight = 400;
 
   return (
-    <Fragment>
+    <PageContainer main>
       <StatisticsTabs currentHref={RouteDefs.statisticsGeneralInformation} />
 
       <NumberStatistic
@@ -76,7 +77,7 @@ const GeneralInformationStatisticsPage = async () => {
       <hr />
 
       <AminoAcidDistributionDynamicChart className="mb-4" height={graphHeight} />
-    </Fragment>
+    </PageContainer>
   );
 };
 

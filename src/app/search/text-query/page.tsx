@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { SearchParam } from '@lib/next/types';
 import { createPageMetadata } from '@lib/next/metadata';
 import { getBooleanSearchParam, getNumberSearchParam, getStringArraySearchParam, getStringSearchParam } from '@lib/next/searchParams';
@@ -8,6 +8,7 @@ import { PeptideSearchHeading } from 'src/components/search/peptideSearchHeading
 import { TextQueryPeptideResultTable } from '@components/search/peptideSearchResult';
 import { Pagination } from 'src/components/common/pagination';
 import { RouteDefs } from '@lib/constants/routes';
+import { PageContainer } from '@components/common/pageContainer';
 
 interface Params {
   searchParams: {
@@ -58,7 +59,9 @@ const TextQuerySearchPage: React.FC<Props> = async ({ searchParams }) => {
 
   if (!results || !exportData) {
     return (
-      <TextQueryPeptideResultTable peptides={[]} firstIndex={0} />
+      <PageContainer main>
+        <TextQueryPeptideResultTable peptides={[]} firstIndex={0} />
+      </PageContainer>
     );
   }
 
@@ -72,12 +75,12 @@ const TextQuerySearchPage: React.FC<Props> = async ({ searchParams }) => {
   };
 
   return (
-    <Fragment>
+    <PageContainer main>
       <PeptideSearchHeading title={title} totalCount={pagination.total} type="text" data={exportData} />
 
       <TextQueryPeptideResultTable peptides={data} firstIndex={pagination.currentIndex} />
       <Pagination paginatedUrlBuilder={paginatedUrlBuilder} {...pagination} />
-    </Fragment>
+    </PageContainer>
   );
 };
 

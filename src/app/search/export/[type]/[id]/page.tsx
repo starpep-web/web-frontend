@@ -8,6 +8,7 @@ import { safeAsync } from '@lib/utils/async';
 import { SearchExportLoadingNoProgress, SearchExportLoadingWithProgress } from '@components/searchExport/searchExportLoading';
 import { SearchExportError } from '@components/searchExport/searchExportError';
 import { SearchExportComplete } from '@components/searchExport/searchExportComplete';
+import { PageContainer } from '@components/common/pageContainer';
 
 const getSearchExportResult = (type: ExportPayloadType, taskId: string) => {
   switch (type) {
@@ -70,28 +71,36 @@ const ExportPage = async ({ params }: Props) => {
   if (result.loading) {
     if (result.data) {
       return (
-        <SearchExportLoadingWithProgress done={result.data.done} form={result.data.form} />
+        <PageContainer main>
+          <SearchExportLoadingWithProgress done={result.data.done} form={result.data.form} />
+        </PageContainer>
       );
     }
 
     return (
-      <SearchExportLoadingNoProgress style={{ marginTop: '30svh', marginBottom: '30svh' }} />
+      <PageContainer main>
+        <SearchExportLoadingNoProgress style={{ marginTop: '30svh', marginBottom: '30svh' }} />
+      </PageContainer>
     );
   }
 
   if (!result.success) {
     return (
-      <SearchExportError error={result.data} />
+      <PageContainer main>
+        <SearchExportError error={result.data} />
+      </PageContainer>
     );
   }
 
   return (
-    <SearchExportComplete
-      id={result.id}
-      form={result.data.form}
-      peptideIds={result.data.peptideIds}
-      total={result.data.total}
-    />
+    <PageContainer main>
+      <SearchExportComplete
+        id={result.id}
+        form={result.data.form}
+        peptideIds={result.data.peptideIds}
+        total={result.data.total}
+      />
+    </PageContainer>
   );
 };
 

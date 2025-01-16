@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { notFound } from 'next/navigation';
 import { SearchParam } from '@lib/next/types';
 import { createPageMetadata } from '@lib/next/metadata';
@@ -12,6 +12,7 @@ import { MultiQueryPeptideResultTable } from '@components/search/peptideSearchRe
 import { Pagination } from '@components/common/pagination';
 import { RouteDefs } from '@lib/constants/routes';
 import { DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS } from '@lib/constants/app';
+import { PageContainer } from '@components/common/pageContainer';
 
 interface Params {
   searchParams: {
@@ -58,23 +59,27 @@ const MultiQuerySearchPage = async ({ searchParams }: Props) => {
 
   if (result.loading) {
     return (
-      <RefreshLoader
-        style={{ marginTop: '30svh', marginBottom: '30svh' }}
-        title="Aligning your query..."
-        subtitle="The page will automatically refresh until the alignment is done."
-        refreshInterval={DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS}
-      />
+      <PageContainer main>
+        <RefreshLoader
+          style={{ marginTop: '30svh', marginBottom: '30svh' }}
+          title="Aligning your query..."
+          subtitle="The page will automatically refresh until the alignment is done."
+          refreshInterval={DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS}
+        />
+      </PageContainer>
     );
   }
 
   if (!result.success) {
     return (
-      <ErrorMessage
-        show
-        error={`Server responded with: ${result.data}`}
-        header="Could not get your multi query alignment"
-        description="Try re-running your multi query search."
-      />
+      <PageContainer main>
+        <ErrorMessage
+          show
+          error={`Server responded with: ${result.data}`}
+          header="Could not get your multi query alignment"
+          description="Try re-running your multi query search."
+        />
+      </PageContainer>
     );
   }
 
@@ -85,7 +90,7 @@ const MultiQuerySearchPage = async ({ searchParams }: Props) => {
 
 
   return (
-    <Fragment>
+    <PageContainer main>
       <PeptideSearchHeading
         title={`Found ${pagination.total} results (Page: ${page})`}
         totalCount={pagination.total}
@@ -95,7 +100,7 @@ const MultiQuerySearchPage = async ({ searchParams }: Props) => {
 
       <MultiQueryPeptideResultTable peptides={peptides} firstIndex={pagination.currentIndex} />
       <Pagination paginatedUrlBuilder={paginatedUrlBuilder} {...pagination} />
-    </Fragment>
+    </PageContainer>
   );
 };
 

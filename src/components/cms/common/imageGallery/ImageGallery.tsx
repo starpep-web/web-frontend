@@ -44,9 +44,9 @@ export const ImageGallery: React.FC<Props> = ({ className, imageClassName, featu
           height: featured ? `${maxImageHeight}px` : undefined
         }}
         draggable
-        autoplay={false}
+        autoplay
         autoplaySpeed={5000}
-        pauseOnHover
+        pauseOnHover={false}
         dots
         arrows={false}
         lazyLoad="progressive"
