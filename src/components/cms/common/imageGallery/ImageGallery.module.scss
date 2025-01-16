@@ -1,0 +1,9 @@
+@import '@styles/mixins';
+
+.featured {
+  max-height: 400px;
+
+  @include media-breakpoint-up(lg) {
+    max-height: calc(100svh - 160px);
+  }
+}
