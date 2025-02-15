@@ -6,6 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { usePathname } from 'next/navigation';
 import { RouteDefs } from '@lib/constants/routes';
+import { GITHUB_ORGANIZATION_URL } from '@lib/constants/external';
 import FullLogo from '@assets/svg/logo/full-logo.svg';
 import styles from './Navbar.module.scss';
 
@@ -21,7 +22,8 @@ const navbarItems = [
     ]
   },
   { text: 'Downloads', href: RouteDefs.downloads },
-  { text: 'FAQ', href: RouteDefs.faq }
+  { text: 'FAQ', href: RouteDefs.faq },
+  { text: 'GitHub', href: GITHUB_ORGANIZATION_URL }
 ];
 
 export const Navbar = () => {
