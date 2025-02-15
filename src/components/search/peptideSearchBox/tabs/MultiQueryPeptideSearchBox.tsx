@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import { useRouter } from 'next/navigation';
 import { ErrorMessage } from '@components/common/errorMessage';
-import { MultiQueryAlignmentOptionsForm } from '../helpers/MultiQueryAlignmentOptionsForm';
+import { MultiQueryAlignmentOptionsForm } from '../helpers/form/MultiQueryAlignmentOptionsForm';
 import { postMultiQuerySearchAction } from '@actions/search/alignment/multi-query';
 import { RouteDefs } from '@lib/constants/routes';
 import { DEFAULT_MULTI_ALIGNMENT_OPTIONS } from '@lib/services/bioApi/helpers/search';

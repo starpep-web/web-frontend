@@ -1,7 +1,7 @@
 'use client';
 import React, { useReducer, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
-import { AttributesFilterFormItem } from './AttributesFilterFormItem';
+import { AttributesFilterFormItem } from '../input/AttributesFilterFormItem';
 import PlusIcon from '@assets/svg/icons/plus-solid.svg';
 import { TextQueryAttributeFilter } from '@lib/services/api/models/search';
 
