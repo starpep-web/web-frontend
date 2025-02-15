@@ -17,7 +17,7 @@ const makeSitemapEntry = (route: string, changeFrequency: SitemapChangeFrequency
 const sitemap = (): MetadataRoute.Sitemap => {
   return [
     makeSitemapEntry(RouteDefs.home, 'monthly', 1),
-    makeSitemapEntry(RouteDefs.faq, 'yearly', 0.7),
+    makeSitemapEntry(RouteDefs.publications, 'yearly', 0.7),
     makeSitemapEntry(RouteDefs.search, 'yearly', 0.7),
     makeSitemapEntry(RouteDefs.statistics, 'yearly', 0.6),
     makeSitemapEntry(RouteDefs.statisticsGeneralInformation, 'yearly', 0.6),

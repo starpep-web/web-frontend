@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useReducer } from 'react';
 import Button from 'react-bootstrap/Button';
-import { MetadataFiltersFormItem } from './MetadataFiltersFormItem';
+import { MetadataFiltersFormItem } from '../input/MetadataFiltersFormItem';
 import PlusIcon from '@assets/svg/icons/plus-solid.svg';
 import { TextQueryMetadataFilter } from '@lib/services/api/models/search';
 

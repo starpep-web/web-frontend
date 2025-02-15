@@ -5,7 +5,7 @@ export const RouteDefs = {
   home: '/',
   about: '/#about',
   contact: '/#contact',
-  faq: '/faq',
+  publications: '/publications',
   search: '/search',
   statistics: '/statistics',
   statisticsGeneralInformation: '/statistics/general-information',

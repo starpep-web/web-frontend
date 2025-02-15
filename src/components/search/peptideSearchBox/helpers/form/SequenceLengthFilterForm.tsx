@@ -1,5 +1,5 @@
 import React from 'react';
-import { BoundRangeSlider } from 'src/components/form/boundRangeLimit';
+import { BoundRangeSlider } from '@components/form/boundRangeLimit';
 import { SequenceLengthFilter } from '@lib/services/api/models/search';
 
 const MIN_SEQUENCE_LENGTH = 2;

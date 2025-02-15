@@ -4,12 +4,12 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import { useRouter } from 'next/navigation';
-import { TextSearchInput } from '../helpers/TextSearchInput';
-import { RegexHelpMessage } from '../helpers/RegexHelpMessage';
-import { FiltersHelpMessage } from '../helpers/FiltersHelpMessage';
-import { SequenceLengthFilterForm } from '../helpers/SequenceLengthFilterForm';
-import { MetadataFiltersForm } from '../helpers/MetadataFiltersForm';
-import { AttributesFiltersForm } from '../helpers/AttributesFiltersForm';
+import { TextSearchInput } from '../helpers/input/TextSearchInput';
+import { RegexHelpMessage } from '../helpers/help/RegexHelpMessage';
+import { TextQueryHelpMessage } from '../helpers/help/TextQueryHelpMessage';
+import { SequenceLengthFilterForm } from '../helpers/form/SequenceLengthFilterForm';
+import { MetadataFiltersForm } from '../helpers/form/MetadataFiltersForm';
+import { AttributesFiltersForm } from '../helpers/form/AttributesFiltersForm';
 import MagnifyingGlassIcon from '@assets/svg/icons/magnifying-glass-solid.svg';
 import { RouteDefs } from '@lib/constants/routes';
 import { TextQueryMetadataFilter, TextQueryAttributeFilter, SequenceLengthFilter, convertMetadataFilterToParam, convertAttributeFilterToParam, convertSequenceLengthFilterToParam } from '@lib/services/api/models/search';
@@ -106,7 +106,7 @@ export const TextQueryPeptideSearchBox = () => {
         <MetadataFiltersForm onChange={handleMetadataFiltersChange} />
       </Form.Group>
 
-      <FiltersHelpMessage />
+      <TextQueryHelpMessage />
 
       <div className="pt-2 w-100 d-flex flex-row align-items-center justify-content-center">
         <Button variant="primary" className="w-100-sm d-inline-flex align-items-center justify-content-center" disabled={loading} type="submit">

@@ -1,0 +1,1 @@
+export { SoftwarePublication } from './SoftwarePublication';
