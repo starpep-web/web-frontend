@@ -22,7 +22,7 @@ const navbarItems = [
     ]
   },
   { text: 'Downloads', href: RouteDefs.downloads },
-  { text: 'FAQ', href: RouteDefs.faq },
+  { text: 'Publications', href: RouteDefs.publications },
   { text: 'GitHub', href: GITHUB_ORGANIZATION_URL }
 ];
 
