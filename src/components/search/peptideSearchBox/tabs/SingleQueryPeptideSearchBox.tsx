@@ -6,6 +6,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { useRouter } from 'next/navigation';
 import { ErrorMessage } from '@components/common/errorMessage';
 import { SingleQueryAlignmentOptionsForm } from '../helpers/form/SingleQueryAlignmentOptionsForm';
+import { SingleQueryHelpMessage } from '@components/search/peptideSearchBox/helpers/help/SingleQueryHelpMessage';
 import { TextSearchInput } from '../helpers/input/TextSearchInput';
 import { postSingleQuerySearchAction } from '@actions/search/alignment/single-query';
 import MagnifyingGlassIcon from '@assets/svg/icons/magnifying-glass-solid.svg';
@@ -73,6 +74,8 @@ export const SingleQueryPeptideSearchBox = () => {
 
         <SingleQueryAlignmentOptionsForm onChange={handleOptionsChange} />
       </Form.Group>
+
+      <SingleQueryHelpMessage />
 
       <div className="pt-2 w-100 d-flex flex-row align-items-center justify-content-center">
         <Button variant="primary" className="w-100-sm d-inline-flex align-items-center justify-content-center" disabled={loading || query.length < 1} type="submit">

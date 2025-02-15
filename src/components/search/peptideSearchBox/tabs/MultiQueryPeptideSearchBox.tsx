@@ -5,6 +5,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { useRouter } from 'next/navigation';
 import { ErrorMessage } from '@components/common/errorMessage';
 import { MultiQueryAlignmentOptionsForm } from '../helpers/form/MultiQueryAlignmentOptionsForm';
+import { MultiQueryHelpMessage } from '@components/search/peptideSearchBox/helpers/help/MultiQueryHelpMessage';
 import { postMultiQuerySearchAction } from '@actions/search/alignment/multi-query';
 import { RouteDefs } from '@lib/constants/routes';
 import { DEFAULT_MULTI_ALIGNMENT_OPTIONS } from '@lib/services/bioApi/helpers/search';
@@ -70,13 +71,15 @@ export const MultiQueryPeptideSearchBox = () => {
 
       <hr />
 
-      <Form.Group className="mb-3">
+      <Form.Group className="mb-4">
         <Form.Label className="fw-semibold" column={false}>
           Alignment Options
         </Form.Label>
 
         <MultiQueryAlignmentOptionsForm onChange={handleOptionsChange} />
       </Form.Group>
+
+      <MultiQueryHelpMessage />
 
       <div className="pt-2 w-100 d-flex flex-row align-items-center justify-content-center">
         <Button variant="primary" className="w-100-sm d-inline-flex align-items-center justify-content-center" disabled={loading || query.length < 1} type="submit">
