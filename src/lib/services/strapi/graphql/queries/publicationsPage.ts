@@ -8,31 +8,36 @@ const GET_PUBLICATIONS_PAGE = graphql(`
       data {
         attributes {
           originalPublications {
+            title
             publications {
               citation
               link
             }
           }
           relevantPublications {
+            title
             publications {
               citation
               link
             }
           }
-          starPepSoftware {
-            name
-            downloadUrl
-            sourceUrl
-            image {
-              data {
-                attributes {
-                  url
-                  alternativeText
-                  width
-                  height
+          softwarePublications {
+            title
+            publications {
+              name
+              downloadUrl
+              sourceUrl
+              image {
+                data {
+                  attributes {
+                    url
+                    alternativeText
+                    width
+                    height
+                  }
                 }
               }
-            }
+            } 
           }
         }
       }

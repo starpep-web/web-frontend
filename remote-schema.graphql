@@ -119,6 +119,27 @@ type ComponentPublicationsSoftwarePublication {
   sourceUrl: String
 }
 
+input ComponentPublicationsSoftwarePublicationFiltersInput {
+  and: [ComponentPublicationsSoftwarePublicationFiltersInput]
+  downloadUrl: StringFilterInput
+  name: StringFilterInput
+  not: ComponentPublicationsSoftwarePublicationFiltersInput
+  or: [ComponentPublicationsSoftwarePublicationFiltersInput]
+  sourceUrl: StringFilterInput
+}
+
+type ComponentPublicationsSoftwarePublicationGroup {
+  id: ID!
+  publications(filters: ComponentPublicationsSoftwarePublicationFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentPublicationsSoftwarePublication]
+  title: String
+}
+
+input ComponentPublicationsSoftwarePublicationGroupInput {
+  id: ID
+  publications: [ComponentPublicationsSoftwarePublicationInput]
+  title: String
+}
+
 input ComponentPublicationsSoftwarePublicationInput {
   downloadUrl: String
   id: ID
@@ -270,7 +291,7 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = ComponentCommonFaq | ComponentCommonImageGallery | ComponentCommonTextCard | ComponentCommonTextImageColumn | ComponentPublicationsPublication | ComponentPublicationsPublicationGroup | ComponentPublicationsSoftwarePublication | ComponentTeamTeamMemberCard | ComponentTeamTeamMemberCardGroup | FaqPage | HomePage | I18NLocale | PublicationsPage | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = ComponentCommonFaq | ComponentCommonImageGallery | ComponentCommonTextCard | ComponentCommonTextImageColumn | ComponentPublicationsPublication | ComponentPublicationsPublicationGroup | ComponentPublicationsSoftwarePublication | ComponentPublicationsSoftwarePublicationGroup | ComponentTeamTeamMemberCard | ComponentTeamTeamMemberCardGroup | FaqPage | HomePage | I18NLocale | PublicationsPage | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type HomePage {
   about: ComponentCommonTextImageColumn!
@@ -493,7 +514,7 @@ type PublicationsPage {
   originalPublications: ComponentPublicationsPublicationGroup!
   publishedAt: DateTime
   relevantPublications: ComponentPublicationsPublicationGroup!
-  starPepSoftware: ComponentPublicationsSoftwarePublication!
+  softwarePublications: ComponentPublicationsSoftwarePublicationGroup!
   updatedAt: DateTime
 }
 
@@ -510,7 +531,7 @@ input PublicationsPageInput {
   originalPublications: ComponentPublicationsPublicationGroupInput
   publishedAt: DateTime
   relevantPublications: ComponentPublicationsPublicationGroupInput
-  starPepSoftware: ComponentPublicationsSoftwarePublicationInput
+  softwarePublications: ComponentPublicationsSoftwarePublicationGroupInput
 }
 
 type Query {
