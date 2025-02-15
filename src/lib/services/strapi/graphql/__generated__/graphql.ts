@@ -110,6 +110,61 @@ export type ComponentCommonTextImageColumnInput = {
   text: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ComponentPublicationsPublication = {
+  citation: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  link: Maybe<Scalars['String']['output']>;
+};
+
+export type ComponentPublicationsPublicationFiltersInput = {
+  and: InputMaybe<Array<InputMaybe<ComponentPublicationsPublicationFiltersInput>>>;
+  citation: InputMaybe<StringFilterInput>;
+  link: InputMaybe<StringFilterInput>;
+  not: InputMaybe<ComponentPublicationsPublicationFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<ComponentPublicationsPublicationFiltersInput>>>;
+};
+
+export type ComponentPublicationsPublicationGroup = {
+  id: Scalars['ID']['output'];
+  publications: Maybe<Array<Maybe<ComponentPublicationsPublication>>>;
+  title: Maybe<Scalars['String']['output']>;
+};
+
+
+export type ComponentPublicationsPublicationGroupPublicationsArgs = {
+  filters: InputMaybe<ComponentPublicationsPublicationFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentPublicationsPublicationGroupInput = {
+  id: InputMaybe<Scalars['ID']['input']>;
+  publications: InputMaybe<Array<InputMaybe<ComponentPublicationsPublicationInput>>>;
+  title: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ComponentPublicationsPublicationInput = {
+  citation: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
+  link: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ComponentPublicationsSoftwarePublication = {
+  downloadUrl: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  image: Maybe<UploadFileEntityResponse>;
+  name: Scalars['String']['output'];
+  sourceUrl: Maybe<Scalars['String']['output']>;
+};
+
+export type ComponentPublicationsSoftwarePublicationInput = {
+  downloadUrl: InputMaybe<Scalars['String']['input']>;
+  id: InputMaybe<Scalars['ID']['input']>;
+  image: InputMaybe<Scalars['ID']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  sourceUrl: InputMaybe<Scalars['String']['input']>;
+};
+
 export type ComponentTeamTeamMemberCard = {
   affiliations: Maybe<Scalars['String']['output']>;
   avatar: Maybe<UploadFileEntityResponse>;
@@ -262,7 +317,7 @@ export type FloatFilterInput = {
   startsWith: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = ComponentCommonFaq | ComponentCommonImageGallery | ComponentCommonTextCard | ComponentCommonTextImageColumn | ComponentTeamTeamMemberCard | ComponentTeamTeamMemberCardGroup | FaqPage | HomePage | I18NLocale | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = ComponentCommonFaq | ComponentCommonImageGallery | ComponentCommonTextCard | ComponentCommonTextImageColumn | ComponentPublicationsPublication | ComponentPublicationsPublicationGroup | ComponentPublicationsSoftwarePublication | ComponentTeamTeamMemberCard | ComponentTeamTeamMemberCardGroup | FaqPage | HomePage | I18NLocale | PublicationsPage | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type HomePage = {
   about: ComponentCommonTextImageColumn;
@@ -413,6 +468,7 @@ export type Mutation = {
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   deleteFaqPage: Maybe<FaqPageEntityResponse>;
   deleteHomePage: Maybe<HomePageEntityResponse>;
+  deletePublicationsPage: Maybe<PublicationsPageEntityResponse>;
   deleteUploadFile: Maybe<UploadFileEntityResponse>;
   deleteUploadFolder: Maybe<UploadFolderEntityResponse>;
   /** Delete an existing role */
@@ -433,6 +489,7 @@ export type Mutation = {
   updateFaqPage: Maybe<FaqPageEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
   updateHomePage: Maybe<HomePageEntityResponse>;
+  updatePublicationsPage: Maybe<PublicationsPageEntityResponse>;
   updateUploadFile: Maybe<UploadFileEntityResponse>;
   updateUploadFolder: Maybe<UploadFolderEntityResponse>;
   /** Update an existing role */
@@ -546,6 +603,11 @@ export type MutationUpdateHomePageArgs = {
 };
 
 
+export type MutationUpdatePublicationsPageArgs = {
+  data: PublicationsPageInput;
+};
+
+
 export type MutationUpdateUploadFileArgs = {
   data: UploadFileInput;
   id: Scalars['ID']['input'];
@@ -597,12 +659,38 @@ export enum PublicationState {
   Preview = 'PREVIEW'
 }
 
+export type PublicationsPage = {
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  originalPublications: ComponentPublicationsPublicationGroup;
+  publishedAt: Maybe<Scalars['DateTime']['output']>;
+  relevantPublications: ComponentPublicationsPublicationGroup;
+  starPepSoftware: ComponentPublicationsSoftwarePublication;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type PublicationsPageEntity = {
+  attributes: Maybe<PublicationsPage>;
+  id: Maybe<Scalars['ID']['output']>;
+};
+
+export type PublicationsPageEntityResponse = {
+  data: Maybe<PublicationsPageEntity>;
+};
+
+export type PublicationsPageInput = {
+  originalPublications: InputMaybe<ComponentPublicationsPublicationGroupInput>;
+  publishedAt: InputMaybe<Scalars['DateTime']['input']>;
+  relevantPublications: InputMaybe<ComponentPublicationsPublicationGroupInput>;
+  starPepSoftware: InputMaybe<ComponentPublicationsSoftwarePublicationInput>;
+};
+
 export type Query = {
   faqPage: Maybe<FaqPageEntityResponse>;
   homePage: Maybe<HomePageEntityResponse>;
   i18NLocale: Maybe<I18NLocaleEntityResponse>;
   i18NLocales: Maybe<I18NLocaleEntityResponseCollection>;
   me: Maybe<UsersPermissionsMe>;
+  publicationsPage: Maybe<PublicationsPageEntityResponse>;
   uploadFile: Maybe<UploadFileEntityResponse>;
   uploadFiles: Maybe<UploadFileEntityResponseCollection>;
   uploadFolder: Maybe<UploadFolderEntityResponse>;
@@ -633,6 +721,11 @@ export type QueryI18NLocalesArgs = {
   filters: InputMaybe<I18NLocaleFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type QueryPublicationsPageArgs = {
+  publicationState?: InputMaybe<PublicationState>;
 };
 
 
@@ -1066,6 +1159,12 @@ export type GetHomePageQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetHomePageQuery = { homePage: { data: { attributes: { imageGallery: { images: { data: Array<{ attributes: { url: string, alternativeText: string | null, width: number | null, height: number | null } | null }> } }, heroText: { color: Enum_Componentcommontextcard_Color, text: string }, about: { text: string, flip: boolean, image: { data: { attributes: { url: string, alternativeText: string | null, width: number | null, height: number | null } | null } | null } }, projectLeaders: { title: string, type: Enum_Componentteamteammembercardgroup_Type, members: Array<{ name: string, email: string, occupation: string | null, affiliations: string | null, website: string | null, location: string | null, shortCv: string | null, avatar: { data: { attributes: { url: string, alternativeText: string | null, width: number | null, height: number | null } | null } | null } | null } | null> }, collaborators: { title: string, type: Enum_Componentteamteammembercardgroup_Type, members: Array<{ name: string, email: string, occupation: string | null, affiliations: string | null, website: string | null, location: string | null, shortCv: string | null, avatar: { data: { attributes: { url: string, alternativeText: string | null, width: number | null, height: number | null } | null } | null } | null } | null> }, developers: { title: string, type: Enum_Componentteamteammembercardgroup_Type, members: Array<{ name: string, email: string, occupation: string | null, affiliations: string | null, website: string | null, location: string | null, shortCv: string | null, avatar: { data: { attributes: { url: string, alternativeText: string | null, width: number | null, height: number | null } | null } | null } | null } | null> } } | null } | null } | null };
 
+export type GetPublicationsPageQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPublicationsPageQuery = { publicationsPage: { data: { attributes: { originalPublications: { publications: Array<{ citation: string, link: string | null } | null> | null }, relevantPublications: { publications: Array<{ citation: string, link: string | null } | null> | null }, starPepSoftware: { name: string, downloadUrl: string, sourceUrl: string | null, image: { data: { attributes: { url: string, alternativeText: string | null, width: number | null, height: number | null } | null } | null } | null } } | null } | null } | null };
+
 
 export const GetFaqPageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetFaqPage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"faqPage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"faqs"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"question"}},{"kind":"Field","name":{"kind":"Name","value":"answer"}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetFaqPageQuery, GetFaqPageQueryVariables>;
 export const GetHomePageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetHomePage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"homePage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"imageGallery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"heroText"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"text"}}]}},{"kind":"Field","name":{"kind":"Name","value":"about"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"flip"}}]}},{"kind":"Field","name":{"kind":"Name","value":"projectLeaders"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"members"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avatar"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"occupation"}},{"kind":"Field","name":{"kind":"Name","value":"affiliations"}},{"kind":"Field","name":{"kind":"Name","value":"website"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"shortCv"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"collaborators"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"members"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avatar"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"occupation"}},{"kind":"Field","name":{"kind":"Name","value":"affiliations"}},{"kind":"Field","name":{"kind":"Name","value":"website"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"shortCv"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"developers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"members"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avatar"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"occupation"}},{"kind":"Field","name":{"kind":"Name","value":"affiliations"}},{"kind":"Field","name":{"kind":"Name","value":"website"}},{"kind":"Field","name":{"kind":"Name","value":"location"}},{"kind":"Field","name":{"kind":"Name","value":"shortCv"}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetHomePageQuery, GetHomePageQueryVariables>;
+export const GetPublicationsPageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPublicationsPage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"publicationsPage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"originalPublications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"publications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"citation"}},{"kind":"Field","name":{"kind":"Name","value":"link"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"relevantPublications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"publications"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"citation"}},{"kind":"Field","name":{"kind":"Name","value":"link"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"starPepSoftware"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"downloadUrl"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"attributes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"alternativeText"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPublicationsPageQuery, GetPublicationsPageQueryVariables>;

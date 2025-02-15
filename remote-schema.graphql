@@ -79,6 +79,54 @@ input ComponentCommonTextImageColumnInput {
   text: String
 }
 
+type ComponentPublicationsPublication {
+  citation: String!
+  id: ID!
+  link: String
+}
+
+input ComponentPublicationsPublicationFiltersInput {
+  and: [ComponentPublicationsPublicationFiltersInput]
+  citation: StringFilterInput
+  link: StringFilterInput
+  not: ComponentPublicationsPublicationFiltersInput
+  or: [ComponentPublicationsPublicationFiltersInput]
+}
+
+type ComponentPublicationsPublicationGroup {
+  id: ID!
+  publications(filters: ComponentPublicationsPublicationFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentPublicationsPublication]
+  title: String
+}
+
+input ComponentPublicationsPublicationGroupInput {
+  id: ID
+  publications: [ComponentPublicationsPublicationInput]
+  title: String
+}
+
+input ComponentPublicationsPublicationInput {
+  citation: String
+  id: ID
+  link: String
+}
+
+type ComponentPublicationsSoftwarePublication {
+  downloadUrl: String!
+  id: ID!
+  image: UploadFileEntityResponse
+  name: String!
+  sourceUrl: String
+}
+
+input ComponentPublicationsSoftwarePublicationInput {
+  downloadUrl: String
+  id: ID
+  image: ID
+  name: String
+  sourceUrl: String
+}
+
 type ComponentTeamTeamMemberCard {
   affiliations: String
   avatar: UploadFileEntityResponse
@@ -222,7 +270,7 @@ input FloatFilterInput {
   startsWith: Float
 }
 
-union GenericMorph = ComponentCommonFaq | ComponentCommonImageGallery | ComponentCommonTextCard | ComponentCommonTextImageColumn | ComponentTeamTeamMemberCard | ComponentTeamTeamMemberCardGroup | FaqPage | HomePage | I18NLocale | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = ComponentCommonFaq | ComponentCommonImageGallery | ComponentCommonTextCard | ComponentCommonTextImageColumn | ComponentPublicationsPublication | ComponentPublicationsPublicationGroup | ComponentPublicationsSoftwarePublication | ComponentTeamTeamMemberCard | ComponentTeamTeamMemberCardGroup | FaqPage | HomePage | I18NLocale | PublicationsPage | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type HomePage {
   about: ComponentCommonTextImageColumn!
@@ -380,6 +428,7 @@ type Mutation {
   createUsersPermissionsUser(data: UsersPermissionsUserInput!): UsersPermissionsUserEntityResponse!
   deleteFaqPage: FaqPageEntityResponse
   deleteHomePage: HomePageEntityResponse
+  deletePublicationsPage: PublicationsPageEntityResponse
   deleteUploadFile(id: ID!): UploadFileEntityResponse
   deleteUploadFolder(id: ID!): UploadFolderEntityResponse
 
@@ -408,6 +457,7 @@ type Mutation {
   updateFaqPage(data: FaqPageInput!): FaqPageEntityResponse
   updateFileInfo(id: ID!, info: FileInfoInput): UploadFileEntityResponse!
   updateHomePage(data: HomePageInput!): HomePageEntityResponse
+  updatePublicationsPage(data: PublicationsPageInput!): PublicationsPageEntityResponse
   updateUploadFile(data: UploadFileInput!, id: ID!): UploadFileEntityResponse
   updateUploadFolder(data: UploadFolderInput!, id: ID!): UploadFolderEntityResponse
 
@@ -438,12 +488,38 @@ enum PublicationState {
   PREVIEW
 }
 
+type PublicationsPage {
+  createdAt: DateTime
+  originalPublications: ComponentPublicationsPublicationGroup!
+  publishedAt: DateTime
+  relevantPublications: ComponentPublicationsPublicationGroup!
+  starPepSoftware: ComponentPublicationsSoftwarePublication!
+  updatedAt: DateTime
+}
+
+type PublicationsPageEntity {
+  attributes: PublicationsPage
+  id: ID
+}
+
+type PublicationsPageEntityResponse {
+  data: PublicationsPageEntity
+}
+
+input PublicationsPageInput {
+  originalPublications: ComponentPublicationsPublicationGroupInput
+  publishedAt: DateTime
+  relevantPublications: ComponentPublicationsPublicationGroupInput
+  starPepSoftware: ComponentPublicationsSoftwarePublicationInput
+}
+
 type Query {
   faqPage(publicationState: PublicationState = LIVE): FaqPageEntityResponse
   homePage(publicationState: PublicationState = LIVE): HomePageEntityResponse
   i18NLocale(id: ID): I18NLocaleEntityResponse
   i18NLocales(filters: I18NLocaleFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): I18NLocaleEntityResponseCollection
   me: UsersPermissionsMe
+  publicationsPage(publicationState: PublicationState = LIVE): PublicationsPageEntityResponse
   uploadFile(id: ID): UploadFileEntityResponse
   uploadFiles(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileEntityResponseCollection
   uploadFolder(id: ID): UploadFolderEntityResponse
