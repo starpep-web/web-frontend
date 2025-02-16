@@ -1,7 +1,7 @@
 import { client } from '@lib/services/api/client';
 import { ApiResponse, WithPagination } from '@lib/services/api/models/api';
 import { SearchPeptide } from '@lib/services/api/models/peptide';
-import { TextQueryFilterParams } from '@lib/services/api/models/search';
+import { TextQueryFilterParams, TextQueryResponseParams } from '@lib/services/api/models/search';
 
 const getMetadataSuggestions = async (label: string, query: string, page: number): Promise<WithPagination<string>> => {
   const response = await client.get<ApiResponse<WithPagination<string>>>('/search/suggestions/metadata', {
@@ -42,16 +42,24 @@ export const getCrossRefSuggestions = (query: string, page: number = 1): Promise
   return getMetadataSuggestions('CrossRef', query, page);
 };
 
-export const postTextQuery = async (sequence: string, filters?: TextQueryFilterParams, page: number = 1): Promise<WithPagination<SearchPeptide>> => {
-  const response = await client.post<ApiResponse<WithPagination<SearchPeptide>>>('/search/text-query', {
+export const postTextQuery = async (
+  sequence: string,
+  filters?: TextQueryFilterParams,
+  page: number = 1
+): Promise<WithPagination<SearchPeptide> & { context: { params: TextQueryResponseParams } }> => {
+  const response = await client.post<ApiResponse<WithPagination<SearchPeptide> & { context: { params: TextQueryResponseParams } }>>('/search/text-query', {
     data: { sequence, ...filters },
     query: { page }
   });
   return response.data;
 };
 
-export const postRegexQuery = async (regex: string, filters?: TextQueryFilterParams, page: number = 1): Promise<WithPagination<SearchPeptide>> => {
-  const response = await client.post<ApiResponse<WithPagination<SearchPeptide>>>('/search/text-query', {
+export const postRegexQuery = async (
+  regex: string,
+  filters?: TextQueryFilterParams,
+  page: number = 1
+): Promise<WithPagination<SearchPeptide> & { context: { params: TextQueryResponseParams } }> => {
+  const response = await client.post<ApiResponse<WithPagination<SearchPeptide> & { context: { params: TextQueryResponseParams } }>>('/search/text-query', {
     data: { regex, ...filters },
     query: { page }
   });

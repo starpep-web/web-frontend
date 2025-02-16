@@ -43,3 +43,11 @@ export const convertAttributeFilterToParam = (filter: TextQueryAttributeFilter):
 export const convertSequenceLengthFilterToParam = (filter: SequenceLengthFilter): string => {
   return filter.join(FILTER_SEPARATOR);
 };
+
+export type TextQueryResponseParams = {
+  query: string
+  regexEnabled: boolean
+  length: SequenceLengthFilter
+  metadata: TextQueryMetadataFilter
+  attributes: TextQueryAttributeFilter
+};
