@@ -1,7 +1,7 @@
 import { AsyncTaskResponse, InitialAsyncTaskResponse } from '@lib/services/bioApi/models/asyncTask';
 import { client } from '@lib/services/bioApi/client';
 import { BioApiResponse, WithPagination } from '@lib/services/bioApi/models/api';
-import { SingleQueryAlignmentOptions, MultiQueryAlignmentOptions } from '@lib/services/bioApi/models/search';
+import { SingleQueryAlignmentOptions, MultiQueryAlignmentOptions, SingleQueryAlignmentContext, MultiQueryAlignmentContext } from '@lib/services/bioApi/models/search';
 import { SingleAlignedPeptide, MultiAlignedPeptide } from '@lib/services/bioApi/models/peptide';
 import { CONTENT_TYPE_FASTA } from '@lib/services/http/headers';
 import { DEFAULT_MULTI_ALIGNMENT_OPTIONS, DEFAULT_SINGLE_ALIGNMENT_OPTIONS } from '@lib/services/bioApi/helpers/search';
@@ -15,8 +15,8 @@ export const postSingleQuerySearch = async (fasta: string, options?: SingleQuery
   return response.data;
 };
 
-export const getSingleQuerySearch = async (taskId: string, page: number = 1): Promise<AsyncTaskResponse<WithPagination<SingleAlignedPeptide>>> => {
-  const response = await client.get<BioApiResponse<AsyncTaskResponse<WithPagination<SingleAlignedPeptide>>>>(`/search/single-query/${taskId}`, {
+export const getSingleQuerySearch = async (taskId: string, page: number = 1): Promise<AsyncTaskResponse<WithPagination<SingleAlignedPeptide>, SingleQueryAlignmentContext>> => {
+  const response = await client.get<BioApiResponse<AsyncTaskResponse<WithPagination<SingleAlignedPeptide>, SingleQueryAlignmentContext>>>(`/search/single-query/${taskId}`, {
     query: { page },
     noCache: true
   });
@@ -32,8 +32,8 @@ export const postMultiQuerySearch = async (fasta: string, options?: MultiQueryAl
   return response.data;
 };
 
-export const getMultiQuerySearch = async (taskId: string, page: number = 1): Promise<AsyncTaskResponse<WithPagination<MultiAlignedPeptide>>> => {
-  const response = await client.get<BioApiResponse<AsyncTaskResponse<WithPagination<MultiAlignedPeptide>>>>(`/search/multi-query/${taskId}`, {
+export const getMultiQuerySearch = async (taskId: string, page: number = 1): Promise<AsyncTaskResponse<WithPagination<MultiAlignedPeptide>, MultiQueryAlignmentContext>> => {
+  const response = await client.get<BioApiResponse<AsyncTaskResponse<WithPagination<MultiAlignedPeptide>, MultiQueryAlignmentContext>>>(`/search/multi-query/${taskId}`, {
     query: { page },
     noCache: true
   });

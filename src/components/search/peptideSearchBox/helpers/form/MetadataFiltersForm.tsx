@@ -34,12 +34,20 @@ const reducer = (state: ReducerState, action: ReducerAction): ReducerState => {
   }
 };
 
+const parseInitialValue = (initialValue?: TextQueryMetadataFilter[]): ReducerState => {
+  return initialValue?.reduce((obj, cur) => {
+    obj[Math.random().toString()] = cur;
+    return obj;
+  }, {} as ReducerState) ?? {};
+};
+
 interface Props {
   onChange?: (filters: TextQueryMetadataFilter[]) => void
+  initialValue?: TextQueryMetadataFilter[]
 }
 
-export const MetadataFiltersForm: React.FC<Props> = ({ onChange }) => {
-  const [state, dispatch] = useReducer(reducer, {});
+export const MetadataFiltersForm: React.FC<Props> = ({ onChange, initialValue }) => {
+  const [state, dispatch] = useReducer(reducer, parseInitialValue(initialValue));
 
   useEffect(() => {
     onChange?.(Object.values(state));

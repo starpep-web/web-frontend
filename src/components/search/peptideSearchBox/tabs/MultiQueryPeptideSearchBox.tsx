@@ -1,3 +1,4 @@
+'use client';
 import React, { Fragment, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -5,20 +6,30 @@ import Spinner from 'react-bootstrap/Spinner';
 import { useRouter } from 'next/navigation';
 import { ErrorMessage } from '@components/common/errorMessage';
 import { MultiQueryAlignmentOptionsForm } from '../helpers/form/MultiQueryAlignmentOptionsForm';
-import { MultiQueryHelpMessage } from '@components/search/peptideSearchBox/helpers/help/MultiQueryHelpMessage';
+import { MultiQueryHelpMessage } from '../helpers/help/MultiQueryHelpMessage';
 import { postMultiQuerySearchAction } from '@actions/search/alignment/multi-query';
 import { RouteDefs } from '@lib/constants/routes';
 import { DEFAULT_MULTI_ALIGNMENT_OPTIONS } from '@lib/services/bioApi/helpers/search';
-import { MultiQueryAlignmentOptions } from '@lib/services/bioApi/models/search';
+import { MultiQueryAlignmentContext, MultiQueryAlignmentOptions } from '@lib/services/bioApi/models/search';
 import MagnifyingGlassIcon from '@assets/svg/icons/magnifying-glass-solid.svg';
 
 const queryPlaceholder = '>Query1\nGIGAVLKVLTTGLPALISWIKRKRQQ\n>Query2\nGIGKFLHSAKKFGKAFVGEIMNS';
 
-export const MultiQueryPeptideSearchBox = () => {
+interface Props {
+  defaultValues?: MultiQueryAlignmentContext
+}
+
+export const MultiQueryPeptideSearchBox: React.FC<Props> = ({ defaultValues }) => {
+  const { query: defaultQuery, ...defaultOptions } = defaultValues ?? {};
+
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
-  const [query, setQuery] = useState<string>('');
-  const [options, setOptions] = useState<MultiQueryAlignmentOptions>(DEFAULT_MULTI_ALIGNMENT_OPTIONS);
+  const [query, setQuery] = useState<string>(defaultQuery ?? '');
+  const [options, setOptions] = useState<MultiQueryAlignmentOptions>(
+    Object.keys(defaultOptions).length > 0 ?
+      defaultOptions as MultiQueryAlignmentOptions :
+      DEFAULT_MULTI_ALIGNMENT_OPTIONS
+  );
   const [error, setError] = useState<string>('');
 
   const handleOnSubmit = async (event: React.FormEvent) => {
@@ -76,7 +87,7 @@ export const MultiQueryPeptideSearchBox = () => {
           Alignment Options
         </Form.Label>
 
-        <MultiQueryAlignmentOptionsForm onChange={handleOptionsChange} />
+        <MultiQueryAlignmentOptionsForm defaultValue={options} onChange={handleOptionsChange} />
       </Form.Group>
 
       <MultiQueryHelpMessage />

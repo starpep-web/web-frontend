@@ -13,6 +13,7 @@ import { Pagination } from '@components/common/pagination';
 import { RouteDefs } from '@lib/constants/routes';
 import { DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS } from '@lib/constants/app';
 import { PageContainer } from '@components/common/pageContainer';
+import { WrappedMultiQueryPeptideSearchBox } from '@components/search/peptideSearchBox';
 
 interface Params {
   searchParams: {
@@ -97,6 +98,8 @@ const MultiQuerySearchPage = async ({ searchParams }: Props) => {
         type="multi"
         data={queryId}
       />
+
+      <WrappedMultiQueryPeptideSearchBox defaultValues={result.context} />
 
       <MultiQueryPeptideResultTable peptides={peptides} firstIndex={pagination.currentIndex} />
       <Pagination paginatedUrlBuilder={paginatedUrlBuilder} {...pagination} />

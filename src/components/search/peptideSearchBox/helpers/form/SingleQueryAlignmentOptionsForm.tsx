@@ -29,10 +29,11 @@ const reducer = (state: SingleQueryAlignmentOptions, action: ReducerAction): Sin
 
 interface Props {
   onChange?: (options: SingleQueryAlignmentOptions) => void
+  defaultValue?: SingleQueryAlignmentOptions
 }
 
-export const SingleQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
-  const [state, dispatch] = useReducer(reducer, DEFAULT_SINGLE_ALIGNMENT_OPTIONS);
+export const SingleQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange, defaultValue }) => {
+  const [state, dispatch] = useReducer(reducer, defaultValue ?? DEFAULT_SINGLE_ALIGNMENT_OPTIONS);
 
   useEffect(() => {
     onChange?.(state);

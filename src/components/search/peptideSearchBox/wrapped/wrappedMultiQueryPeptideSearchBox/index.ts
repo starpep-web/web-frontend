@@ -1,0 +1,1 @@
+export { WrappedMultiQueryPeptideSearchBox } from './WrappedMultiQueryPeptideSearchBox';

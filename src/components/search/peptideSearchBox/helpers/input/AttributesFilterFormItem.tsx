@@ -33,7 +33,7 @@ interface Props {
 }
 
 export const AttributesFilterFormItem: React.FC<Props> = ({ value, onChange, onDelete }) => {
-  const [rawFilterValue, setRawFilterValue] = useState<string>('0');
+  const [rawFilterValue, setRawFilterValue] = useState<string>(value[3].toString() || '0');
   const [operator, attributeName, comparator, filterValue] = value;
 
   const handleOperatorChange = (operator: string) => {
@@ -50,18 +50,14 @@ export const AttributesFilterFormItem: React.FC<Props> = ({ value, onChange, onD
 
   const handleFilterValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
+    const valueAsNumber = parseFloat(value);
+    const newValueAsNumber = isNaN(valueAsNumber) ? 0 : valueAsNumber;
+
     const isNewInputValid = value === '' || FLOAT_REGEX.test(value);
     const newFilterValue = isNewInputValid ? value : rawFilterValue;
 
     setRawFilterValue(newFilterValue);
-  };
-
-  const handleFilterValueBlur = () => {
-    const valueAsNumber = parseFloat(rawFilterValue);
-    const newFilterValue = isNaN(valueAsNumber) ? 0 : valueAsNumber;
-
-    setRawFilterValue(newFilterValue.toString());
-    onChange?.([operator, attributeName, comparator, newFilterValue]);
+    onChange?.([operator, attributeName, comparator, newValueAsNumber]);
   };
 
   return (
@@ -106,7 +102,6 @@ export const AttributesFilterFormItem: React.FC<Props> = ({ value, onChange, onD
                 type="text"
                 inputMode="numeric"
                 onChange={handleFilterValueChange}
-                onBlur={handleFilterValueBlur}
                 value={rawFilterValue}
                 placeholder="Insert a number"
               />

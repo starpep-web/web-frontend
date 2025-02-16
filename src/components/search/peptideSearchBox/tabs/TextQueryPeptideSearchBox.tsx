@@ -12,30 +12,44 @@ import { MetadataFiltersForm } from '../helpers/form/MetadataFiltersForm';
 import { AttributesFiltersForm } from '../helpers/form/AttributesFiltersForm';
 import MagnifyingGlassIcon from '@assets/svg/icons/magnifying-glass-solid.svg';
 import { RouteDefs } from '@lib/constants/routes';
-import { TextQueryMetadataFilter, TextQueryAttributeFilter, SequenceLengthFilter, convertMetadataFilterToParam, convertAttributeFilterToParam, convertSequenceLengthFilterToParam } from '@lib/services/api/models/search';
+import {
+  TextQueryMetadataFilter,
+  TextQueryAttributeFilter,
+  SequenceLengthFilter,
+  convertMetadataFilterToParam,
+  convertAttributeFilterToParam,
+  convertSequenceLengthFilterToParam,
+  TextQueryResponseParams
+} from '@lib/services/api/models/search';
 
-export const TextQueryPeptideSearchBox = () => {
+interface Props {
+  defaultValues?: TextQueryResponseParams
+}
+
+export const TextQueryPeptideSearchBox: React.FC<Props> = ({ defaultValues }) => {
   const router = useRouter();
-  const [query, setQuery] = useState<string>('');
-  const [regexEnabled, setRegexEnabled] = useState<boolean>(false);
-  const [sequenceLengthFilter, setSequenceLengthFilter] = useState<SequenceLengthFilter | null>(null);
-  const [metadataFilters, setMetadataFilters] = useState<TextQueryMetadataFilter[]>([]);
-  const [attributeFilters, setAttributeFilters] = useState<TextQueryAttributeFilter[]>([]);
+  const [query, setQuery] = useState<string>(defaultValues?.query ?? '');
+  const [regexEnabled, setRegexEnabled] = useState<boolean>(defaultValues?.regexEnabled ?? false);
+  const [sequenceLengthFilter, setSequenceLengthFilter] = useState<SequenceLengthFilter | null>(defaultValues?.length ?? null);
+  const [metadataFilters, setMetadataFilters] = useState<TextQueryMetadataFilter[]>(defaultValues?.metadata ?? []);
+  const [attributeFilters, setAttributeFilters] = useState<TextQueryAttributeFilter[]>(defaultValues?.attributes ?? []);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    setQuery('');
+    setQuery(defaultValues?.query ?? '');
   }, [regexEnabled]);
 
   const handleOnSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
 
-    return router.push(RouteDefs.textQuery(query, regexEnabled, {
+    router.push(RouteDefs.textQuery(query, regexEnabled, {
       metadata: metadataFilters.map(convertMetadataFilterToParam),
       attributes: attributeFilters.map(convertAttributeFilterToParam),
       length: sequenceLengthFilter ? convertSequenceLengthFilterToParam(sequenceLengthFilter) : ''
     }));
+
+    setLoading(false);
   };
 
   const handleInputChange = (value: string) => {
@@ -87,7 +101,7 @@ export const TextQueryPeptideSearchBox = () => {
           Sequence Length
         </Form.Label>
 
-        <SequenceLengthFilterForm onChange={handleSequenceLengthFilterChange} />
+        <SequenceLengthFilterForm initialValue={defaultValues?.length} onChange={handleSequenceLengthFilterChange} />
       </Form.Group>
 
       <Form.Group className="mb-4">
@@ -95,7 +109,7 @@ export const TextQueryPeptideSearchBox = () => {
           Feature Filters
         </Form.Label>
 
-        <AttributesFiltersForm onChange={handleAttributeFiltersChange} />
+        <AttributesFiltersForm initialValue={defaultValues?.attributes} onChange={handleAttributeFiltersChange} />
       </Form.Group>
 
       <Form.Group className="mb-4">
@@ -103,7 +117,7 @@ export const TextQueryPeptideSearchBox = () => {
           Metadata Filters
         </Form.Label>
 
-        <MetadataFiltersForm onChange={handleMetadataFiltersChange} />
+        <MetadataFiltersForm initialValue={defaultValues?.metadata} onChange={handleMetadataFiltersChange} />
       </Form.Group>
 
       <TextQueryHelpMessage />

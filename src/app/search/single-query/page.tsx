@@ -13,6 +13,7 @@ import { Pagination } from '@components/common/pagination';
 import { RouteDefs } from '@lib/constants/routes';
 import { DEFAULT_AUTO_RELOAD_INTERVAL_SECONDS } from '@lib/constants/app';
 import { PageContainer } from '@components/common/pageContainer';
+import { WrappedSingleQueryPeptideSearchBox } from '@components/search/peptideSearchBox';
 
 interface Params {
   searchParams: {
@@ -96,6 +97,8 @@ const SingleQuerySearchPage = async ({ searchParams }: Props) => {
         type="single"
         data={queryId}
       />
+
+      <WrappedSingleQueryPeptideSearchBox defaultValues={result.context} />
 
       <SingleQueryPeptideResultTable peptides={peptides} firstIndex={pagination.currentIndex} />
       <Pagination paginatedUrlBuilder={paginatedUrlBuilder} {...pagination} />
