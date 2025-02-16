@@ -9,6 +9,7 @@ import { TextQueryPeptideResultTable } from '@components/search/peptideSearchRes
 import { Pagination } from 'src/components/common/pagination';
 import { RouteDefs } from '@lib/constants/routes';
 import { PageContainer } from '@components/common/pageContainer';
+import { WrappedTextQueryPeptideSearchBox } from '@components/search/peptideSearchBox';
 
 interface Params {
   searchParams: {
@@ -77,6 +78,8 @@ const TextQuerySearchPage: React.FC<Props> = async ({ searchParams }) => {
   return (
     <PageContainer main>
       <PeptideSearchHeading title={title} totalCount={pagination.total} type="text" data={exportData} />
+
+      <WrappedTextQueryPeptideSearchBox defaultValues={results.context.params} />
 
       <TextQueryPeptideResultTable peptides={data} firstIndex={pagination.currentIndex} />
       <Pagination paginatedUrlBuilder={paginatedUrlBuilder} {...pagination} />

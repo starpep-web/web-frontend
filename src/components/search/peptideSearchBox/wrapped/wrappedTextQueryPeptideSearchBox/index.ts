@@ -1,0 +1,1 @@
+export { WrappedTextQueryPeptideSearchBox } from './WrappedTextQueryPeptideSearchBox';

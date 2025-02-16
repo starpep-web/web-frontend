@@ -5,7 +5,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { useRouter } from 'next/navigation';
 import { ErrorMessage } from '@components/common/errorMessage';
 import { MultiQueryAlignmentOptionsForm } from '../helpers/form/MultiQueryAlignmentOptionsForm';
-import { MultiQueryHelpMessage } from '@components/search/peptideSearchBox/helpers/help/MultiQueryHelpMessage';
+import { MultiQueryHelpMessage } from '../helpers/help/MultiQueryHelpMessage';
 import { postMultiQuerySearchAction } from '@actions/search/alignment/multi-query';
 import { RouteDefs } from '@lib/constants/routes';
 import { DEFAULT_MULTI_ALIGNMENT_OPTIONS } from '@lib/services/bioApi/helpers/search';

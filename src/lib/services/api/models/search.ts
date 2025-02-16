@@ -48,6 +48,6 @@ export type TextQueryResponseParams = {
   query: string
   regexEnabled: boolean
   length: SequenceLengthFilter
-  metadata: TextQueryMetadataFilter
-  attributes: TextQueryAttributeFilter
+  metadata: TextQueryMetadataFilter[]
+  attributes: TextQueryAttributeFilter[]
 };
