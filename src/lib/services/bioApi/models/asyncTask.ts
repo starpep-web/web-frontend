@@ -1,13 +1,13 @@
-export type InitialAsyncTaskResponse = {
+export type InitialAsyncTaskResponse<TData = null> = {
   id: string
   name: string
   loading: true
   success: boolean
   context: null
-  data: null
+  data: TData
 }
 
-export type AsyncTaskResponse<TData, TContext = null> = InitialAsyncTaskResponse
+export type AsyncTaskResponse<TData, TContext = null> = InitialAsyncTaskResponse<TData | null>
   | {
   id: string
   name: string
