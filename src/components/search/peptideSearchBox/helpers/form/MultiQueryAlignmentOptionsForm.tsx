@@ -22,10 +22,12 @@ const reducer = (state: MultiQueryAlignmentOptions, action: ReducerAction): Mult
 
 interface Props {
   onChange?: (options: MultiQueryAlignmentOptions) => void
+  defaultValue?: MultiQueryAlignmentOptions
 }
 
-export const MultiQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) => {
-  const [state, dispatch] = useReducer(reducer, DEFAULT_MULTI_ALIGNMENT_OPTIONS);
+export const MultiQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange, defaultValue }) => {
+  const [state, dispatch] = useReducer(reducer, defaultValue ?? DEFAULT_MULTI_ALIGNMENT_OPTIONS);
+  const { criterion, ...restOfOptions } = state;
 
   useEffect(() => {
     onChange?.(state);
@@ -41,13 +43,13 @@ export const MultiQueryAlignmentOptionsForm: React.FC<Props> = ({ onChange }) =>
 
   return (
     <Fragment>
-      <SingleQueryAlignmentOptionsForm onChange={handleSingleAlignmentOptionsChange} />
+      <SingleQueryAlignmentOptionsForm defaultValue={restOfOptions} onChange={handleSingleAlignmentOptionsChange} />
 
       <Form.Group className="mb-3">
         <Dropdown
           label="Score Criterion"
           options={SUPPORTED_CRITERIA}
-          value={state.criterion}
+          value={criterion}
           onChange={handleCriterionChange}
         />
       </Form.Group>
